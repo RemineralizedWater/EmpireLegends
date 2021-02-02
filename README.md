@@ -1,7 +1,7 @@
 # EmpireLegends
 C++ remake of Eight-Minute Empire Legends game
 
-#TODO
+# TODO
 
 https://medium.com/heuristics/c-application-development-part-1-project-structure-454b00f9eddc
 
