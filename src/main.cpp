@@ -1,6 +1,7 @@
 #include <iostream>
 
+void DemonstratePlayers();
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    DemonstratePlayers();
     return 0;
 }
