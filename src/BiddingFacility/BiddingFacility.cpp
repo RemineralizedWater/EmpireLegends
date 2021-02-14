@@ -3,12 +3,73 @@
 #include "BiddingFacility.h"
 #include <iostream>
 #include <string>
+#include <utility>
 
 using namespace std;
 
 int coins;
 int bidAmount;
 string lastName;
+
+// Constructors
+BiddingFacility::BiddingFacility() {
+    cout << "Player last name:";
+    cin >> lastName;
+    coins = 0;
+    bidAmount = 0;
+}
+
+BiddingFacility::BiddingFacility(BiddingFacility &copy){
+    lastName = copy.lastName;
+    coins = copy.coins;
+    bidAmount = copy.bidAmount;
+}
+
+BiddingFacility::BiddingFacility(string _lastName, int _coins, int _bidAmount){
+    lastName = move(_lastName);
+    coins = _coins;
+    bidAmount = _bidAmount;
+}
+BiddingFacility::BiddingFacility(string _lastName, int _coins){
+    lastName = move(_lastName);
+    coins = _coins;
+    bidAmount = 0;
+}
+BiddingFacility::BiddingFacility(string _lastName){
+    lastName = move(_lastName);
+    coins = 0;
+    bidAmount = 0;
+}
+
+// Accessors
+string BiddingFacility::GetLastName(){
+    return lastName;
+}
+
+int BiddingFacility::GetCoins(){
+    return coins;
+}
+
+int BiddingFacility::GetBidAmount(){
+    return bidAmount;
+}
+
+// Stream Insertion Operators
+ostream & operator << (ostream &out, const BiddingFacility &bf){
+    out << "last name: " << bf.lastName << ", coins: " << bf.coins << ", bid amount: " << bf.bidAmount << endl;
+    return out;
+}
+
+// Note: obj needs to be dereferenced when using cout (ie, cout << *foo)
+istream & operator >> (istream &in, BiddingFacility &bf){
+    cout << "Enter last name:";
+    in >> bf.lastName;
+    cout << "Enter coins:";
+    in >> bf.coins;
+    cout << "Enter bid amount:";
+    in >> bf.bidAmount;
+    return in;
+}
 
 // Enable the Player Object to pick up their coins
 void BiddingFacility::ReceiveStartingCoins(int numberOfPlayers){
@@ -20,12 +81,10 @@ void BiddingFacility::ReceiveStartingCoins(int numberOfPlayers){
 
 // Enable the Player Object to privately choose a number to bid
 void BiddingFacility::EnterBid(){
-    cout << "Player last name:";
-    cin >> lastName;
 
     cout << "Enter starting bid (you have " << coins << " coins):";
     while(true){
-        if(cin >> bidAmount && bidAmount <= coins){
+        if(cin >> bidAmount && bidAmount <= coins && bidAmount >= 0){
             cout << "Bid amount of (" << bidAmount << ") received." << endl;
             break;
         }else{
@@ -53,3 +112,4 @@ void BiddingFacility::ResolveBid(bool hasWonBid){
         cout << lastName << " has lost the bid. They keep their coins." << endl;
     }
 }
+

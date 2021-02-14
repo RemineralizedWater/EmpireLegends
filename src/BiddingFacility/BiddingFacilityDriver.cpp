@@ -43,24 +43,22 @@ void DemonstrateBiddingFacility(){
     }
 
     // Each player reveals their bid
-    int bids[numberOfPlayers];
     for(int i = 0; i < numberOfPlayers; i++) {
         biddingFacilities[i]->RevealBid();
-        bids[i] = biddingFacilities[i]->bidAmount;
     }
 
     // Determine which player(s) placed the highest bid
     BiddingFacility* bidWinner;
     int highestBid = -1;
     for(int i = 0; i < numberOfPlayers; i++){
-        if(biddingFacilities[i]->bidAmount > highestBid) {
-            highestBid = biddingFacilities[i]->bidAmount;
+        if(biddingFacilities[i]->GetBidAmount() > highestBid) {
+            highestBid = biddingFacilities[i]->GetBidAmount();
             bidWinner = biddingFacilities[i];
         }
     }
     for(int i = 0; i < numberOfPlayers; i++){
-        if(biddingFacilities[i]->bidAmount == highestBid &&
-            biddingFacilities[i]->lastName.compare(bidWinner->lastName) < 0){
+        if(biddingFacilities[i]->GetBidAmount() == highestBid &&
+            biddingFacilities[i]->GetLastName().compare(bidWinner->GetLastName()) < 0){
             bidWinner = biddingFacilities[i];
         }
     }
@@ -77,5 +75,4 @@ void DemonstrateBiddingFacility(){
         delete biddingFacilities[i];
         biddingFacilities[i] = nullptr;
     }
-
 }

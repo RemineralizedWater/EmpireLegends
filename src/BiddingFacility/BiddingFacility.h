@@ -6,15 +6,26 @@
 using namespace std;
 
 class BiddingFacility {
-public:
-    //int numberOfPlayers;
+private:
+    string lastName;
     int coins;
     int bidAmount;
-    string lastName;
+
+public:
     void ReceiveStartingCoins(int numberOfPlayers);
     void EnterBid();
     void RevealBid();
     void ResolveBid(bool hasWonBid);
+    string GetLastName();
+    int GetCoins();
+    int GetBidAmount();
+    BiddingFacility();
+    BiddingFacility(BiddingFacility &copy);
+    BiddingFacility(string _lastName, int _coins, int _bidAmount);
+    BiddingFacility(string _lastName, int _coins);
+    explicit BiddingFacility(string _lastName);
+    friend ostream & operator << (ostream &out, const BiddingFacility &bf);
+    friend istream & operator >> (istream &in, BiddingFacility &bf);
 };
 
 
