@@ -54,6 +54,13 @@ int BiddingFacility::GetBidAmount(){
     return bidAmount;
 }
 
+// Assignment Operator
+BiddingFacility & BiddingFacility::operator =(const BiddingFacility &bf){
+    lastName = bf.lastName;
+    coins = bf.coins;
+    bidAmount = bf.bidAmount;
+}
+
 // Stream Insertion Operators
 ostream & operator << (ostream &out, const BiddingFacility &bf){
     out << "last name: " << bf.lastName << ", coins: " << bf.coins << ", bid amount: " << bf.bidAmount << endl;

@@ -24,6 +24,7 @@ public:
     BiddingFacility(string _lastName, int _coins, int _bidAmount);
     BiddingFacility(string _lastName, int _coins);
     explicit BiddingFacility(string _lastName);
+    BiddingFacility & operator =(const BiddingFacility &bf);
     friend ostream & operator << (ostream &out, const BiddingFacility &bf);
     friend istream & operator >> (istream &in, BiddingFacility &bf);
 };
