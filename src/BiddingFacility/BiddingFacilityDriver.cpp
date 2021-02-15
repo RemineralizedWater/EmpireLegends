@@ -11,22 +11,9 @@ using namespace std;
 // 2. Show bids which are tied
 // 3. Show if all bids are zero
 
-void DemonstrateBiddingFacility(){
+void DemonstrateBiddingFacility(int numberOfPlayers){
 
     int whiteLines = 100;
-    int numberOfPlayers = 0;
-
-    // The number of players determines the number of coins each player receives at the start of the game
-    cout << "Enter the number of players:";
-    while(true){
-        if(cin >> numberOfPlayers && numberOfPlayers >= 2 && numberOfPlayers <= 4){
-            break;
-        }else{
-            cout << "Please enter a valid number of players (integer, no greater than 4 and no less than 2)" << endl << ">>";
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        }
-    }
 
     cout << endl << "Beginning Bidding Phase!" << endl << endl;
 
