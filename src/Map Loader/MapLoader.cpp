@@ -41,7 +41,7 @@ MapLoader::MapLoader(MapLoader &copy){
  */
 bool MapLoader::isRectangle() {
     std::string input;
-    std::cout << "Choose a Board Layout \n1) Rectangular \n2) L-shape \nEnter the number corresponding to your layout choice"<< std::endl;
+    std::cout << "\nChoose a Board Layout \n1) Rectangular \n2) L-shape \nEnter the number corresponding to your layout choice"<< std::endl;
     std::cin >> input;
     while(true){
         if( input == "1" ){
