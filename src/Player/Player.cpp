@@ -35,13 +35,13 @@ void Player::DestroyArmy() {
 
 //Copy constructor
 Player::Player(const Player &playerToCopy)
-        : region_(playerToCopy.region_) {
+        : region_(new std::string(*playerToCopy.region_)) {
     std::cout << "Calling the copy constructor" << std::endl;
 }
 
 //Constructor
 Player::Player(const std::string &region)
-        : region_(region) {
+        : region_(new std::string (region)) {
     std::cout << "Calling the default constructor" << std::endl;
 
 }
@@ -54,7 +54,7 @@ Player &Player::operator=(const Player &playerToCopy) {
 
 //stream insertion operation
 std::istream &operator>>(std::istream &is, Player &player) {
-    is >> player.region_;
+    is >> *player.region_;
     return is;
 }
 

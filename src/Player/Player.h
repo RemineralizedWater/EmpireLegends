@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <memory>
 
 class Player {
 public:
@@ -29,7 +30,7 @@ public:
 
 private:
     //just one attribute added for stream insertion operator
-    std::string region_;
+    std::unique_ptr<std::string> region_;
 
 };
 
