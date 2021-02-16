@@ -2,6 +2,8 @@
 
 using namespace std;
 
+void DemonstratePlayers();
+
 void DemonstrateBiddingFacility(int numberOfPlayers);
 
 int main() {
@@ -19,6 +21,8 @@ int main() {
         }
     }
 
+    DemonstratePlayers();
+  
     DemonstrateBiddingFacility(numberOfPlayers);
 
     return 0;
