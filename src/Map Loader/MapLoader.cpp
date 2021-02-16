@@ -1,24 +1,37 @@
 #include "MapLoader.h"
 #include <iostream>
 #include <fstream>
+
+int numberOfBoardPieces;
+bool rectangle;
+std::string mapFilePath;
+
 /**
  * Gets board shape type and number of board pieces based on player to load a map
  * @param mapFilePath
  * @param numberOfPlayers
  */
-MapLoader::MapLoader(std::string mapFilePath, int numberOfPlayers) {
-    std::cout <<"********Loading Map from "<< mapFilePath <<" *********"<< std::endl;
-    int numberOfBoardPieces=0;
-    bool rectangle=false;
+MapLoader::MapLoader(int numberOfPlayers) {
+    numberOfBoardPieces=new int{0};
+    rectangle=new bool{false};
     if(numberOfPlayers==2||numberOfPlayers==3){
-        rectangle=isRectangle();
-        numberOfBoardPieces=3;
+        rectangle=new bool{isRectangle()};
+        numberOfBoardPieces=new int{3};
     }
     else if(numberOfPlayers==4){
-        numberOfBoardPieces=4;
-        rectangle=true;
+        numberOfBoardPieces=new int{4};
+        rectangle=new bool{false};
     }
-    loadMap(mapFilePath, numberOfBoardPieces, rectangle);
+}
+
+/**
+ * Copy Constructor
+ * @param copy
+ */
+MapLoader::MapLoader(MapLoader &copy){
+    this->numberOfBoardPieces = new int(*(copy.numberOfBoardPieces));
+    this->rectangle = new bool(*(copy.rectangle));
+    this->mapFilePath = new std::string(*(copy.mapFilePath));
 }
 
 /**
@@ -49,15 +62,44 @@ MapLoader::MapLoader() {
 MapLoader::~MapLoader() {
 
 }
+/**
+ * Assignment operator
+ * @param ml
+ * @return
+ */
+MapLoader & MapLoader::operator =(const MapLoader &ml){
+    this->numberOfBoardPieces = new int(*(ml.numberOfBoardPieces));
+    this->rectangle = new bool(*(ml.rectangle));
+    return *this;
+}
+/**
+ * Stream insertion operator
+ * @param out
+ * @param ml
+ * @return
+ */
+std::ostream& operator << (std::ostream &out, const MapLoader &ml){
+    out << " Map File: "<< *(ml.mapFilePath) << " Board Pieces: " << *(ml.numberOfBoardPieces) << " Rectangular Board: " << *(ml.rectangle) <<std::endl;
+    return out;
+}
+std::istream& operator >> (std::istream &in, MapLoader &ml){
+    std::cout << "Enter map file path"<<std::endl;
+    in >> *(ml.mapFilePath);
+
+    return in;
+}
+
 //TODO change return type/ input once Part1 completed
 /**
  * reads map and validates format
- * @param mapFile
+ * @param file
  * @param numberOfBoardPieces
  * @param rectangle
  */
-void MapLoader::loadMap(std::string mapFile,int numberOfBoardPieces,bool rectangle) {
-    std::fstream input(mapFile);
+void MapLoader::loadMap(std::string file) {
+    mapFilePath=new std::string(file);
+    std::cout << "***** Reading from map file "<<*mapFilePath<<std::endl;
+    std::fstream input(file);
     std::string line;
     std::string adjacency;
     int mapBoardCount = 0;
@@ -70,7 +112,7 @@ void MapLoader::loadMap(std::string mapFile,int numberOfBoardPieces,bool rectang
         //check for board pieces
         if (line == "-") {
             mapBoardCount++;
-            if(mapBoardCount==numberOfBoardPieces){
+            if(mapBoardCount==*numberOfBoardPieces){
                 break;
             }
             else{
@@ -101,8 +143,8 @@ void MapLoader::loadMap(std::string mapFile,int numberOfBoardPieces,bool rectang
     }
     input.close();
 
-    if(mapBoardCount < numberOfBoardPieces){
-        std::cout << "Invalid Map! Map must have at least "<< numberOfBoardPieces<<" boards pieces" << std::endl;
+    if(mapBoardCount < *numberOfBoardPieces){
+        std::cout << "Invalid Map! Map must have at least "<< *numberOfBoardPieces<<" boards pieces" << std::endl;
         exit(1);
     }
     //TODO if 3 board pieces then remove connections to 4th board
