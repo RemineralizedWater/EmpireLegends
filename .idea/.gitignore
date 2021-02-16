@@ -2,7 +2,8 @@
 /shelf/
 /workspace.xml
 # Datasource local storage ignored files
-/../../../../../../:\Users\06spa\Desktop\EmpireLegends\.idea/dataSources/
+
+/../../../../:\COMP 345\EmpireLegends\.idea/dataSources/
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
