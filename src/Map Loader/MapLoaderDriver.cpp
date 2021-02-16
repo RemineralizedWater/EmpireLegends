@@ -9,9 +9,9 @@ void DemonstrateMapLoader(int numberOfPlayers) {
     MapLoader *map = new MapLoader(numberOfPlayers);
     map->loadMap("../src/Map Boards/valid_map.txt");
     //load invalid maps
-    //map->loadMap("../src/Map Boards/invalid1_map.txt");
-    //map->loadMap("../src/Map Boards/invalid2_map.txt");
-    //map->loadMap("../src/Map Boards/invalid3_map.txt");
+    map->loadMap("../src/Map Boards/invalid1_map.txt");
+    map->loadMap("../src/Map Boards/invalid2_map.txt");
+    map->loadMap("../src/Map Boards/invalid3_map.txt");
     delete map;
     map= nullptr;
 }

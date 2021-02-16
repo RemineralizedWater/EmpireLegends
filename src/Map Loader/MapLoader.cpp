@@ -156,7 +156,6 @@ void MapLoader::loadMap(std::string file) {
  * @param adjacency
  */
 void MapLoader::parseAdjacency(std::string adjacency) {
-    ///////////////////////////////////////////////////std::cout << adjacency << std::endl;
 
     bool land;
     int currentIndex = 0;
@@ -239,7 +238,6 @@ void MapLoader::verifyRegionName(std::string line, int currentIndex, int charInd
         std::cout << outRangeErrMsg << '\n';
         exit(1);
     }
-    /////////////////////////////////////////////////////std::cout << region << std::endl;
 }
 
 /**
@@ -255,16 +253,13 @@ void MapLoader::verifyRegionName(std::string line, int currentIndex, int charInd
 bool MapLoader::isLand(std::string adjacency, int commaIndex, int currentIndex ) {
     //land
     if (adjacency.substr(currentIndex, commaIndex - currentIndex) == "L") {
-        ///////////////////////////////////std::cout << adjacency.substr(currentIndex, commaIndex - currentIndex) << std::endl;
         return true;
     }
     //water
     else if (adjacency.substr(currentIndex, commaIndex - currentIndex) == "W") {
-        /////////////////////////std::cout << adjacency.substr(currentIndex, commaIndex - currentIndex) << std::endl;
         return false;
     }
     else{
-        //////////////////////////////std::cout << adjacency.substr(currentIndex, commaIndex - currentIndex) << std::endl;
         std::cout << "region must be connected by L or W " << std::endl;
         exit(1);
     }
