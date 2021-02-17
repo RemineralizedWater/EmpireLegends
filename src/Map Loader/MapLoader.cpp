@@ -57,10 +57,14 @@ bool MapLoader::isRectangle() {
     }
 }
 MapLoader::MapLoader() {
-
+    numberOfBoardPieces=new int{0};
+    rectangle=new bool{false};
+    mapFilePath= new std::string {};
 }
 MapLoader::~MapLoader() {
-
+    delete mapFilePath;
+    delete rectangle;
+    delete numberOfBoardPieces;
 }
 /**
  * Assignment operator
