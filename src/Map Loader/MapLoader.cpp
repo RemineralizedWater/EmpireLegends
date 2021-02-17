@@ -65,6 +65,9 @@ MapLoader::~MapLoader() {
     delete mapFilePath;
     delete rectangle;
     delete numberOfBoardPieces;
+    mapFilePath= nullptr;
+    rectangle= nullptr;
+    numberOfBoardPieces= nullptr;
 }
 /**
  * Assignment operator
