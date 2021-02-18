@@ -35,13 +35,15 @@ void Player::DestroyArmy() {
 
 //Copy constructor
 Player::Player(const Player &playerToCopy)
-        : region_(new std::string(*playerToCopy.region_)) {
+        : region_(new std::string(*playerToCopy.region_)),
+        biddingFacility(new BiddingFacility(*playerToCopy.biddingFacility)){ //TODO update with necessary objects
     std::cout << "Calling the copy constructor" << std::endl;
 }
 
 //Constructor
 Player::Player(const std::string &region)
-        : region_(new std::string (region)) {
+        : region_(new std::string (region)),
+        biddingFacility(new BiddingFacility()){ //TODO update with necessary objects
     std::cout << "Calling the default constructor" << std::endl;
 
 }
@@ -53,8 +55,9 @@ Player &Player::operator=(const Player &playerToCopy) {
 }
 
 //stream insertion operation
-std::istream &operator>>(std::istream &is, Player &player) {
+std::istream &operator>>(std::istream &is, Player &player) {//TODO update with necessary players
     is >> *player.region_;
+    is >> *player.biddingFacility;
     return is;
 }
 
