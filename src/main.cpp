@@ -1,10 +1,10 @@
 #include <iostream>
-
+#include <limits>
 using namespace std;
 
 void DemonstratePlayers();
-
 void DemonstrateBiddingFacility(int numberOfPlayers);
+void DemonstrateMapLoader(int numberOfPlayers);
 
 int main() {
     int numberOfPlayers = 0;
@@ -22,8 +22,8 @@ int main() {
     }
 
     DemonstratePlayers();
-  
     DemonstrateBiddingFacility(numberOfPlayers);
+    DemonstrateMapLoader(numberOfPlayers);
 
     return 0;
 }
