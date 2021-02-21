@@ -243,3 +243,15 @@ void Cards::ShuffleDeck(vector <Cards> deck){
     //TODO
 }
 
+Cards::~Cards() {
+    if(name != nullptr){
+        delete name;
+        name = nullptr;
+    }
+
+    if(goodsAndAction != nullptr){
+        delete goodsAndAction;
+        goodsAndAction = nullptr;
+    }
+}
+

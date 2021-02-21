@@ -78,7 +78,16 @@ void DemonstrateCards(){
         cin >> position;
         // TODO data validation
         if(position < 1 || position > 6){
-            break;
+            delete deckPtr;
+            deckPtr = nullptr;
+
+            delete faceUpCardsPtr;
+            faceUpCardsPtr = nullptr;
+
+            delete playerHandPtr;
+            playerHandPtr = nullptr;
+
+            exit(0);
         }
 
         // Exchange and Draw
@@ -94,4 +103,5 @@ void DemonstrateCards(){
             cout << ++count << " - " << *(it->GetName()) << " : " << *(it ->GetGoodsAndAction()) << endl;
         }
     }
+
 }

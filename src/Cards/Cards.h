@@ -18,6 +18,7 @@ public:
     static void Exchange(vector<Cards> *faceUpCardsPtr, int position, vector<Cards> *playerHandPtr, vector<Cards> *deckPtr);
     static void ShuffleDeck(vector <Cards> deck);
     Cards();
+    ~Cards();
     Cards(const Cards &copy);
     explicit Cards(string* _name);
     Cards(string* _name,string* _goodsAndAction);
