@@ -2,12 +2,13 @@
 #include <limits>
 using namespace std;
 
-void DemonstratePlayers();
-void DemonstrateBiddingFacility(int numberOfPlayers);
-void DemonstrateMapLoader(int numberOfPlayers);
+//void DemonstratePlayers();
+//void DemonstrateBiddingFacility(int numberOfPlayers);
+//void DemonstrateMapLoader(int numberOfPlayers);
 void DemonstrateCards();
 
 int main() {
+    int numberOfPlayers = 0;
 
     /* REMOVE THIS COMMENT BLOCK WHEN PUSHING
     int numberOfPlayers = 0;

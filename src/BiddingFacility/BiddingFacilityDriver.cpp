@@ -11,14 +11,14 @@ using namespace std;
 // 2. Show bids which are tied
 // 3. Show if all bids are zero
 
-void DemonstrateBiddingFacility(int numberOfPlayers){
+void DemonstrateBiddingFacility(const int numberOfPlayers){
 
     int whiteLines = 100;
 
     cout << endl << "Beginning Bidding Phase!" << endl << endl;
 
     // Initialization of BiddingFacilities, each player must enter their last name and starting bid amount
-    BiddingFacility* biddingFacilities[numberOfPlayers];
+    BiddingFacility* biddingFacilities[4];
     for(int i = 0; i < numberOfPlayers; i++){
         cout << "Bidding details for player #" << (i + 1) << endl;
         biddingFacilities[i] = new BiddingFacility;

@@ -1,9 +1,11 @@
 #include "MapLoader.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 
 int numberOfBoardPieces;
 bool rectangle;
+
 std::string mapFilePath;
 
 /**
@@ -112,7 +114,7 @@ void MapLoader::loadMap(std::string file) {
     int mapBoardCount = 0;
 
     //Go through map file line by line
-    while(std::getline(input, line)) {
+    while(getline(input, line)) {
         int currentIndex = 0;
         std::cout << line << std::endl;
 

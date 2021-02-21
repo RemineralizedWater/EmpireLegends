@@ -8,11 +8,17 @@ using namespace std;
 class Cards {
 private:
     string* name;
+    string* GnA;
+
 
 public:
     Cards();
     Cards(string* _name);
+    Cards(string* _name,string* _GnA);
     string* GetName();
+    string* GetGnA();
+
+
 
 };
 
