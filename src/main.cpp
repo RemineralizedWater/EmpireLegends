@@ -5,8 +5,11 @@ using namespace std;
 void DemonstratePlayers();
 void DemonstrateBiddingFacility(int numberOfPlayers);
 void DemonstrateMapLoader(int numberOfPlayers);
+void DemonstrateCards();
 
 int main() {
+
+    /* REMOVE THIS COMMENT BLOCK WHEN PUSHING
     int numberOfPlayers = 0;
 
     // Determine the number of players
@@ -24,6 +27,9 @@ int main() {
     DemonstratePlayers();
     DemonstrateBiddingFacility(numberOfPlayers);
     DemonstrateMapLoader(numberOfPlayers);
+     */
+
+    DemonstrateCards();
 
     return 0;
 }
