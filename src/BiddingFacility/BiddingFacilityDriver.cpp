@@ -18,7 +18,7 @@ void DemonstrateBiddingFacility(const int numberOfPlayers){
     cout << endl << "Beginning Bidding Phase!" << endl << endl;
 
     // Initialization of BiddingFacilities, each player must enter their last name and starting bid amount
-    BiddingFacility* biddingFacilities[4];
+    BiddingFacility* biddingFacilities[numberOfPlayers];
     for(int i = 0; i < numberOfPlayers; i++){
         cout << "Bidding details for player #" << (i + 1) << endl;
         biddingFacilities[i] = new BiddingFacility;
