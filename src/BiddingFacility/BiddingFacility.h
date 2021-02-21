@@ -7,7 +7,7 @@ using namespace std;
 
 class BiddingFacility {
 private:
-    string* lastName{};
+    string* lastName;
     int* coins;
     int* bidAmount;
 
@@ -20,6 +20,7 @@ public:
     int* GetCoins();
     int* GetBidAmount();
     BiddingFacility();
+    ~BiddingFacility();
     BiddingFacility(BiddingFacility &copy);
     BiddingFacility(string* _lastName, int* _coins, int* _bidAmount);
     BiddingFacility(string* _lastName, int* _coins);

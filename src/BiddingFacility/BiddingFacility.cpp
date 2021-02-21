@@ -125,3 +125,21 @@ void BiddingFacility::ResolveBid(bool hasWonBid){
     }
 }
 
+BiddingFacility::~BiddingFacility() {
+    if(coins != nullptr){
+        delete coins;
+        coins = nullptr;
+    }
+
+    if(bidAmount != nullptr){
+        delete bidAmount;
+        bidAmount = nullptr;
+    }
+
+    if(lastName != nullptr){
+        delete lastName;
+        lastName = nullptr;
+    }
+
+}
+
