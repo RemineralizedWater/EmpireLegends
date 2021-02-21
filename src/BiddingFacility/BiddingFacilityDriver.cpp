@@ -11,7 +11,7 @@ using namespace std;
 // 2. Show bids which are tied
 // 3. Show if all bids are zero
 
-void DemonstrateBiddingFacility(int numberOfPlayers){
+void DemonstrateBiddingFacility(const int numberOfPlayers){
 
     int whiteLines = 100;
 
