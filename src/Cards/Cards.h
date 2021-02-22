@@ -6,6 +6,8 @@
 
 using namespace std;
 
+
+
 class Cards {
 private:
     string* name;
@@ -13,7 +15,7 @@ private:
 public:
     string* GetName();
     string* GetGoodsAndAction();
-    static vector <Cards> GetDeck();
+    static vector <Cards> GetDeck(int numberOfPlayers);
     static void Draw(vector<Cards> *deckPtr, vector<Cards> *faceUpCardsPtr);
     static void Exchange(vector<Cards> *faceUpCardsPtr, int position, vector<Cards> *playerHandPtr, vector<Cards> *deckPtr);
     static void ShuffleDeck(vector <Cards> deck);

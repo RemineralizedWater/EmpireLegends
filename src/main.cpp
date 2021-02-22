@@ -1,11 +1,14 @@
+
 #include <iostream>
 #include <limits>
+
+
 using namespace std;
 
 void DemonstratePlayers();
 void DemonstrateBiddingFacility(int numberOfPlayers);
 void DemonstrateMapLoader(int numberOfPlayers);
-void DemonstrateCards();
+void DemonstrateCards(int numberOfPlayers);
 
 int main() {
 
@@ -16,6 +19,7 @@ int main() {
     cout << "Enter the number of players:";
     while(true){
         if(cin >> numberOfPlayers && numberOfPlayers >= 2 && numberOfPlayers <= 4){
+            cout<<numberOfPlayers<<endl;
             break;
         }else{
             cout << "Please enter a valid number of players (integer, no greater than 4 and no less than 2)" << endl << ">>";
@@ -54,7 +58,7 @@ int main() {
                 DemonstratePlayers();
                 break;
             case 4:
-                DemonstrateCards();
+                DemonstrateCards(numberOfPlayers);
                 break;
             case 5:
                 DemonstrateBiddingFacility(numberOfPlayers);
