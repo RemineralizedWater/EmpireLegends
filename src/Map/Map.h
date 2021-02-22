@@ -8,7 +8,6 @@
 
 using namespace std;
 
-// DONEDONE
 class Region {
 private:
     int* name;
@@ -17,9 +16,12 @@ private:
 public:
     Region(int* name,int* continent);
     Region();
+    Region(Region &copy);
     int* getName();
     int* getContinent();
-    ~Region();
+   Region & operator =(const Region &r);
+    friend std::ostream & operator << (std::ostream &out, const Region &r);
+    friend std::istream & operator >> (std::istream &in, Region &r);
 };
 
 class Adjacency {
@@ -32,7 +34,9 @@ public:
     Adjacency();
     bool* getLand();
     int* getRegion();
-    ~Adjacency();
+    Adjacency & operator =(const Adjacency &a);
+    friend std::ostream & operator << (std::ostream &out, const Adjacency &a);
+    friend std::istream & operator >> (std::istream &in, Adjacency &a);
 };
 
 
@@ -46,9 +50,15 @@ private:
 public:
     Map(bool* rect);
     Map();
+    Map(Map &copy);
     ~Map();
     void addRegion(Region* region);
     void addAdjacency(Region* region,Adjacency* adjacency);
     void display();
     void validate();
+    void removeAdjacency(int* region);
+    void removeUnUsedAdjacency();
+    Map & operator =(const Map &m);
+    friend std::ostream & operator << (std::ostream &out, const Map &m);
+    friend std::istream & operator >> (std::istream &in, Map &m);
 };

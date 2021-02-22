@@ -16,7 +16,7 @@ int main() {
     int numberOfPlayers = 0;
     int userInput = 0;
 
-    /*// Determine the number of players
+    // Determine the number of players
     cout << "Enter the number of players:";
     while(true){
         if(cin >> numberOfPlayers && numberOfPlayers >= 2 && numberOfPlayers <= 4){
@@ -70,6 +70,4 @@ int main() {
     }
 
     return 0;
-     */
-    DemonstrateMapLoader(2);
 }

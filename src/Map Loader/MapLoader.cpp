@@ -36,6 +36,7 @@ MapLoader::MapLoader(MapLoader &copy){
     this->numberOfBoardPieces = new int(*(copy.numberOfBoardPieces));
     this->rectangle = new bool(*(copy.rectangle));
     this->mapFilePath = new std::string(*(copy.mapFilePath));
+    this->map= new Map(*(copy.map));
 }
 
 /**
@@ -90,6 +91,7 @@ MapLoader::~MapLoader() {
 MapLoader & MapLoader::operator =(const MapLoader &ml){
     this->numberOfBoardPieces = new int(*(ml.numberOfBoardPieces));
     this->rectangle = new bool(*(ml.rectangle));
+    this->map=new Map(*(ml.map));
     return *this;
 }
 /**
@@ -109,7 +111,6 @@ std::istream& operator >> (std::istream &in, MapLoader &ml){
     return in;
 }
 
-//TODO change return type/ input once Part1 completed
 /**
  * reads map and validates format
  * @param file
@@ -132,7 +133,6 @@ void MapLoader::loadMap(std::string file) {
     //Go through map file line by line
     while(getline(input, line)) {
         int currentIndex = 0;
-        std::cout << line << std::endl;
 
         //check for board pieces
         if (line == "-") {
@@ -169,9 +169,8 @@ void MapLoader::loadMap(std::string file) {
         std::cout << "Invalid Map! Map must have at least "<< *numberOfBoardPieces<<" boards pieces" << std::endl;
         exit(1);
     }
-    //TODO if 3 board pieces then remove connections to 4th board
-
-    map->display();
+    //removes edges to regions that are on boards not used
+    map->removeUnUsedAdjacency();
     map->validate();
     map->display();
 }
@@ -240,8 +239,6 @@ int MapLoader::checkNextFieldExists(std::string line,int currentIndex) {
     return  currentIndex;
 }
 
-
-//TODO change return type/ input once Part1 completed
 /**
  * verifies continents/regions are numbers
  * @param line

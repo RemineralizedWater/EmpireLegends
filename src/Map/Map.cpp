@@ -101,6 +101,38 @@ bool Map::isConnected(int *region) {
     return false;
 }
 /**
+ * removes unused adjacency
+ */
+void Map::removeUnUsedAdjacency() {
+    vector<regionInfo>::iterator regIt;
+    for (regIt = (regions)->begin(); regIt != (regions)->end(); ++regIt) {
+        vector<Adjacency>::iterator adjIt;
+        //check if all regions listed in adjacency are also listed as regions
+        for (adjIt = (*regIt).second->begin(); adjIt != (*regIt).second->end(); ++adjIt) {
+            if (!regionExists(adjIt->getRegion())) {
+                removeAdjacency(adjIt->getRegion());
+                return;
+            }
+        }
+    }
+}
+/**
+ * removes any adjacency that contains the region
+ * @param region
+ */
+void Map::removeAdjacency(int *region) {
+    vector<regionInfo>::iterator regIt;
+    for (regIt = (regions)->begin(); regIt != (regions)->end(); ++regIt) {
+        vector<Adjacency>::iterator adjIt;
+        for (adjIt = regIt->second->begin(); adjIt != (*regIt).second->end(); ++adjIt) {
+            if(*(adjIt->getRegion())==*(region)){
+                regIt->second->erase(adjIt);
+                return;
+            }
+        }
+    }
+}
+/**
  * checks the map is a connected graph and each region listed as an adjacency exists
  **/
 void Map::validate() {
@@ -155,7 +187,7 @@ void Map::addAdjacency(Region *region, Adjacency *adjacency) {
  */
 void Map::display(){
     cout<<"______________________________________________________________________________"<<endl<<"Displaying Board Map"<<endl<<"______________________________________________________________________________"<<endl;
-    if(rect){
+    if(*(rect)){
         cout<<"Map shape: Rectangle"<<endl;
     }
     else{
@@ -179,10 +211,66 @@ void Map::display(){
     cout<<"__________________________________________________________________________"<<endl;
 
 }
-Adjacency::~Adjacency() {
+/**
+ * Assignment operator
+ * @param a
+ * @return
+ */
 
+Adjacency & Adjacency::operator =(const Adjacency &a){
+    this->region = new int(*(a.region));
+    this->land = new bool(*(a.land));
+    return *this;
 }
-Region::~Region() {
+/**
+ * stream operators
+ * @param out
+ * @param a
+ * @return
+ */
+std::ostream& operator << (std::ostream &out, const Adjacency &a){
+    out << " Region: "<< *(a.region) << " Land: " << *(a.land) <<std::endl;
+    return out;
+}
+std::istream& operator >> (std::istream &in, Adjacency &a){
+   std::cout << "Enter region name and land type"<<std::endl;
+   in >> *(a.region);
+   in >> *(a.land);
+   return in;
+}
+/**
+ * Copy Constructor
+ * @param copy
+ */
+Region::Region(Region &copy) {
+    this->name=new int(*(copy.name));
+    this->continent = new int(*(copy.continent));
+}
+/**
+ * Assignment operator
+ * @param r
+ * @return
+ */
+Region & Region::operator =(const Region &r){
+    this->name = new int(*(r.name));
+    this->continent = new int(*(r.continent));
+    return *this;
+}
+/**
+ * Stream operator
+ * @param out
+ * @param r
+ * @return
+ */
+std::ostream& operator << (std::ostream &out, const Region &r){
+    out << " Region name: "<< *(r.name) << " Continent: " << *(r.continent) <<std::endl;
+    return out;
+}
+std::istream& operator >> (std::istream &in, Region &r){
+    std::cout << "Region name and Continent name"<<std::endl;
+    in >> *(r.name);
+    in >> *(r.continent);
+    return in;
 }
 /**
  * deconstructor
@@ -208,16 +296,49 @@ void Map::addRegion(Region *region) {
     regions->push_back(make_pair(region, adj));
 }
 /**
- * Default constructor
+ * default constructor
  */
 Map::Map() {
     regions= new vector<regionInfo>;
 }
 /**
- * Construtor that takes board shape
+ * takes board shape
  * @param rect
  */
 Map::Map(bool *rect) {
     this->rect=rect;
     regions= new vector<regionInfo>;
+}
+/**
+ * copy constructor
+ * @param copy
+ */
+Map::Map(Map &copy){
+    this->rect = new bool(*(copy.rect));
+    this->regions = new vector<regionInfo> (*(copy.regions));
+}
+/**
+ * Assignment operator
+ * @param m
+ * @return
+ */
+Map & Map::operator =(const Map &m){
+    this->rect = new bool(*(m.rect));
+    this->regions = new vector<regionInfo>(*(m.regions));
+    return *this;
+}
+/**
+ * Stream operators
+ * @param out
+ * @param m
+ * @return
+ */
+std::ostream& operator << (std::ostream &out, const Map &m){
+    out << " Rectangle: "<< *(m.rect) <<std::endl;
+    return out;
+}
+std::istream& operator >> (std::istream &in, Map &m){
+    std::cout << "Is map shape rectangle?"<<std::endl;
+    in >> *(m.rect);
+    return in;
 }
