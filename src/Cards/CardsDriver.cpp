@@ -4,13 +4,13 @@
 
 using namespace std;
 
-void DemonstrateCards(){
+void DemonstrateCards(const int numberOfPlayers){
 
     int cost;
     int count = 0;
     int position = 0;
     Cards card;
-    vector <Cards> deck = Cards::GetDeck();
+    vector <Cards> deck = Cards::GetDeck(numberOfPlayers);
     vector <Cards> *deckPtr = &deck;
     vector <Cards> faceUpCards;
     vector <Cards> *faceUpCardsPtr = &faceUpCards;
