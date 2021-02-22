@@ -113,6 +113,11 @@ void MapLoader::loadMap(std::string file) {
     std::string adjacency;
     int mapBoardCount = 0;
 
+    if(!input){
+        std::cout << "No file found!" << std::endl;
+        exit(1);
+    }
+
     //Go through map file line by line
     while(getline(input, line)) {
         int currentIndex = 0;
