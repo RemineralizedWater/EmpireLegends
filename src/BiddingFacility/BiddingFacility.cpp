@@ -73,11 +73,8 @@ ostream& operator << (ostream &out, const BiddingFacility &bf){
 
 // Note: obj needs to be dereferenced when using cout (ie, cout << *foo)
 istream& operator >> (istream &in, BiddingFacility &bf){
-    cout << "Enter last name:";
     in >> *(bf.lastName);
-    cout << "Enter coins:";
     in >> *(bf.coins);
-    cout << "Enter bid amount:";
     in >> *(bf.bidAmount);
     return in;
 }
