@@ -16,7 +16,7 @@ private:
     int terrId;
 
 public:
-    Territory& Territory::operator=(const Territory& rightSide);
+    Territory& operator=(const Territory& rightSide);
     friend std::ostream& operator<<(std::ostream& os, Territory& terr);
 
     Territory(int terrId);
@@ -38,7 +38,7 @@ private:
     int contId;
 
 public:
-    Continent& Continent::operator=(const Continent& rightSide);
+    Continent& operator=(const Continent& rightSide);
     friend std::ostream& operator<<(std::ostream& os, Continent& cont);
 
     Continent(int contId);
@@ -54,7 +54,7 @@ private:
     int mapId;
 
 public:
-    Map& Map::operator=(const Map& rightSide);
+    Map& operator=(const Map& rightSide);
     friend std::ostream& operator<<(std::ostream& os, Map& map);
 
     Map(int mapId);

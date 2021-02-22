@@ -84,7 +84,6 @@ int Continent::getContId() {
 // ------------------
 
 Map& Map::operator=(const Map& rightSide) { // assignment operator // DONEDONE
-    adjList = rightSide.adjList;
     return *this;
 }
 std::ostream& operator<<(std::ostream& os, Map& map) { // output stream operator // DONEDONE
