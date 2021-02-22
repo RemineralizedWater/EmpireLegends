@@ -6,61 +6,49 @@
 #include <vector>
 #include <iostream>
 
-using std::vector;
+using namespace std;
 
 // DONEDONE
-class Territory {
+class Region {
 private:
-    vector<Territory*> adj;
-    int army;
-    int terrId;
+    int* name;
+    int* continent;
 
 public:
-    Territory& operator=(const Territory& rightSide);
-    friend std::ostream& operator<<(std::ostream& os, Territory& terr);
-
-    Territory(int terrId);
-    Territory(const Territory& rightSide);
-    ~Territory();
-
-    void setArmy(int army);
-    void setAdj(Territory* terr);
-    void setTerrId(int terrId);
-    int getArmy();
-    vector<Territory*> getAdj();
-    int getTerrId();
+    Region(int* name,int* continent);
+    Region();
+    int* getName();
+    int* getContinent();
+    ~Region();
 };
 
-// -------------------
-
-class Continent {
+class Adjacency {
 private:
-    int contId;
+    int* region;
+    bool* land;
 
 public:
-    Continent& operator=(const Continent& rightSide);
-    friend std::ostream& operator<<(std::ostream& os, Continent& cont);
-
-    Continent(int contId);
-    Continent(const Continent& rightSide);
-    ~Continent();
-
-    void setContId(int contId);
-    int getContId();
+    Adjacency(int* region,bool* land);
+    Adjacency();
+    bool* getLand();
+    int* getRegion();
+    ~Adjacency();
 };
+
 
 class Map {
 private:
-    int mapId;
-
+    typedef pair<Region*, vector<Adjacency>*> regionInfo;
+    vector<regionInfo> *regions;
+    bool regionExists(int* region);
+    bool isConnected(int* region);
+    bool* rect;
 public:
-    Map& operator=(const Map& rightSide);
-    friend std::ostream& operator<<(std::ostream& os, Map& map);
-
-    Map(int mapId);
-    Map(const Map& rightSide);
+    Map(bool* rect);
+    Map();
     ~Map();
-
-    void setMapId(int mapId);
-    int getMapId();
+    void addRegion(Region* region);
+    void addAdjacency(Region* region,Adjacency* adjacency);
+    void display();
+    void validate();
 };

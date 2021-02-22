@@ -1,11 +1,12 @@
 #include "MapLoader.h"
+#include "../Map/Map.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 
 int numberOfBoardPieces;
 bool rectangle;
-
+Map map;
 std::string mapFilePath;
 
 /**
@@ -24,6 +25,7 @@ MapLoader::MapLoader(int numberOfPlayers) {
         numberOfBoardPieces=new int{4};
         rectangle=new bool{false};
     }
+    map=new Map(rectangle);
 }
 
 /**
@@ -58,18 +60,27 @@ bool MapLoader::isRectangle() {
         }
     }
 }
+/**
+ * Default constructor
+ */
 MapLoader::MapLoader() {
     numberOfBoardPieces=new int{0};
     rectangle=new bool{false};
     mapFilePath= new std::string {};
+    map=new Map();
 }
+/**
+ * destructor
+ */
 MapLoader::~MapLoader() {
     delete mapFilePath;
     delete rectangle;
     delete numberOfBoardPieces;
+    delete map;
     mapFilePath= nullptr;
     rectangle= nullptr;
     numberOfBoardPieces= nullptr;
+    map= nullptr;
 }
 /**
  * Assignment operator
@@ -135,25 +146,22 @@ void MapLoader::loadMap(std::string file) {
         }
 
         //parse continent field
-        //TODO store continent in graph
-        verifyRegionName(line, currentIndex, line.find("|", currentIndex), "Continent name must be a number", "Continent name is too long");
+        int continent=verifyRegionName(line, currentIndex, line.find("|", currentIndex), "Continent name must be a number", "Continent name is too long");
         currentIndex = checkNextFieldExists(line, currentIndex);
 
         //parse region field
-        //TODO store regions in graph
-        verifyRegionName(line, currentIndex, line.find("|", currentIndex), "Region name must be a number", "Region name is too long");
+        int region=verifyRegionName(line, currentIndex, line.find("|", currentIndex), "Region name must be a number", "Region name is too long");
+        map->addRegion(new Region(new int {region},new int {continent}));
         currentIndex = checkNextFieldExists(line, currentIndex);
 
-        //TODO store adjacency in graph
         //parse adjacency field
-
         //there must be ( after |
         if (line.at(currentIndex) != '(') {
             std::cout << "Invalid format" << std::endl;
             exit(1);
         }
         adjacency = line.substr(currentIndex, line.size() - 1);
-        parseAdjacency(adjacency);
+        parseAdjacency(adjacency,new Region(new int {region},new int {continent}));
     }
     input.close();
 
@@ -162,16 +170,19 @@ void MapLoader::loadMap(std::string file) {
         exit(1);
     }
     //TODO if 3 board pieces then remove connections to 4th board
-    //TODO call validate from map class
-    //TODO display map
+
+    map->display();
+    map->validate();
+    map->display();
 }
 /**
  * Loops through each adjacency a region has
  * @param adjacency
  */
-void MapLoader::parseAdjacency(std::string adjacency) {
+void MapLoader::parseAdjacency(std::string adjacency, Region* region) {
 
     bool land;
+    int adjacentRegion;
     int currentIndex = 0;
 
     //going through each adjacent region in parenthesis
@@ -193,18 +204,20 @@ void MapLoader::parseAdjacency(std::string adjacency) {
             exit(1);
         }
 
-        //TODO store whether edge is land or water in graph
         //Checks whether a region is connected to another by land or water, otherwise invalid
         land = isLand(adjacency, commaIndex, currentIndex);
 
         //parsing the adjacent region
         if (commaIndex + 1 < adjacency.size()) {
             currentIndex = commaIndex + 1;
-            verifyRegionName(adjacency, currentIndex, closingParenthesisIndex,
+            adjacentRegion=verifyRegionName(adjacency, currentIndex, closingParenthesisIndex,
                              "Region name referred in adjacency must be a number",
                              "Region name referred in adjacency is too long");
+
         }
         currentIndex = closingParenthesisIndex + 1;
+        Adjacency* adj =new Adjacency(new int{adjacentRegion},new bool{land});
+        map->addAdjacency(region,adj);
     }
 }
 
@@ -237,12 +250,13 @@ int MapLoader::checkNextFieldExists(std::string line,int currentIndex) {
  * @param argErrMsg
  * @param outRangeErrMsg
  */
-void MapLoader::verifyRegionName(std::string line, int currentIndex, int charIndex, std::string argErrMsg,
+int MapLoader::verifyRegionName(std::string line, int currentIndex, int charIndex, std::string argErrMsg,
                                  std::string outRangeErrMsg) {
     int region = 0;
     try {
         //casting string to int
         region = std::stoi(line.substr(currentIndex, charIndex - currentIndex));
+        return region;
     }
     catch (std::invalid_argument const &e) {
         std::cout << argErrMsg << '\n';

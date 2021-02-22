@@ -9,13 +9,14 @@ void DemonstratePlayers();
 void DemonstrateBiddingFacility(int numberOfPlayers);
 void DemonstrateMapLoader(int numberOfPlayers);
 void DemonstrateCards(int numberOfPlayers);
+void DemonstrateMap();
 
 int main() {
 
     int numberOfPlayers = 0;
     int userInput = 0;
 
-    // Determine the number of players
+    /*// Determine the number of players
     cout << "Enter the number of players:";
     while(true){
         if(cin >> numberOfPlayers && numberOfPlayers >= 2 && numberOfPlayers <= 4){
@@ -27,7 +28,6 @@ int main() {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
     }
-
 
     while(true){
         cout << endl << "What would you like to test:" << endl;
@@ -49,7 +49,7 @@ int main() {
         }
         switch (userInput) {
             case 1:
-                // TODO MAP
+                DemonstrateMap();
                 break;
             case 2:
                 DemonstrateMapLoader(numberOfPlayers);
@@ -70,4 +70,6 @@ int main() {
     }
 
     return 0;
+     */
+    DemonstrateMapLoader(2);
 }
