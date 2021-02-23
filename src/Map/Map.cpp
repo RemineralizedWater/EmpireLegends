@@ -13,7 +13,7 @@ bool rect;
  * @param name
  * @param continent
  */
-Territory::Territory(int* name,int* continent) {
+Territory::Territory(int* name, int* continent) {
     this->name = name;
     this->continent=continent;
 }
