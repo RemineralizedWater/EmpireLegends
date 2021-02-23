@@ -22,11 +22,11 @@ private:
     bool* rectangle;
     Map* map;
 
-    int verifyRegionName(std::string line,int currentIndex, int charIndex, std::string argErrMsg, std::string outRangeErrMsg);
+    int verifyTerritoryName(std::string line,int currentIndex, int charIndex, std::string argErrMsg, std::string outRangeErrMsg);
     int checkNextFieldExists(std::string line,int currentIndex);
     bool isLand(std::string adjacency, int commaIndex, int currentIndex );
     bool isRectangle();
-    void parseAdjacency(std::string adjacency,Region* reg);
+    void parseAdjacency(std::string adjacency,Territory* terr);
 
 };
 #endif //EMPIRELEGENDS_MAPLOADER_H

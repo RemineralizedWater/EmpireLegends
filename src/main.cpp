@@ -9,7 +9,7 @@ void DemonstratePlayers();
 void DemonstrateBiddingFacility(int numberOfPlayers);
 void DemonstrateMapLoader(int numberOfPlayers);
 void DemonstrateCards(int numberOfPlayers);
-void DemonstrateMap();
+// void DemonstrateMap(); // TODO MAP
 
 int main() {
 
@@ -28,6 +28,7 @@ int main() {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
     }
+
 
     while(true){
         cout << endl << "What would you like to test:" << endl;
@@ -49,7 +50,7 @@ int main() {
         }
         switch (userInput) {
             case 1:
-                DemonstrateMap();
+                // DemonstrateMap(); // TODO MAP
                 break;
             case 2:
                 DemonstrateMapLoader(numberOfPlayers);

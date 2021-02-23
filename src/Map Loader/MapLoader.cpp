@@ -146,12 +146,12 @@ void MapLoader::loadMap(std::string file) {
         }
 
         //parse continent field
-        int continent=verifyRegionName(line, currentIndex, line.find("|", currentIndex), "Continent name must be a number", "Continent name is too long");
+        int continent=verifyTerritoryName(line, currentIndex, line.find("|", currentIndex), "Continent name must be a number", "Continent name is too long");
         currentIndex = checkNextFieldExists(line, currentIndex);
 
-        //parse region field
-        int region=verifyRegionName(line, currentIndex, line.find("|", currentIndex), "Region name must be a number", "Region name is too long");
-        map->addRegion(new Region(new int {region},new int {continent}));
+        //parse territory field
+        int territory=verifyTerritoryName(line, currentIndex, line.find("|", currentIndex), "Territory name must be a number", "Territory name is too long");
+        map->addTerritory(new Territory(new int {territory},new int {continent}));
         currentIndex = checkNextFieldExists(line, currentIndex);
 
         //parse adjacency field
@@ -161,7 +161,7 @@ void MapLoader::loadMap(std::string file) {
             exit(1);
         }
         adjacency = line.substr(currentIndex, line.size() - 1);
-        parseAdjacency(adjacency,new Region(new int {region},new int {continent}));
+        parseAdjacency(adjacency,new Territory(new int {territory},new int {continent}));
     }
     input.close();
 
@@ -169,22 +169,22 @@ void MapLoader::loadMap(std::string file) {
         std::cout << "Invalid Map! Map must have at least "<< *numberOfBoardPieces<<" boards pieces" << std::endl;
         exit(1);
     }
-    //removes edges to regions that are on boards not used
+    //removes edges to terrs that are on boards not used
     map->removeUnUsedAdjacency();
     map->validate();
     map->display();
 }
 /**
- * Loops through each adjacency a region has
+ * Loops through each adjacency a territory has
  * @param adjacency
  */
-void MapLoader::parseAdjacency(std::string adjacency, Region* region) {
+void MapLoader::parseAdjacency(std::string adjacency, Territory* territory) {
 
     bool land;
-    int adjacentRegion;
+    int adjacentTerritory;
     int currentIndex = 0;
 
-    //going through each adjacent region in parenthesis
+    //going through each adjacent territory in parenthesis
     while (currentIndex < adjacency.size() - 1) {
         int openingParenthesisIndex = adjacency.find("(", currentIndex);
         int commaIndex = adjacency.find(",", currentIndex);
@@ -203,20 +203,20 @@ void MapLoader::parseAdjacency(std::string adjacency, Region* region) {
             exit(1);
         }
 
-        //Checks whether a region is connected to another by land or water, otherwise invalid
+        //Checks whether a territory is connected to another by land or water, otherwise invalid
         land = isLand(adjacency, commaIndex, currentIndex);
 
-        //parsing the adjacent region
+        //parsing the adjacent territory
         if (commaIndex + 1 < adjacency.size()) {
             currentIndex = commaIndex + 1;
-            adjacentRegion=verifyRegionName(adjacency, currentIndex, closingParenthesisIndex,
-                             "Region name referred in adjacency must be a number",
-                             "Region name referred in adjacency is too long");
+            adjacentTerritory=verifyTerritoryName(adjacency, currentIndex, closingParenthesisIndex,
+                             "Territory name referred in adjacency must be a number",
+                             "Territory name referred in adjacency is too long");
 
         }
         currentIndex = closingParenthesisIndex + 1;
-        Adjacency* adj =new Adjacency(new int{adjacentRegion},new bool{land});
-        map->addAdjacency(region,adj);
+        Adjacency* adj =new Adjacency(new int{adjacentTerritory},new bool{land});
+        map->addAdjacency(territory,adj);
     }
 }
 
@@ -240,20 +240,20 @@ int MapLoader::checkNextFieldExists(std::string line,int currentIndex) {
 }
 
 /**
- * verifies continents/regions are numbers
+ * verifies continents/terrs are numbers
  * @param line
  * @param currentIndex
  * @param charIndex
  * @param argErrMsg
  * @param outRangeErrMsg
  */
-int MapLoader::verifyRegionName(std::string line, int currentIndex, int charIndex, std::string argErrMsg,
+int MapLoader::verifyTerritoryName(std::string line, int currentIndex, int charIndex, std::string argErrMsg,
                                  std::string outRangeErrMsg) {
-    int region = 0;
+    int territory = 0;
     try {
         //casting string to int
-        region = std::stoi(line.substr(currentIndex, charIndex - currentIndex));
-        return region;
+        territory = std::stoi(line.substr(currentIndex, charIndex - currentIndex));
+        return territory;
     }
     catch (std::invalid_argument const &e) {
         std::cout << argErrMsg << '\n';
@@ -285,7 +285,7 @@ bool MapLoader::isLand(std::string adjacency, int commaIndex, int currentIndex )
         return false;
     }
     else{
-        std::cout << "region must be connected by L or W " << std::endl;
+        std::cout << "territory must be connected by L or W " << std::endl;
         exit(1);
     }
 }
