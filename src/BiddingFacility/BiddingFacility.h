@@ -21,7 +21,7 @@ public:
     int* GetBidAmount();
     BiddingFacility();
     ~BiddingFacility();
-    BiddingFacility(BiddingFacility &copy);
+    BiddingFacility(const BiddingFacility &copy);
     BiddingFacility(string* _lastName, int* _coins, int* _bidAmount);
     BiddingFacility(string* _lastName, int* _coins);
     explicit BiddingFacility(string* _lastName);

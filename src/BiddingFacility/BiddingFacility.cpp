@@ -22,7 +22,7 @@ BiddingFacility::BiddingFacility() {
     bidAmount = new int{0};
 }
 
-BiddingFacility::BiddingFacility(BiddingFacility &copy){
+BiddingFacility::BiddingFacility(const BiddingFacility &copy){
     this->lastName = new string(*(copy.lastName));
     this->coins = new int(*(copy.coins));
     this->bidAmount = new int(*(copy.bidAmount));

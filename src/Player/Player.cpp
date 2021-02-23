@@ -36,14 +36,27 @@ void Player::DestroyArmy() {
 //Copy constructor
 Player::Player(const Player &playerToCopy)
         : region_(new std::string(*playerToCopy.region_)),
-        biddingFacility(new BiddingFacility(*playerToCopy.biddingFacility)){ //TODO update with necessary objects
+          biddingFacility_(new BiddingFacility(*playerToCopy.biddingFacility_)),
+          territory_(new Territory(*playerToCopy.territory_)),
+          cards_(new Cards(*playerToCopy.cards_)),
+          tokenArmies_(new int (*playerToCopy.tokenArmies_)),
+          cubes_(new int(*playerToCopy.cubes_)),
+          disks_(new int(*playerToCopy.disks_))
+        {
     std::cout << "Calling the copy constructor" << std::endl;
 }
 
 //Constructor
-Player::Player(const std::string &region)
-        : region_(new std::string (region)),
-        biddingFacility(new BiddingFacility()){ //TODO update with necessary objects
+Player::Player(const std::string &region, const BiddingFacility &biddingFacility, const Territory &territory,
+               const Cards &cards, const int &tokenArmies,
+               const int &cubes, const int &disks)
+        : region_(new std::string(region)),
+          biddingFacility_(new BiddingFacility(biddingFacility)),
+          territory_(new Territory(territory)),
+          cards_(new Cards(cards)),
+          tokenArmies_(new int (tokenArmies)),
+          cubes_(new int(cubes)),
+          disks_(new int(disks)){
     std::cout << "Calling the default constructor" << std::endl;
 
 }
@@ -55,9 +68,14 @@ Player &Player::operator=(const Player &playerToCopy) {
 }
 
 //stream insertion operation
-std::istream &operator>>(std::istream &is, Player &player) {//TODO update with necessary players
+std::istream &operator>>(std::istream &is, Player &player) {//TODO update player.territory_
     is >> *player.region_;
-    is >> *player.biddingFacility;
+    is >> *player.biddingFacility_;
+//    is >> *player.territory_;
+    is >> *player.cards_;
+    is >> *player.tokenArmies_;
+    is >> *player.cubes_;
+    is >> *player.disks_;
     return is;
 }
 
