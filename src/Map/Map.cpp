@@ -5,9 +5,19 @@
 #include "Map.h"
 int name;
 int continent;
-int territory;
+// int territory;   // Why were these included?
 bool land;
 bool rect;
+
+// TERRITORY METHODS
+// Constructors/Destructor
+/**
+ * default constructor
+ */
+Territory::Territory() {
+    this->name = new int{0};
+    this->continent= new int{0};
+}
 /**
  * Territory constructor
  * @param name
@@ -18,41 +28,68 @@ Territory::Territory(int* name, int* continent) {
     this->continent=continent;
 }
 /**
+ * Copy Constructor
+ * @param copy
+ */
+Territory::Territory(const Territory &copy) {
+    this->name=new int(*(copy.name));
+    this->continent = new int(*(copy.continent));
+}
+/**
+ * destructor
+ */
+Territory::~Territory() {
+    delete name;
+    name = nullptr;
+    delete continent;
+    continent = nullptr;
+}
+// Operators
+/**
+ * Assignment operator
+ * @param r
+ * @return
+ */
+Territory & Territory::operator =(const Territory &r){
+    this->name = new int(*(r.name));
+    this->continent = new int(*(r.continent));
+    return *this;
+}
+/**
+ * Stream operator
+ * @param out
+ * @param r
+ * @return
+ */
+std::ostream& operator << (std::ostream &out, const Territory &r){
+    out << " Territory name: "<< *(r.name) << " Continent: " << *(r.continent) <<std::endl;
+    return out;
+}
+std::istream& operator >> (std::istream &in, Territory &r){
+    std::cout << "Territory name and Continent name"<<std::endl;
+    in >> *(r.name);
+    in >> *(r.continent);
+    return in;
+}
+// Accessors
+/**
  * get territory name
  * @return
  */
-int * Territory::getName() {
+int* Territory::getName() {
     return name;
 }
 /**
  * get continent name
  * @return
  */
-int * Territory::getContinent() {
+int* Territory::getContinent() {
     return continent;
 }
- /**
-  * default constructor
-  */
-Territory::Territory() {
-     this->name = new int{0};
-     this->continent= new int{0};
-}
+
 // ------------------------
-/**
- * get adjacent territory
- * @return
- */
-int * Adjacency::getTerritory() {
-    return territory;
-}
-/**
- * get route type ex. land or water
- * @return
- */
-bool * Adjacency::getLand() {
-    return land;
-}
+// ADJACENCY METHODS
+// Constructors/Destructor
 /**
  * Default constructor
  */
@@ -70,12 +107,123 @@ Adjacency::Adjacency(int *territory, bool *land) {
     this->land=land;
 }
 /**
+ * destructor
+ */
+Adjacency::~Adjacency() {
+    delete territory;
+    territory = nullptr;
+    delete land;
+    land = nullptr;
+}
+// Operators
+/**
+ * Assignment operator
+ * @param a
+ * @return
+ */
+Adjacency & Adjacency::operator =(const Adjacency &a){
+    this->territory = new int(*(a.territory));
+    this->land = new bool(*(a.land));
+    return *this;
+}
+/**
+ * stream operators
+ * @param out
+ * @param a
+ * @return
+ */
+std::ostream& operator << (std::ostream &out, const Adjacency &a){
+    out << " Territory: "<< *(a.territory) << " Land: " << *(a.land) <<std::endl;
+    return out;
+}
+std::istream& operator >> (std::istream &in, Adjacency &a){
+    std::cout << "Enter territory name and land type"<<std::endl;
+    in >> *(a.territory);
+    in >> *(a.land);
+    return in;
+}
+// Accessors
+/**
+ * get adjacent territory
+ * @return
+ */
+int* Adjacency::getTerritory() {
+    return territory;
+}
+/**
+ * get route type ex. land or water
+ * @return
+ */
+bool * Adjacency::getLand() {
+    return land;
+}
+
+// ------------------------
+// MAP METHODS
+// Constructors/Destructors
+/**
+ * default constructor
+ */
+Map::Map() {
+    terrs= new vector<terrInfo>;
+}
+/**
+ * constructor: takes board shape
+ * @param rect
+ */
+Map::Map(bool *rect) {
+    this->rect=rect;
+    terrs= new vector<terrInfo>;
+}
+/**
+ * copy constructor
+ * @param copy
+ */
+Map::Map(Map &copy){
+    this->rect = new bool(*(copy.rect));
+    this->terrs = new vector<terrInfo> (*(copy.terrs));
+}
+/**
+ * destructor
+ */
+Map::~Map() {
+    delete terrs;
+    terrs = nullptr;
+}
+// Operators
+/**
+ * Assignment operator
+ * @param m
+ * @return
+ */
+Map & Map::operator =(const Map &m){
+    this->rect = new bool(*(m.rect));
+    this->terrs = new vector<terrInfo>(*(m.terrs));
+    return *this;
+}
+/**
+ * Stream operators
+ * @param out
+ * @param m
+ * @return
+ */
+std::ostream& operator << (std::ostream &out, const Map &m){
+    out << " Rectangle: "<< *(m.rect) <<std::endl;
+    return out;
+}
+std::istream& operator >> (std::istream &in, Map &m){
+    std::cout << "Is map shape rectangle?"<<std::endl;
+    in >> *(m.rect);
+    return in;
+}
+// Other
+/**
  * Check if territory is currently in graph
  * @param territory
  * @return
  */
 bool Map::territoryExists(int *territory) {
-    vector<territoryInfo>::iterator terrIt;
+    vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrs)->begin(); terrIt != (terrs)->end(); ++terrIt) {
         if (*(*terrIt).first->getName() == *(territory)) {
             return true;
@@ -89,7 +237,7 @@ bool Map::territoryExists(int *territory) {
  * @return
  */
 bool Map::isConnected(int *territory) {
-    vector<territoryInfo>::iterator terrIt;
+    vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrs)->begin(); terrIt != (terrs)->end(); ++terrIt) {
         vector<Adjacency>::iterator adjIt;
         for (adjIt = (*terrIt).second->begin(); adjIt != (*terrIt).second->end(); ++adjIt) {
@@ -104,7 +252,7 @@ bool Map::isConnected(int *territory) {
  * removes unused adjacency
  */
 void Map::removeUnUsedAdjacency() {
-    vector<territoryInfo>::iterator terrIt;
+    vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrs)->begin(); terrIt != (terrs)->end(); ++terrIt) {
         vector<Adjacency>::iterator adjIt;
         //check if all terrs listed in adjacency are also listed as terrs
@@ -121,7 +269,7 @@ void Map::removeUnUsedAdjacency() {
  * @param territory
  */
 void Map::removeAdjacency(int *territory) {
-    vector<territoryInfo>::iterator terrIt;
+    vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrs)->begin(); terrIt != (terrs)->end(); ++terrIt) {
         vector<Adjacency>::iterator adjIt;
         for (adjIt = terrIt->second->begin(); adjIt != (*terrIt).second->end(); ++adjIt) {
@@ -136,7 +284,7 @@ void Map::removeAdjacency(int *territory) {
  * checks the map is a connected graph and each territory listed as an adjacency exists
  **/
 void Map::validate() {
-    vector<territoryInfo>::iterator terrIt;
+    vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrs)->begin(); terrIt != (terrs)->end(); ++terrIt) {
         vector<Adjacency>::iterator adjIt;
 
@@ -162,7 +310,7 @@ void Map::validate() {
  * @param adjacency
  */
 void Map::addAdjacency(Territory *territory, Adjacency *adjacency) {
-    vector<territoryInfo>::iterator terrIt;
+    vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrs)->begin(); terrIt != (terrs)->end(); ++terrIt) {
         if (*(*terrIt).first->getName() == *(territory->getName())) {
             vector<Adjacency>::iterator adjIt;
@@ -194,91 +342,22 @@ void Map::display(){
     else{
         cout<<"Map shape: L-shape"<<endl;
     }
-    vector<territoryInfo>::iterator terrIt;
+    vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrs)->begin(); terrIt != (terrs)->end(); ++terrIt) {
         cout<<"territory:"<<*(*terrIt).first->getName()<<"  continent:"<<*(*terrIt).first->getContinent()<<" adjacency:";
             vector<Adjacency>::iterator adjIt;
             for(adjIt=(*terrIt).second->begin(); adjIt != (*terrIt).second->end(); ++adjIt){
                 cout<<"("<<*(adjIt->getTerritory())<<",";
-                if(*(adjIt->getLand())== false){
+                if(!*(adjIt->getLand())){
                     cout<<"W"<<") ";
                 }
-                else if(*(adjIt->getLand())== true){
+                else if(*(adjIt->getLand())){
                     cout<<"L"<<") ";
                 }
             }
         cout<<endl;
     }
     cout<<"__________________________________________________________________________"<<endl;
-
-}
-/**
- * Assignment operator
- * @param a
- * @return
- */
-
-Adjacency & Adjacency::operator =(const Adjacency &a){
-    this->territory = new int(*(a.territory));
-    this->land = new bool(*(a.land));
-    return *this;
-}
-/**
- * stream operators
- * @param out
- * @param a
- * @return
- */
-std::ostream& operator << (std::ostream &out, const Adjacency &a){
-    out << " Territory: "<< *(a.territory) << " Land: " << *(a.land) <<std::endl;
-    return out;
-}
-std::istream& operator >> (std::istream &in, Adjacency &a){
-   std::cout << "Enter territory name and land type"<<std::endl;
-   in >> *(a.territory);
-   in >> *(a.land);
-   return in;
-}
-/**
- * Copy Constructor
- * @param copy
- */
-Territory::Territory(const Territory &copy) {
-    this->name=new int(*(copy.name));
-    this->continent = new int(*(copy.continent));
-}
-/**
- * Assignment operator
- * @param r
- * @return
- */
-Territory & Territory::operator =(const Territory &r){
-    this->name = new int(*(r.name));
-    this->continent = new int(*(r.continent));
-    return *this;
-}
-/**
- * Stream operator
- * @param out
- * @param r
- * @return
- */
-std::ostream& operator << (std::ostream &out, const Territory &r){
-    out << " Territory name: "<< *(r.name) << " Continent: " << *(r.continent) <<std::endl;
-    return out;
-}
-std::istream& operator >> (std::istream &in, Territory &r){
-    std::cout << "Territory name and Continent name"<<std::endl;
-    in >> *(r.name);
-    in >> *(r.continent);
-    return in;
-}
-/**
- * deconstructor
- */
-Map::~Map() {
-    delete terrs;
-    terrs= nullptr;
 }
 /**
  * Adds a territory to a graph
@@ -287,7 +366,7 @@ Map::~Map() {
  */
 void Map::addTerritory(Territory *territory) {
     vector<Adjacency>* adj = new vector<Adjacency>();
-    vector<territoryInfo>::iterator i;
+    vector<terrInfo>::iterator i;
     for (i = (terrs)->begin(); i !=(terrs)->end(); ++i) {
         if (*(*i).first->getName() == *(territory->getName())) {
             cout<< "Territory already exists"<<endl;
@@ -295,51 +374,4 @@ void Map::addTerritory(Territory *territory) {
         }
     }
     terrs->push_back(make_pair(territory, adj));
-}
-/**
- * default constructor
- */
-Map::Map() {
-    terrs= new vector<territoryInfo>;
-}
-/**
- * takes board shape
- * @param rect
- */
-Map::Map(bool *rect) {
-    this->rect=rect;
-    terrs= new vector<territoryInfo>;
-}
-/**
- * copy constructor
- * @param copy
- */
-Map::Map(Map &copy){
-    this->rect = new bool(*(copy.rect));
-    this->terrs = new vector<territoryInfo> (*(copy.terrs));
-}
-/**
- * Assignment operator
- * @param m
- * @return
- */
-Map & Map::operator =(const Map &m){
-    this->rect = new bool(*(m.rect));
-    this->terrs = new vector<territoryInfo>(*(m.terrs));
-    return *this;
-}
-/**
- * Stream operators
- * @param out
- * @param m
- * @return
- */
-std::ostream& operator << (std::ostream &out, const Map &m){
-    out << " Rectangle: "<< *(m.rect) <<std::endl;
-    return out;
-}
-std::istream& operator >> (std::istream &in, Map &m){
-    std::cout << "Is map shape rectangle?"<<std::endl;
-    in >> *(m.rect);
-    return in;
 }
