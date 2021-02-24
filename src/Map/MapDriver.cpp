@@ -11,6 +11,9 @@ using std::cin;
 using std::streamsize;
 using std::numeric_limits;
 
+void cleanTerr(vector<Territory*> terr);
+void cleanAdj(vector<Adjacency*> adj);
+
 int DemonstrateMap(int numberOfPlayers) {
     int userInput = 0;
 
@@ -268,6 +271,8 @@ int DemonstrateMap(int numberOfPlayers) {
                 break;
             case 5:
             default:
+                cleanTerr(terr);
+                cleanAdj(adj);
                 delete map;
                 map = nullptr;
                 return 0;
@@ -275,28 +280,23 @@ int DemonstrateMap(int numberOfPlayers) {
         map->display();
         map->validate();
         cout << "Valid Map!" << endl;
+        cleanTerr(terr);
+        cleanAdj(adj);
         delete map;
         map = nullptr;
     }
 }
-/*
-void cleanAdj(vector<Adjacency*> adj) {
-    vector<Adjacency>::iterator adjIt;
-    for (adjIt=(vector<Adjacency*> adj)->begin(); adjIt != adj.end(); ++adjIt) {
-        vector<Adjacency>::iterator adjIt;
 
-        //check if all terrs listed in adjacency are also listed as terrs
-        for(adjIt=(*terrIt).second->begin(); adjIt != (*terrIt).second->end(); ++adjIt){
-            if(!territoryExists(adjIt->getAdjId())){
-                cout << "Invalid Map! Territory " << *(*terrIt).first->getTerrId()
-                     << " connects to another territory that does not exist" << endl;
-                exit(1);
-            }
-        }
-        //check if territory is connected to rest of graph
-        if(!isConnected((*terrIt).first->getTerrId())){
-            cout << "Invalid Map! Map does not connect territory " << *(*terrIt).first->getTerrId() << endl;
-            exit(1);
-        }
+void cleanTerr(vector<Territory*> terr) {
+    while(!terr.empty()) {
+        delete terr.back();
+        terr.pop_back();
     }
-}*/
+}
+
+void cleanAdj(vector<Adjacency*> adj) {
+    while(!adj.empty()) {
+        delete adj.back();
+        adj.pop_back();
+    }
+}
