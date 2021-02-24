@@ -127,7 +127,7 @@ void MapLoader::loadMap(std::string file) {
 
     if(!input){
         std::cout << "No file found!" << std::endl;
-        exit(1);
+        return;
     }
 
     //Go through map file line by line
@@ -158,7 +158,7 @@ void MapLoader::loadMap(std::string file) {
         //there must be ( after |
         if (line.at(currentIndex) != '(') {
             std::cout << "Invalid format" << std::endl;
-            exit(1);
+            return;
         }
         adjacency = line.substr(currentIndex, line.size() - 1);
         parseAdjacency(adjacency,new Territory(new int {territory},new int {continent}));
@@ -167,7 +167,7 @@ void MapLoader::loadMap(std::string file) {
 
     if(mapBoardCount < *numberOfBoardPieces){
         std::cout << "Invalid Map! Map must have at least "<< *numberOfBoardPieces<<" boards pieces" << std::endl;
-        exit(1);
+        return;
     }
     //removes edges to terrs that are on boards not used
     map->removeUnUsedAdjacency();
@@ -193,14 +193,14 @@ void MapLoader::parseAdjacency(std::string adjacency, Territory* territory) {
         //duplicate closing brackets
         if (openingParenthesisIndex > closingParenthesisIndex) {
             std::cout << "Invalid format" << std::endl;
-            exit(1);
+            return;
         }
         //checks there is anything after opening parenthesis
         if (openingParenthesisIndex + 1 < adjacency.size()) {
             currentIndex = openingParenthesisIndex + 1;
         } else {
             std::cout << "Invalid format" << std::endl;
-            exit(1);
+            return;
         }
 
         //Checks whether a territory is connected to another by land or water, otherwise invalid

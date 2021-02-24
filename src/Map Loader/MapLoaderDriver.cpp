@@ -8,6 +8,12 @@ void DemonstrateMapLoader(int numberOfPlayers) {
     MapLoader *map = new MapLoader(numberOfPlayers);
     map->loadMap("../src/Map Boards/valid_map.txt");
     delete map;
+    map = new MapLoader(numberOfPlayers);
+    map->loadMap("../src/Map Boards/invalid_map.txt");
+    delete map;
+    map = new MapLoader(numberOfPlayers);
+    map->loadMap("../src/Map Boards/invalid1_map.txt");
+    delete map;
     map= nullptr;
 }
 
