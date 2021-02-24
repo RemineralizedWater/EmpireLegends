@@ -186,7 +186,8 @@ void Map::addAdjacency(Territory *territory, Adjacency *adjacency) {
  * displays contents in graph
  */
 void Map::display(){
-    cout<<"______________________________________________________________________________"<<endl<<"Displaying Board Map"<<endl<<"______________________________________________________________________________"<<endl;
+    cout<<"______________________________________________________________________________"<<endl<<"Displaying Board Map"
+    <<endl<<"______________________________________________________________________________"<<endl;
     if(*(rect)){
         cout<<"Map shape: Rectangle"<<endl;
     }
