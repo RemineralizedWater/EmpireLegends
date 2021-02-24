@@ -62,6 +62,7 @@ istream& operator >> (istream &in, Cards &c){
 void Cards::Draw(vector<Cards> *deckPtr, vector<Cards> *faceUpCardsPtr) {
 
     int count = 0;
+    int cost;
     Cards drawnCard;
     vector <Cards>::iterator it;
 
@@ -73,7 +74,27 @@ void Cards::Draw(vector<Cards> *deckPtr, vector<Cards> *faceUpCardsPtr) {
     cout  << endl << "Showing new cards in face up pile:" << endl;
     cout  << "------------------------------\n" << endl;
     for(it = faceUpCardsPtr->begin(); it != faceUpCardsPtr->end(); ++it){
-        cout << ++count << ": " << *(it->GetName()) << " : " << *(it ->GetGoodsAndAction()) << endl;
+        count++;
+        switch(count) {
+            case 1:
+                cost = 0;
+                break;
+            case 2:
+            case 3:
+                cost = 1;
+                break;
+            case 4:
+            case 5:
+                cost = 2;
+                break;
+            case 6:
+                cost = 3;
+                break;
+            default:
+                cout << "Error in showing face up pile." << endl;
+                exit(0);
+        }
+        cout << count << " - (cost " << cost << " coins) "<< ": " << *(it->GetName()) << " : " << *(it ->GetGoodsAndAction()) << endl;
     }
 }
 

@@ -4,6 +4,7 @@
 #ifndef EMPIRELEGENDS_MAPLOADER_H
 #define EMPIRELEGENDS_MAPLOADER_H
 #include <iostream>
+#include "../Map/Map.h"
 class MapLoader {
 public:
     MapLoader();
@@ -19,12 +20,13 @@ private:
     std::string* mapFilePath;
     int* numberOfBoardPieces;
     bool* rectangle;
+    Map* map;
 
-    void verifyRegionName(std::string line,int currentIndex, int charIndex, std::string argErrMsg, std::string outRangeErrMsg);
+    int verifyTerritoryName(std::string line,int currentIndex, int charIndex, std::string argErrMsg, std::string outRangeErrMsg);
     int checkNextFieldExists(std::string line,int currentIndex);
     bool isLand(std::string adjacency, int commaIndex, int currentIndex );
     bool isRectangle();
-    void parseAdjacency(std::string adjacency);
+    void parseAdjacency(std::string adjacency,Territory* terr);
 
 };
 #endif //EMPIRELEGENDS_MAPLOADER_H
