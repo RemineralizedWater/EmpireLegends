@@ -13,12 +13,12 @@ using std::endl;
 
 class Territory {
 private:
-    int* terr;
-    int* continent;
+    int* terrId;
+    int* continentId;
 
 public:
     Territory();
-    Territory(int* name, int* continent);
+    Territory(int* terrId, int* continentId);
     Territory(const Territory& copy);
     //~Territory();     // Doesn't fix leak
 
@@ -26,18 +26,18 @@ public:
     friend std::ostream& operator << (std::ostream& out, const Territory& t);
     friend std::istream& operator >> (std::istream& in, Territory& t);
 
-    int* getTerr();
+    int* getTerrId();
     int* getContinent();
 };
 
 class Adjacency {
 private:
-    int* adjTerr;
+    int* adjId;
     bool* isLandRoute;
 
 public:
     Adjacency();
-    Adjacency(int* territory, bool* isLandRoute);
+    Adjacency(int* adjId, bool* isLandRoute);
     Adjacency(const Adjacency& copy);
     //~Adjacency();     // Doesn't fix leak
 
@@ -45,9 +45,29 @@ public:
     friend std::ostream& operator << (std::ostream& out, const Adjacency& a);
     friend std::istream& operator >> (std::istream& in, Adjacency& a);
 
+    int* getAdjId();
+    bool* getIsLandRoute();
+};
+
+/*
+class terrAndAdjs {
+private:
+    Territory* terrWithAdjs;
+    vector<Adjacency>* adjsForTerr;
+public:
+    Map();
+    Map(bool* rect);
+    Map(const Map& copy);
+    ~Map();
+
+    Map& operator =(const Map& map);
+    friend std::ostream& operator << (std::ostream& out, const Map& map);
+    friend std::istream& operator >> (std::istream& in, Map& map);
+
     int* getAdjTerr();
     bool* getIsLandRoute();
 };
+ */
 
 
 class Map {
