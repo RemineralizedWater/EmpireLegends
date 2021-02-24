@@ -25,7 +25,7 @@ Territory::Territory() {
  */
 Territory::Territory(int* name, int* continent) {
     this->name = name;
-    this->continent=continent;
+    this->continent = continent;
 }
 /**
  * Copy Constructor
@@ -216,7 +216,7 @@ std::istream& operator >> (std::istream &in, Map &m){
     in >> *(m.rect);
     return in;
 }
-// Other
+// Private Methods
 /**
  * Check if territory is currently in graph
  * @param territory
@@ -248,59 +248,22 @@ bool Map::isConnected(int *territory) {
     }
     return false;
 }
+// Public Methods
 /**
- * removes unused adjacency
- */
-void Map::removeUnUsedAdjacency() {
-    vector<terrInfo>::iterator terrIt;
-    for (terrIt = (terrs)->begin(); terrIt != (terrs)->end(); ++terrIt) {
-        vector<Adjacency>::iterator adjIt;
-        //check if all terrs listed in adjacency are also listed as terrs
-        for (adjIt = (*terrIt).second->begin(); adjIt != (*terrIt).second->end(); ++adjIt) {
-            if (!territoryExists(adjIt->getTerritory())) {
-                removeAdjacency(adjIt->getTerritory());
-                return;
-            }
-        }
-    }
-}
-/**
- * removes any adjacency that contains the territory
+ * Adds a territory to a graph
+ * Makes sure there is no duplicate territory eliminating need to validate if a territory belongs to one continent
  * @param territory
  */
-void Map::removeAdjacency(int *territory) {
-    vector<terrInfo>::iterator terrIt;
-    for (terrIt = (terrs)->begin(); terrIt != (terrs)->end(); ++terrIt) {
-        vector<Adjacency>::iterator adjIt;
-        for (adjIt = terrIt->second->begin(); adjIt != (*terrIt).second->end(); ++adjIt) {
-            if(*(adjIt->getTerritory())==*(territory)){
-                terrIt->second->erase(adjIt);
-                return;
-            }
-        }
-    }
-}
-/**
- * checks the map is a connected graph and each territory listed as an adjacency exists
- **/
-void Map::validate() {
-    vector<terrInfo>::iterator terrIt;
-    for (terrIt = (terrs)->begin(); terrIt != (terrs)->end(); ++terrIt) {
-        vector<Adjacency>::iterator adjIt;
-
-        //check if all terrs listed in adjacency are also listed as terrs
-        for(adjIt=(*terrIt).second->begin(); adjIt != (*terrIt).second->end(); ++adjIt){
-            if(!territoryExists(adjIt->getTerritory())){
-                cout<<"Invalid Map! Territory "<<*(*terrIt).first->getName()<< " connects to another territory that does not exist"<<endl;
-                exit(1);
-            }
-        }
-        //check if territory is connected to rest of graph
-        if(!isConnected((*terrIt).first->getName())){
-            cout<<"Invalid Map! map does not connect territory "<<*(*terrIt).first->getName() <<endl;
+void Map::addTerritory(Territory *territory) {
+    vector<Adjacency>* adj = new vector<Adjacency>();
+    vector<terrInfo>::iterator i;
+    for (i = (terrs)->begin(); i !=(terrs)->end(); ++i) {
+        if (*(*i).first->getName() == *(territory->getName())) {
+            cout<< "Territory already exists"<<endl;
             exit(1);
         }
     }
+    terrs->push_back(make_pair(territory, adj));
 }
 /**
  * Adds adjacency to connect a territory to other terrs
@@ -327,6 +290,38 @@ void Map::addAdjacency(Territory *territory, Adjacency *adjacency) {
             }
             (*terrIt).second->push_back(*(adjacency));
             break;
+        }
+    }
+}
+/**
+ * removes any adjacency that contains the territory
+ * @param territory
+ */
+void Map::removeAdjacency(int *territory) {
+    vector<terrInfo>::iterator terrIt;
+    for (terrIt = (terrs)->begin(); terrIt != (terrs)->end(); ++terrIt) {
+        vector<Adjacency>::iterator adjIt;
+        for (adjIt = terrIt->second->begin(); adjIt != (*terrIt).second->end(); ++adjIt) {
+            if(*(adjIt->getTerritory())==*(territory)){
+                terrIt->second->erase(adjIt);
+                return;
+            }
+        }
+    }
+}
+/**
+ * removes unused adjacency
+ */
+void Map::removeUnUsedAdjacency() {
+    vector<terrInfo>::iterator terrIt;
+    for (terrIt = (terrs)->begin(); terrIt != (terrs)->end(); ++terrIt) {
+        vector<Adjacency>::iterator adjIt;
+        //check if all terrs listed in adjacency are also listed as terrs
+        for (adjIt = (*terrIt).second->begin(); adjIt != (*terrIt).second->end(); ++adjIt) {
+            if (!territoryExists(adjIt->getTerritory())) {
+                removeAdjacency(adjIt->getTerritory());
+                return;
+            }
         }
     }
 }
@@ -360,18 +355,24 @@ void Map::display(){
     cout<<"__________________________________________________________________________"<<endl;
 }
 /**
- * Adds a territory to a graph
- * Makes sure there is no duplicate territory eliminating need to validate if a territory belongs to one continent
- * @param territory
- */
-void Map::addTerritory(Territory *territory) {
-    vector<Adjacency>* adj = new vector<Adjacency>();
-    vector<terrInfo>::iterator i;
-    for (i = (terrs)->begin(); i !=(terrs)->end(); ++i) {
-        if (*(*i).first->getName() == *(territory->getName())) {
-            cout<< "Territory already exists"<<endl;
+ * checks the map is a connected graph and each territory listed as an adjacency exists
+ **/
+void Map::validate() {
+    vector<terrInfo>::iterator terrIt;
+    for (terrIt = (terrs)->begin(); terrIt != (terrs)->end(); ++terrIt) {
+        vector<Adjacency>::iterator adjIt;
+
+        //check if all terrs listed in adjacency are also listed as terrs
+        for(adjIt=(*terrIt).second->begin(); adjIt != (*terrIt).second->end(); ++adjIt){
+            if(!territoryExists(adjIt->getTerritory())){
+                cout<<"Invalid Map! Territory "<<*(*terrIt).first->getName()<< " connects to another territory that does not exist"<<endl;
+                exit(1);
+            }
+        }
+        //check if territory is connected to rest of graph
+        if(!isConnected((*terrIt).first->getName())){
+            cout<<"Invalid Map! map does not connect territory "<<*(*terrIt).first->getName() <<endl;
             exit(1);
         }
     }
-    terrs->push_back(make_pair(territory, adj));
 }

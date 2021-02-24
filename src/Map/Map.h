@@ -63,13 +63,14 @@ public:
     Map(Map &copy);
     ~Map();
 
+    Map & operator =(const Map &m);
+    friend std::ostream & operator << (std::ostream &out, const Map &m);
+    friend std::istream & operator >> (std::istream &in, Map &m);
+
     void addTerritory(Territory* territory);
     void addAdjacency(Territory* territory,Adjacency* adjacency);
     void display();
     void validate();
     void removeAdjacency(int* territory);
     void removeUnUsedAdjacency();
-    Map & operator =(const Map &m);
-    friend std::ostream & operator << (std::ostream &out, const Map &m);
-    friend std::istream & operator >> (std::istream &in, Map &m);
 };
