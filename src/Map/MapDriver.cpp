@@ -86,7 +86,6 @@ int DemonstrateMap(int numberOfPlayers) {
                 map->addAdjacency(new Territory(new int{5}, new int{1}), new Adjacency(new int{3}, new bool(true)));
                 break;
             case 3:
-                // TODO Make invalid map
                 /* Stores the information below in the graph:
                  * Continent|Territory  |Adjacency
                  * 1        |1          |(L,2)
