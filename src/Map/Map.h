@@ -13,7 +13,7 @@ using std::endl;
 
 class Territory {
 private:
-    int* name;
+    int* terr;
     int* continent;
 
 public:
@@ -22,17 +22,17 @@ public:
     Territory(const Territory& copy);
     //~Territory();     // Doesn't fix leak
 
-    Territory& operator =(const Territory& terr);
-    friend std::ostream& operator << (std::ostream& out, const Territory& terr);
-    friend std::istream& operator >> (std::istream& in, Territory& terr);
+    Territory& operator =(const Territory& t);
+    friend std::ostream& operator << (std::ostream& out, const Territory& t);
+    friend std::istream& operator >> (std::istream& in, Territory& t);
 
-    int* getName();
+    int* getTerr();
     int* getContinent();
 };
 
 class Adjacency {
 private:
-    int* terr;
+    int* adjTerr;
     bool* isLandRoute;
 
 public:
@@ -45,15 +45,16 @@ public:
     friend std::ostream& operator << (std::ostream& out, const Adjacency& a);
     friend std::istream& operator >> (std::istream& in, Adjacency& a);
 
+    int* getAdjTerr();
     bool* getIsLandRoute();
-    int* getTerritory();
 };
 
 
 class Map {
 private:
     bool* rect;
-    typedef pair<Territory*, vector<Adjacency>*> terrInfo;     // TODO Type pair?
+    typedef pair<Territory*, vector<Adjacency>*> terrInfo;     // typedef keyword allows new names for types, pair holds two & had constructor/destructor
+    //struct terrInfo {Territory* terr; vector<Adjacency>* adj;};     // TODO Change typedef pair to struct? Need init?
     vector<terrInfo>* terrs;
     bool territoryExists(int* terr);
     bool isConnected(int* terr);
