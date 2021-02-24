@@ -19,12 +19,12 @@ private:
 public:
     Territory(int* name, int* continent);
     Territory();
-    Territory(const Territory &rightSide);
+    Territory(const Territory& terr);
     //~Territory();     // Doesn't fix leak
 
-   Territory& operator =(const Territory &r);
-    friend std::ostream& operator << (std::ostream &out, const Territory &r);
-    friend std::istream& operator >> (std::istream &in, Territory &r);
+   Territory& operator =(const Territory& terr);
+    friend std::ostream& operator << (std::ostream& out, const Territory& terr);
+    friend std::istream& operator >> (std::istream& in, Territory& terr);
 
     int* getName();
     int* getContinent();
@@ -32,19 +32,19 @@ public:
 
 class Adjacency {
 private:
-    int* territory;
-    bool* land;
+    int* terr;
+    bool* isLandRoute;
 
 public:
-    Adjacency(int* territory,bool* land);
+    Adjacency(int* territory, bool* land);
     Adjacency();
     //~Adjacency();     // Doesn't fix leak
 
     Adjacency& operator =(const Adjacency &a);
-    friend std::ostream& operator << (std::ostream &out, const Adjacency &a);
-    friend std::istream& operator >> (std::istream &in, Adjacency &a);
+    friend std::ostream& operator << (std::ostream &out, const Adjacency& a);
+    friend std::istream& operator >> (std::istream &in, Adjacency& a);
 
-    bool* getLand();
+    bool* getIsLandRoute();
     int* getTerritory();
 };
 
