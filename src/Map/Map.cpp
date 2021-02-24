@@ -392,6 +392,5 @@ void Map::validate() {
             cout << "Invalid Map! map does not connect territory " << *(*terrIt).first->getTerrId() << endl;
             exit(1);
         }
-        cout << "Valid Map!" << endl;
     }
 }
