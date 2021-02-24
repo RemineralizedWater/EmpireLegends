@@ -107,6 +107,14 @@ Adjacency::Adjacency(int* territory, bool* isLandRoute) {
     this->isLandRoute = isLandRoute;
 }
 /**
+ * Copy Constructor
+ * @param copy
+ */
+Adjacency::Adjacency(const Adjacency& copy) {
+    this->terr = new int(*(copy.terr));
+    this->isLandRoute = new bool(*(copy.isLandRoute));
+}
+/**
  * destructor
  */
 /*Adjacency::~Adjacency() {     // Doesn't fix leak
@@ -121,9 +129,9 @@ Adjacency::Adjacency(int* territory, bool* isLandRoute) {
  * @param a
  * @return
  */
-Adjacency& Adjacency::operator =(const Adjacency& a){
-    this->terr = new int(*(a.terr));
-    this->isLandRoute = new bool(*(a.isLandRoute));
+Adjacency& Adjacency::operator =(const Adjacency& adj){
+    this->terr = new int(*(adj.terr));
+    this->isLandRoute = new bool(*(adj.isLandRoute));
     return *this;
 }
 /**
@@ -132,14 +140,14 @@ Adjacency& Adjacency::operator =(const Adjacency& a){
  * @param a
  * @return
  */
-std::ostream& operator << (std::ostream& out, const Adjacency& a){
-    out << " Territory: "<< *(a.terr) << " Land: " << *(a.isLandRoute) << std::endl;
+std::ostream& operator << (std::ostream& out, const Adjacency& adj){
+    out << " Territory: "<< *(adj.terr) << " Land: " << *(adj.isLandRoute) << std::endl;
     return out;
 }
-std::istream& operator >> (std::istream& in, Adjacency& a){
+std::istream& operator >> (std::istream& in, Adjacency& adj){
     std::cout << "Enter territory name and land type"<< std::endl;
-    in >> *(a.terr);
-    in >> *(a.isLandRoute);
+    in >> *(adj.terr);
+    in >> *(adj.isLandRoute);
     return in;
 }
 // Accessors
@@ -179,7 +187,7 @@ Map::Map(bool* rect) {
  * copy constructor
  * @param copy
  */
-Map::Map(Map& copy){
+Map::Map(const Map& copy){
     this->rect = new bool(*(copy.rect));
     this->terrs = new vector<terrInfo> (*(copy.terrs));
 }
@@ -196,9 +204,9 @@ Map::~Map() {
  * @param m
  * @return
  */
-Map& Map::operator =(const Map& m){
-    this->rect = new bool(*(m.rect));
-    this->terrs = new vector<terrInfo>(*(m.terrs));
+Map& Map::operator =(const Map& map){
+    this->rect = new bool(*(map.rect));
+    this->terrs = new vector<terrInfo>(*(map.terrs));
     return *this;
 }
 /**
@@ -207,13 +215,13 @@ Map& Map::operator =(const Map& m){
  * @param m
  * @return
  */
-std::ostream& operator << (std::ostream& out, const Map& m){
-    out << " Rectangle: " << *(m.rect) << std::endl;
+std::ostream& operator << (std::ostream& out, const Map& map){
+    out << " Rectangle: " << *(map.rect) << std::endl;
     return out;
 }
-std::istream& operator >> (std::istream& in, Map& m){
+std::istream& operator >> (std::istream& in, Map& map){
     std::cout << "Is map shape rectangle?" << std::endl;
-    in >> *(m.rect);
+    in >> *(map.rect);
     return in;
 }
 // Private Methods
@@ -272,18 +280,18 @@ void Map::addTerritory(Territory* terr) {
  * @param territory
  * @param adjacency
  */
-void Map::addAdjacency(Territory *territory, Adjacency *adj) {
+void Map::addAdjacency(Territory* terr, Adjacency* adj) {
     vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrs)->begin(); terrIt != (terrs)->end(); ++terrIt) {
-        if (*(*terrIt).first->getName() == *(territory->getName())) {
+        if (*(*terrIt).first->getName() == *(terr->getName())) {
             vector<Adjacency>::iterator adjIt;
             for(adjIt = (*terrIt).second->begin(); adjIt != (*terrIt).second->end(); ++adjIt){
                 if(*(adjIt->getTerritory()) == *adj->getTerritory() && *(adjIt->getIsLandRoute()) == *adj->getIsLandRoute()){
                     cout << "Edge already exists for the territory" << endl;
                     exit(1);
                 }
-                if(*(adjIt->getTerritory()) == *territory->getName()){
-                    cout << *(adjIt->getTerritory()) << *territory->getName() << endl;
+                if(*(adjIt->getTerritory()) == *terr->getName()){
+                    cout << *(adjIt->getTerritory()) << *terr->getName() << endl;
                     cout << "Edge cannot connect to itself" << endl;
                     exit(1);
                 }

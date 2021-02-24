@@ -17,12 +17,12 @@ private:
     int* continent;
 
 public:
-    Territory(int* name, int* continent);
     Territory();
-    Territory(const Territory& terr);
+    Territory(int* name, int* continent);
+    Territory(const Territory& copy);
     //~Territory();     // Doesn't fix leak
 
-   Territory& operator =(const Territory& terr);
+    Territory& operator =(const Territory& terr);
     friend std::ostream& operator << (std::ostream& out, const Territory& terr);
     friend std::istream& operator >> (std::istream& in, Territory& terr);
 
@@ -36,13 +36,14 @@ private:
     bool* isLandRoute;
 
 public:
-    Adjacency(int* territory, bool* land);
     Adjacency();
+    Adjacency(int* territory, bool* isLandRoute);
+    Adjacency(const Adjacency& copy);
     //~Adjacency();     // Doesn't fix leak
 
-    Adjacency& operator =(const Adjacency &a);
-    friend std::ostream& operator << (std::ostream &out, const Adjacency& a);
-    friend std::istream& operator >> (std::istream &in, Adjacency& a);
+    Adjacency& operator =(const Adjacency& adj);
+    friend std::ostream& operator << (std::ostream& out, const Adjacency& a);
+    friend std::istream& operator >> (std::istream& in, Adjacency& a);
 
     bool* getIsLandRoute();
     int* getTerritory();
@@ -51,26 +52,26 @@ public:
 
 class Map {
 private:
-    typedef pair<Territory*, vector<Adjacency>*> terrInfo;     // TODO Type pair?
-    vector<terrInfo> *terrs;
-    bool territoryExists(int* territory);
-    bool isConnected(int* territory);
     bool* rect;
+    typedef pair<Territory*, vector<Adjacency>*> terrInfo;     // TODO Type pair?
+    vector<terrInfo>* terrs;
+    bool territoryExists(int* terr);
+    bool isConnected(int* terr);
 
 public:
-    Map(bool* rect);
     Map();
-    Map(Map &copy);
+    Map(bool* rect);
+    Map(const Map& copy);
     ~Map();
 
-    Map & operator =(const Map &m);
-    friend std::ostream & operator << (std::ostream &out, const Map &m);
-    friend std::istream & operator >> (std::istream &in, Map &m);
+    Map& operator =(const Map& map);
+    friend std::ostream& operator << (std::ostream& out, const Map& map);
+    friend std::istream& operator >> (std::istream& in, Map& map);
 
-    void addTerritory(Territory* territory);
-    void addAdjacency(Territory* territory,Adjacency* adjacency);
+    void addTerritory(Territory* terr);
+    void addAdjacency(Territory* terr, Adjacency* adj);
     void display();
     void validate();
-    void removeAdjacency(int* territory);
+    void removeAdjacency(int* terr);
     void removeUnUsedAdjacency();
 };
