@@ -168,6 +168,7 @@ bool* Adjacency::getIsLandRoute() {
  * default constructor
  */
 Map::Map() {
+    this->rect = new bool{false};
     terrAndAdjsList = new vector<terrInfo>;
 }
 /**
@@ -389,7 +390,7 @@ void Map::validate() {
         }
         //check if territory is connected to rest of graph
         if(!isConnected((*terrIt).first->getTerrId())){
-            cout << "Invalid Map! map does not connect territory " << *(*terrIt).first->getTerrId() << endl;
+            cout << "Invalid Map! Map does not connect territory " << *(*terrIt).first->getTerrId() << endl;
             exit(1);
         }
     }

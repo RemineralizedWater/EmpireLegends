@@ -155,9 +155,8 @@ int DemonstrateMap(int numberOfPlayers) {
                 map = nullptr;
                 return 0;
         }
-        //map->display();           // memory leak in display
-        // cout << map << endl;     // TODO Line unreachable on second or third call (randomly alternates)
-        map->validate();            // no memory leak
+        map->display();
+        map->validate();
         cout << "Valid Map!" << endl;
         delete map;
         map = nullptr;
