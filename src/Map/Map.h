@@ -7,60 +7,94 @@
 #include <iostream>
 
 using std::vector;
+using std::pair;
+using std::cout;
+using std::endl;
 
-// DONEDONE
 class Territory {
 private:
-    vector<Territory*> adj;
-    int army;
-    int terrId;
+    int* terrId;
+    int* continentId;
 
 public:
-    Territory& operator=(const Territory& rightSide);
-    friend std::ostream& operator<<(std::ostream& os, Territory& terr);
+    Territory();
+    Territory(int* terrId, int* continentId);
+    Territory(const Territory& copy);
+    //~Territory();     // Doesn't fix leak
 
-    Territory(int terrId);
-    Territory(const Territory& rightSide);
-    ~Territory();
+    Territory& operator =(const Territory& t);
+    friend std::ostream& operator << (std::ostream& out, const Territory& t);
+    friend std::istream& operator >> (std::istream& in, Territory& t);
 
-    void setArmy(int army);
-    void setAdj(Territory* terr);
-    void setTerrId(int terrId);
-    int getArmy();
-    vector<Territory*> getAdj();
-    int getTerrId();
+    int* getTerrId();
+    int* getContinent();
 };
 
-// -------------------
-
-class Continent {
+class Adjacency {
 private:
-    int contId;
+    int* adjId;
+    bool* isLandRoute;
 
 public:
-    Continent& operator=(const Continent& rightSide);
-    friend std::ostream& operator<<(std::ostream& os, Continent& cont);
+    Adjacency();
+    Adjacency(int* adjId, bool* isLandRoute);
+    Adjacency(const Adjacency& copy);
+    //~Adjacency();     // Doesn't fix leak
 
-    Continent(int contId);
-    Continent(const Continent& rightSide);
-    ~Continent();
+    Adjacency& operator =(const Adjacency& adj);
+    friend std::ostream& operator << (std::ostream& out, const Adjacency& a);
+    friend std::istream& operator >> (std::istream& in, Adjacency& a);
 
-    void setContId(int contId);
-    int getContId();
+    int* getAdjId();
+    bool* getIsLandRoute();
 };
+
+/*
+class terrAndAdjs {
+private:
+    Territory* terrWithAdjs;
+    vector<Adjacency>* adjsForTerr;
+public:
+    Map();
+    Map(bool* rect);
+    Map(const Map& copy);
+    ~Map();
+
+    Map& operator =(const Map& map);
+    friend std::ostream& operator << (std::ostream& out, const Map& map);
+    friend std::istream& operator >> (std::istream& in, Map& map);
+
+    Territory* getTerrWithAdjs();
+    vector<Adjacency>* getAdjsForTerr();
+};
+ */
+
 
 class Map {
 private:
-    int mapId;
+    bool* rect;
+    typedef pair<Territory*, vector<Adjacency>*> terrInfo;     // typedef keyword allows new names for types, pair holds two & had constructor/destructor
+    vector<terrInfo>* terrAndAdjsList;
+    //struct terrInfo {Territory* terr; vector<Adjacency>* adj;};     // TODO Change typedef pair to struct? Need init?
+    //vector<Territory*, vector<Adjacency>*>* terrs;
+    bool territoryExists(int* adjId);
+    bool continentExists(int* continent);
+    bool isConnected(int* adjId);
 
 public:
-    Map& operator=(const Map& rightSide);
-    friend std::ostream& operator<<(std::ostream& os, Map& map);
-
-    Map(int mapId);
-    Map(const Map& rightSide);
+    Map();
+    Map(bool* rect);
+    Map(const Map& copy);
     ~Map();
 
-    void setMapId(int mapId);
-    int getMapId();
+    Map& operator =(const Map& m);
+    friend std::ostream& operator << (std::ostream& out, const Map& m);
+    friend std::istream& operator >> (std::istream& in, Map& m);
+
+    void addTerritory(Territory* t);
+    void addAdjacency(Territory* t, Adjacency* a);
+    void display();
+    void validate();
+    void removeAdjacency(int* adjId);
+    void removeUnUsedAdjacency();
 };

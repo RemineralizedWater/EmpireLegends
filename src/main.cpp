@@ -9,6 +9,7 @@ void DemonstratePlayers();
 void DemonstrateBiddingFacility(int numberOfPlayers);
 void DemonstrateMapLoader(int numberOfPlayers);
 void DemonstrateCards(int numberOfPlayers);
+int DemonstrateMap(int numberOfPlayers);
 
 int main() {
 
@@ -49,7 +50,7 @@ int main() {
         }
         switch (userInput) {
             case 1:
-                // TODO MAP
+                DemonstrateMap(numberOfPlayers);
                 break;
             case 2:
                 DemonstrateMapLoader(numberOfPlayers);

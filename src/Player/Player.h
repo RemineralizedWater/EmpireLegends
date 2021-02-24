@@ -44,7 +44,7 @@ private:
     std::unique_ptr<int> cubes_;//for now is an int, but maybe will change for class "Cubes"?
     std::unique_ptr<int> disks_;//for now is an int, but maybe will change for class "Disks"?
 
-    //TODO add regions/countries
+    //TODO add terrs
     //TODO add hand of cards meaning cards class
 
 };
