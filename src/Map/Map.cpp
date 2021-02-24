@@ -169,7 +169,7 @@ bool* Adjacency::getIsLandRoute() {
  */
 Map::Map() {
     this->rect = new bool{false};
-    this->terrAndAdjsList = new vector<terrInfo>;       // TODO memory leak?
+    this->terrAndAdjsList = new vector<terrInfo>;       // memory leak
 }
 /**
  * constructor: takes board shape
@@ -177,7 +177,7 @@ Map::Map() {
  */
 Map::Map(bool* rect) {
     this->rect = rect;
-    this->terrAndAdjsList = new vector<terrInfo>;       // TODO memory leak?
+    this->terrAndAdjsList = new vector<terrInfo>;       // memory leak
 }
 /**
  * copy constructor
@@ -185,7 +185,7 @@ Map::Map(bool* rect) {
  */
 Map::Map(const Map& copy){
     this->rect = new bool(*(copy.rect));
-    this->terrAndAdjsList = new vector<terrInfo> (*(copy.terrAndAdjsList));       // TODO memory leak?
+    this->terrAndAdjsList = new vector<terrInfo> (*(copy.terrAndAdjsList));       // memory leak?
 }
 /**
  * destructor
@@ -208,7 +208,7 @@ Map::~Map() {
  */
 Map& Map::operator =(const Map& m){
     this->rect = new bool(*(m.rect));
-    this->terrAndAdjsList = new vector<terrInfo>(*(m.terrAndAdjsList));       // TODO memory leak?
+    this->terrAndAdjsList = new vector<terrInfo>(*(m.terrAndAdjsList));       // memory leak
     return *this;
 }
 /**
@@ -279,7 +279,7 @@ bool Map::isConnected(int* adjId) {
  * @param t
  */
 void Map::addTerritory(Territory* t) {
-    vector<Adjacency>* adj = new vector<Adjacency>();       // TODO memory leak
+    vector<Adjacency>* adj = new vector<Adjacency>();       // memory leak
     if (territoryExists(t->getTerrId()) == *(t->getTerrId())) {
         cout << "Territory already exists. Territory belongs to more than one continent. Invalid Map!" << endl;
         /*if (continentExists(t->getContinent()) == *(t->getContinent())) {
