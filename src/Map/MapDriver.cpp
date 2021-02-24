@@ -32,6 +32,8 @@ int DemonstrateMap(int numberOfPlayers) {
             }
         }
         Map* map = new Map();
+        vector<Territory*> terr;
+        vector<Adjacency*> adj;
         switch (userInput) {
             case 1:
                 /* Stores the information below in the graph:
@@ -41,6 +43,56 @@ int DemonstrateMap(int numberOfPlayers) {
                  * 1        |3          |(L,2)(L,5)
                  * 1        |4          |(L,2)(L,5)
                  * 1        |5          |(L,4)(L,3)*/
+                terr.push_back(new Territory(new int{1}, new int{1}));
+                map->addTerritory(terr.back());
+                terr.push_back(new Territory(new int{2}, new int{1}));
+                map->addTerritory(terr.back());
+                terr.push_back(new Territory(new int{3}, new int{1}));
+                map->addTerritory(terr.back());
+                terr.push_back(new Territory(new int{4}, new int{1}));
+                map->addTerritory(terr.back());
+                terr.push_back(new Territory(new int{5}, new int{1}));
+                map->addTerritory(terr.back());
+
+                terr.push_back(new Territory(new int{1}, new int{1}));
+                adj.push_back(new Adjacency(new int{2}, new bool(true)));
+                map->addAdjacency(terr.back(), adj.back());
+                terr.push_back(new Territory(new int{2}, new int{1}));
+                adj.push_back(new Adjacency(new int{1}, new bool(true)));
+                map->addAdjacency(terr.back(), adj.back());
+                terr.push_back(new Territory(new int{2}, new int{1}));
+                adj.push_back(new Adjacency(new int{3}, new bool(true)));
+                map->addAdjacency(terr.back(), adj.back());
+                terr.push_back(new Territory(new int{2}, new int{1}));
+                adj.push_back(new Adjacency(new int{4}, new bool(true)));
+                map->addAdjacency(terr.back(), adj.back());
+                terr.push_back(new Territory(new int{3}, new int{1}));
+                adj.push_back(new Adjacency(new int{2}, new bool(true)));
+                map->addAdjacency(terr.back(), adj.back());
+                terr.push_back(new Territory(new int{3}, new int{1}));
+                adj.push_back(new Adjacency(new int{5}, new bool(true)));
+                map->addAdjacency(terr.back(), adj.back());
+                terr.push_back(new Territory(new int{4}, new int{1}));
+                adj.push_back(new Adjacency(new int{2}, new bool(true)));
+                map->addAdjacency(terr.back(), adj.back());
+                terr.push_back(new Territory(new int{4}, new int{1}));
+                adj.push_back(new Adjacency(new int{5}, new bool(true)));
+                map->addAdjacency(terr.back(), adj.back());
+                terr.push_back(new Territory(new int{5}, new int{1}));
+                adj.push_back(new Adjacency(new int{4}, new bool(true)));
+                map->addAdjacency(terr.back(), adj.back());
+                terr.push_back(new Territory(new int{5}, new int{1}));
+                adj.push_back(new Adjacency(new int{3}, new bool(true)));
+                map->addAdjacency(terr.back(), adj.back());
+                break;/*
+            case 1:
+                /* Stores the information below in the graph:
+                 * Continent|Territory  |Adjacency
+                 * 1        |1          |(L,2)
+                 * 1        |2          |(L,1)(L,3)(L,4)
+                 * 1        |3          |(L,2)(L,5)
+                 * 1        |4          |(L,2)(L,5)
+                 * 1        |5          |(L,4)(L,3)*//*
                 map->addTerritory(new Territory(new int{1}, new int{1}));
                 map->addTerritory(new Territory(new int{2}, new int{1}));
                 map->addTerritory(new Territory(new int{3}, new int{1}));
@@ -57,7 +109,7 @@ int DemonstrateMap(int numberOfPlayers) {
                 map->addAdjacency(new Territory(new int{4}, new int{1}), new Adjacency(new int{5}, new bool(true)));
                 map->addAdjacency(new Territory(new int{5}, new int{1}), new Adjacency(new int{4}, new bool(true)));
                 map->addAdjacency(new Territory(new int{5}, new int{1}), new Adjacency(new int{3}, new bool(true)));
-                break;
+                break;*/
             case 2:
                 /* Stores the information below in the graph:
                  * Continent|Territory  |Adjacency
