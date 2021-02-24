@@ -64,8 +64,8 @@ public:
     friend std::ostream& operator << (std::ostream& out, const Map& map);
     friend std::istream& operator >> (std::istream& in, Map& map);
 
-    int* getAdjTerr();
-    bool* getIsLandRoute();
+    Territory* getTerrWithAdjs();
+    vector<Adjacency>* getAdjsForTerr();
 };
  */
 
@@ -74,11 +74,12 @@ class Map {
 private:
     bool* rect;
     typedef pair<Territory*, vector<Adjacency>*> terrInfo;     // typedef keyword allows new names for types, pair holds two & had constructor/destructor
+    vector<terrInfo>* terrAndAdjsList;
     //struct terrInfo {Territory* terr; vector<Adjacency>* adj;};     // TODO Change typedef pair to struct? Need init?
-    vector<terrInfo>* terrs;
     //vector<Territory*, vector<Adjacency>*>* terrs;
-    bool territoryExists(int* terr);
-    bool isConnected(int* terr);
+    bool territoryExists(int* adjId);
+    bool continentExists(int* continent);
+    bool isConnected(int* adjId);
 
 public:
     Map();
@@ -86,14 +87,14 @@ public:
     Map(const Map& copy);
     ~Map();
 
-    Map& operator =(const Map& map);
-    friend std::ostream& operator << (std::ostream& out, const Map& map);
-    friend std::istream& operator >> (std::istream& in, Map& map);
+    Map& operator =(const Map& m);
+    friend std::ostream& operator << (std::ostream& out, const Map& m);
+    friend std::istream& operator >> (std::istream& in, Map& m);
 
-    void addTerritory(Territory* terr);
-    void addAdjacency(Territory* terr, Adjacency* adj);
+    void addTerritory(Territory* t);
+    void addAdjacency(Territory* t, Adjacency* a);
     void display();
     void validate();
-    void removeAdjacency(int* terr);
+    void removeAdjacency(int* adjId);
     void removeUnUsedAdjacency();
 };
