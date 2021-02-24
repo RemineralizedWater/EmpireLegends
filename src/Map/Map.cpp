@@ -3,11 +3,6 @@
 //
 
 #include "Map.h"
-// int name;
-// int continent;
-// int territory;   // Why were these included?
-// bool land;
-// bool rect;
 
 // TERRITORY METHODS
 // Constructors/Destructor

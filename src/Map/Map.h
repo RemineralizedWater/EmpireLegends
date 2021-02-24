@@ -56,6 +56,7 @@ private:
     typedef pair<Territory*, vector<Adjacency>*> terrInfo;     // typedef keyword allows new names for types, pair holds two & had constructor/destructor
     //struct terrInfo {Territory* terr; vector<Adjacency>* adj;};     // TODO Change typedef pair to struct? Need init?
     vector<terrInfo>* terrs;
+    //vector<Territory*, vector<Adjacency>*>* terrs;
     bool territoryExists(int* terr);
     bool isConnected(int* terr);
 
