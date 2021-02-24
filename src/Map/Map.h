@@ -20,7 +20,7 @@ public:
     Territory(int* name, int* continent);
     Territory();
     Territory(const Territory &rightSide);
-    ~Territory();
+    //~Territory();     // Doesn't fix leak
 
    Territory& operator =(const Territory &r);
     friend std::ostream& operator << (std::ostream &out, const Territory &r);
@@ -38,7 +38,7 @@ private:
 public:
     Adjacency(int* territory,bool* land);
     Adjacency();
-    ~Adjacency();
+    //~Adjacency();     // Doesn't fix leak
 
     Adjacency& operator =(const Adjacency &a);
     friend std::ostream& operator << (std::ostream &out, const Adjacency &a);

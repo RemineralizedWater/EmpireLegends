@@ -38,12 +38,12 @@ Territory::Territory(const Territory &copy) {
 /**
  * destructor
  */
-Territory::~Territory() {
+/*Territory::~Territory() {     // Doesn't fix leak
     delete name;
     name = nullptr;
     delete continent;
     continent = nullptr;
-}
+}*/
 // Operators
 /**
  * Assignment operator
@@ -109,12 +109,12 @@ Adjacency::Adjacency(int *territory, bool *land) {
 /**
  * destructor
  */
-Adjacency::~Adjacency() {
+/*Adjacency::~Adjacency() {     // Doesn't fix leak
     delete territory;
     territory = nullptr;
     delete land;
     land = nullptr;
-}
+}*/
 // Operators
 /**
  * Assignment operator
