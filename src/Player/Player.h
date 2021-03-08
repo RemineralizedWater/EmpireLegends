@@ -1,6 +1,7 @@
 #ifndef EMPIRELEGENDS_PLAYER_H
 #define EMPIRELEGENDS_PLAYER_H
 
+# pragma once
 #include <string>
 #include <iostream>
 #include <memory>
@@ -12,13 +13,16 @@
 class Player {
 public:
 
-    std::unique_ptr<Hand> hand_;
+    Hand* hand_;
+
+    Player();
+    ~Player();
 
     Player(const Player &playerToCopy);
 
     Player(const std::string &region, const BiddingFacility &biddingFacility, const Territory &territory,
            const Cards &cards, const int &tokenArmies,
-           const int &cubes, const int &disks);
+           const int &cubes, const int &disks, const Hand &hand);
 
     Player &operator=(const Player &playerToCopy);
 

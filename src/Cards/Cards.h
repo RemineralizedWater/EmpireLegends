@@ -1,9 +1,6 @@
-#ifndef EMPIRELEGENDS_CARDS_H
-#define EMPIRELEGENDS_CARDS_H
-
+# pragma once
 #include <string>
 #include <vector>
-#include "../Player/Player.h"
 
 using namespace std;
 
@@ -18,7 +15,6 @@ public:
     int* GetCost();
     void SetCost(int _cost);
     static void Draw(vector<Cards> *deckPtr, vector<Cards> *faceUpCardsPtr);
-    static void Exchange(vector<Cards> *faceUpCardsPtr, int position, vector<Cards> *playerHandPtr, vector<Cards> *deckPtr);
     static void ShuffleDeck(vector <Cards> deck);
     Cards();
     ~Cards();
@@ -38,7 +34,7 @@ private:
 public:
     Deck();
     Deck(int numberOfPlayers);
-    //~Deck();
+    ~Deck();
     static vector<Cards>* GetDeck();
     static vector<Cards>* GetFaceUpCards();
     void PrintCardsIn(vector<Cards>* vectorOfCards);
@@ -50,12 +46,10 @@ public:
 
 class Hand{
 private:
-    vector<Cards> hand;
+    vector<Cards>* hand;
 public:
     Hand();
-    //~Hand();
-    void AddToHand(Cards::Cards card);
-    void Exchange(int positionToPickUp, Player::Player player);
+    ~Hand();
+    void AddToHand(Cards card);
+    void Exchange(int positionToPickUp);
 };
-
-#endif //EMPIRELEGENDS_CARDS_H

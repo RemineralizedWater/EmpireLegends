@@ -1,6 +1,7 @@
-#include "Cards.h"
+
 #include <iostream>
 #include <vector>
+#include "Cards.h"
 
 using namespace std;
 
@@ -115,59 +116,6 @@ void Cards::Draw(vector<Cards> *deckPtr, vector<Cards> *faceUpCardsPtr) {
     }
 }
 
-void Cards::Exchange(vector<Cards> *faceUpCardsPtr, int position, vector<Cards> *playerHandPtr, vector<Cards> *deckPtr) {
-
-    int index = position - 1;
-    int cost;
-    int count = 0;
-    vector <Cards>::iterator it;
-
-    cout << "Picking up card " << position << endl;
-    // setting cost of the card based on the position
-    switch(position){
-        case 1:
-            cost = 0;
-            break;
-        case 2:
-        case 3:
-            cost = 1;
-            break;
-        case 4:
-        case 5:
-            cost = 2;
-            break;
-        case 6:
-            cost = 3;
-            break;
-        default:
-            cout << "Position must be < 7." << endl;
-            exit(0);
-    }
-
-    // TODO: check player coins
-    /* if(player.coins > cost){
-        cout << "Player does not have enough coins." << endl;
-    }*/
-
-    // TODO: remove coins from Player and add to Supply
-    //player.coins = player.coins - cost;
-    cout << cost << " coin(s) have been paid." << endl;
-
-    // put card in players hand
-    Cards & cardPickedUp = faceUpCardsPtr->at(index);
-    cout << "Picked up: " << *cardPickedUp.GetName() << endl;
-    playerHandPtr->push_back(cardPickedUp);
-
-
-    // organize cards in face up pile
-    for(int i = index; i < faceUpCardsPtr->size() - 1; i++){
-        faceUpCardsPtr->at(i) = faceUpCardsPtr->at(i + 1);
-    }
-
-    // remove last card
-    faceUpCardsPtr->pop_back();
-}
-
 void Cards::ShuffleDeck(vector <Cards> deck){
     //TODO
 }
@@ -191,6 +139,8 @@ Deck::Deck() {
 
 Deck::Deck(int numberOfPlayers) {
     deck = new vector<Cards>();
+    faceUpCards  = new vector<Cards>();
+
     switch(numberOfPlayers){
         case 4:
             {
@@ -317,7 +267,7 @@ vector<Cards> *Deck::GetFaceUpCards() {
 }
 
 void Deck::Draw() {
-
+    //
 }
 
 void Deck::PopulateFaceUpCards() {
@@ -365,8 +315,20 @@ void Deck::SetFaceUpCardsCost() {
     }
 }
 
+Deck::~Deck() {
+    if(deck != nullptr){
+        delete deck;
+        deck = nullptr;
+    }
 
-void Hand::Exchange(int positionToPickUp, Player player) {
+    if(faceUpCards != nullptr){
+        delete faceUpCards;
+        faceUpCards = nullptr;
+    }
+}
+
+
+void Hand::Exchange(int positionToPickUp) {
 
     int index = positionToPickUp - 1;
     cout << "Picking up card " << positionToPickUp << endl;
@@ -383,7 +345,8 @@ void Hand::Exchange(int positionToPickUp, Player player) {
     //player.coins = player.coins - cost;
     cout << drawnCard.GetCost() << " coin(s) have been paid." << endl;
 
-    player.hand_->AddToHand(drawnCard);
+    AddToHand(drawnCard);
+
     cout << "Picked up " << drawnCard.GetName() << endl;
 
     //reorganize cards in faceup pile
@@ -396,10 +359,17 @@ void Hand::Exchange(int positionToPickUp, Player player) {
 }
 
 Hand::Hand() {
-
+    hand = new vector<Cards>();
 }
 
 void Hand::AddToHand(Cards card) {
-    hand.push_back(card);
+    hand->push_back(card);
+}
+
+Hand::~Hand() {
+    if(hand != nullptr){
+        delete hand;
+        hand = nullptr;
+    }
 }
 

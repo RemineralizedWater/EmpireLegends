@@ -1,11 +1,14 @@
-#include "Cards.h"
+
 #include <iostream>
 #include <vector>
+#include "Cards.h"
+#include "../Player/Player.h"
 
 using namespace std;
 
 void DemonstrateCards(const int numberOfPlayers){
 
+    /*
     int cost;
     int count = 0;
     int position = 0;
@@ -102,6 +105,17 @@ void DemonstrateCards(const int numberOfPlayers){
         for(it = playerHand.begin(); it != playerHand.end(); ++it){
             cout << ++count << " - " << *(it->GetName()) << " : " << *(it ->GetGoodsAndAction()) << endl;
         }
-    }
+    }*/
+
+    std::unique_ptr<Player> player (new Player("Montreal", BiddingFacility(), Territory(), Cards(),
+                                                    rand(), rand(), rand(), Hand()));
+
+    Deck deck = Deck((int)numberOfPlayers);
+    deck.PopulateFaceUpCards();
+    deck.PrintCardsIn(deck.GetDeck());
+    deck.PrintCardsIn((deck.GetFaceUpCards()));
+
+
+
 
 }
