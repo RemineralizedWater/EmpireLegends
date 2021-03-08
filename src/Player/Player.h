@@ -12,6 +12,8 @@
 class Player {
 public:
 
+    std::unique_ptr<Hand> hand_;
+
     Player(const Player &playerToCopy);
 
     Player(const std::string &region, const BiddingFacility &biddingFacility, const Territory &territory,
