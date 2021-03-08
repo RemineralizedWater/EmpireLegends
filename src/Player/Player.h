@@ -8,6 +8,8 @@
 #include "../BiddingFacility/BiddingFacility.h"
 #include "../Map/Map.h"
 #include "../Cards/Cards.h"
+#include "../Cards/Hand.h"
+#include "../Cards/Deck.h"
 
 
 class Player {
