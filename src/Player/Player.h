@@ -1,22 +1,30 @@
 #ifndef EMPIRELEGENDS_PLAYER_H
 #define EMPIRELEGENDS_PLAYER_H
 
+# pragma once
 #include <string>
 #include <iostream>
 #include <memory>
 #include "../BiddingFacility/BiddingFacility.h"
 #include "../Map/Map.h"
 #include "../Cards/Cards.h"
+#include "../Cards/Hand.h"
+#include "../Cards/Deck.h"
 
 
 class Player {
 public:
 
+    Hand* hand_;
+
+    Player();
+    ~Player();
+
     Player(const Player &playerToCopy);
 
     Player(const std::string &region, const BiddingFacility &biddingFacility, const Territory &territory,
            const Cards &cards, const int &tokenArmies,
-           const int &cubes, const int &disks);
+           const int &cubes, const int &disks, const Hand &hand);
 
     Player &operator=(const Player &playerToCopy);
 

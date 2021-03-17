@@ -29,7 +29,6 @@ int main() {
         }
     }
 
-
     while(true){
         cout << endl << "What would you like to test:" << endl;
         cout << "1 - Part 1: Map" << endl;

@@ -49,14 +49,15 @@ Player::Player(const Player &playerToCopy)
 //Constructor
 Player::Player(const std::string &region, const BiddingFacility &biddingFacility, const Territory &territory,
                const Cards &cards, const int &tokenArmies,
-               const int &cubes, const int &disks)
+               const int &cubes, const int &disks, const Hand &hand)
         : region_(new std::string(region)),
           biddingFacility_(new BiddingFacility(biddingFacility)),
           territory_(new Territory(territory)),
           cards_(new Cards(cards)),
           tokenArmies_(new int (tokenArmies)),
           cubes_(new int(cubes)),
-          disks_(new int(disks)){
+          disks_(new int(disks)),
+          hand_(new Hand(hand)){
     std::cout << "Calling the default constructor" << std::endl;
 
 }
@@ -77,5 +78,13 @@ std::istream &operator>>(std::istream &is, Player &player) {//TODO update player
     is >> *player.cubes_;
     is >> *player.disks_;
     return is;
+}
+
+Player::Player() {
+
+}
+
+Player::~Player() {
+
 }
 
