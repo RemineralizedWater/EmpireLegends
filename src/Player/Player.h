@@ -2,6 +2,7 @@
 #define EMPIRELEGENDS_PLAYER_H
 
 # pragma once
+
 #include <string>
 #include <iostream>
 #include <memory>
@@ -15,22 +16,23 @@
 class Player {
 public:
 
-    Hand* hand_;
+    Hand *hand_;
 
     Player();
+
     ~Player();
 
     Player(const Player &playerToCopy);
 
     Player(const std::string &region, const BiddingFacility &biddingFacility, const Territory &territory,
            const Cards &cards, const int &tokenArmies,
-           const int &cubes, const int &disks, const Hand &hand);
+           const int &cubes, const int &disks, const Hand &hand, const int &money, const std::string &name);
 
     Player &operator=(const Player &playerToCopy);
 
-    void PayCoin();
+    void PayCoin(int costOfCard);
 
-    void PlaceNewArmies();
+    void PlaceNewArmies(int numberOfArmiesToPlace);
 
     void MoveArmies();
 
@@ -39,6 +41,12 @@ public:
     void BuildCity();
 
     void DestroyArmy();
+
+    void AndOrAction(const std::string &goodAndAction);
+
+    const std::string &getName() const;
+
+    void setName(const std::string &name);
 
     friend std::istream &operator>>(std::istream &is, Player &player);
 
@@ -51,10 +59,14 @@ private:
     std::unique_ptr<int> tokenArmies_; //for now is an int, but maybe will change for class "Token"?
     std::unique_ptr<int> cubes_;//for now is an int, but maybe will change for class "Cubes"?
     std::unique_ptr<int> disks_;//for now is an int, but maybe will change for class "Disks"?
+    std::unique_ptr<int> money_;
+    std::unique_ptr<std::string> name_;
+
 
     //TODO add terrs
     //TODO add hand of cards meaning cards class
 
+    static int bankOfCoins;
 };
 
 std::istream &operator>>(std::istream &is, Player &player);

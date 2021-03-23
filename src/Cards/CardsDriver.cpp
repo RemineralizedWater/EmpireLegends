@@ -9,7 +9,7 @@ using namespace std;
 void DemonstrateCards(int numberOfPlayers){
 
     std::unique_ptr<Player> player (new Player("Montreal", BiddingFacility(), Territory(), Cards(),
-                                                    rand(), rand(), rand(), *new Hand()));
+                                                    rand(), rand(), rand(), *new Hand(), rand(), NULL));
 
     cout << "Creating deck.." << endl;
     Deck* deck = new Deck(numberOfPlayers);

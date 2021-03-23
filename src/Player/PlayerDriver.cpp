@@ -5,13 +5,13 @@
 //Main driver for Ass1. to create and run desired functions of the player class
 void DemonstratePlayers(){
     std::unique_ptr<Player> playerSimon (new Player("Montreal", BiddingFacility(), Territory(), Cards(),
-                                                    rand(), rand(), rand(), Hand()));
+                                                    rand(), rand(), rand(), Hand(),rand(), NULL));
     playerSimon->BuildCity();
     playerSimon->DestroyArmy();
     playerSimon->MoveArmies();
     playerSimon->MoveOverLand();
-    playerSimon->PayCoin();
-    playerSimon->PlaceNewArmies();
+    playerSimon->PayCoin(12);
+    playerSimon->PlaceNewArmies(12);
 
     std::unique_ptr<Player> copyPlayerConstructor(new Player(*playerSimon.get())); //copy constructor
     *copyPlayerConstructor = *playerSimon;//assignment operator
