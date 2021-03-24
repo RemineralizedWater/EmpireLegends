@@ -13,6 +13,8 @@ void DemonstrateCards(int numberOfPlayers){
 
     cout << "Creating deck.." << endl;
     Deck* deck = new Deck(numberOfPlayers);
+    cout << "Shuffling deck.." << endl;
+    deck->ShuffleDeck();
     cout << "Populating Face Up Cards.." << endl;
     deck->PopulateFaceUpCards();
     cout << "Cards in deck: " << endl;

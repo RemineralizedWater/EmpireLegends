@@ -4,6 +4,9 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <random>
+#include <chrono>
 #include "Deck.h"
 
 
@@ -126,8 +129,22 @@ Deck::Deck(int numberOfPlayers) {
         Cards card34(new string("Castle 2"), new string("Potion|-|3cubesMove+settlement"));
         deck->push_back(card34);
     }
-}
 
+
+    //auto rng = default_random_engine {};
+
+    //std::shuffle(deck->begin(), deck->end(), rng);
+
+
+
+}
+void Deck::ShuffleDeck() {
+
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+    shuffle (deck->begin(), deck->end(), std::default_random_engine(seed));
+
+}
 // Accessors
 vector<Cards> *Deck::GetDeck() {
     return deck;
