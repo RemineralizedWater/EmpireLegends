@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <limits>
+#include "BiddingFacility/BiddingFacility.h"
 
 
 using namespace std;
@@ -28,6 +29,68 @@ int main() {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
     }
+
+
+    //  while(true){
+        if (numberOfPlayers==2){
+            cout << "Enter the name of players1:"<< endl;
+            //cin>>Player.name;
+            cout << "There are 4 colour armies and cities: Red,Blue,Green and Yellow. Please Select army and city colour:"<< endl;
+            //cin>>Player.army;
+            cout << "You are assigned 14 coins."<< endl;
+
+
+            cout << "Enter the name of players2:"<< endl;
+            //cin>>Player.name;
+            cout << "There are 4 colour armies and cities: Red,Blue,Green and Yellow. Please Select army and city colour:"<< endl;
+            //cin>>Player.army;
+            cout << "You are assigned 14 coins."<< endl;
+        }
+        if (numberOfPlayers==3){
+            cout << "Enter the name of players1:"<< endl;
+            //cin>>Player.name;
+            cout << "There are 4 colour armies and cities: Red,Blue,Green and Yellow. Please Select army and city colour:"<< endl;
+            //cin>>Player.army;
+            cout << "You are assigned 14 coins."<< endl;
+
+            cout << "Enter the name of players2:"<< endl;
+            //cin>>Player.name;
+            cout << "There are 4 colour armies and cities: Red,Blue,Green and Yellow. Please Select army and city colour:"<< endl;
+            //cin>>Player.army;
+            cout << "You are assigned 14 coins."<< endl;
+
+            cout << "Enter the name of players3:"<< endl;
+            //cin>>Player.name;
+            cout << "There are 4 colour armies and cities: Red,Blue,Green and Yellow. Please Select army and city colour:"<< endl;
+            //cin>>Player.army;
+            cout << "You are assigned 14 coins."<< endl;
+        }
+        if (numberOfPlayers==4){
+            cout << "Enter the name of players1:"<< endl;
+            //cin>>Player.name;
+            cout << "There are 4 colour armies and cities: Red,Blue,Green and Yellow. Please Select army and city colour:"<< endl;
+            //cin>>Player.army;
+            cout << "You are assigned 14 coins."<< endl;
+
+            cout << "Enter the name of players2:"<< endl;
+            //cin>>Player.name;
+            cout << "There are 4 colour armies and cities: Red,Blue,Green and Yellow. Please Select army and city colour:"<< endl;
+            //cin>>Player.army;
+            cout << "You are assigned 14 coins."<< endl;
+
+            cout << "Enter the name of players3:"<< endl;
+            //cin>>Player.name;
+            cout << "There are 4 colour armies and cities: Red,Blue,Green and Yellow. Please Select army and city colour:"<< endl;
+            //cin>>Player.army;
+            cout << "You are assigned 14 coins."<< endl;
+
+            cout << "Enter the name of players4:"<< endl;
+            //cin>>Player.name;
+            cout << "There are 4 colour armies and cities: Red,Blue,Green and Yellow. Please Select army and city colour:"<< endl;
+            //cin>>Player.army;
+            cout << "You are assigned 14 coins."<< endl;
+        }
+    //}
 
     while(true){
         cout << endl << "What would you like to test:" << endl;

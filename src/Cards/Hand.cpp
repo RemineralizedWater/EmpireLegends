@@ -63,3 +63,7 @@ vector<Cards> *Hand::GetHand() {
 Cards Hand::Draw(int coins, int index){
     //if(coins==)
 };
+
+//void BiddingFacility::initializeCoins(BiddingFacility H){
+//
+//}

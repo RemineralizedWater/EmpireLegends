@@ -28,6 +28,9 @@ public:
     BiddingFacility & operator =(const BiddingFacility &bf);
     friend ostream & operator << (ostream &out, const BiddingFacility &bf);
     friend istream & operator >> (istream &in, BiddingFacility &bf);
+
+
+    void initializeCoins(BiddingFacility H);
 };
 
 

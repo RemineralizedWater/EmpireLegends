@@ -7,6 +7,7 @@
 
 #include "Cards.h"
 #include "Deck.h"
+#include "../BiddingFacility/BiddingFacility.h"
 #include <vector>
 
 class Hand{
@@ -19,7 +20,10 @@ public:
     void Exchange(Deck* deck);
     vector<Cards>* GetHand();
     Cards Draw(int coins,int index);
+
 };
 
+void BiddingFacility::initializeCoins(BiddingFacility H){
 
+}
 #endif //EMPIRELEGENDS_HAND_H
