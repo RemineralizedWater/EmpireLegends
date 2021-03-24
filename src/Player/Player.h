@@ -26,21 +26,25 @@ public:
 
     Player(const std::string &region, const BiddingFacility &biddingFacility, const Territory &territory,
            const Cards &cards, const int &tokenArmies,
-           const int &cubes, const int &disks, const Hand &hand, const int &money, const std::string &name);
+           const int &cubes, const int &disks, const Hand &hand, const int &money, const std::string &name,
+           const int &totalMovementPointsForRound);
 
     Player &operator=(const Player &playerToCopy);
 
-    void PayCoin(int costOfCard);
+    void PayCoin(const int &costOfCard);
 
-    void PlaceNewArmies(int numberOfArmiesToPlace);
+    void PlaceNewArmies(const int &numberOfArmiesToPlace);
 
-    void MoveArmies();
+    void MoveArmies(Territory &territoryToMoveFrom, Territory &toMoveTo, const std::string &playerWhoWantsToMove,
+                    const int &numberOfArmiesHeWantsToMove);
 
     void MoveOverLand();
 
-    void BuildCity();
+    void MoveOverWater(const int &totalMovementPointsForRound);
 
-    void DestroyArmy();
+    void BuildCity(Territory &territory);
+
+    void DestroyArmy(Territory &territory, const std::string &playerAttacking, const std::string &playerBeingAttacked);
 
     void AndOrAction(const std::string &goodAndAction);
 
@@ -61,6 +65,7 @@ private:
     std::unique_ptr<int> disks_;//for now is an int, but maybe will change for class "Disks"?
     std::unique_ptr<int> money_;
     std::unique_ptr<std::string> name_;
+    std::unique_ptr<int> totalMovementPointsForRound_;
 
 
     //TODO add terrs

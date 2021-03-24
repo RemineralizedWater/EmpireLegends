@@ -128,6 +128,11 @@ std::map<std::string, bool> &Territory::getHasCity() {
     return *hasCity;
 }
 
+Territory::Territory(int *terrId, int *continent) {
+    this->terrId = terrId;
+    this->continentId = continent;
+}
+
 // ------------------------
 // ADJACENCY METHODS
 // Constructors/Destructor

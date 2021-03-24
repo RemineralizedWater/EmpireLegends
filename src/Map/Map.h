@@ -16,7 +16,6 @@ using std::endl;
 
 class Territory {
 private:
-    Territory(int *terrId, int *continent);
 
     int *terrId;
     int *continentId;
@@ -24,6 +23,7 @@ private:
     std::unique_ptr<std::map<std::string, bool>> hasCity;
 
 public:
+    Territory(int *terrId, int *continent);
     Territory();
 
     Territory(int *terrId,
