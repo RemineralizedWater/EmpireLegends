@@ -59,3 +59,7 @@ Hand::~Hand() {
 vector<Cards> *Hand::GetHand() {
     return hand;
 }
+
+Cards Hand::Draw(int coins, int index){
+    //if(coins==)
+};

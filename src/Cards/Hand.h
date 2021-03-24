@@ -18,6 +18,7 @@ public:
     void AddToHand(Cards* card);
     void Exchange(Deck* deck);
     vector<Cards>* GetHand();
+    Cards Draw(int coins,int index);
 };
 
 

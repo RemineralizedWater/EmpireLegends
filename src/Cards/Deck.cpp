@@ -154,10 +154,6 @@ vector<Cards> *Deck::GetFaceUpCards() {
     return faceUpCards;
 }
 
-void Deck::Draw() {
-    //
-}
-
 void Deck::PopulateFaceUpCards() {
     for(int i = 0; i < 6; i++){
         Cards drawnCard = deck->back();
