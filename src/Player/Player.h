@@ -2,6 +2,7 @@
 #define EMPIRELEGENDS_PLAYER_H
 
 # pragma once
+
 #include <string>
 #include <iostream>
 #include <memory>
@@ -14,31 +15,55 @@
 
 class Player {
 public:
-
-    Hand* hand_;
+    static int supply;
+    Hand *hand_;
 
     Player();
+
     ~Player();
 
     Player(const Player &playerToCopy);
 
     Player(const std::string &region, const BiddingFacility &biddingFacility, const Territory &territory,
            const Cards &cards, const int &tokenArmies,
-           const int &cubes, const int &disks, const Hand &hand);
+           const int &cubes, const int &disks, const Hand &hand, const int &money, const std::string &name,
+           const int &totalMovementPointsForRound, const int &costToMoveOverWater);
 
     Player &operator=(const Player &playerToCopy);
 
-    void PayCoin();
+    bool PayCoin(const int &amountToPay);
 
-    void PlaceNewArmies();
+    bool PlaceNewArmies(const int &numberOfArmiesToPlaced);
 
-    void MoveArmies();
+    bool MoveArmies(Territory &territoryToMoveFrom, Territory &toMoveTo, const std::string &playerWhoWantsToMove,
+                    const int &numberOfArmiesHeWantsToMove);
 
-    void MoveOverLand();
+    bool MoveOverLand();
 
-    void BuildCity();
+    bool MoveOverWater();
 
-    void DestroyArmy();
+    bool BuildCity(Territory &territory);
+
+    bool DestroyArmy(Territory &territory, const std::string &playerAttacking, const std::string &playerBeingAttacked,
+                     const int &numberOfArmiesToDestroy);
+
+    void AndOrAction(const std::string &goodAndAction);
+
+    const std::string &getName() const;
+
+    void setName(const std::string &name);
+
+    int &getCostOverWater();
+
+    void setCostOverWater(const int &costToMoveOverWater);
+
+    int &getMoney();
+
+    void setMoney(const int &money);
+
+    int &getTotalMovementPointsForRound();
+
+    void setTotalMovementPointsForRound(const int &totalMovementPointsForRound);
 
     friend std::istream &operator>>(std::istream &is, Player &player);
 
@@ -51,9 +76,15 @@ private:
     std::unique_ptr<int> tokenArmies_; //for now is an int, but maybe will change for class "Token"?
     std::unique_ptr<int> cubes_;//for now is an int, but maybe will change for class "Cubes"?
     std::unique_ptr<int> disks_;//for now is an int, but maybe will change for class "Disks"?
+    std::unique_ptr<int> money_;
+    std::unique_ptr<std::string> name_;
+    std::unique_ptr<int> totalMovementPointsForRound_;
+    std::unique_ptr<int> costToMoveOverWater_;
+
 
     //TODO add terrs
     //TODO add hand of cards meaning cards class
+
 
 };
 
