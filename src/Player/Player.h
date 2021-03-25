@@ -31,7 +31,7 @@ public:
 
     Player &operator=(const Player &playerToCopy);
 
-    bool PayCoin(const int &costOfCard);
+    bool PayCoin(const int &amountToPay);
 
     bool PlaceNewArmies(const int &numberOfArmiesToPlaced);
 

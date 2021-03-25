@@ -7,11 +7,11 @@
 int Player::supply = 0;
 
 //Successfully pays coin and withdraws money from said player account (for Ass1. just returns
-bool Player::PayCoin(const int &costOfCard) {
-    if (costOfCard <= *money_) {
-        *money_ -= costOfCard;
-        supply += costOfCard;
-        std::cout << "The transaction has been successful, we have removed: " << costOfCard << " coins" << std::endl;
+bool Player::PayCoin(const int &amountToPay) {
+    if (amountToPay <= *money_) {
+        *money_ -= amountToPay;
+        supply += amountToPay;
+        std::cout << "The transaction has been successful, we have removed: " << amountToPay << " coins" << std::endl;
         return true;
     } else {
         std::cout << "You do not have enough money to buy this card" << std::endl;
@@ -98,7 +98,7 @@ bool Player::BuildCity(Territory &territory) {
         std::cout << "You have successfully built the city" << std::endl;
         return true;
     } else {
-        std::cout << "You cannot build a city" << std::endl;
+        std::cout << "ou cannot build a city in this territory because you do not have an available city token" << std::endl;
         return false;
     }
 }
