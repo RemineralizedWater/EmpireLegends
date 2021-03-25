@@ -13,6 +13,7 @@ using std::vector;
 using std::pair;
 using std::cout;
 using std::endl;
+using std::string;
 
 class Territory {
 private:
@@ -46,10 +47,11 @@ public:
 
     int *getContinent();
 
-     std::map<std::string, int> &getArmySizeForPlayer();
-     std::map<std::string, bool> &getHasCity();
+    std::map<std::string, int> &getArmySizeForPlayer();
+    std::map<std::string, bool> &getHasCity();
 
-
+    void InsertNewArmyPlayerMapping(string playerName);
+    void InsertNewCityPlayerMapping(string playerName);
 };
 
 class Adjacency {

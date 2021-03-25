@@ -8,8 +8,10 @@ using namespace std;
 
 void DemonstrateCards(int numberOfPlayers){
 
-    std::unique_ptr<Player> player (new Player("Montreal", BiddingFacility(), Territory(), Cards(),
-                                               rand(), rand(), rand(), Hand(), rand(), "Player 1", rand(), rand()));
+
+    std::unique_ptr<Player> player(
+            new Player("Montreal", BiddingFacility(), Territory(), Cards(),
+       18, rand(), rand(), new Hand(), rand(), "Player 1", rand(), rand(), true));
 
     cout << "Creating deck.." << endl;
     Deck* deck = new Deck(numberOfPlayers);
