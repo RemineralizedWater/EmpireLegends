@@ -20,15 +20,16 @@ bool Player::PayCoin(const int &costOfCard) {
 }
 
 //Places armies for desired player
-bool Player::PlaceNewArmies(const int &numberOfArmiesToPlace) {
-    if (*tokenArmies_ >= numberOfArmiesToPlace && territory_->getHasCity()[*name_]) {
-        *tokenArmies_ -= numberOfArmiesToPlace;
-        territory_->getArmySizeForPlayer()[*name_] += numberOfArmiesToPlace;
+bool Player::PlaceNewArmies(const int &numberOfArmiesToPlaced) {
+    if (*tokenArmies_ >= numberOfArmiesToPlaced && territory_->getHasCity()[*name_]) {
+        *tokenArmies_ -= numberOfArmiesToPlaced;
+        territory_->getArmySizeForPlayer()[*name_] += numberOfArmiesToPlaced;
         std::cout << "Your army has been successfully placed" << std::endl;
         return true;
     } else {
-        return false;
         std::cout << "Your army has been unsuccessfully placed, because you have no more armies to place" << std::endl;
+        return false;
+
     }
 }
 
@@ -47,7 +48,7 @@ bool Player::MoveArmies(Territory &territoryToMoveFrom, Territory &toMoveTo, con
         return true;
     } else {
         std::cout
-                << "Your army has not been moved because the armies you want to move are bigger than the armies in that territory"
+                << "Your army has not been moved because the armies you want to move are bigger than the armies you own in your source territory"
                 << std::endl;
         return false;
     }

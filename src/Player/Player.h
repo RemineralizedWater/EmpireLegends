@@ -33,7 +33,7 @@ public:
 
     bool PayCoin(const int &costOfCard);
 
-    bool PlaceNewArmies(const int &numberOfArmiesToPlace);
+    bool PlaceNewArmies(const int &numberOfArmiesToPlaced);
 
     bool MoveArmies(Territory &territoryToMoveFrom, Territory &toMoveTo, const std::string &playerWhoWantsToMove,
                     const int &numberOfArmiesHeWantsToMove);
