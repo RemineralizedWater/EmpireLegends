@@ -22,7 +22,6 @@ public:
     void PopulateFaceUpCards();
     void SetFaceUpCardsCost();
     //void ShuffleDeck();
-    void Draw();
 };
 
 
