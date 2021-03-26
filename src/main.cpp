@@ -10,11 +10,15 @@ void DemonstrateBiddingFacility(int numberOfPlayers);
 void DemonstrateMapLoader(int numberOfPlayers);
 void DemonstrateCards(int numberOfPlayers);
 int DemonstrateMap(int numberOfPlayers);
+void DemonstrateA2Part3();
 
 int main() {
 
     int numberOfPlayers = 0;
     int userInput = 0;
+
+
+
 
     // Determine the number of players
     cout << "Enter the number of players:";
@@ -33,7 +37,7 @@ int main() {
         cout << endl << "What would you like to test:" << endl;
         cout << "1 - Part 1: Map" << endl;
         cout << "2 - Part 2: Map Loader" << endl;
-        cout << "3 - Part 3: Player" << endl;
+        cout << "3 - Part 3: Game play: main game loop" << endl;
         cout << "4 - Part 4: Cards" << endl;
         cout << "5 - Part 5: Bidding Facility" << endl;
         cout << "6 - Exit" << endl;
@@ -55,7 +59,7 @@ int main() {
                 DemonstrateMapLoader(numberOfPlayers);
                 break;
             case 3:
-                DemonstratePlayers();
+                DemonstrateA2Part3();
                 break;
             case 4:
                 DemonstrateCards(numberOfPlayers);
@@ -68,6 +72,7 @@ int main() {
                 exit(0);
         }
     }
+
 
     return 0;
 }

@@ -11,13 +11,14 @@ using std::cin;
 using std::streamsize;
 using std::numeric_limits;
 
-void cleanTerr(vector<Territory*> terr);
-void cleanAdj(vector<Adjacency*> adj);
+void cleanTerr(vector<Territory *> terr);
+
+void cleanAdj(vector<Adjacency *> adj);
 
 int DemonstrateMap(int numberOfPlayers) {
     int userInput = 0;
 
-    while(true){
+    while (true) {
         cout << endl << "What map would you like to test:" << endl;
         cout << "1 - Valid Map" << endl;
         cout << "2 - Invalid Map - Map must be connected graph of adjacent territories" << endl;
@@ -25,18 +26,23 @@ int DemonstrateMap(int numberOfPlayers) {
         cout << "4 - Invalid Map - Each territory must belong to one and only one continent" << endl;
         cout << "5 - Return to Main Menu" << endl;
 
-        while(true){
-            if(cin >> userInput && userInput >= 1 && userInput <= 6){
+        while (true) {
+            if (cin >> userInput && userInput >= 1 && userInput <= 6) {
                 break;
-            }else{
-                cout << "Please enter a valid selection (integer, no greater than 5 and no less than 1)" << endl << ">>";
+            } else {
+                cout << "Please enter a valid selection (integer, no greater than 5 and no less than 1)" << endl
+                     << ">>";
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
         }
-        Map* map = new Map();
-        vector<Territory*> terr;
-        vector<Adjacency*> adj;
+        Map *map = new Map();
+        vector<Territory *> terr;
+        vector<Adjacency *> adj;
+        std::unique_ptr<std::map<std::string, int>> armySizeForPlayer(new std::map<std::string, int>());
+        std::unique_ptr<std::map<std::string, bool>> hasArmy(new std::map<std::string, bool>());
+
+
         switch (userInput) {
             case 1:
                 /* Stores the information below in the graph:
@@ -46,45 +52,45 @@ int DemonstrateMap(int numberOfPlayers) {
                  * 1        |3          |(L,2)(L,5)
                  * 1        |4          |(L,2)(L,5)
                  * 1        |5          |(L,4)(L,3)*/
-                terr.push_back(new Territory(new int{1}, new int{1}));
+                terr.push_back(new Territory(new int{1}, new int{1}, *armySizeForPlayer,*hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{3}, new int{1}));
+                terr.push_back(new Territory(new int{3}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{4}, new int{1}));
+                terr.push_back(new Territory(new int{4}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{5}, new int{1}));
+                terr.push_back(new Territory(new int{5}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
 
-                terr.push_back(new Territory(new int{1}, new int{1}));
+                terr.push_back(new Territory(new int{1}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{2}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{1}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{3}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{4}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{3}, new int{1}));
+                terr.push_back(new Territory(new int{3}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{2}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{3}, new int{1}));
+                terr.push_back(new Territory(new int{3}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{5}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{4}, new int{1}));
+                terr.push_back(new Territory(new int{4}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{2}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{4}, new int{1}));
+                terr.push_back(new Territory(new int{4}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{5}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{5}, new int{1}));
+                terr.push_back(new Territory(new int{5}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{4}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{5}, new int{1}));
+                terr.push_back(new Territory(new int{5}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{3}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
                 break;
@@ -97,47 +103,47 @@ int DemonstrateMap(int numberOfPlayers) {
                  * 1        |4          |(L,2)(L,5)
                  * 1        |5          |(L,4)(L,3)
                  * 1        |6          |(L, No Adjacency)*/   // invalid, Territory 6 is not connected to rest of graph
-                terr.push_back(new Territory(new int{1}, new int{1}));
+                terr.push_back(new Territory(new int{1}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{3}, new int{1}));
+                terr.push_back(new Territory(new int{3}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{4}, new int{1}));
+                terr.push_back(new Territory(new int{4}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{5}, new int{1}));
+                terr.push_back(new Territory(new int{5}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{6}, new int{1}));   // invalid
+                terr.push_back(new Territory(new int{6}, new int{1}, *armySizeForPlayer, *hasArmy));   // invalid
                 map->addTerritory(terr.back());
 
-                terr.push_back(new Territory(new int{1}, new int{1}));
+                terr.push_back(new Territory(new int{1}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{2}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{1}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{3}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{4}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{3}, new int{1}));
+                terr.push_back(new Territory(new int{3}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{2}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{3}, new int{1}));
+                terr.push_back(new Territory(new int{3}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{5}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{4}, new int{1}));
+                terr.push_back(new Territory(new int{4}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{2}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{4}, new int{1}));
+                terr.push_back(new Territory(new int{4}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{5}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{5}, new int{1}));
+                terr.push_back(new Territory(new int{5}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{4}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{5}, new int{1}));
+                terr.push_back(new Territory(new int{5}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{3}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
                 break;
@@ -151,61 +157,61 @@ int DemonstrateMap(int numberOfPlayers) {
                  * 1        |5          |(L,4)(L,3)
                  * 2        |6          |(L,2)
                  * 2        |7          |(L,2)*/                     // invalid, Continent 2 is not a connected subgraph
-                terr.push_back(new Territory(new int{1}, new int{1}));
+                terr.push_back(new Territory(new int{1}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{3}, new int{1}));
+                terr.push_back(new Territory(new int{3}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{4}, new int{1}));
+                terr.push_back(new Territory(new int{4}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{5}, new int{1}));
+                terr.push_back(new Territory(new int{5}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{6}, new int{2}));
+                terr.push_back(new Territory(new int{6}, new int{2}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{7}, new int{2}));
+                terr.push_back(new Territory(new int{7}, new int{2}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());                                                 // invalid
 
-                terr.push_back(new Territory(new int{1}, new int{1}));
+                terr.push_back(new Territory(new int{1}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{2}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{1}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{3}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{4}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{3}, new int{1}));
+                terr.push_back(new Territory(new int{3}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{2}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{3}, new int{1}));
+                terr.push_back(new Territory(new int{3}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{5}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{4}, new int{1}));
+                terr.push_back(new Territory(new int{4}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{2}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{4}, new int{1}));
+                terr.push_back(new Territory(new int{4}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{5}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{5}, new int{1}));
+                terr.push_back(new Territory(new int{5}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{4}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{5}, new int{1}));
+                terr.push_back(new Territory(new int{5}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{3}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{6}, new int{2}));
+                terr.push_back(new Territory(new int{6}, new int{2}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{2}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{2}, new int{2}));
+                terr.push_back(new Territory(new int{2}, new int{2}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{6}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{7}, new int{2}));
+                terr.push_back(new Territory(new int{7}, new int{2}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{2}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());                                     // invalid
-                terr.push_back(new Territory(new int{2}, new int{2}));
+                terr.push_back(new Territory(new int{2}, new int{2}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{7}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());                                     // invalid
                 break;
@@ -219,53 +225,53 @@ int DemonstrateMap(int numberOfPlayers) {
                  * 1        |5          |(L,4)(L,3)
                  * 2        |1          |(L,2)      // invalid, Territory 1 belongs to Continents 1 & 2
                  * 2        |2          |(L,1)*/    // invalid, Territory 1 belongs to Continents 1 & 2
-                terr.push_back(new Territory(new int{1}, new int{1}));
+                terr.push_back(new Territory(new int{1}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{1}, new int{2}));
+                terr.push_back(new Territory(new int{1}, new int{2}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());                                                // invalid
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{3}, new int{1}));
+                terr.push_back(new Territory(new int{3}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{4}, new int{1}));
+                terr.push_back(new Territory(new int{4}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
-                terr.push_back(new Territory(new int{5}, new int{1}));
+                terr.push_back(new Territory(new int{5}, new int{1}, *armySizeForPlayer, *hasArmy));
                 map->addTerritory(terr.back());
 
-                terr.push_back(new Territory(new int{1}, new int{1}));
+                terr.push_back(new Territory(new int{1}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{2}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{1}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{3}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{2}, new int{1}));
+                terr.push_back(new Territory(new int{2}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{4}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{3}, new int{1}));
+                terr.push_back(new Territory(new int{3}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{2}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{3}, new int{1}));
+                terr.push_back(new Territory(new int{3}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{5}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{4}, new int{1}));
+                terr.push_back(new Territory(new int{4}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{2}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{4}, new int{1}));
+                terr.push_back(new Territory(new int{4}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{5}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{5}, new int{1}));
+                terr.push_back(new Territory(new int{5}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{4}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{5}, new int{1}));
+                terr.push_back(new Territory(new int{5}, new int{1}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{3}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(new int{1}, new int{2}));
+                terr.push_back(new Territory(new int{1}, new int{2}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{2}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());                                        // invalid
-                terr.push_back(new Territory(new int{2}, new int{2}));
+                terr.push_back(new Territory(new int{2}, new int{2}, *armySizeForPlayer, *hasArmy));
                 adj.push_back(new Adjacency(new int{1}, new bool(true)));
                 map->addAdjacency(terr.back(), adj.back());                                        // invalid
                 break;
@@ -287,15 +293,15 @@ int DemonstrateMap(int numberOfPlayers) {
     }
 }
 
-void cleanTerr(vector<Territory*> terr) {
-    while(!terr.empty()) {
+void cleanTerr(vector<Territory *> terr) {
+    while (!terr.empty()) {
         delete terr.back();
         terr.pop_back();
     }
 }
 
-void cleanAdj(vector<Adjacency*> adj) {
-    while(!adj.empty()) {
+void cleanAdj(vector<Adjacency *> adj) {
+    while (!adj.empty()) {
         delete adj.back();
         adj.pop_back();
     }
