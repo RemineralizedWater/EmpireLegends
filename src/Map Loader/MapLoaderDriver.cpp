@@ -14,9 +14,15 @@ void DemonstrateMapLoader(int numberOfPlayers) {
     delete mapLoader;
     mapLoader = new MapLoader(numberOfPlayers);
     mapLoader->loadMap("../src/Map Boards/invalid1_map.txt", validMap);
+    if(validMap){
+        map->display();
+    }
     delete mapLoader;
     mapLoader = new MapLoader(numberOfPlayers);
     mapLoader->loadMap("../src/Map Boards/invalid2_map.txt", validMap);
+    if(validMap){
+        map->display();
+    }
     delete mapLoader;
     mapLoader= nullptr;
 }
