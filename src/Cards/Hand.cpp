@@ -60,9 +60,9 @@ vector<Cards> *Hand::GetHand() {
     return hand;
 }
 
-Cards Hand::Draw(int coins, int index){
+//Cards Hand::Draw(int coins, int index){
     //if(coins==)
-};
+//};
 
 //void BiddingFacility::initializeCoins(BiddingFacility H){
 //

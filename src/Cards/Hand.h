@@ -23,7 +23,7 @@ public:
 
 };
 
-void BiddingFacility::initializeCoins(BiddingFacility H){
+//void BiddingFacility::initializeCoins(BiddingFacility H){
 
-}
+//}
 #endif //EMPIRELEGENDS_HAND_H

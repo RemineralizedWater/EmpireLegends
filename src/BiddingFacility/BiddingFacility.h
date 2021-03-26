@@ -7,6 +7,8 @@ using namespace std;
 
 class BiddingFacility {
 private:
+
+
     string* lastName;
     int* coins;
     int* bidAmount;
@@ -20,6 +22,7 @@ public:
     int* GetCoins();
     int* GetBidAmount();
     BiddingFacility();
+    BiddingFacility(string name);
     ~BiddingFacility();
     BiddingFacility(const BiddingFacility &copy);
     BiddingFacility(string* _lastName, int* _coins, int* _bidAmount);
@@ -30,7 +33,7 @@ public:
     friend istream & operator >> (istream &in, BiddingFacility &bf);
 
 
-    void initializeCoins(BiddingFacility H);
+    //void initializeCoins(BiddingFacility H);
 };
 
 

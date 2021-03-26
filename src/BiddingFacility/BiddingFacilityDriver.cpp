@@ -12,7 +12,7 @@ using namespace std;
 // 2. Show bids which are tied
 // 3. Show if all bids are zero
 
-void DemonstrateBiddingFacility(int numberOfPlayers){
+void DemonstrateBiddingFacility(int numberOfPlayers, string name){
 
     int whiteLines = 100;
 
@@ -22,7 +22,7 @@ void DemonstrateBiddingFacility(int numberOfPlayers){
     vector<BiddingFacility> biddingFacilities;
     for(int i = 0; i < numberOfPlayers; i++){
         cout << "Bidding details for player #" << (i + 1) << endl;
-        BiddingFacility newBiddingFacility;
+        BiddingFacility newBiddingFacility(name);
         newBiddingFacility.ReceiveStartingCoins(numberOfPlayers);
         newBiddingFacility.EnterBid();
         biddingFacilities.push_back(newBiddingFacility);

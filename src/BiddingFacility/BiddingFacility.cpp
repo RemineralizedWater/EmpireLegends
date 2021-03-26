@@ -15,9 +15,17 @@ string lastName;
 // Constructors
 BiddingFacility::BiddingFacility() {
     string tempName;
-    cout << "Player last name:";
-    cin >> tempName;
+    //cout << "Player last name:";
+    //cin >> tempName;
     lastName = new string(tempName);
+    coins = new int{0};
+    bidAmount = new int{0};
+}
+BiddingFacility::BiddingFacility(string name) {
+    //string tempName;
+    //cout << "Player last name:";
+    //cin >> tempName;
+    lastName = new string(name);
     coins = new int{0};
     bidAmount = new int{0};
 }
@@ -56,6 +64,7 @@ int* BiddingFacility::GetCoins(){
 int* BiddingFacility::GetBidAmount(){
     return bidAmount;
 }
+
 
 // Assignment Operator
 BiddingFacility& BiddingFacility::operator =(const BiddingFacility &bf){

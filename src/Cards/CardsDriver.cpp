@@ -1,4 +1,5 @@
 
+
 #include <iostream>
 #include <vector>
 #include "Cards.h"
@@ -6,10 +7,11 @@
 
 using namespace std;
 
+
 void DemonstrateCards(int numberOfPlayers){
 
-    std::unique_ptr<Player> player (new Player("Montreal", BiddingFacility(), Territory(), Cards(),
-                                               rand(), rand(), rand(), Hand(), rand(), "Player 1", rand(), rand()));
+    //std::unique_ptr<Player> player (new Player("Montreal", BiddingFacility(), Territory(), Cards(),
+     //                                          rand(), rand(), rand(), Hand(), rand(), "Player 1", rand(), rand()));
 
     cout << "Creating deck.." << endl;
     Deck* deck = new Deck(numberOfPlayers);
@@ -21,7 +23,7 @@ void DemonstrateCards(int numberOfPlayers){
     deck->PrintCardsIn(deck->GetDeck());
     cout << "Cards in Face Up Pile:" << endl;
     deck->PrintCardsIn((deck->GetFaceUpCards()));
-
+/*
     player->hand_->Exchange(deck);
 
     cout << "Cards in deck: " << endl;
@@ -30,5 +32,5 @@ void DemonstrateCards(int numberOfPlayers){
     deck->PrintCardsIn((deck->GetFaceUpCards()));
     cout << "Cards in player hand:" << endl;
     deck->PrintCardsIn(player->hand_->GetHand());
-
+*/
 }

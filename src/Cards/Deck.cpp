@@ -131,11 +131,6 @@ Deck::Deck(int numberOfPlayers) {
     }
 
 
-    //auto rng = default_random_engine {};
-
-    //std::shuffle(deck->begin(), deck->end(), rng);
-
-
 
 }
 void Deck::ShuffleDeck() {
