@@ -5,15 +5,19 @@
  * @param numberOfPlayers
  */
 void DemonstrateMapLoader(int numberOfPlayers) {
-    MapLoader *map = new MapLoader(numberOfPlayers);
-    map->loadMap("../src/Map Boards/valid_map.txt");
-    delete map;
-    map = new MapLoader(numberOfPlayers);
-    map->loadMap("../src/Map Boards/invalid_map.txt");
-    delete map;
-    map = new MapLoader(numberOfPlayers);
-    map->loadMap("../src/Map Boards/invalid1_map.txt");
-    delete map;
-    map= nullptr;
+    MapLoader *mapLoader = new MapLoader(numberOfPlayers);
+    bool validMap=false;
+    Map* map=mapLoader->loadMap("../src/Map Boards/valid_map.txt", validMap);
+    if(validMap){
+        map->display();
+    }
+    delete mapLoader;
+    mapLoader = new MapLoader(numberOfPlayers);
+    mapLoader->loadMap("../src/Map Boards/invalid1_map.txt", validMap);
+    delete mapLoader;
+    mapLoader = new MapLoader(numberOfPlayers);
+    mapLoader->loadMap("../src/Map Boards/invalid2_map.txt", validMap);
+    delete mapLoader;
+    mapLoader= nullptr;
 }
 

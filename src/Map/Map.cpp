@@ -342,17 +342,21 @@ bool Map::isConnected(int *adjId) {
  * Makes sure there is no duplicate territory eliminating need to validate if a territory belongs to one continent
  * @param t
  */
-void Map::addTerritory(Territory *t) {
+bool Map::addTerritory(Territory *t) {
     vector<Adjacency> *adj = new vector<Adjacency>();       // memory leak
     if (territoryExists(t->getTerrId()) == *(t->getTerrId())) {
         cout << "Territory already exists. Territory belongs to more than one continent. Invalid Map!" << endl;
         /*if (continentExists(t->getContinent()) == *(t->getContinent())) {
             cout << "Territory belongs to more than one continent. Invalid Map!" << endl;
         }*/
-        exit(1);
+        return false;
     }
     terrAndAdjsList->push_back(make_pair(t, adj));
+    return true;
 }
+
+
+
 
 /**
  * Adds adjacency to connect a territory to other terrs
@@ -361,7 +365,7 @@ void Map::addTerritory(Territory *t) {
  * @param t
  * @param a
  */
-void Map::addAdjacency(Territory *t, Adjacency *a) {
+bool Map::addAdjacency(Territory *t, Adjacency *a) {
     vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrAndAdjsList)->begin(); terrIt != (terrAndAdjsList)->end(); ++terrIt) {
         if (*(*terrIt).first->getTerrId() == *(t->getTerrId())) {
@@ -369,16 +373,16 @@ void Map::addAdjacency(Territory *t, Adjacency *a) {
             for (adjIt = (*terrIt).second->begin(); adjIt != (*terrIt).second->end(); ++adjIt) {
                 if (*(adjIt->getAdjId()) == *a->getAdjId() && *(adjIt->getIsLandRoute()) == *a->getIsLandRoute()) {
                     cout << "Edge already exists for the territory" << endl;
-                    exit(1);
+                    return false;
                 }
                 if (*(adjIt->getAdjId()) == *t->getTerrId()) {
                     cout << *(adjIt->getAdjId()) << *t->getTerrId() << endl;
                     cout << "Edge cannot connect to itself" << endl;
-                    exit(1);
+                    return false;
                 }
             }
             (*terrIt).second->push_back(*(a));
-            break;
+            return true;
         }
     }
 }
@@ -394,23 +398,6 @@ void Map::removeAdjacency(int *adjId) {
         for (adjIt = terrIt->second->begin(); adjIt != (*terrIt).second->end(); ++adjIt) {
             if (*(adjIt->getAdjId()) == *(adjId)) {
                 terrIt->second->erase(adjIt);
-                return;
-            }
-        }
-    }
-}
-
-/**
- * removes unused adjacency
- */
-void Map::removeUnUsedAdjacency() {
-    vector<terrInfo>::iterator terrIt;
-    for (terrIt = (terrAndAdjsList)->begin(); terrIt != (terrAndAdjsList)->end(); ++terrIt) {
-        vector<Adjacency>::iterator adjIt;
-        //check if all terrs listed in adjacency are also listed as terrs
-        for (adjIt = (*terrIt).second->begin(); adjIt != (*terrIt).second->end(); ++adjIt) {
-            if (!territoryExists(adjIt->getAdjId())) {
-                removeAdjacency(adjIt->getAdjId());
                 return;
             }
         }
@@ -450,7 +437,7 @@ void Map::display() {
 /**
  * checks the map is a connected graph and each territory listed as an adjacency exists
  **/
-void Map::validate() {
+bool Map::validate() {
     vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrAndAdjsList)->begin(); terrIt != (terrAndAdjsList)->end(); ++terrIt) {
         vector<Adjacency>::iterator adjIt;
@@ -460,13 +447,14 @@ void Map::validate() {
             if (!territoryExists(adjIt->getAdjId())) {
                 cout << "Invalid Map! Territory " << *(*terrIt).first->getTerrId()
                      << " connects to another territory that does not exist" << endl;
-                exit(1);
+                return false;
             }
         }
         //check if territory is connected to rest of graph
         if (!isConnected((*terrIt).first->getTerrId())) {
             cout << "Invalid Map! Map does not connect territory " << *(*terrIt).first->getTerrId() << endl;
-            exit(1);
+            return false;
         }
     }
+    return true;
 }
