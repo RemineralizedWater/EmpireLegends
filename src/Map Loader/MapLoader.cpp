@@ -56,7 +56,7 @@ bool MapLoader::isRectangle() {
             return false;
         }
         else{
-            std::cout << "Please enter a valid number of players \n1) Rectangular \n2) L-shape \nEnter the number corresponding to your layout choice" << std::endl;
+            std::cout << "Please enter a valid number \n1) Rectangular \n2) L-shape \nEnter the number corresponding to your layout choice" << std::endl;
             std::cin >> input;
         }
     }
@@ -272,7 +272,7 @@ bool MapLoader::parseAdjacency(std::string adjacency, Territory* territory) {
             currentIndex = commaIndex + 1;
 
             if(!verifyId(adjacency.substr(currentIndex, closingParenthesisIndex - currentIndex),adjacentTerritory, "Territory name referred in adjacency must be a number",
-                     "Territory name referred in adjacency is too long")){
+                         "Territory name referred in adjacency is too long")){
                 return false;
             }
         }
@@ -315,7 +315,7 @@ bool MapLoader::checkNextFieldExists(std::string line,int &currentIndex) {
  * @return true of false
  */
 bool MapLoader::verifyId(std::string string_id, int &int_id,std::string argErrMsg,
-                                   std::string outRangeErrMsg) {
+                         std::string outRangeErrMsg) {
     try {
         //casting string to int
         int_id = std::stoi(string_id);

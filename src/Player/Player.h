@@ -60,6 +60,8 @@ public:
 
     int getMoney();
 
+    BiddingFacility &getBiddingFacility();
+
     void setMoney(int money);
 
     int &getTotalMovementPointsForRound();

@@ -304,6 +304,10 @@ int Player::getMoney() {
     return *money_;
 }
 
+BiddingFacility & Player::getBiddingFacility() {
+    return *biddingFacility_;
+}
+
 void Player::setMoney(int money) {
     money_ = new int(money);
 }
