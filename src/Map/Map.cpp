@@ -363,6 +363,9 @@ bool Map::addTerritory(Territory *t) {
     return true;
 }
 
+
+
+
 /**
  * Adds adjacency to connect a territory to other terrs
  * verifies there are not duplicate edges

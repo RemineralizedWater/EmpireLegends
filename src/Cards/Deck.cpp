@@ -3,7 +3,10 @@
 //
 
 #include <iostream>
+#include <algorithm>
 #include <vector>
+#include <chrono>
+#include <random>
 #include "Deck.h"
 
 Deck::Deck() {
@@ -230,6 +233,13 @@ Deck::Deck(int numberOfPlayers) {
     }
 }
 
+void Deck::ShuffleDeck() {
+
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+    shuffle (deck->begin(), deck->end(), std::default_random_engine(seed));
+
+}
 // Accessors
 vector<Cards> *Deck::GetDeck() {
     return deck;

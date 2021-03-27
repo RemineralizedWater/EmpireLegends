@@ -138,5 +138,4 @@ public:
     bool validate();
 
     void removeAdjacency(int *adjId);
-
 };
