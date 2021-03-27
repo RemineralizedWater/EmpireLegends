@@ -21,7 +21,7 @@ public:
     void PrintCardsIn(vector<Cards>* vectorOfCards);
     void PopulateFaceUpCards();
     void SetFaceUpCardsCost();
-    //void ShuffleDeck();
+    void ShuffleDeck();
 };
 
 
