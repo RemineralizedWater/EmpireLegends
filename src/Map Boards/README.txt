@@ -2,6 +2,7 @@ __________________________________________________________
 **** This file demonstrates the format for a map file ****
 __________________________________________________________
 
+Starting point
 Shape(number of board pieces) or Shape{
 continent|territory|adjacency
 continent|territory|adjacency

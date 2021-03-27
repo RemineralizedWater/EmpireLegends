@@ -126,6 +126,7 @@ Map* MapLoader::loadMap(std::string file, bool &validMap) {
     std::string adjacency;
     int mapBoardCount = 0;
     bool configuration=false;
+    bool startingPointFound=false;
 
     if(!input){
         std::cout << "No file found!" << std::endl;
@@ -136,9 +137,16 @@ Map* MapLoader::loadMap(std::string file, bool &validMap) {
     //Go through map file line by line
     while(getline(input, line)) {
         int currentCharIndex = 0;
-
+        if(!startingPointFound){
+            int startingPoint=0;
+            if(!verifyId(line, startingPoint, "Territory name must be a number", "Territory name is too long")){
+                return map;
+            }
+            startingPointFound=true;
+            map->setStartingPoint(startingPoint);
+        }
         //checking if map file contains configuration for Rectangle or L-shape
-        if(line=="Rectangle(3){"&&*rectangle==true&&*numberOfBoardPieces==3){
+        else if(line=="Rectangle(3){"&&*rectangle==true&&*numberOfBoardPieces==3){
             configuration=true;
             continue;
         }
