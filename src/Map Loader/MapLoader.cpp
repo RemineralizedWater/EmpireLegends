@@ -56,7 +56,7 @@ bool MapLoader::isRectangle() {
             return false;
         }
         else{
-            std::cout << "Please enter a valid number of players \n1) Rectangular \n2) L-shape \nEnter the number corresponding to your layout choice" << std::endl;
+            std::cout << "Please enter a valid number \n1) Rectangular \n2) L-shape \nEnter the number corresponding to your layout choice" << std::endl;
             std::cin >> input;
         }
     }
@@ -126,6 +126,7 @@ Map* MapLoader::loadMap(std::string file, bool &validMap) {
     std::string adjacency;
     int mapBoardCount = 0;
     bool configuration=false;
+    bool startingPointFound=false;
 
     if(!input){
         std::cout << "No file found!" << std::endl;
@@ -136,9 +137,16 @@ Map* MapLoader::loadMap(std::string file, bool &validMap) {
     //Go through map file line by line
     while(getline(input, line)) {
         int currentCharIndex = 0;
-
+        if(!startingPointFound){
+            int startingPoint=0;
+            if(!verifyId(line, startingPoint, "Territory name must be a number", "Territory name is too long")){
+                return map;
+            }
+            startingPointFound=true;
+            map->setStartingPoint(startingPoint);
+        }
         //checking if map file contains configuration for Rectangle or L-shape
-        if(line=="Rectangle(3){"&&*rectangle==true&&*numberOfBoardPieces==3){
+        else if(line=="Rectangle(3){"&&*rectangle==true&&*numberOfBoardPieces==3){
             configuration=true;
             continue;
         }
@@ -272,7 +280,7 @@ bool MapLoader::parseAdjacency(std::string adjacency, Territory* territory) {
             currentIndex = commaIndex + 1;
 
             if(!verifyId(adjacency.substr(currentIndex, closingParenthesisIndex - currentIndex),adjacentTerritory, "Territory name referred in adjacency must be a number",
-                     "Territory name referred in adjacency is too long")){
+                         "Territory name referred in adjacency is too long")){
                 return false;
             }
         }
@@ -315,7 +323,7 @@ bool MapLoader::checkNextFieldExists(std::string line,int &currentIndex) {
  * @return true of false
  */
 bool MapLoader::verifyId(std::string string_id, int &int_id,std::string argErrMsg,
-                                   std::string outRangeErrMsg) {
+                         std::string outRangeErrMsg) {
     try {
         //casting string to int
         int_id = std::stoi(string_id);

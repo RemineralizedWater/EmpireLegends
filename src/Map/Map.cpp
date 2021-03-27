@@ -235,6 +235,7 @@ bool *Adjacency::getIsLandRoute() {
 Map::Map() {
     this->rect = new bool{false};
     this->terrAndAdjsList = new vector<terrInfo>;       // memory leak
+    this->startingPoint=new int{0};
 }
 
 /**
@@ -244,6 +245,7 @@ Map::Map() {
 Map::Map(bool *rect) {
     this->rect = rect;
     this->terrAndAdjsList = new vector<terrInfo>;       // memory leak
+    this->startingPoint=new int{0};
 }
 
 /**
@@ -253,6 +255,7 @@ Map::Map(bool *rect) {
 Map::Map(const Map &copy) {
     this->rect = new bool(*(copy.rect));
     this->terrAndAdjsList = new vector<terrInfo>(*(copy.terrAndAdjsList));       // memory leak?
+    this->startingPoint = new int(*(copy.startingPoint));
 }
 
 /**
@@ -263,6 +266,8 @@ Map::~Map() {
     rect = nullptr;
     delete terrAndAdjsList;
     terrAndAdjsList = nullptr;
+    delete startingPoint;
+    startingPoint= nullptr;
     /*while(!terrAndAdjsList->empty()) {
         delete terrAndAdjsList->back();
         terrAndAdjsList->pop_back();
@@ -277,6 +282,7 @@ Map::~Map() {
 Map &Map::operator=(const Map &m) {
     this->rect = new bool(*(m.rect));
     this->terrAndAdjsList = new vector<terrInfo>(*(m.terrAndAdjsList));       // memory leak
+    this->startingPoint=new int(*(m.startingPoint));
     return *this;
 }
 
@@ -325,6 +331,20 @@ bool Map::continentExists(int *continent) {
         }
     }
     return false;
+}
+/**
+ * Get the starting point
+ * @return
+ */
+int * Map::getStartingPoint() {
+    return startingPoint;
+}
+/**
+ * set the starting point
+ * @param terrId
+ */
+void Map::setStartingPoint(int &terrId) {
+    startingPoint = &terrId;
 }
 
 /**
