@@ -12,6 +12,9 @@
 #include "../Cards/Hand.h"
 #include "../Cards/Deck.h"
 
+using namespace std;
+
+class Hand;
 
 class Player {
 public:
@@ -25,29 +28,27 @@ public:
     Player(const Player &playerToCopy);
 
     Player(const std::string &region, const BiddingFacility &biddingFacility, const Territory &territory,
-           const Cards &cards, const int &tokenArmies,
-           const int &cubes, const int &disks, const Hand &hand, const int &money, const std::string &name,
-           const int &totalMovementPointsForRound, const int &costToMoveOverWater);
+           const Cards &cards, int *tokenArmies,
+           const int &cubes, int *disks, Hand *hand, int *money, const std::string &name,
+           const int &totalMovementPointsForRound, const int &costToMoveOverWater, const bool &canBeAttacked);
 
     Player &operator=(const Player &playerToCopy);
 
-    bool PayCoin(const int &amountToPay);
+    void PayCoin(const int &amountToPay);
 
-    bool PlaceNewArmies(const int &numberOfArmiesToPlaced);
+    void PlaceNewArmies(int numberOfArmiesToPlaced);
 
-    bool MoveArmies(Territory &territoryToMoveFrom, Territory &toMoveTo, const std::string &playerWhoWantsToMove,
-                    const int &numberOfArmiesHeWantsToMove);
+    void MoveArmies(int numberOfArmiesHeWantsToMove);
 
-    bool MoveOverLand();
+    void MoveOverLand();
 
-    bool MoveOverWater();
+    void MoveOverWater();
 
-    bool BuildCity(Territory &territory);
+    void BuildCity();
 
-    bool DestroyArmy(Territory &territory, const std::string &playerAttacking, const std::string &playerBeingAttacked,
-                     const int &numberOfArmiesToDestroy);
+    void DestroyArmy(int numberOfArmiesToDestroy);
 
-    void AndOrAction(const std::string &goodAndAction);
+    void AndOrAction();
 
     const std::string &getName() const;
 
@@ -57,9 +58,9 @@ public:
 
     void setCostOverWater(const int &costToMoveOverWater);
 
-    int &getMoney();
+    int getMoney();
 
-    void setMoney(const int &money);
+    void setMoney(int money);
 
     int &getTotalMovementPointsForRound();
 
@@ -67,19 +68,31 @@ public:
 
     friend std::istream &operator>>(std::istream &is, Player &player);
 
+    void ResolveActiveCard();
+
+    void SetArmiesTokens(int numberOfTokens);
+
+    int GetArmiesTokens();
+
+    void SetCitiesDisks(int numberOfDisks);
+
+    int GetCitiesDisks();
+
 private:
     //just one attribute added for stream insertion operator
     std::unique_ptr<std::string> region_;
     std::unique_ptr<BiddingFacility> biddingFacility_;
     std::unique_ptr<Territory> territory_;
     std::unique_ptr<Cards> cards_;
-    std::unique_ptr<int> tokenArmies_; //for now is an int, but maybe will change for class "Token"?
+    int *tokenArmies_; //for now is an int, but maybe will change for class "Token"?
     std::unique_ptr<int> cubes_;//for now is an int, but maybe will change for class "Cubes"?
-    std::unique_ptr<int> disks_;//for now is an int, but maybe will change for class "Disks"?
-    std::unique_ptr<int> money_;
+    int *disks_;//for now is an int, but maybe will change for class "Disks"?
+    int *money_;
     std::unique_ptr<std::string> name_;
     std::unique_ptr<int> totalMovementPointsForRound_;
     std::unique_ptr<int> costToMoveOverWater_;
+    std::unique_ptr<bool> canBeAttacked_;
+
 
 
     //TODO add terrs
@@ -91,3 +104,4 @@ private:
 std::istream &operator>>(std::istream &is, Player &player);
 
 #endif //EMPIRELEGENDS_PLAYER_H
+
