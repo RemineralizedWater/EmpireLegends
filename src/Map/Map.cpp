@@ -133,6 +133,14 @@ Territory::Territory(int *terrId, int *continent) {
     this->continentId = continent;
 }
 
+void Territory::InsertNewArmyPlayerMapping(string playerName) {
+    armySizeForPlayer_->insert(std::pair<string, int>(playerName, 0));
+}
+
+void Territory::InsertNewCityPlayerMapping(string playerName) {
+    hasCity->insert(std::pair<string, bool>(playerName, false));
+}
+
 // ------------------------
 // ADJACENCY METHODS
 // Constructors/Destructor
