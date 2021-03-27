@@ -7,7 +7,7 @@
 void DemonstratePlayers() {
 
     std::unique_ptr<Player> playerSimon(new Player("Montreal",
-                                                   BiddingFacility(),
+                                                   new BiddingFacility(),
                                                    Territory(),
                                                    Cards(),
                                                    new int(0),

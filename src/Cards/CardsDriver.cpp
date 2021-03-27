@@ -11,7 +11,7 @@ void DemonstrateCards(int numberOfPlayers){
 
     std::unique_ptr<Player> player(
             new Player("Montreal",
-                       BiddingFacility(),
+                       new BiddingFacility(),
                        Territory(),
                        Cards(),
                        new int(0),
