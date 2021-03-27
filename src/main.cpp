@@ -11,10 +11,12 @@ void DemonstrateMapLoader(int numberOfPlayers);
 void DemonstrateCards(int numberOfPlayers);
 int DemonstrateMap(int numberOfPlayers);
 void DemonstrateA2Part3();
+void DemonstrateGameStart();
 
 int main() {
 
-    int numberOfPlayers = 0;
+    DemonstrateGameStart();
+  /*  int numberOfPlayers = 0;
     int userInput = 0;
 
 
@@ -72,7 +74,7 @@ int main() {
                 exit(0);
         }
     }
-
+*/
 
     return 0;
 }

@@ -129,15 +129,14 @@ public:
 
     friend std::istream &operator>>(std::istream &in, Map &m);
 
-    void addTerritory(Territory *t);
+    bool addTerritory(Territory *t);
 
-    void addAdjacency(Territory *t, Adjacency *a);
+    bool addAdjacency(Territory *t, Adjacency *a);
 
     void display();
 
-    void validate();
+    bool validate();
 
     void removeAdjacency(int *adjId);
 
-    void removeUnUsedAdjacency();
 };

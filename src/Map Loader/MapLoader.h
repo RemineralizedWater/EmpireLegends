@@ -12,7 +12,7 @@ public:
     MapLoader(MapLoader &copy);
     ~MapLoader();
 
-    void loadMap(std::string file);
+    Map* loadMap(std::string file,bool &validMap);
     MapLoader & operator =(const MapLoader &ml);
     friend std::ostream & operator << (std::ostream &out, const MapLoader &ml);
     friend std::istream & operator >> (std::istream &in, MapLoader &ml);
@@ -22,11 +22,11 @@ private:
     bool* rectangle;
     Map* map;
 
-    int verifyTerritoryName(std::string line,int currentIndex, int charIndex, std::string argErrMsg, std::string outRangeErrMsg);
-    int checkNextFieldExists(std::string line,int currentIndex);
-    bool isLand(std::string adjacency, int commaIndex, int currentIndex );
+    bool verifyId(std::string string_id, int &int_id, std::string argErrMsg,std::string outRangeErrMsg);
+    bool isLand(std::string adjacency, int commaIndex, int currentIndex, bool &land );
+    bool checkNextFieldExists(std::string line,int &currentIndex);
     bool isRectangle();
-    void parseAdjacency(std::string adjacency,Territory* terr);
+    bool parseAdjacency(std::string adjacency, Territory* territory);
 
 };
 #endif //EMPIRELEGENDS_MAPLOADER_H

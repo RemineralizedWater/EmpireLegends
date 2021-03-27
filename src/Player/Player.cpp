@@ -303,6 +303,10 @@ int &Player::getMoney() {
     return *money_;
 }
 
+BiddingFacility & Player::getBiddingFacility() {
+    return *biddingFacility_;
+}
+
 void Player::setMoney(const int &money) {
     money_ = std::unique_ptr<int>(new int(money));
 }
