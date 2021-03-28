@@ -7,12 +7,12 @@ void DemonstrateA2Part3(){
 
     Player *player1(
             new Player("Montreal",
-                       BiddingFacility(),
+                       new BiddingFacility(),
                        Territory(),
                        Cards(),
-                       18,
+                       new int(18),
                        1,
-                       3,
+                       new int(3),
                        new Hand(),
                        0,
                        "Player 1",
@@ -23,12 +23,12 @@ void DemonstrateA2Part3(){
 
     Player *player2(
             new Player("Montreal",
-                       BiddingFacility(),
+                       new BiddingFacility(),
                        Territory(),
                        Cards(),
-                       18,
+                       new int(18),
                        1,
-                       3,
+                       new int(3),
                        new Hand(),
                        0,
                        "Player 2",

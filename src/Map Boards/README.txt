@@ -2,7 +2,25 @@ __________________________________________________________
 **** This file demonstrates the format for a map file ****
 __________________________________________________________
 
+Starting point
+Shape(number of board pieces) or Shape{
 continent|territory|adjacency
+continent|territory|adjacency
+continent|territory|adjacency
+-
+continent|territory|adjacency
+continent|territory|adjacency
+-
+}
+
+Shape(number of board pieces)/Shape
+Must specify the number of board pieces as 3 or 4 if Rectangle is the shape
+L-shape board does not need a number of board pieces specified
+
+    ex. L-shape
+
+    ex. Rectangle(3)
+        Rectangle of 3 board pieces
 
 continent
     ex. 1,2,3,4,5,6 ...
@@ -20,8 +38,11 @@ adjacency
     territory is adjacent to territory 8 via Land
 
 ex.
+Rectangle(3){
 1|8|(L,9)(W,10)
-
+}
+shape --> rectangle
+board pieces --> 3
 continent --> 1
 territory --> 8
 adjacency -->
@@ -40,7 +61,7 @@ invalid1_map.txt - does not follow map format
     - error at line 1
 
 invalid2_map.txt - terrs that belong to multiple continents
-    - error at lines 7-10
+    - error at lines 8-11, 22-25, 36-39
 
 invalid3_map.txt - terrs that are not connected
     - error at lines 22-23

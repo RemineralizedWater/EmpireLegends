@@ -23,7 +23,7 @@ MapLoader::MapLoader(int numberOfPlayers) {
     }
     else if(numberOfPlayers==4){
         numberOfBoardPieces=new int{4};
-        rectangle=new bool{false};
+        rectangle=new bool{true};
     }
     map=new Map(rectangle);
 }
@@ -56,7 +56,7 @@ bool MapLoader::isRectangle() {
             return false;
         }
         else{
-            std::cout << "Please enter a valid number of players \n1) Rectangular \n2) L-shape \nEnter the number corresponding to your layout choice" << std::endl;
+            std::cout << "Please enter a valid number \n1) Rectangular \n2) L-shape \nEnter the number corresponding to your layout choice" << std::endl;
             std::cin >> input;
         }
     }
@@ -111,77 +111,144 @@ std::istream& operator >> (std::istream &in, MapLoader &ml){
     return in;
 }
 
+
 /**
  * reads map and validates format
  * @param file
- * @param numberOfBoardPieces
- * @param rectangle
+ * @param validMap
+ * @return map object
  */
-void MapLoader::loadMap(std::string file) {
+Map* MapLoader::loadMap(std::string file, bool &validMap) {
     mapFilePath=new std::string(file);
     std::cout << "***** Reading from map file "<<*mapFilePath<<std::endl;
     std::fstream input(file);
     std::string line;
     std::string adjacency;
     int mapBoardCount = 0;
+    bool configuration=false;
+    bool startingPointFound=false;
 
     if(!input){
         std::cout << "No file found!" << std::endl;
-        return;
+        validMap=false;
+        return map;
     }
 
     //Go through map file line by line
     while(getline(input, line)) {
-        int currentIndex = 0;
-
-        //check for board pieces
-        if (line == "-") {
-            mapBoardCount++;
-            if(mapBoardCount==*numberOfBoardPieces){
-                break;
+        int currentCharIndex = 0;
+        if(!startingPointFound){
+            int startingPoint=0;
+            if(!verifyId(line, startingPoint, "Territory name must be a number", "Territory name is too long")){
+                return map;
             }
-            else{
-                continue;
-            }
+            startingPointFound=true;
+            map->setStartingPoint(startingPoint);
+        }
+        //checking if map file contains configuration for Rectangle or L-shape
+        else if(line=="Rectangle(3){"&&*rectangle==true&&*numberOfBoardPieces==3){
+            configuration=true;
+            continue;
+        }
+        else if(line=="Rectangle(4){"&&*rectangle==true&&*numberOfBoardPieces==4){
+            configuration=true;
+            continue;
+        }
+        else if(line=="L-shape{"&&*rectangle==false){
+            configuration=true;
+            continue;
+        }
+        //stop reading file if end of specified map shape
+        if(configuration==true&&line=="}"){
+            break;
         }
 
-        //parse continent field
-        int continent=verifyTerritoryName(line, currentIndex, line.find("|", currentIndex), "Continent name must be a number", "Continent name is too long");
-        currentIndex = checkNextFieldExists(line, currentIndex);
+        if(configuration){
+            //check for board pieces
+            if (line == "-") {
+                mapBoardCount++;
+                if(mapBoardCount==*numberOfBoardPieces){
+                    break;
+                }
+                else{
+                    continue;
+                }
+            }
 
-        //parse territory field
-        int territory=verifyTerritoryName(line, currentIndex, line.find("|", currentIndex), "Territory name must be a number", "Territory name is too long");
-        map->addTerritory(new Territory(new int {territory},new int {continent}));
-        currentIndex = checkNextFieldExists(line, currentIndex);
+            //parse continent field
+            int continent=0;
+            if(!verifyId(line.substr(currentCharIndex, line.find("|", currentCharIndex) - currentCharIndex), continent, "Continent name must be a number", "Continent name is too long")){
+                validMap=false;
+                return map;
+            }
 
-        //parse adjacency field
-        //there must be ( after |
-        if (line.at(currentIndex) != '(') {
-            std::cout << "Invalid format" << std::endl;
-            return;
+            if(!checkNextFieldExists(line, currentCharIndex)){
+                validMap=false;
+                return map;
+            }
+
+            //parse territory field
+            int territory=0;
+            if(!verifyId(line.substr(currentCharIndex, line.find("|", currentCharIndex) - currentCharIndex) , territory, "Territory name must be a number", "Territory name is too long")){
+                validMap=false;
+                return map;
+            }
+
+            if(!map->addTerritory(new Territory(new int {territory},new int {continent}))){
+                validMap=false;
+                return map;
+            }
+            if(!checkNextFieldExists(line, currentCharIndex)){
+                validMap=false;
+                return map;
+            }
+
+            //parse adjacency field
+            //there must be ( after |
+            if (line.at(currentCharIndex) != '(') {
+                std::cout << "Invalid format" << std::endl;
+                validMap=false;
+                return map;
+            }
+            adjacency = line.substr(currentCharIndex, line.size() - 1);
+            if(!parseAdjacency(adjacency,new Territory(new int {territory},new int {continent}))){
+                validMap=false;
+                return map;
+            }
+
         }
-        adjacency = line.substr(currentIndex, line.size() - 1);
-        parseAdjacency(adjacency,new Territory(new int {territory},new int {continent}));
+
     }
     input.close();
 
-    if(mapBoardCount < *numberOfBoardPieces){
-        std::cout << "Invalid Map! Map must have at least "<< *numberOfBoardPieces<<" boards pieces" << std::endl;
-        return;
+    if(!configuration){
+        cout<<"Invalid Map! There is no configuration for the shape of the map selected in map file"<<endl;
+        validMap=false;
+        return map;
     }
-    //removes edges to terrs that are on boards not used
-    map->removeUnUsedAdjacency();
-    map->validate();
-    map->display();
+    if(mapBoardCount !=*numberOfBoardPieces){
+        std::cout << "Invalid Map! Map must have "<< *numberOfBoardPieces<<" boards pieces" << std::endl;
+        validMap=false;
+        return map;
+    }
+    //validate the values in map
+    if(!map->validate()){
+        validMap=false;
+        return map;
+    }
+    validMap=true;
+    return map;
 }
+
+
 /**
- * Loops through each adjacency a territory has
+ * Loops through each adjacency a territory has and checks it
  * @param adjacency
  */
-void MapLoader::parseAdjacency(std::string adjacency, Territory* territory) {
+bool MapLoader::parseAdjacency(std::string adjacency, Territory* territory) {
 
-    bool land;
-    int adjacentTerritory;
+    bool land = false;
+    int adjacentTerritory = 0;
     int currentIndex = 0;
 
     //going through each adjacent territory in parenthesis
@@ -193,32 +260,40 @@ void MapLoader::parseAdjacency(std::string adjacency, Territory* territory) {
         //duplicate closing brackets
         if (openingParenthesisIndex > closingParenthesisIndex) {
             std::cout << "Invalid format" << std::endl;
-            return;
+            return false;
         }
         //checks there is anything after opening parenthesis
         if (openingParenthesisIndex + 1 < adjacency.size()) {
             currentIndex = openingParenthesisIndex + 1;
         } else {
             std::cout << "Invalid format" << std::endl;
-            return;
+            return false;
         }
 
         //Checks whether a territory is connected to another by land or water, otherwise invalid
-        land = isLand(adjacency, commaIndex, currentIndex);
+        if(!isLand(adjacency,commaIndex,currentIndex, land )){
+            return false;
+        }
 
         //parsing the adjacent territory
         if (commaIndex + 1 < adjacency.size()) {
             currentIndex = commaIndex + 1;
-            adjacentTerritory=verifyTerritoryName(adjacency, currentIndex, closingParenthesisIndex,
-                             "Territory name referred in adjacency must be a number",
-                             "Territory name referred in adjacency is too long");
 
+            if(!verifyId(adjacency.substr(currentIndex, closingParenthesisIndex - currentIndex),adjacentTerritory, "Territory name referred in adjacency must be a number",
+                         "Territory name referred in adjacency is too long")){
+                return false;
+            }
         }
         currentIndex = closingParenthesisIndex + 1;
+
         Adjacency* adj =new Adjacency(new int{adjacentTerritory},new bool{land});
-        map->addAdjacency(territory,adj);
+        if(!map->addAdjacency(territory,adj)){
+            return false;
+        }
     }
+    return true;
 }
+
 
 /**
  * checks if next field exists in the string and updates the current index accordingly
@@ -226,7 +301,7 @@ void MapLoader::parseAdjacency(std::string adjacency, Territory* territory) {
  * @param currentIndex
  * @return
  */
-int MapLoader::checkNextFieldExists(std::string line,int currentIndex) {
+bool MapLoader::checkNextFieldExists(std::string line,int &currentIndex) {
     currentIndex = line.find("|", currentIndex);
 
     //check if there is a character after |
@@ -234,34 +309,33 @@ int MapLoader::checkNextFieldExists(std::string line,int currentIndex) {
         currentIndex++;
     } else {
         std::cout << "invalid format" << std::endl;
-        exit(1);
+        return false;
     }
-    return  currentIndex;
+    return true;
 }
 
 /**
  * verifies continents/terrs are numbers
- * @param line
- * @param currentIndex
- * @param charIndex
+ * @param string_id
+ * @param int_id
  * @param argErrMsg
  * @param outRangeErrMsg
+ * @return true of false
  */
-int MapLoader::verifyTerritoryName(std::string line, int currentIndex, int charIndex, std::string argErrMsg,
-                                 std::string outRangeErrMsg) {
-    int territory = 0;
+bool MapLoader::verifyId(std::string string_id, int &int_id,std::string argErrMsg,
+                         std::string outRangeErrMsg) {
     try {
         //casting string to int
-        territory = std::stoi(line.substr(currentIndex, charIndex - currentIndex));
-        return territory;
+        int_id = std::stoi(string_id);
+        return true;
     }
     catch (std::invalid_argument const &e) {
         std::cout << argErrMsg << '\n';
-        exit(1);
+        return false;
     }
     catch (std::out_of_range const &e) {
         std::cout << outRangeErrMsg << '\n';
-        exit(1);
+        return false;
     }
 }
 
@@ -273,19 +347,22 @@ int MapLoader::verifyTerritoryName(std::string line, int currentIndex, int charI
  * @param adjacency
  * @param commaIndex
  * @param currentIndex
+ * @param land
  * @return
  */
-bool MapLoader::isLand(std::string adjacency, int commaIndex, int currentIndex ) {
+bool MapLoader::isLand(std::string adjacency, int commaIndex, int currentIndex, bool &land ) {
     //land
     if (adjacency.substr(currentIndex, commaIndex - currentIndex) == "L") {
+        land=true;
         return true;
     }
-    //water
+        //water
     else if (adjacency.substr(currentIndex, commaIndex - currentIndex) == "W") {
-        return false;
+        land=false;
+        return true;
     }
     else{
         std::cout << "territory must be connected by L or W " << std::endl;
-        exit(1);
+        return false;
     }
 }

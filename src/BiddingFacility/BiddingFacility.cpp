@@ -14,34 +14,27 @@ string lastName;
 
 // Constructors
 BiddingFacility::BiddingFacility() {
-    string tempName;
-    cout << "Player last name:";
-    cin >> tempName;
-    lastName = new string(tempName);
+    lastName = new string("blank");
     coins = new int{0};
     bidAmount = new int{0};
+    owningPlayer = nullptr;
+    isStartingPlayer = new bool(false);
 }
 
 BiddingFacility::BiddingFacility(const BiddingFacility &copy){
     this->lastName = new string(*(copy.lastName));
     this->coins = new int(*(copy.coins));
     this->bidAmount = new int(*(copy.bidAmount));
+    this->owningPlayer = copy.owningPlayer;
+    this->isStartingPlayer = new bool(*(copy.isStartingPlayer));
 }
 
-BiddingFacility::BiddingFacility(string* _lastName, int* _coins, int* _bidAmount){
-    lastName = new string(*(_lastName));
-    coins = new int(*(_coins));
-    bidAmount = new int(*(_bidAmount));
-}
-BiddingFacility::BiddingFacility(string* _lastName, int* _coins){
-    lastName = new string(*(_lastName));
-    coins = new int(*(_coins));
-    bidAmount = new int{0};
-}
-BiddingFacility::BiddingFacility(string* _lastName){
-    lastName = new string(*(_lastName));
-    coins = new int{0};
-    bidAmount = new int{0};
+BiddingFacility::BiddingFacility(string* _lastName, int* _coins, int* _bidAmount, Player* _owningPlayer, bool* _isStartingPlayer){
+    lastName = new string(*_lastName);
+    coins = new int(*_coins);
+    bidAmount = new int(*_bidAmount);
+    owningPlayer = _owningPlayer;
+    isStartingPlayer = new bool(*_isStartingPlayer);
 }
 
 // Accessors
@@ -90,13 +83,13 @@ void BiddingFacility::ReceiveStartingCoins(int numberOfPlayers){
 // Enable the Player Object to privately choose a number to bid
 void BiddingFacility::EnterBid(){
 
-    cout << "Enter starting bid (you have " << *coins << " coins):";
+    cout << "Enter starting bid (you have " << owningPlayer->getMoney() << " coins):";
     while(true){
-        if(cin >> *bidAmount && *bidAmount <= *coins && *bidAmount >= 0){
+        if(cin >> *bidAmount && *bidAmount <= owningPlayer->getMoney() && *bidAmount >= 0){
             cout << "Bid amount of (" << *bidAmount << ") received." << endl;
             break;
         }else{
-            cout << "Please enter a valid bid (integer, no greater than " << *coins << ")" << endl << ">>";
+            cout << "Please enter a valid bid (integer, no greater than " << owningPlayer->getMoney() << ")" << endl << ">>";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
@@ -113,12 +106,13 @@ void BiddingFacility::RevealBid(){
 // name order wins the bid and will go first (if coins are bid they are paid).
 void BiddingFacility::ResolveBid(bool hasWonBid){
     if(hasWonBid){
-        *coins = *coins - *bidAmount;
-        cout << *lastName << " has won the bid! " << endl;
-        cout << *lastName << " has lost " << *bidAmount << " coins and has " << *coins << " coins left." << endl;
+        owningPlayer->PayCoin(*bidAmount);
+        cout << owningPlayer->getName() << " has won the bid! " << endl;
+        cout << owningPlayer->getName() << " has lost " << *bidAmount << " coins and has " << owningPlayer->getMoney() << " coins left." << endl;
+        owningPlayer->supply += *bidAmount;
         cout << *bidAmount << " has been added to the Supply." << endl;
     }else{
-        cout << *lastName << " has lost the bid. They keep their coins." << endl;
+        cout << owningPlayer->getName() << " has lost the bid. They keep their coins." << endl;
     }
 }
 
@@ -138,5 +132,13 @@ BiddingFacility::~BiddingFacility() {
         lastName = nullptr;
     }
 
+}
+
+void BiddingFacility::SetOwningPlayer(Player *_owningPlayer) {
+    owningPlayer = _owningPlayer;
+}
+
+void BiddingFacility::SetLastName(string name) {
+    lastName = new string(name);
 }
 

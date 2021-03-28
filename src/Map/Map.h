@@ -105,6 +105,7 @@ private:
     bool *rect;
     typedef pair<Territory *, vector<Adjacency> *> terrInfo;     // typedef keyword allows new names for types, pair holds two & had constructor/destructor
     vector<terrInfo> *terrAndAdjsList;
+    int* startingPoint;
 
     //struct terrInfo {Territory* terr; vector<Adjacency>* adj;};     // TODO Change typedef pair to struct? Need init?
     //vector<Territory*, vector<Adjacency>*>* terrs;
@@ -129,15 +130,17 @@ public:
 
     friend std::istream &operator>>(std::istream &in, Map &m);
 
-    void addTerritory(Territory *t);
+    bool addTerritory(Territory *t);
 
-    void addAdjacency(Territory *t, Adjacency *a);
+    bool addAdjacency(Territory *t, Adjacency *a);
+
+    int* getStartingPoint();
+
+    void setStartingPoint(int &terrId);
 
     void display();
 
-    void validate();
+    bool validate();
 
     void removeAdjacency(int *adjId);
-
-    void removeUnUsedAdjacency();
 };

@@ -36,6 +36,7 @@ void Player::PlaceNewArmies(int numberOfArmiesToPlaced) {
         cout << "You do not have enough armies left to place." << endl;
     }else{
         terr->getArmySizeForPlayer()[*name_] += numberOfArmiesToPlaced;
+        tokenArmies_-=numberOfArmiesToPlaced;
         cout << "Your army has been successfully placed." << endl;
     }
 }
@@ -226,27 +227,27 @@ Player::Player(const Player &playerToCopy)
 
 //Constructor
 Player::Player(const std::string &region,
-               const BiddingFacility &biddingFacility,
+               BiddingFacility *biddingFacility,
                const Territory &territory,
                const Cards &cards,
-               const int &tokenArmies,
+               int *tokenArmies,
                const int &cubes,
-               const int &disks,
+               int *disks,
                Hand *hand,
-               const int &money,
+               int *money,
                const std::string &name,
                const int &totalMovementPointsForRound,
                const int &costToMoveOverWater,
                const bool &canBeAttacked)
         : region_(new std::string(region)),
-          biddingFacility_(new BiddingFacility(biddingFacility)),
+          biddingFacility_(new BiddingFacility()),
           territory_(new Territory(territory)),
           cards_(new Cards(cards)),
-          tokenArmies_(new int(18)),
+          tokenArmies_(new int(0)),
           cubes_(new int(cubes)),
-          disks_(new int(3)),
+          disks_(new int(0)),
           hand_(new Hand()),
-          money_(new int(money)),
+          money_(new int(0)),
           totalMovementPointsForRound_(new int(0)),
           costToMoveOverWater_(new int(3)),
           name_(new std::string(name)),
@@ -299,12 +300,16 @@ void Player::setCostOverWater(const int &costToMoveOverWater) {
     costToMoveOverWater_ = std::unique_ptr<int>(new int(costToMoveOverWater));
 }
 
-int &Player::getMoney() {
+int Player::getMoney() {
     return *money_;
 }
 
-void Player::setMoney(const int &money) {
-    money_ = std::unique_ptr<int>(new int(money));
+BiddingFacility * Player::getBiddingFacility() {
+    return biddingFacility_;
+}
+
+void Player::setMoney(int money) {
+    money_ = new int(money);
 }
 
 int &Player::getTotalMovementPointsForRound() {
@@ -337,5 +342,29 @@ void Player::ResolveActiveCard() {
         }
     }
 
+}
+
+void Player::SetArmiesTokens(int numberOfTokens) {
+    tokenArmies_= new int (numberOfTokens);
+}
+
+int Player::GetArmiesTokens() {
+    return *tokenArmies_;
+}
+
+int Player::GetCitiesDisks() {
+    return *disks_;
+}
+
+void Player::SetCitiesDisks(int numberOfDisks) {
+    disks_=new int (numberOfDisks);
+}
+
+void Player::RequestPlayerName() {
+    string tempName;
+    cout << "Please enter player's name: ";
+    cin >> tempName;
+    setName(tempName);
+    biddingFacility_->SetLastName(tempName);
 }
 

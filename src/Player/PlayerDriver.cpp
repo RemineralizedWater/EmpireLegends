@@ -6,8 +6,19 @@
 //Main driver for Ass1. to create and run desired functions of the player class
 void DemonstratePlayers() {
 
-    std::unique_ptr<Player> playerSimon(new Player("Montreal", BiddingFacility(), Territory(), Cards(),
-                                                   rand(), rand(), rand(), new Hand(), rand(), "Player 1", rand(), rand(), true));
+    std::unique_ptr<Player> playerSimon(new Player("Montreal",
+                                                   new BiddingFacility(),
+                                                   Territory(),
+                                                   Cards(),
+                                                   new int(0),
+                                                   1,
+                                                   new int(0),
+                                                   new Hand(),
+                                                   0,
+                                                   "Player 1",
+                                                   0,
+                                                   3,
+                                                   true));
 
 
     std::unique_ptr<std::map<std::string, int>> armySizeForPlayer(new std::map<std::string, int>());
