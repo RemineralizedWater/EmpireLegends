@@ -91,19 +91,10 @@ void DemonstrateA2BiddingFacility(){
 
     delete winningBidPlayer;
     winningBidPlayer = nullptr;
-    delete players[0];
-    players[0] = nullptr;
-    delete players[1];
-    players[1] = nullptr;
-
-    if(player1 != nullptr){
-        delete player1;
-        player1 = nullptr;
-    }
-    if(player2 != nullptr){
-        delete player2;
-        player2 = nullptr;
-    }
+    delete player1;
+    player1 = nullptr;
+    delete player2;
+    player2 = nullptr;
 
 
     return;
