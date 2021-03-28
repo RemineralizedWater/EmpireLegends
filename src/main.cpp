@@ -42,8 +42,8 @@ int main() {
         cout << "1 - Part 1: Game start " << endl;
         cout << "2 - Part 2: Game play: startup phase" << endl;
         cout << "3 - Part 3: Game play: main game loop" << endl;
-        cout << "4 - Part 4: Cards" << endl;
-        cout << "5 - Part 5: Bidding Facility" << endl;
+        cout << "4 - Part 4: Main game loop: The player actions" << endl;
+        cout << "5 - Part 5: See Part 3 for implementation" << endl;
         cout << "6 - Exit" << endl;
 
         while(true){
@@ -63,13 +63,11 @@ int main() {
                 DemonstrateA2Part2();
                 break;
             case 3:
+            case 5:
                 DemonstrateA2Part3();
                 break;
             case 4:
-                DemonstrateCards(numberOfPlayers);
-                break;
-            case 5:
-                DemonstrateA2BiddingFacility();
+                DemonstratePlayers();
                 break;
             case 6:
             default:

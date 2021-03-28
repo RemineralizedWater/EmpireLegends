@@ -47,10 +47,15 @@ Territory::Territory(const Territory &copy) {
  * destructor
  */
 Territory::~Territory() {
-    delete terrId;
-    terrId = nullptr;
-    delete continentId;
-    continentId = nullptr;
+    if(terrId != nullptr){
+        delete terrId;
+        terrId = nullptr;
+    }
+    if(continentId != nullptr){
+        delete continentId;
+        continentId = nullptr;
+    }
+
 }
 // Operators
 /**
@@ -175,10 +180,16 @@ Adjacency::Adjacency(const Adjacency &copy) {
  * destructor
  */
 Adjacency::~Adjacency() {
-    delete adjId;
-    adjId = nullptr;
-    delete isLandRoute;
-    isLandRoute = nullptr;
+    if(adjId != nullptr){
+        delete adjId;
+        adjId = nullptr;
+    }
+
+    if(isLandRoute != nullptr){
+        delete isLandRoute;
+        isLandRoute = nullptr;
+    }
+
 }
 // Operators
 /**
@@ -262,12 +273,21 @@ Map::Map(const Map &copy) {
  * destructor
  */
 Map::~Map() {
-    delete rect;
-    rect = nullptr;
-    delete terrAndAdjsList;
-    terrAndAdjsList = nullptr;
-    delete startingPoint;
-    startingPoint= nullptr;
+    if(rect != nullptr){
+        delete rect;
+        rect = nullptr;
+    }
+
+    if(terrAndAdjsList != nullptr){
+        delete terrAndAdjsList;
+        terrAndAdjsList = nullptr;
+    }
+
+    //if(startingPoint != nullptr){
+    //    delete startingPoint;
+    //    startingPoint= nullptr;
+    //}
+
     /*while(!terrAndAdjsList->empty()) {
         delete terrAndAdjsList->back();
         terrAndAdjsList->pop_back();
@@ -413,6 +433,7 @@ bool Map::addAdjacency(Territory *t, Adjacency *a) {
             return true;
         }
     }
+    return false;
 }
 
 /**
