@@ -13,10 +13,11 @@ int DemonstrateMap(int numberOfPlayers);
 void DemonstrateA2Part3();
 void DemonstrateA2Part2();
 void DemonstrateA2Part1();
+void DemonstrateA2Part6();
 
 
 int main() {
-
+    DemonstrateA2Part6();
 
    int numberOfPlayers = 0;
     int userInput = 0;
@@ -72,11 +73,13 @@ int main() {
                 DemonstrateBiddingFacility(numberOfPlayers);
                 break;
             case 6:
+                DemonstrateA2Part6();
+                break;
+            case 7:
             default:
                 exit(0);
         }
     }
-
 
     return 0;
 }

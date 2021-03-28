@@ -105,6 +105,7 @@ private:
     bool *rect;
     typedef pair<Territory *, vector<Adjacency> *> terrInfo;     // typedef keyword allows new names for types, pair holds two & had constructor/destructor
     vector<terrInfo> *terrAndAdjsList;
+    int* startingPoint;
 
     //struct terrInfo {Territory* terr; vector<Adjacency>* adj;};     // TODO Change typedef pair to struct? Need init?
     //vector<Territory*, vector<Adjacency>*>* terrs;
@@ -136,6 +137,14 @@ public:
     void display();
 
     bool validate();
+
+    int* getStartingPoint();
+
+    void setStartingPoint(int &terrId);
+
+    Territory* findTerritory(int terrId);
+
+    int getMapSize();
 
     void removeAdjacency(int *adjId);
 };
