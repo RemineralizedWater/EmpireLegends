@@ -89,10 +89,10 @@ private:
     BiddingFacility* biddingFacility_;
     std::unique_ptr<Territory> territory_;
     std::unique_ptr<Cards> cards_;
-    int *tokenArmies_; //for now is an int, but maybe will change for class "Token"?
+    int tokenArmies_; //for now is an int, but maybe will change for class "Token"?
     std::unique_ptr<int> cubes_;//for now is an int, but maybe will change for class "Cubes"?
-    int *disks_;//for now is an int, but maybe will change for class "Disks"?
-    int *money_;
+    int disks_;//for now is an int, but maybe will change for class "Disks"?
+    int money_;
     std::unique_ptr<std::string> name_;
     std::unique_ptr<int> totalMovementPointsForRound_;
     std::unique_ptr<int> costToMoveOverWater_;

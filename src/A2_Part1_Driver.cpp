@@ -38,4 +38,6 @@ void DemonstrateA2Part1(){
     deck = nullptr;
     delete starter;
     starter= nullptr;
+
+    return;
 }

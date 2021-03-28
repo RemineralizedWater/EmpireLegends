@@ -49,8 +49,9 @@ void DemonstrateA2Part2(){
     player2->getBiddingFacility()->SetOwningPlayer(player2);
 
     cout<<"Enter Player 2 Name: "<<endl;
-    cin>>temp;
-    player2->getBiddingFacility()->SetLastName(temp);
+    string temp2 = "";
+    cin>>temp2;
+    player2->getBiddingFacility()->SetLastName(temp2);
 
 
     Player *players[2] = {player1, player2};
@@ -114,11 +115,11 @@ void DemonstrateA2Part2(){
     cout<<"----------------------------------"<<endl;
 
     cout<<"Placing 4 armies in starting Territories."<<endl;
+    Territory *terr2 = new Territory();
+    terr2->InsertNewArmyPlayerMapping(player2->getName());
+    terr2->InsertNewCityPlayerMapping(player2->getName());
 
-    terr->InsertNewArmyPlayerMapping(player2->getName());
-    terr->InsertNewCityPlayerMapping(player2->getName());
-
-    terr->getHasCity()[player2->getName()]=true;
+    terr2->getHasCity()[player2->getName()]=true;
     player2->PlaceNewArmies(4);
     cout<<"----------------------------------"<<endl;
 
@@ -171,22 +172,14 @@ void DemonstrateA2Part2(){
         }
     }
 
-    delete winningBidPlayer;
-    winningBidPlayer = nullptr;
     delete player1;
     player1 = nullptr;
     delete player2;
     player2 = nullptr;
-    delete players[0];
-    players[0] = nullptr;
-    delete players[1];
-    players[1] = nullptr;
     delete deck;
     deck = nullptr;
     delete terr;
     terr = nullptr;
 
-
     return;
-
 }
