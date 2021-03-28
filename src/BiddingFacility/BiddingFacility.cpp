@@ -55,6 +55,8 @@ BiddingFacility& BiddingFacility::operator =(const BiddingFacility &bf){
     this->lastName = new string(*(bf.lastName));
     this->coins = new int(*(bf.coins));
     this->bidAmount = new int(*(bf.bidAmount));
+    this->owningPlayer = bf.owningPlayer;
+    this->isStartingPlayer = new bool(*bf.isStartingPlayer);
     return *this;
 }
 
@@ -66,13 +68,15 @@ ostream& operator << (ostream &out, const BiddingFacility &bf){
 
 // Note: obj needs to be dereferenced when using cout (ie, cout << *foo)
 istream& operator >> (istream &in, BiddingFacility &bf){
-    in >> *(bf.lastName);
-    in >> *(bf.coins);
-    in >> *(bf.bidAmount);
+    in >> *bf.lastName;
+    in >> *bf.coins;
+    in >> *bf.bidAmount;
+    in >> *bf.owningPlayer;
+    in >> *bf.isStartingPlayer;
     return in;
 }
 
-// Enable the Player Object to pick up their coins
+//Obsolete
 void BiddingFacility::ReceiveStartingCoins(int numberOfPlayers){
     coins = new int{0};
     if(numberOfPlayers == 2) coins = new int{14};
@@ -106,9 +110,9 @@ void BiddingFacility::RevealBid(){
 // name order wins the bid and will go first (if coins are bid they are paid).
 void BiddingFacility::ResolveBid(bool hasWonBid){
     if(hasWonBid){
-        owningPlayer->PayCoin(*bidAmount);
         cout << owningPlayer->getName() << " has won the bid! " << endl;
         cout << owningPlayer->getName() << " has lost " << *bidAmount << " coins and has " << owningPlayer->getMoney() << " coins left." << endl;
+        owningPlayer->PayCoin(*bidAmount);
         owningPlayer->supply += *bidAmount;
         cout << *bidAmount << " has been added to the Supply." << endl;
     }else{
@@ -132,6 +136,15 @@ BiddingFacility::~BiddingFacility() {
         lastName = nullptr;
     }
 
+    if(owningPlayer != nullptr){
+        delete owningPlayer;
+        owningPlayer = nullptr;
+    }
+
+    if(isStartingPlayer != nullptr){
+        delete isStartingPlayer;
+        isStartingPlayer = nullptr;
+    }
 }
 
 void BiddingFacility::SetOwningPlayer(Player *_owningPlayer) {

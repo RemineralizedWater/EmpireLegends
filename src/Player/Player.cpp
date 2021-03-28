@@ -39,6 +39,9 @@ void Player::PlaceNewArmies(int numberOfArmiesToPlaced) {
         tokenArmies_-=numberOfArmiesToPlaced;
         cout << "Your army has been successfully placed." << endl;
     }
+
+    delete terr;
+    terr = nullptr;
 }
 
 void Player::AndOrAction() {
@@ -105,6 +108,9 @@ void Player::AndOrAction() {
         cout << "Error in Player.cpp.AndOrAction().";
         exit(0);
     }
+
+    delete activeCard;
+    activeCard = nullptr;
 }
 
 //Moves army for desired player
@@ -129,6 +135,11 @@ void Player::MoveArmies(int numberOfArmiesHeWantsToMove) {
                 << "Your army has not been moved because the armies you want to move are bigger than the armies you own in your source territory"
                 << std::endl;
     }
+
+    delete territoryToMoveFrom;
+    territoryToMoveFrom = nullptr;
+    delete territoryToMoveTo;
+    territoryToMoveTo = nullptr;
 }
 
 //Move over land for desired player
@@ -177,6 +188,9 @@ void Player::BuildCity() {
         cout << "You cannot build a city in this territory because you do not have an available city token." << endl;
         // OK TO END, no need to loop
     }
+
+    delete terr;
+    terr = nullptr;
 }
 
 //Destroys the army of the selected played
@@ -205,7 +219,8 @@ void Player::DestroyArmy(int numberOfArmiesToDestroy) {
         targetTerritory->getArmySizeForPlayer()[targetPlayer] = 0;
     }
 
-
+    delete targetTerritory;
+    targetTerritory = nullptr;
 }
 
 //Copy constructor
@@ -222,7 +237,7 @@ Player::Player(const Player &playerToCopy)
           totalMovementPointsForRound_(new int(*playerToCopy.totalMovementPointsForRound_)),
           costToMoveOverWater_(new int(*playerToCopy.costToMoveOverWater_)),
           canBeAttacked_(new bool(*playerToCopy.canBeAttacked_)){
-    std::cout << "Calling the copy constructor" << std::endl;
+
 }
 
 //Constructor
@@ -252,13 +267,11 @@ Player::Player(const std::string &region,
           costToMoveOverWater_(new int(3)),
           name_(new std::string(name)),
           canBeAttacked_(new bool(canBeAttacked)){
-    std::cout << "Calling the default constructor" << std::endl;
-
 }
 
 //assignment operator
 Player &Player::operator=(const Player &playerToCopy) {
-    std::cout << "Calling the assignment operator" << std::endl;
+    //TODO?
     return *this;
 }
 
@@ -281,7 +294,25 @@ Player::Player() {
 }
 
 Player::~Player() {
+    if(hand_ != nullptr){
+        delete hand_;
+        hand_ = nullptr;
+    }
 
+    if(tokenArmies_ != nullptr){
+        delete tokenArmies_;
+        tokenArmies_ = nullptr;
+    }
+
+    if(disks_ != nullptr){
+        delete disks_;
+        disks_ = nullptr;
+    }
+
+    if(money_ != nullptr){
+        delete money_;
+        money_ = nullptr;
+    }
 }
 
 const std::string &Player::getName() const {
@@ -341,7 +372,8 @@ void Player::ResolveActiveCard() {
                 break;
         }
     }
-
+    delete activeCard;
+    activeCard = nullptr;
 }
 
 void Player::SetArmiesTokens(int numberOfTokens) {

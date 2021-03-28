@@ -81,7 +81,16 @@ void DemonstrateA2Part2(){
     cout<<player1->getName()<<" Currently has "<<player1->getMoney()<<" Coins."<<endl;
 
 
-
-
-
+    delete player1;
+    player1 = nullptr;
+    delete player2;
+    player2 = nullptr;
+    delete players[0];
+    players[0] = nullptr;
+    delete players[1];
+    players[1] = nullptr;
+    delete deck;
+    deck = nullptr;
+    delete terr;
+    terr = nullptr;
 }
