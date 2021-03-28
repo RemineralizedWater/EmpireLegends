@@ -13,12 +13,12 @@ int DemonstrateMap(int numberOfPlayers);
 void DemonstrateA2Part3();
 void DemonstrateA2Part2();
 void DemonstrateA2Part1();
-
+void DemonstrateA2BiddingFacility();
 
 int main() {
 
 
-   int numberOfPlayers = 0;
+    int numberOfPlayers = 0;
     int userInput = 0;
 
 
@@ -69,7 +69,7 @@ int main() {
                 DemonstrateCards(numberOfPlayers);
                 break;
             case 5:
-                DemonstrateBiddingFacility(numberOfPlayers);
+                DemonstrateA2BiddingFacility();
                 break;
             case 6:
             default:

@@ -227,7 +227,7 @@ Player::Player(const Player &playerToCopy)
 
 //Constructor
 Player::Player(const std::string &region,
-               const BiddingFacility &biddingFacility,
+               BiddingFacility *biddingFacility,
                const Territory &territory,
                const Cards &cards,
                int *tokenArmies,
@@ -240,7 +240,7 @@ Player::Player(const std::string &region,
                const int &costToMoveOverWater,
                const bool &canBeAttacked)
         : region_(new std::string(region)),
-          biddingFacility_(new BiddingFacility(biddingFacility)),
+          biddingFacility_(new BiddingFacility()),
           territory_(new Territory(territory)),
           cards_(new Cards(cards)),
           tokenArmies_(new int(0)),
@@ -304,8 +304,8 @@ int Player::getMoney() {
     return *money_;
 }
 
-BiddingFacility & Player::getBiddingFacility() {
-    return *biddingFacility_;
+BiddingFacility * Player::getBiddingFacility() {
+    return biddingFacility_;
 }
 
 void Player::setMoney(int money) {
@@ -358,5 +358,13 @@ int Player::GetCitiesDisks() {
 
 void Player::SetCitiesDisks(int numberOfDisks) {
     disks_=new int (numberOfDisks);
+}
+
+void Player::RequestPlayerName() {
+    string tempName;
+    cout << "Please enter player's name: ";
+    cin >> tempName;
+    setName(tempName);
+    biddingFacility_->SetLastName(tempName);
 }
 

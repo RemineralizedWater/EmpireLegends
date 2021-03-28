@@ -62,22 +62,25 @@ vector<Player*> Game::createPlayers(int startingPoint) {
     Player* ptr;
 
     for(int i=0;i<*numberOfPlayers;i++){
-        BiddingFacility *b =new BiddingFacility();
-        b->ReceiveStartingCoins(*numberOfPlayers);
         Player *player(
                 new Player(to_string(startingPoint),
-                           *b,
+                           new BiddingFacility(),
                            Territory(),
                            Cards(),
                            new int(0),
                            1,
                            new int(0),
                            new Hand(),
-                           b->GetCoins(),
-                           *(b->GetLastName()),
+                           new int{0},
+                           "Player 1",
                            0,
                            3,
                            true));
+        player->hand_->SetOwningPlayer(player);
+        player->getBiddingFacility()->SetOwningPlayer(player);
+
+        cout << "Providing player 18 coins.." << endl;
+        player->setMoney(18);
         players.push_back(player);
     }
     return players;

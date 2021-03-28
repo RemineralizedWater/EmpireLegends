@@ -11,7 +11,7 @@ void DemonstrateA2Part2(){
 
     Player *player1(
             new Player("Montreal",
-                       BiddingFacility(),
+                       new BiddingFacility(),
                        Territory(),
                        Cards(),
                        new int(0),
@@ -27,7 +27,7 @@ void DemonstrateA2Part2(){
 
     Player *player2(
             new Player("Montreal",
-                       BiddingFacility(),
+                       new BiddingFacility(),
                        Territory(),
                        Cards(),
                        new int(0),
