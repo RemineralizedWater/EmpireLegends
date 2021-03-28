@@ -181,8 +181,12 @@ void DemonstrateA2Part2(){
     players[0] = nullptr;
     delete players[1];
     players[1] = nullptr;
+    delete deck;
+    deck = nullptr;
+    delete terr;
+    terr = nullptr;
 
 
-return;
+    return;
 
 }

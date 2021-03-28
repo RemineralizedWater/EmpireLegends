@@ -129,6 +129,46 @@ Cards::~Cards() {
         delete cost;
         cost = nullptr;
     }
+
+    if(actionOperation != nullptr){
+        delete actionOperation;
+        actionOperation = nullptr;
+    }
+
+    if(actionOne != nullptr){
+        delete actionOne;
+        actionOne = nullptr;
+    }
+
+    if(actionOneValue != nullptr){
+        delete actionOneValue;
+        actionOneValue = nullptr;
+    }
+
+    if(actionTwo != nullptr){
+        delete actionTwo;
+        actionTwo = nullptr;
+    }
+
+    if(actionTwoValue != nullptr){
+        delete actionTwoValue;
+        actionTwoValue = nullptr;
+    }
+
+    if(goods != nullptr){
+        delete goods;
+        goods = nullptr;
+    }
+
+    if(goodsValue != nullptr){
+        delete goodsValue;
+        goodsValue = nullptr;
+    }
+
+    if(goodsSpecific != nullptr){
+        delete goodsSpecific;
+        goodsSpecific = nullptr;
+    }
 }
 
 int *Cards::GetActionOne() {

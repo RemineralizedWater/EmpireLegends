@@ -64,9 +64,15 @@ Hand::~Hand() {
         delete hand;
         hand = nullptr;
     }
+
     if(activeCard != nullptr){
         delete activeCard;
         activeCard = nullptr;
+    }
+
+    if(owningPlayer != nullptr){
+        delete owningPlayer;
+        owningPlayer = nullptr;
     }
 }
 
