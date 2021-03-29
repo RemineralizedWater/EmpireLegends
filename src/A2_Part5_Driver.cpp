@@ -59,10 +59,10 @@ void DemonstrateA2Part5(){
         players[index]->ResolveActiveCard();
 
         /*cout << "Cards in deck: " << endl;
-        deck->PrintCardsIn(deck->GetDeck());
+        deck->PrintCardsIn(deck->GetDeck());*/
         cout << "Cards in Face Up Pile:" << endl;
         deck->PrintCardsIn((deck->GetFaceUpCards()));
-        cout << "Cards in " << players[index]->getName() << "'s hand:" << endl;
+        /*cout << "Cards in " << players[index]->getName() << "'s hand:" << endl;
         deck->PrintCardsIn(players[index]->hand_->GetHand());*/
 
         if(index == 0) index = 1;
