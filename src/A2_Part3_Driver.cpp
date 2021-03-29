@@ -83,4 +83,5 @@ void DemonstrateA2Part3(){
     delete deck;
     deck = nullptr;
 
+    return;
 }

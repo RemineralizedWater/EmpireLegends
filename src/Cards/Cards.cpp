@@ -8,79 +8,97 @@ using namespace std;
 
 // Constructors
 Cards::Cards() {
-    name = new string{"New Card"};
-    goodsAndAction = new string{"empty"};
-    cost = new int{0};
+    name = "New Card";
+    goodsAndAction = "empty";
+    cost = 0;
 
-    actionOperation = new string{""};
-    actionOne = new int{0};
-    actionOneValue = new int{0};
-    actionTwo = new int{0};
-    actionTwoValue = new int{0};
+    actionOperation = "";
+    actionOne = 0;
+    actionOneValue = 0;
+    actionTwo = 0;
+    actionTwoValue = 0;
 
-    goods = new int{0};
-    goodsValue = new int{0};
-    goodsSpecific = new string{""};
+    goods = 0;
+    goodsValue = 0;
+    goodsSpecific = "";
 }
 
-Cards::Cards(string *_name, string *_goodsAndAction, int* _cost,
-             int* _actionOne, int* _actionOneValue, string* _actionOperation,
-             int* _actionTwo, int* _actionTwoValue,
-             int* _goods, int* _goodsValue, string* _goodsSpecific) {
-    name = new string(*_name);
-    goodsAndAction = new string(*_goodsAndAction);
-    cost = new int(*_cost);
+Cards::Cards(string _name, string _goodsAndAction, int _cost,
+             int _actionOne, int _actionOneValue, string _actionOperation,
+             int _actionTwo, int _actionTwoValue,
+             int _goods, int _goodsValue, string _goodsSpecific) {
+    name = _name;
+    goodsAndAction = _goodsAndAction;
+    cost = _cost;
 
-    actionOperation = new string{*_actionOperation};
-    actionOne = new int{*_actionOne};
-    actionOneValue = new int{*_actionOneValue};
-    actionTwo = new int{*_actionTwo};
-    actionTwoValue = new int{*_actionTwoValue};
+    actionOperation = _actionOperation;
+    actionOne = _actionOne;
+    actionOneValue = _actionOneValue;
+    actionTwo = _actionTwo;
+    actionTwoValue = _actionTwoValue;
 
-    goods = new int{*_goods};
-    goodsValue = new int{*_goodsValue};
-    goodsSpecific = new string{*_goodsSpecific};
+    goods = _goods;
+    goodsValue = _goodsValue;
+    goodsSpecific = _goodsSpecific;
+}
+
+Cards::Cards(string *_name, string *_goodsAndAction, int *_cost, int *_actionOne, int *_actionOneValue,
+             string *_actionOperation, int *_actionTwo, int *_actionTwoValue, int *_goods, int *_goodsValue,
+             string *_goodsSpecific) {
+    name = *_name;
+    goodsAndAction = *_goodsAndAction;
+    cost = *_cost;
+
+    actionOperation = *_actionOperation;
+    actionOne = *_actionOne;
+    actionOneValue = *_actionOneValue;
+    actionTwo = *_actionTwo;
+    actionTwoValue = *_actionTwoValue;
+
+    goods = *_goods;
+    goodsValue = *_goodsValue;
+    goodsSpecific = *_goodsSpecific;
 }
 
 Cards::Cards(const Cards &copy){
-    this->name = new string(*copy.name);
-    this->goodsAndAction = new string(*copy.goodsAndAction);
-    this->cost = cost = new int{*copy.cost};
+    this->name = copy.name;
+    this->goodsAndAction = copy.goodsAndAction;
+    this->cost = cost = copy.cost;
 
-    this->actionOperation = new string(*copy.actionOperation);
-    this->actionOne = new int{*copy.actionOne};
-    this->actionOneValue = new int{*copy.actionOneValue};
-    this->actionTwo = new int{*copy.actionTwo};
-    this->actionTwoValue = new int{*copy.actionTwoValue};
+    this->actionOperation = copy.actionOperation;
+    this->actionOne = copy.actionOne;
+    this->actionOneValue = copy.actionOneValue;
+    this->actionTwo = copy.actionTwo;
+    this->actionTwoValue = copy.actionTwoValue;
 
-    this->goods = new int{*copy.goods};
-    this->goodsValue = new int{*copy.goodsValue};
-    this->goodsSpecific = new string{*copy.goodsSpecific};
+    this->goods = copy.goods;
+    this->goodsValue = copy.goodsValue;
+    this->goodsSpecific = copy.goodsSpecific;
 }
 
 // Accessors
-string* Cards::GetName() {
+string Cards::GetName() {
     return name;
 }
 
-string *Cards::GetGoodsAndAction() {
+string Cards::GetGoodsAndAction() {
     return goodsAndAction;
 }
 
-int* Cards::GetCost(){
+int Cards::GetCost(){
     return cost;
 }
 
 // Mutators
 void Cards::SetCost(int _cost){
-    cost = new int{_cost};
+    cost = _cost;
 }
 
 // Assignment Operator
 Cards & Cards::operator =(const Cards &c){
-    this->name = new string(*(c.name));
-    this->goodsAndAction = new string(*(c.goodsAndAction));
-    this->cost = new int(*(c.cost));
+    this->name = c.name;
+    this->goodsAndAction = c.goodsAndAction;
+    this->cost = c.cost;
     return *this;
 }
 
@@ -92,14 +110,14 @@ ostream& operator << (ostream &out, const Cards &c){
                         "+ coins and 1+ elixirs", "+ VP per card: ", "+ VP for card: Noble x3", "+ VP per 3 coins",
                         "immune to attack", "+ VP for card: Mountain x2"};
 
-    out << "(cost: " << *(c.cost) << ") name: " << *(c.name) << ", actions = " << actions[*c.actionOne] << *c.actionOneValue;
-    if(*c.actionTwo != 0){
-        out << " " << *c.actionOperation << " " << actions[*c.actionTwo] << *c.actionTwoValue;
+    out << "(cost: " << c.cost << ") name: " << c.name << ", actions = " << actions[c.actionOne] << c.actionOneValue;
+    if(c.actionTwo != 0){
+        out << " " << c.actionOperation << " " << actions[c.actionTwo] << c.actionTwoValue;
     }
-    if(*c.goods == 6){
-        out << " goods = " << goods[6] << *c.goodsSpecific;
+    if(c.goods == 6){
+        out << " goods = " << goods[6] << c.goodsSpecific;
     }else{
-        out<< " goods = " << to_string(*c.goodsValue) << goods[*c.goods];
+        out<< " goods = " << to_string(c.goodsValue) << goods[c.goods];
     }
 
     out << endl;
@@ -108,99 +126,48 @@ ostream& operator << (ostream &out, const Cards &c){
 
 // Note: obj needs to be dereferenced when using cout (ie, cout << *foo)
 istream& operator >> (istream &in, Cards &c){
-    in >> *(c.name);
-    in >> *(c.goodsAndAction);
-    in >> *(c.cost);
+    in >> c.name;
+    in >> c.goodsAndAction;
+    in >> c.cost;
     return in;
 }
 
 Cards::~Cards() {
-    if(name != nullptr){
-        delete name;
-        name = nullptr;
-    }
 
-    if(goodsAndAction != nullptr){
-        delete goodsAndAction;
-        goodsAndAction = nullptr;
-    }
-
-    if(cost != nullptr){
-        delete cost;
-        cost = nullptr;
-    }
-
-    if(actionOperation != nullptr){
-        delete actionOperation;
-        actionOperation = nullptr;
-    }
-
-    if(actionOne != nullptr){
-        delete actionOne;
-        actionOne = nullptr;
-    }
-
-    if(actionOneValue != nullptr){
-        delete actionOneValue;
-        actionOneValue = nullptr;
-    }
-
-    if(actionTwo != nullptr){
-        delete actionTwo;
-        actionTwo = nullptr;
-    }
-
-    if(actionTwoValue != nullptr){
-        delete actionTwoValue;
-        actionTwoValue = nullptr;
-    }
-
-    if(goods != nullptr){
-        delete goods;
-        goods = nullptr;
-    }
-
-    if(goodsValue != nullptr){
-        delete goodsValue;
-        goodsValue = nullptr;
-    }
-
-    if(goodsSpecific != nullptr){
-        delete goodsSpecific;
-        goodsSpecific = nullptr;
-    }
 }
 
-int *Cards::GetActionOne() {
+int Cards::GetActionOne() {
     return actionOne;
 }
 
-int *Cards::GetActionTwo() {
+int Cards::GetActionTwo() {
     return actionTwo;
 }
 
-int *Cards::GetActionOneValue() {
+int Cards::GetActionOneValue() {
     return actionOneValue;
 }
 
-int *Cards::GetActionTwoValue() {
+int Cards::GetActionTwoValue() {
     return actionTwoValue;
 }
 
-string *Cards::GetActionOperator() {
+string Cards::GetActionOperator() {
     return actionOperation;
 }
 
-int *Cards::GetGoods() {
+int Cards::GetGoods() {
     return goods;
 }
 
-int *Cards::GetGoodsValue() {
+int Cards::GetGoodsValue() {
     return goodsValue;
 }
 
-string *Cards::GetGoodsSpecific() {
+string Cards::GetGoodsSpecific() {
     return goodsSpecific;
 }
+
+
 
 

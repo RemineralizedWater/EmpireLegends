@@ -136,10 +136,10 @@ BiddingFacility::~BiddingFacility() {
         lastName = nullptr;
     }
 
-    if(owningPlayer != nullptr){
-        delete owningPlayer;
-        owningPlayer = nullptr;
-    }
+    //if(owningPlayer != nullptr){
+    //    delete owningPlayer;
+    //    owningPlayer = nullptr;
+    //}
 
     if(isStartingPlayer != nullptr){
         delete isStartingPlayer;

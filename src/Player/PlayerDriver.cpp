@@ -40,11 +40,12 @@ void DemonstratePlayers() {
     playerSimon->MoveOverLand();
     //playerSimon->AndOrAction(); // needs a card to showcase - see part 3 demonstration
 
+    /*
     std::unique_ptr<Player> copyPlayerConstructor(new Player(*playerSimon.get())); //copy constructor
     *copyPlayerConstructor = *playerSimon;//assignment operator
 
     std::istringstream istringstream("Another city");//creating stream of string
     istringstream >> *copyPlayerConstructor;//stream insertion operation
-
+    */
     return;
 }
