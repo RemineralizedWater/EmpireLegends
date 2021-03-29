@@ -20,6 +20,7 @@ public:
     bool countArmies(vector<Player*>players,Map* map);
     bool countControlledTerritories(vector<Player*>players,Map* map);
 
+
     Map* selectMap(bool &validMap);
     Game & operator =(const Game &gs);
     friend std::ostream & operator << (std::ostream &out, const Game &gs);

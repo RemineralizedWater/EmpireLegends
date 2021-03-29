@@ -7,7 +7,7 @@ void DemonstrateA2Part3(){
 
     Player *player1(
             new Player("Montreal",
-                       BiddingFacility(),
+                       new BiddingFacility(),
                        Territory(),
                        Cards(),
                        new int(18),
@@ -23,7 +23,7 @@ void DemonstrateA2Part3(){
 
     Player *player2(
             new Player("Montreal",
-                       BiddingFacility(),
+                       new BiddingFacility(),
                        Territory(),
                        Cards(),
                        new int(18),
@@ -72,4 +72,16 @@ void DemonstrateA2Part3(){
         }
     }
 
+    delete player1;
+    player1 = nullptr;
+    delete player2;
+    player2 = nullptr;
+    delete players[0];
+    players[0] = nullptr;
+    delete players[1];
+    players[1] = nullptr;
+    delete deck;
+    deck = nullptr;
+
+    return;
 }

@@ -134,13 +134,13 @@ public:
 
     bool addAdjacency(Territory *t, Adjacency *a);
 
-    void display();
-
-    bool validate();
-
     int* getStartingPoint();
 
     void setStartingPoint(int &terrId);
+
+    void display();
+
+    bool validate();
 
     Territory* findTerritory(int terrId);
 

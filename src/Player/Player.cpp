@@ -10,7 +10,7 @@ int Player::supply = 0;
 
 //Successfully pays coin and withdraws money from said player account (for Ass1. just returns
 void Player::PayCoin(const int &amountToPay) {
-    *money_ -= amountToPay;
+    money_ -= amountToPay;
     supply += amountToPay;
     std::cout << "The transaction has been successful, we have removed: " << amountToPay << " coins." << std::endl;
 }
@@ -28,31 +28,34 @@ void Player::PlaceNewArmies(int numberOfArmiesToPlaced) {
 
     if(!terr->getHasCity()[*name_]){
         cout << "You do not have a city in this territory, please choose another territory." << endl;
-        cout << "You have " << *tokenArmies_ << " army tokens." << endl;
+        cout << "You have " << tokenArmies_ << " army tokens." << endl;
         //TODO LOOP
     }
 
-    if(*tokenArmies_ < numberOfArmiesToPlaced){
+    if(tokenArmies_ < numberOfArmiesToPlaced){
         cout << "You do not have enough armies left to place." << endl;
     }else{
         terr->getArmySizeForPlayer()[*name_] += numberOfArmiesToPlaced;
         tokenArmies_-=numberOfArmiesToPlaced;
         cout << "Your army has been successfully placed." << endl;
     }
+
+    delete terr;
+    terr = nullptr;
 }
 
 void Player::AndOrAction() {
     Cards* activeCard = hand_->GetActiveCard();
 
-    string actionOneValue = to_string(*activeCard->GetActionOneValue());
-    string actionTwoValue = to_string(*activeCard->GetActionTwoValue());
+    string actionOneValue = to_string(activeCard->GetActionOneValue());
+    string actionTwoValue = to_string(activeCard->GetActionTwoValue());
     string actions[5] = {"", "Place Armies: ", "Move Armies: ", "Build City: ", "Destroy Armies: "};
 
-    if(activeCard->GetActionOperator()->compare("OR") == 0){
+    if(activeCard->GetActionOperator().compare("OR") == 0){
         int option;
         cout << "Would you like to: " << endl;
-        cout << to_string(*activeCard->GetActionOne()) + ": " + actions[*activeCard->GetActionOne()] + actionOneValue + ", OR" << endl;
-        cout << to_string(*activeCard->GetActionTwo()) + ": " + actions[*activeCard->GetActionTwo()] + actionTwoValue << endl;
+        cout << to_string(activeCard->GetActionOne()) + ": " + actions[activeCard->GetActionOne()] + actionOneValue + ", OR" << endl;
+        cout << to_string(activeCard->GetActionTwo()) + ": " + actions[activeCard->GetActionTwo()] + actionTwoValue << endl;
         cout << "Option: ";
         cin >> option;
 
@@ -60,51 +63,54 @@ void Player::AndOrAction() {
 
         switch(option){
             case 1: //place i armies
-                PlaceNewArmies(*(activeCard->GetActionOneValue()));
+                PlaceNewArmies(activeCard->GetActionOneValue());
                 break;
             case 2: //move i armies
-                MoveArmies(*(activeCard->GetActionOneValue()));
+                MoveArmies(activeCard->GetActionOneValue());
                 break;
             case 3: // build city
                 BuildCity();
                 break;
             case 4: // destroy armies
-                DestroyArmy(*(activeCard->GetActionOneValue()));
+                DestroyArmy(activeCard->GetActionOneValue());
                 break;
         }
-    }else if(activeCard->GetActionOperator()->compare("AND") == 0){
-        switch(*activeCard->GetActionOne()){
+    }else if(activeCard->GetActionOperator().compare("AND") == 0){
+        switch(activeCard->GetActionOne()){
             case 1: //place i armies
-                PlaceNewArmies(*(activeCard->GetActionOneValue()));
+                PlaceNewArmies(activeCard->GetActionOneValue());
                 break;
             case 2: //move i armies
-                MoveArmies(*(activeCard->GetActionOneValue()));
+                MoveArmies(activeCard->GetActionOneValue());
                 break;
             case 3: // build city
                 BuildCity();
                 break;
             case 4: // destroy armies
-                DestroyArmy(*(activeCard->GetActionOneValue()));
+                DestroyArmy(activeCard->GetActionOneValue());
                 break;
         }
-        switch(*activeCard->GetActionTwo()){
+        switch(activeCard->GetActionTwo()){
             case 1: //place i armies
-                PlaceNewArmies(*(activeCard->GetActionTwoValue()));
+                PlaceNewArmies(activeCard->GetActionTwoValue());
                 break;
             case 2: //move i armies
-                MoveArmies(*(activeCard->GetActionTwoValue()));
+                MoveArmies(activeCard->GetActionTwoValue());
                 break;
             case 3: // build city
                 BuildCity();
                 break;
             case 4: // destroy armies
-                DestroyArmy(*(activeCard->GetActionTwoValue()));
+                DestroyArmy(activeCard->GetActionTwoValue());
                 break;
         }
     }else{
         cout << "Error in Player.cpp.AndOrAction().";
         exit(0);
     }
+
+    delete activeCard;
+    activeCard = nullptr;
 }
 
 //Moves army for desired player
@@ -129,6 +135,11 @@ void Player::MoveArmies(int numberOfArmiesHeWantsToMove) {
                 << "Your army has not been moved because the armies you want to move are bigger than the armies you own in your source territory"
                 << std::endl;
     }
+
+    delete territoryToMoveFrom;
+    territoryToMoveFrom = nullptr;
+    delete territoryToMoveTo;
+    territoryToMoveTo = nullptr;
 }
 
 //Move over land for desired player
@@ -169,14 +180,17 @@ void Player::BuildCity() {
         }
     }
 
-    if (*disks_ > 0) {
-        *disks_ -= 1;
+    if (disks_ > 0) {
+        disks_ -= 1;
         terr->getHasCity()[*name_] = true;
         cout << "You have successfully built the city." << endl;
     } else {
         cout << "You cannot build a city in this territory because you do not have an available city token." << endl;
         // OK TO END, no need to loop
     }
+
+    delete terr;
+    terr = nullptr;
 }
 
 //Destroys the army of the selected played
@@ -205,7 +219,8 @@ void Player::DestroyArmy(int numberOfArmiesToDestroy) {
         targetTerritory->getArmySizeForPlayer()[targetPlayer] = 0;
     }
 
-
+    delete targetTerritory;
+    targetTerritory = nullptr;
 }
 
 //Copy constructor
@@ -214,23 +229,22 @@ Player::Player(const Player &playerToCopy)
           biddingFacility_(new BiddingFacility(*playerToCopy.biddingFacility_)),
           territory_(new Territory(*playerToCopy.territory_)),
           cards_(new Cards(*playerToCopy.cards_)),
-          tokenArmies_(new int(*playerToCopy.tokenArmies_)),
+          tokenArmies_(playerToCopy.tokenArmies_),
           cubes_(new int(*playerToCopy.cubes_)),
-          disks_(new int(*playerToCopy.disks_)),
-          money_(new int(*playerToCopy.money_)),
+          disks_(playerToCopy.disks_),
+          money_(playerToCopy.money_),
           name_(new std::string(*playerToCopy.name_)),
           totalMovementPointsForRound_(new int(*playerToCopy.totalMovementPointsForRound_)),
           costToMoveOverWater_(new int(*playerToCopy.costToMoveOverWater_)),
-          canBeAttacked_(new bool(*playerToCopy.canBeAttacked_)),
           victoryPoints_(new int(*playerToCopy.victoryPoints_)),
-          elixers_(new int(*playerToCopy.elixers_))
+          elixers_(new int(*playerToCopy.elixers_)),
+          canBeAttacked_(new bool(*playerToCopy.canBeAttacked_))
           {
-    std::cout << "Calling the copy constructor" << std::endl;
 }
 
 //Constructor
 Player::Player(const std::string &region,
-               const BiddingFacility &biddingFacility,
+               BiddingFacility *biddingFacility,
                const Territory &territory,
                const Cards &cards,
                int *tokenArmies,
@@ -243,25 +257,26 @@ Player::Player(const std::string &region,
                const int &costToMoveOverWater,
                const bool &canBeAttacked)
         : region_(new std::string(region)),
-          biddingFacility_(new BiddingFacility(biddingFacility)),
+          biddingFacility_(new BiddingFacility()),
           territory_(new Territory(territory)),
           cards_(new Cards(cards)),
-          tokenArmies_(new int(0)),
+          tokenArmies_(0),
           cubes_(new int(cubes)),
-          disks_(new int(0)),
+          disks_(0),
           hand_(new Hand()),
-          money_(new int(0)),
+          money_(0),
           totalMovementPointsForRound_(new int(0)),
           costToMoveOverWater_(new int(3)),
           name_(new std::string(name)),
-          canBeAttacked_(new bool(canBeAttacked)), victoryPoints_(new int(0)), elixers_(new int(0)){
-    std::cout << "Calling the default constructor" << std::endl;
-
+          canBeAttacked_(new bool(canBeAttacked)),
+          victoryPoints_(new int(0)),
+          elixers_(new int(0)) {
 }
+
 
 //assignment operator
 Player &Player::operator=(const Player &playerToCopy) {
-    std::cout << "Calling the assignment operator" << std::endl;
+    //TODO?
     return *this;
 }
 
@@ -271,9 +286,10 @@ std::istream &operator>>(std::istream &is, Player &player) {
     is >> *player.biddingFacility_;
     is >> *player.territory_;
     is >> *player.cards_;
-    is >> *player.tokenArmies_;
+    is >> player.tokenArmies_;
     is >> *player.cubes_;
-    is >> *player.disks_;
+    is >> player.disks_;
+    is >> player.money_;
     is >> *player.totalMovementPointsForRound_;
     is >> *player.costToMoveOverWater_;
     is >> *player.victoryPoints_;
@@ -288,7 +304,10 @@ Player::Player() {
 }
 
 Player::~Player() {
-
+    if(hand_ != nullptr){
+        delete hand_;
+        hand_ = nullptr;
+    }
 }
 
 const std::string &Player::getName() const {
@@ -306,16 +325,17 @@ int &Player::getCostOverWater() {
 void Player::setCostOverWater(const int &costToMoveOverWater) {
     costToMoveOverWater_ = std::unique_ptr<int>(new int(costToMoveOverWater));
 }
-BiddingFacility & Player::getBiddingFacility() {
-    return *biddingFacility_;
-}
 
 int Player::getMoney() {
-    return *money_;
+    return money_;
+}
+
+BiddingFacility * Player::getBiddingFacility() {
+    return biddingFacility_;
 }
 
 void Player::setMoney(int money) {
-    money_ = new int(money);
+    money_ = money;
 }
 
 int Player::GetElixers() {
@@ -342,80 +362,83 @@ void Player::setTotalMovementPointsForRound(const int &totalMovementPointsForRou
 }
 
 void Player::applyAbility() {
-    Cards* activeCard = hand_->GetActiveCard();
     //+ to move armies
-    if(*(activeCard->GetGoods()) == 1){
+    if(hand_->GetActiveCard()->GetGoods() == 1){
         //TODO 1 extra move each time player movesArmy
     }
         //"+ to place armies"
-    else if(*(activeCard->GetGoods()) == 2){
+    else if(hand_->GetActiveCard()->GetGoods() == 2){
         //TODO gain one more army when placeArmies performed
     }
         //"- to move over water"
-    else if(*(activeCard->GetGoods()) == 3){
+    else if(hand_->GetActiveCard()->GetGoods() == 3){
         //TODO reduce cost to move over water
     }
         //"+ elixirs"
-    else if(*(activeCard->GetGoods()) == 4){
-        *elixers_+=*(activeCard->GetGoodsValue());
+    else if(hand_->GetActiveCard()->GetGoods() == 4){
+        *elixers_+=hand_->GetActiveCard()->GetGoods();
     }
         //"+ coins and 1+ elixirs"
-    else if(*(activeCard->GetGoods()) == 5){
+    else if(hand_->GetActiveCard()->GetGoods() == 5){
         *elixers_+=1;
-        *money_+=*(activeCard->GetGoodsValue());
+        money_+=hand_->GetActiveCard()->GetGoods();
     }
         // "immune to attack"
-    else if(*(activeCard->GetGoods()) == 9){
+    else if(hand_->GetActiveCard()->GetGoods() == 9){
         //TODO make immumne to attak
 
     }
 }
 void Player::ResolveActiveCard() {
-    Cards* activeCard = hand_->GetActiveCard();
     applyAbility();
-
-    if(*activeCard->GetActionTwo() != 0){ // if a second action exists
+    if(hand_->GetActiveCard()->GetActionTwo() != 0){ // if a second action exists
         AndOrAction();
-    }
-    else{
-        switch(*(activeCard->GetActionOne())){
+    }else{
+        switch(hand_->GetActiveCard()->GetActionOne()){
             case 1: //place i armies
-                PlaceNewArmies(*(activeCard->GetActionOneValue()));
+                PlaceNewArmies(hand_->GetActiveCard()->GetActionOneValue());
                 break;
             case 2: //move i armies
-                MoveArmies(*(activeCard->GetActionOneValue()));
+                MoveArmies(hand_->GetActiveCard()->GetActionOneValue());
                 break;
             case 3: // build city
                 BuildCity();
                 break;
             case 4: // destroy armies
-                DestroyArmy(*(activeCard->GetActionOneValue()));
+                DestroyArmy(hand_->GetActiveCard()->GetActionOneValue());
                 break;
         }
     }
-
 }
 
 void Player::SetArmiesTokens(int numberOfTokens) {
-    tokenArmies_= new int (numberOfTokens);
+    tokenArmies_= numberOfTokens;
 }
 
 int Player::GetArmiesTokens() {
-    return *tokenArmies_;
+    return tokenArmies_;
 }
 
 int Player::GetCitiesDisks() {
-    return *disks_;
+    return disks_;
 }
 
 void Player::SetCitiesDisks(int numberOfDisks) {
-    disks_=new int (numberOfDisks);
+    disks_= numberOfDisks;
+}
+
+void Player::RequestPlayerName() {
+    string tempName;
+    cout << "Please enter player's name: ";
+    cin >> tempName;
+    setName(tempName);
+    biddingFacility_->SetLastName(tempName);
 }
 void Player::ComputeVPFlying(Cards c) {
     vector<Cards>* hand = hand_->GetHand();
     for(Cards c2:*hand){
-        std::string::size_type pos = (*(c.GetName())).find(' ');
-        if(*(c.GetGoodsSpecific())==(*(c.GetName())).substr(0, pos)){
+        std::string::size_type pos = (c.GetName()).find(' ');
+        if(c.GetGoodsSpecific()==(c.GetName()).substr(0, pos)){
             *victoryPoints_+=1;
         }
     }
@@ -424,12 +447,12 @@ void Player::ComputeVPNoble(Cards c) {
     int nobleCards=0;
     vector<Cards>* hand = hand_->GetHand();
     for(Cards c2:*hand){
-        std::string::size_type pos = (*(c.GetName())).find(' ');
-        if("Noble"==(*(c.GetName())).substr(0, pos)){
+        std::string::size_type pos = (c.GetName()).find(' ');
+        if("Noble"==(c.GetName()).substr(0, pos)){
             nobleCards++;
         }
         if(nobleCards==3){
-            *victoryPoints_+=*c.GetGoodsValue();
+            *victoryPoints_+=c.GetGoodsValue();
         }
     }
 }
@@ -437,12 +460,12 @@ void Player::ComputeVPMountain(Cards c) {
     vector<Cards>* hand = hand_->GetHand();
     int mountainCards=0;
     for(Cards c2:*hand){
-        std::string::size_type pos = (*(c.GetName())).find(' ');
-        if("Mountain"==(*(c.GetName())).substr(0, pos)){
+        std::string::size_type pos = (c.GetName()).find(' ');
+        if("Mountain"==(c.GetName()).substr(0, pos)){
             mountainCards++;
         }
         if(mountainCards==2){
-            *victoryPoints_+=*c.GetGoodsValue();
+            *victoryPoints_+=c.GetGoodsValue();
         }
     }
 
@@ -451,19 +474,19 @@ void Player::ComputeCards() {
     vector<Cards>* hand = hand_->GetHand();
     for(Cards c:*hand){
         //+ VP per card: flying
-        if (*(c.GetGoods()) == 6){
+        if (c.GetGoods() == 6){
             ComputeVPFlying(c);
         }
             //+ VP for card: Noble x3
-        else if(*(c.GetGoods()) == 7){
+        else if(c.GetGoods() == 7){
             ComputeVPNoble(c);
         }
             //+ VP per 3 coins
-        else if(*(c.GetGoods()) == 8){
-            *victoryPoints_+=(*money_)*(*c.GetGoodsValue());
+        else if(c.GetGoods() == 8){
+            *victoryPoints_+=money_*c.GetGoodsValue();
         }
             //+ VP for card: Mountain x2
-        else if(*(c.GetGoods()) == 10){
+        else if(c.GetGoods() == 10){
             ComputeVPMountain(c);
 
         }
@@ -498,7 +521,6 @@ void Player::checkForMostElixers(int currentPlayerIndex,vector<Player*> players)
  * @param map
  */
 void Player::ComputeScore(int currentPlayerIndex,vector<Player*> players,Map* map) {
-
     //looks at abilities from some of the cards the user owns and update VP if possible
     ComputeCards();
 

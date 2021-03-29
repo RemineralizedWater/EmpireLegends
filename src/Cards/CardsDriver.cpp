@@ -11,7 +11,7 @@ void DemonstrateCards(int numberOfPlayers){
 
     std::unique_ptr<Player> player(
             new Player("Montreal",
-                       BiddingFacility(),
+                       new BiddingFacility(),
                        Territory(),
                        Cards(),
                        new int(0),
@@ -42,4 +42,6 @@ void DemonstrateCards(int numberOfPlayers){
     cout << "Cards in player hand:" << endl;
     deck->PrintCardsIn(player->hand_->GetHand());
 
+    delete deck;
+    deck = nullptr;
 }

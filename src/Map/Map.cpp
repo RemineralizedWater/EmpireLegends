@@ -47,10 +47,15 @@ Territory::Territory(const Territory &copy) {
  * destructor
  */
 Territory::~Territory() {
-    delete terrId;
-    terrId = nullptr;
-    delete continentId;
-    continentId = nullptr;
+    if(terrId != nullptr){
+        delete terrId;
+        terrId = nullptr;
+    }
+    if(continentId != nullptr){
+        delete continentId;
+        continentId = nullptr;
+    }
+
 }
 // Operators
 /**
@@ -176,10 +181,16 @@ Adjacency::Adjacency(const Adjacency &copy) {
  * destructor
  */
 Adjacency::~Adjacency() {
-    delete adjId;
-    adjId = nullptr;
-    delete isLandRoute;
-    isLandRoute = nullptr;
+    if(adjId != nullptr){
+        delete adjId;
+        adjId = nullptr;
+    }
+
+    if(isLandRoute != nullptr){
+        delete isLandRoute;
+        isLandRoute = nullptr;
+    }
+
 }
 // Operators
 /**
@@ -263,12 +274,21 @@ Map::Map(const Map &copy) {
  * destructor
  */
 Map::~Map() {
-    delete rect;
-    rect = nullptr;
-    delete terrAndAdjsList;
-    terrAndAdjsList = nullptr;
-    delete startingPoint;
-    startingPoint= nullptr;
+    if(rect != nullptr){
+        delete rect;
+        rect = nullptr;
+    }
+
+    if(terrAndAdjsList != nullptr){
+        delete terrAndAdjsList;
+        terrAndAdjsList = nullptr;
+    }
+
+    //if(startingPoint != nullptr){
+    //    delete startingPoint;
+    //    startingPoint= nullptr;
+    //}
+
     /*while(!terrAndAdjsList->empty()) {
         delete terrAndAdjsList->back();
         terrAndAdjsList->pop_back();
@@ -354,6 +374,21 @@ int Map::getMapSize() {
 return terrAndAdjsList->size();
 }
 /**
+ * Get the starting point
+ * @return
+ */
+int * Map::getStartingPoint() {
+    return startingPoint;
+}
+/**
+ * set the starting point
+ * @param terrId
+ */
+void Map::setStartingPoint(int &terrId) {
+    startingPoint = &terrId;
+}
+
+/**
  * Checks if a territory is connected to rest of graph by checking if any other territory has it listed as an adjacency
  * @param adjId
  * @return
@@ -419,6 +454,7 @@ bool Map::addAdjacency(Territory *t, Adjacency *a) {
             return true;
         }
     }
+    return false;
 }
 
 /**
@@ -436,20 +472,6 @@ void Map::removeAdjacency(int *adjId) {
             }
         }
     }
-}
-/**
- * Get the starting point
- * @return
- */
-int * Map::getStartingPoint() {
-    return startingPoint;
-}
-/**
- * set the starting point
- * @param terrId
- */
-void Map::setStartingPoint(int &terrId) {
-    startingPoint = &terrId;
 }
 /**
  * displays contents in graph

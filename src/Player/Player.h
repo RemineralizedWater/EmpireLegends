@@ -15,6 +15,7 @@
 using namespace std;
 
 class Hand;
+class BiddingFacility;
 
 class Player {
 public:
@@ -27,12 +28,14 @@ public:
 
     Player(const Player &playerToCopy);
 
-    Player(const std::string &region, const BiddingFacility &biddingFacility, const Territory &territory,
+    Player(const std::string &region, BiddingFacility *biddingFacility, const Territory &territory,
            const Cards &cards, int *tokenArmies,
            const int &cubes, int *disks, Hand *hand, int *money, const std::string &name,
            const int &totalMovementPointsForRound, const int &costToMoveOverWater, const bool &canBeAttacked);
 
     Player &operator=(const Player &playerToCopy);
+
+    void RequestPlayerName();
 
     void PayCoin(const int &amountToPay);
 
@@ -60,7 +63,7 @@ public:
 
     int getMoney();
 
-    BiddingFacility &getBiddingFacility();
+    BiddingFacility *getBiddingFacility();
 
     void setMoney(int money);
 
@@ -105,15 +108,15 @@ public:
 private:
     //just one attribute added for stream insertion operator
     std::unique_ptr<std::string> region_;
-    std::unique_ptr<BiddingFacility> biddingFacility_;
+    BiddingFacility* biddingFacility_;
     std::unique_ptr<Territory> territory_;
     std::unique_ptr<Cards> cards_;
-    int *tokenArmies_; //for now is an int, but maybe will change for class "Token"?
+    int tokenArmies_; //for now is an int, but maybe will change for class "Token"?
     std::unique_ptr<int> cubes_;//for now is an int, but maybe will change for class "Cubes"?
-    int *disks_;//for now is an int, but maybe will change for class "Disks"?
-    int *money_;
     int *victoryPoints_;
     int *elixers_;
+    int disks_;//for now is an int, but maybe will change for class "Disks"?
+    int money_;
     std::unique_ptr<std::string> name_;
     std::unique_ptr<int> totalMovementPointsForRound_;
     std::unique_ptr<int> costToMoveOverWater_;
