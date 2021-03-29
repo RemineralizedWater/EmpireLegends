@@ -376,12 +376,12 @@ void Player::applyAbility() {
     }
         //"+ elixirs"
     else if(hand_->GetActiveCard()->GetGoods() == 4){
-        *elixers_+=hand_->GetActiveCard()->GetGoods();
+        *elixers_+=hand_->GetActiveCard()->GetGoodsValue();
     }
         //"+ coins and 1+ elixirs"
     else if(hand_->GetActiveCard()->GetGoods() == 5){
         *elixers_+=1;
-        money_+=hand_->GetActiveCard()->GetGoods();
+        money_+=hand_->GetActiveCard()->GetGoodsValue();
     }
         // "immune to attack"
     else if(hand_->GetActiveCard()->GetGoods() == 9){
