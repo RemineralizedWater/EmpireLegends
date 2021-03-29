@@ -22,7 +22,6 @@ int main() {
 
 
 
-
     // Determine the number of players
     cout << "Enter the number of players:";
     while(true){
