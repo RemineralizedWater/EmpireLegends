@@ -335,6 +335,7 @@ Territory * Map::findTerritory(int terrId) {
             return (*terrIt).first;
         }
     }
+    return 0;
 }
 // Private Methods
 /**
