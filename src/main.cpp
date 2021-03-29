@@ -108,4 +108,5 @@ void mainGameLoop(Map *map, bool validMap) {
                 return;
         }
     }
+    return;
 }
