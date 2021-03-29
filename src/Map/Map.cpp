@@ -509,6 +509,9 @@ void Map::display() {
  **/
 bool Map::validate() {
     vector<terrInfo>::iterator terrIt;
+    if (terrIt == (terrAndAdjsList)->end()) {
+        return false;
+    }
     for (terrIt = (terrAndAdjsList)->begin(); terrIt != (terrAndAdjsList)->end(); ++terrIt) {
         vector<Adjacency>::iterator adjIt;
 

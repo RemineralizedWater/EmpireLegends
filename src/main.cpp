@@ -1,6 +1,8 @@
 
 #include <iostream>
 #include <limits>
+#include "Game/Game.h"
+#include "Map/Map.h"
 
 
 using namespace std;
@@ -21,19 +23,26 @@ int main() {
    int numberOfPlayers = 0;
     int userInput = 0;
 
-
-
     // Determine the number of players
     cout << "Enter the number of players:";
     while(true){
         if(cin >> numberOfPlayers && numberOfPlayers >= 2 && numberOfPlayers <= 4){
-            cout<<numberOfPlayers<<endl;
+            //cout<<numberOfPlayers<<endl;
             break;
         }else{
             cout << "Please enter a valid number of players (integer, no greater than 4 and no less than 2)" << endl << ">>";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
+    }
+
+    static Game* starter = new Game(numberOfPlayers);
+    bool validMap=false;
+    static Map *graph;
+
+    while(!validMap) {
+        graph = starter->selectMap(validMap);
+        validMap = graph->validate();
     }
 
     while(true){
@@ -57,6 +66,10 @@ int main() {
         }
         switch (userInput) {
             case 1:
+                if(validMap){
+                    cout<<"Starting point token: "<<*(graph->getStartingPoint())<<endl;
+                    graph->display();
+                }
                 DemonstrateA2Part1();
                 break;
             case 2:

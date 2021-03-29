@@ -9,7 +9,7 @@
 
 int numberOfPlayers;
 Game::Game(int numberOfPlayers) {
-    cout<<numberOfPlayers<<" players game"<<endl;
+    cout<<numberOfPlayers<<" player game"<<endl;
     this->numberOfPlayers=new int{numberOfPlayers};
     //TODO call methods here and create setters and getters
 }
