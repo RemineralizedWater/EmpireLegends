@@ -62,6 +62,7 @@ vector<Player*> Game::createPlayers(int startingPoint) {
     Player* ptr;
 
     for(int i=0;i<*numberOfPlayers;i++){
+
         Player *player(
                 new Player(to_string(startingPoint),
                            new BiddingFacility(),
@@ -72,7 +73,7 @@ vector<Player*> Game::createPlayers(int startingPoint) {
                            new int(0),
                            new Hand(),
                            new int{0},
-                           "Player 1",
+                           "Player "+to_string(i+1),
                            0,
                            3,
                            true));
@@ -84,6 +85,156 @@ vector<Player*> Game::createPlayers(int startingPoint) {
         players.push_back(player);
     }
     return players;
+}
+/**
+ * Counts victory Points to check if ties or not
+ * @param players
+ * @return
+ */
+bool Game::tied(vector<Player*> players, int &winner) {
+    int maxVictoryPoint=-1;
+    winner=0;
+    int ties=0;
+
+    for(int i=0;i<*numberOfPlayers;i++){
+        if(maxVictoryPoint==players[i]->GetVictoryPoints()){
+            ties+=1;
+        }
+        if(maxVictoryPoint<(players[i])->GetVictoryPoints()){
+            maxVictoryPoint=(players[i])->GetVictoryPoints();
+            winner=i;
+            ties=0;
+        }
+    }
+    if(ties!=0){
+        return true;
+    }
+    return false;
+}
+/**
+ * Finds the max controlled regions by a player
+ * @param players
+ * @param map
+ * @return
+ */
+bool Game::countControlledTerritories(vector<Player *> players, Map *map) {
+    int ties;
+    int maxArmiesSize=-1;
+    int playerWithMostArmies=0;
+    int winner=0;
+    std::map<int,int> playersAndControlledTerritoriesCount;
+
+    for(int i=1;i<(map->getMapSize()+1);i++){
+        Territory* temp=map->findTerritory(i);
+
+        //finds which player controls a territory by counting armies and cities
+        for(int k=0;k<*numberOfPlayers;k++){
+            int currentArmiesSize=temp->getArmySizeForPlayer()[players[k]->getName()];
+            if(temp->getHasCity()[players[k]->getName()]){
+                currentArmiesSize+=1;
+            }
+            if(maxArmiesSize==currentArmiesSize) {
+                ties+=1;
+            }
+            if(maxArmiesSize<currentArmiesSize){
+                maxArmiesSize=currentArmiesSize;
+                playerWithMostArmies=k;
+                ties=0;
+            }
+            maxArmiesSize=0;
+        }
+        //if tied then no player owns the territory
+        if(ties == 0){
+            if(playersAndControlledTerritoriesCount.find(playerWithMostArmies) != playersAndControlledTerritoriesCount.end()){
+                playersAndControlledTerritoriesCount[playerWithMostArmies]=(playersAndControlledTerritoriesCount[playerWithMostArmies] + 1);
+            }
+            else{
+                playersAndControlledTerritoriesCount.insert(pair<int, int>(playerWithMostArmies, 1));
+            }
+        }
+    }
+    //compare which player controls the most territories
+    int maxTerritories=-1;
+    for(int i=0;i<2;i++){
+        if(maxTerritories<playersAndControlledTerritoriesCount[i]){
+            maxTerritories=playersAndControlledTerritoriesCount[i];
+            winner=i;
+        }
+    }
+    players[winner]->SetVictoryPoints(players[winner]->GetVictoryPoints()+1);
+    return false;
+}
+/**
+ * Counts armies on board for each player to get player with max armies
+ * @param players
+ * @param map
+ * @return
+ */
+bool Game::countArmies(vector<Player *> players, Map* map) {
+    int winner=0;
+    int ties=0;
+    int maxArmies=-1;
+
+    //counting total armies for each player from board
+    std::map<int,int> playersAndArmies;
+    for(int i=1;i<(map->getMapSize()+1);i++){
+        Territory* temp=map->findTerritory(i);
+        for(int k=0;k<*numberOfPlayers;k++){
+            if(playersAndArmies.find(k) != playersAndArmies.end()){
+                playersAndArmies[k]=(playersAndArmies[k] + temp->getArmySizeForPlayer()[players[k]->getName()]);
+            }
+            else{
+                playersAndArmies.insert(pair<int, int>(k, temp->getArmySizeForPlayer()[players[k]->getName()]));
+            }
+        }
+    }
+
+    //comparing results or army counts on board for each player to get player with most armies
+    std::map<int,int>::iterator playersAndArmiesIt;
+    for(playersAndArmiesIt = playersAndArmies.begin(); playersAndArmiesIt != playersAndArmies.end(); playersAndArmiesIt++){
+        if(maxArmies==playersAndArmiesIt->second){
+            ties+=1;
+        }
+        if(maxArmies<playersAndArmiesIt->second){
+            maxArmies=playersAndArmiesIt->second;
+            winner=playersAndArmiesIt->first;
+            ties=0;
+        }
+    }
+
+    if(ties!=0){
+        return true;
+    }
+    players[winner]->SetVictoryPoints(players[winner]->GetVictoryPoints()+1);
+    return false;
+
+}
+/**
+ * Returns check which players have more money if tied then return true else false
+ * @param players
+ * @param winner
+ * @return
+ */
+bool Game::countMoney(vector<Player *> players) {
+    int maxMoney=-1;
+    int winner=0;
+    int ties=0;
+
+    for(int i=0;i<*numberOfPlayers;i++){
+        if(maxMoney==players[i]->getMoney()){
+            ties+=1;
+        }
+        if(maxMoney<(players[i])->getMoney()){
+            maxMoney=(players[i])->getMoney();
+            winner=i;
+            ties=0;
+        }
+    }
+    if(ties!=0){
+        return true;
+    }
+    players[winner]->SetVictoryPoints(players[winner]->GetVictoryPoints()+1);
+    return false;
 }
 
 

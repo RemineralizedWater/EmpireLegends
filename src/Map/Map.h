@@ -142,5 +142,9 @@ public:
 
     bool validate();
 
+    Territory* findTerritory(int terrId);
+
+    int getMapSize();
+
     void removeAdjacency(int *adjId);
 };

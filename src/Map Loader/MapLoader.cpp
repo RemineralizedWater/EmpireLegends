@@ -193,8 +193,9 @@ Map* MapLoader::loadMap(std::string file, bool &validMap) {
                 validMap=false;
                 return map;
             }
-
-            if(!map->addTerritory(new Territory(new int {territory},new int {continent}))){
+            const std::map<std::string, int> armySizeForPlayer;
+            const std::map<std::string, bool> hasCity;
+            if(!map->addTerritory(new Territory(new int {territory},new int {continent},armySizeForPlayer,hasCity))){
                 validMap=false;
                 return map;
             }

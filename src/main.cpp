@@ -13,14 +13,12 @@ int DemonstrateMap(int numberOfPlayers);
 void DemonstrateA2Part3();
 void DemonstrateA2Part2();
 void DemonstrateA2Part1();
+void DemonstrateA2Part6();
 void DemonstrateA2BiddingFacility();
 
 int main() {
-
-
-    int numberOfPlayers = 0;
+   int numberOfPlayers = 0;
     int userInput = 0;
-
 
 
 
@@ -44,7 +42,8 @@ int main() {
         cout << "3 - Part 3: Game play: main game loop" << endl;
         cout << "4 - Part 4: Main game loop: The player actions" << endl;
         cout << "5 - Part 5: See Part 3 for implementation" << endl;
-        cout << "6 - Exit" << endl;
+        cout << "6 - Part 6: Main Game loop: Compute the game score" << endl;
+        cout << "7 - Exit" << endl;
 
         while(true){
             if(cin >> userInput && userInput >= 1 && userInput <= 6){
@@ -70,11 +69,13 @@ int main() {
                 DemonstratePlayers();
                 break;
             case 6:
+                DemonstrateA2Part6();
+                break;
+            case 7:
             default:
                 exit(0);
         }
     }
-
 
     return 0;
 }

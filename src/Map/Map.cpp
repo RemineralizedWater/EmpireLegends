@@ -140,6 +140,7 @@ Territory::Territory(int *terrId, int *continent) {
 
 void Territory::InsertNewArmyPlayerMapping(string playerName) {
     armySizeForPlayer_->insert(std::pair<string, int>(playerName, 0));
+
 }
 
 void Territory::InsertNewCityPlayerMapping(string playerName) {
@@ -322,6 +323,19 @@ std::istream &operator>>(std::istream &in, Map &m) {
     in >> *(m.rect);
     return in;
 }
+/**
+ * Find a specific territory by id
+ * @param terrId
+ * @return
+ */
+Territory * Map::findTerritory(int terrId) {
+    vector<terrInfo>::iterator terrIt;
+    for (terrIt = (terrAndAdjsList)->begin(); terrIt != (terrAndAdjsList)->end(); ++terrIt) {
+        if(*(*terrIt).first->getTerrId()==terrId){
+            return (*terrIt).first;
+        }
+    }
+}
 // Private Methods
 /**
  * Check if territory is currently in graph
@@ -351,6 +365,13 @@ bool Map::continentExists(int *continent) {
         }
     }
     return false;
+}
+/**
+ * Get list of territories and adjacencies
+ * @return
+ */
+int Map::getMapSize() {
+return terrAndAdjsList->size();
 }
 /**
  * Get the starting point
@@ -452,7 +473,6 @@ void Map::removeAdjacency(int *adjId) {
         }
     }
 }
-
 /**
  * displays contents in graph
  */
