@@ -19,9 +19,14 @@ void DemonstrateA2Part5();
 void DemonstrateA2Part6();
 void DemonstrateA2BiddingFacility();
 
+void gameLoop(bool map);
+
+static Game *starter;
+static Map *graph;
+
 int main() {
-   int numberOfPlayers = 0;
-    int userInput = 0;
+
+    int numberOfPlayers = 0;
 
     // Determine the number of players
     cout << "Enter the number of players:";
@@ -36,14 +41,27 @@ int main() {
         }
     }
 
-    static Game* starter = new Game(numberOfPlayers);
     bool validMap=false;
-    static Map *graph;
+    starter = new Game(numberOfPlayers);
 
     while(!validMap) {
         graph = starter->selectMap(validMap);
         validMap = graph->validate();
     }
+
+    // Main Game Loop
+    gameLoop(validMap);
+
+    delete graph;
+    graph = nullptr;
+    delete starter;
+    starter = nullptr;
+
+    return 0;
+}
+
+void gameLoop(bool validMap) {
+    int userInput = 0;
 
     while(true){
         cout << endl << "What would you like to test:" << endl;
@@ -89,9 +107,7 @@ int main() {
                 break;
             case 7:
             default:
-                exit(0);
+                return;
         }
     }
-
-    return 0;
 }

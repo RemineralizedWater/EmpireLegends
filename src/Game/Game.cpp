@@ -7,7 +7,7 @@
 #include "../Map Loader/MapLoader.h"
 #include "../BiddingFacility/BiddingFacility.h"
 
-int numberOfPlayers;
+//int numberOfPlayers;
 Game::Game(int numberOfPlayers) {
     cout<<numberOfPlayers<<" player game"<<endl;
     this->numberOfPlayers=new int{numberOfPlayers};
