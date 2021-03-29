@@ -64,7 +64,7 @@ void DemonstrateA2Part3(){
         if(index == 0) index = 1;
         else index = 0;
 
-        string option;
+        string option = "";
         cout << "Enter 'X' to exit, or anything else to continue to next player turn." << endl;
         cin >> option;
         if(option.compare("X") == 0 || option.compare("x") == 0){
@@ -72,14 +72,11 @@ void DemonstrateA2Part3(){
         }
     }
 
+
     delete player1;
     player1 = nullptr;
     delete player2;
     player2 = nullptr;
-    delete players[0];
-    players[0] = nullptr;
-    delete players[1];
-    players[1] = nullptr;
     delete deck;
     deck = nullptr;
 
