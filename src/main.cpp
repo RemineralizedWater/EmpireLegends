@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void DemonstratePlayers();
+void DemonstrateA2Part4();
 void DemonstrateBiddingFacility(int numberOfPlayers);
 void DemonstrateMapLoader(int numberOfPlayers);
 void DemonstrateCards(int numberOfPlayers);
@@ -13,6 +13,7 @@ int DemonstrateMap(int numberOfPlayers);
 void DemonstrateA2Part3();
 void DemonstrateA2Part2();
 void DemonstrateA2Part1();
+void DemonstrateA2Part5();
 void DemonstrateA2Part6();
 void DemonstrateA2BiddingFacility();
 
@@ -41,7 +42,7 @@ int main() {
         cout << "2 - Part 2: Game play: startup phase" << endl;
         cout << "3 - Part 3: Game play: main game loop" << endl;
         cout << "4 - Part 4: Main game loop: The player actions" << endl;
-        cout << "5 - Part 5: See Part 3 for implementation" << endl;
+        cout << "5 - Part 5: Main game loop: after the action" << endl;
         cout << "6 - Part 6: Main Game loop: Compute the game score" << endl;
         cout << "7 - Exit" << endl;
 
@@ -62,11 +63,13 @@ int main() {
                 DemonstrateA2Part2();
                 break;
             case 3:
-            case 5:
                 DemonstrateA2Part3();
                 break;
             case 4:
-                DemonstratePlayers();
+                DemonstrateA2Part4();
+                break;
+            case 5:
+                DemonstrateA2Part5();
                 break;
             case 6:
                 DemonstrateA2Part6();

@@ -1,10 +1,10 @@
-#include "Player.h"
+#include "Player/Player.h"
 #include <memory>
 #include <sstream>
-#include "../Cards/Deck.h"
+#include "Cards/Deck.h"
 
 //Main driver for Ass1. to create and run desired functions of the player class
-void DemonstratePlayers() {
+void DemonstrateA2Part4() {
 
     std::unique_ptr<Player> playerSimon(new Player("Montreal",
                                                    new BiddingFacility(),
