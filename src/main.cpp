@@ -18,14 +18,12 @@ void DemonstrateA2Part1();
 void DemonstrateA2Part5();
 void DemonstrateA2Part6();
 void DemonstrateA2BiddingFacility();
-
-void gameLoop(bool map);
-
-static Game *starter;
-static Map *graph;
+void mainGameLoop(Map* map, bool validMap);
 
 int main() {
 
+    Game *starter;
+    Map *map;
     int numberOfPlayers = 0;
 
     // Determine the number of players
@@ -45,22 +43,22 @@ int main() {
     starter = new Game(numberOfPlayers);
 
     while(!validMap) {
-        graph = starter->selectMap(validMap);
-        validMap = graph->validate();
+        map = starter->selectMap(validMap);
+        validMap = map->validate();
     }
 
     // Main Game Loop
-    gameLoop(validMap);
+    mainGameLoop(map, validMap);
 
-    delete graph;
-    graph = nullptr;
+    delete map;
+    map = nullptr;
     delete starter;
     starter = nullptr;
 
     return 0;
 }
 
-void gameLoop(bool validMap) {
+void mainGameLoop(Map *map, bool validMap) {
     int userInput = 0;
 
     while(true){
@@ -85,8 +83,8 @@ void gameLoop(bool validMap) {
         switch (userInput) {
             case 1:
                 if(validMap){
-                    cout<<"Starting point token: "<<*(graph->getStartingPoint())<<endl;
-                    graph->display();
+                    cout<<"Starting point token: "<<*(map->getStartingPoint())<<endl;
+                    map->display();
                 }
                 DemonstrateA2Part1();
                 break;
