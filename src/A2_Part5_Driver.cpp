@@ -44,8 +44,8 @@ void DemonstrateA2Part5(){
     //cout << "Populating Face Up Cards.." << endl;
     deck->PopulateFaceUpCards();
     //cout << "Cards in deck: " << endl;
-    deck->PrintCardsIn(deck->GetDeck());
-    //cout << "Cards in Face Up Pile:" << endl;
+    //deck->PrintCardsIn(deck->GetDeck());
+    cout << "Cards in Face Up Pile:" << endl;
     deck->PrintCardsIn((deck->GetFaceUpCards()));
 
     int index = 0;
