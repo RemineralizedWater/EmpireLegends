@@ -46,7 +46,7 @@ int main() {
         cout << "7 - Exit" << endl;
 
         while(true){
-            if(cin >> userInput && userInput >= 1 && userInput <= 6){
+            if(cin >> userInput && userInput >= 1 && userInput <= 7){
                 break;
             }else{
                 cout << "Please enter a valid selection (integer, no greater than 6 and no less than 1)" << endl << ">>";
