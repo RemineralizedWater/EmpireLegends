@@ -1,6 +1,8 @@
 
 #include <iostream>
 #include <limits>
+#include "Game/Game.h"
+#include "Map/Map.h"
 
 
 using namespace std;
@@ -16,18 +18,18 @@ void DemonstrateA2Part1();
 void DemonstrateA2Part5();
 void DemonstrateA2Part6();
 void DemonstrateA2BiddingFacility();
+void MainGameLoop(Map* map, bool validMap);
 
 int main() {
-   int numberOfPlayers = 0;
-    int userInput = 0;
 
-
+    Game *game;
+    Map *map;
+    int numberOfPlayers = 0;
 
     // Determine the number of players
     cout << "Enter the number of players:";
     while(true){
         if(cin >> numberOfPlayers && numberOfPlayers >= 2 && numberOfPlayers <= 4){
-            cout<<numberOfPlayers<<endl;
             break;
         }else{
             cout << "Please enter a valid number of players (integer, no greater than 4 and no less than 2)" << endl << ">>";
@@ -35,6 +37,28 @@ int main() {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
     }
+
+    bool validMap=false;
+    game = new Game(numberOfPlayers);
+
+    while(!validMap) {
+        map = game->selectMap(validMap);
+        validMap = map->validate();
+    }
+
+    // Main Game Loop
+    MainGameLoop(map, validMap);
+
+    delete map;
+    map = nullptr;
+    delete game;
+    game = nullptr;
+
+    return 0;
+}
+
+void MainGameLoop(Map *map, bool validMap) {
+    int userInput = 0;
 
     while(true){
         cout << endl << "What would you like to test:" << endl;
@@ -57,6 +81,10 @@ int main() {
         }
         switch (userInput) {
             case 1:
+                if(validMap){
+                    cout<<"Starting point token: "<<*(map->getStartingPoint())<<endl;
+                    map->display();
+                }
                 DemonstrateA2Part1();
                 break;
             case 2:
@@ -76,9 +104,8 @@ int main() {
                 break;
             case 7:
             default:
-                exit(0);
+                return;
         }
     }
-
-    return 0;
+    return;
 }
