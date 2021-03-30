@@ -18,11 +18,11 @@ void DemonstrateA2Part1();
 void DemonstrateA2Part5();
 void DemonstrateA2Part6();
 void DemonstrateA2BiddingFacility();
-void mainGameLoop(Map* map, bool validMap);
+void MainGameLoop(Map* map, bool validMap);
 
 int main() {
 
-    Game *starter;
+    Game *game;
     Map *map;
     int numberOfPlayers = 0;
 
@@ -30,7 +30,6 @@ int main() {
     cout << "Enter the number of players:";
     while(true){
         if(cin >> numberOfPlayers && numberOfPlayers >= 2 && numberOfPlayers <= 4){
-            //cout<<numberOfPlayers<<endl;
             break;
         }else{
             cout << "Please enter a valid number of players (integer, no greater than 4 and no less than 2)" << endl << ">>";
@@ -40,25 +39,25 @@ int main() {
     }
 
     bool validMap=false;
-    starter = new Game(numberOfPlayers);
+    game = new Game(numberOfPlayers);
 
     while(!validMap) {
-        map = starter->selectMap(validMap);
+        map = game->selectMap(validMap);
         validMap = map->validate();
     }
 
     // Main Game Loop
-    mainGameLoop(map, validMap);
+    MainGameLoop(map, validMap);
 
     delete map;
     map = nullptr;
-    delete starter;
-    starter = nullptr;
+    delete game;
+    game = nullptr;
 
     return 0;
 }
 
-void mainGameLoop(Map *map, bool validMap) {
+void MainGameLoop(Map *map, bool validMap) {
     int userInput = 0;
 
     while(true){
