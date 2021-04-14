@@ -19,7 +19,7 @@ void DemonstrateA2Part1(){
     cout<<"\n\n\n\n"<<endl;
     vector<Player*> players=starter->createPlayers(map->getStartingPoint());
     for (Player* p : players){
-        cout <<p->getName()<< ": "<<*(p->getBiddingFacility()->GetLastName()) <<" Money:"<<p->getMoney()<< " Bid Amount:" <<*(p->getBiddingFacility()->GetBidAmount())<<endl;
+        cout <<p->getName()<< ": "<<p->getBiddingFacility()->GetLastName() <<" Money:"<<p->getMoney()<< " Bid Amount:" <<p->getBiddingFacility()->GetBidAmount()<<endl;
     }
 
     cout<<"\n\n\n\n"<<endl;

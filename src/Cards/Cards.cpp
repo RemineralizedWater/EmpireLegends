@@ -23,57 +23,57 @@ Cards::Cards() {
     goodsSpecific = "";
 }
 
-Cards::Cards(string _name, string _goodsAndAction, int _cost,
-             int _actionOne, int _actionOneValue, string _actionOperation,
-             int _actionTwo, int _actionTwoValue,
-             int _goods, int _goodsValue, string _goodsSpecific) {
-    name = _name;
-    goodsAndAction = _goodsAndAction;
-    cost = _cost;
+Cards::Cards(string name_, string goodsAndAction_, int cost_,
+             int actionOne_, int actionOneValue_, string actionOperation_,
+             int actionTwo_, int actionTwoValue_,
+             int goods_, int goodsValue_, string goodsSpecific_) {
+    name = name_;
+    goodsAndAction = goodsAndAction_;
+    cost = cost_;
 
-    actionOperation = _actionOperation;
-    actionOne = _actionOne;
-    actionOneValue = _actionOneValue;
-    actionTwo = _actionTwo;
-    actionTwoValue = _actionTwoValue;
+    actionOperation = actionOperation_;
+    actionOne = actionOne_;
+    actionOneValue = actionOneValue_;
+    actionTwo = actionTwo_;
+    actionTwoValue = actionTwoValue_;
 
-    goods = _goods;
-    goodsValue = _goodsValue;
-    goodsSpecific = _goodsSpecific;
+    goods = goods_;
+    goodsValue = goodsValue_;
+    goodsSpecific = goodsSpecific_;
 }
 
-Cards::Cards(string *_name, string *_goodsAndAction, int *_cost, int *_actionOne, int *_actionOneValue,
-             string *_actionOperation, int *_actionTwo, int *_actionTwoValue, int *_goods, int *_goodsValue,
-             string *_goodsSpecific) {
-    name = *_name;
-    goodsAndAction = *_goodsAndAction;
-    cost = *_cost;
+Cards::Cards(string *name_, string *goodsAndAction_, int *cost_, int *actionOne_, int *actionOneValue_,
+             string *actionOperation_, int *actionTwo_, int *actionTwoValue_, int *goods_, int *goodsValue_,
+             string *goodsSpecific_) {
+    name = *name_;
+    goodsAndAction = *goodsAndAction_;
+    cost = *cost_;
 
-    actionOperation = *_actionOperation;
-    actionOne = *_actionOne;
-    actionOneValue = *_actionOneValue;
-    actionTwo = *_actionTwo;
-    actionTwoValue = *_actionTwoValue;
+    actionOperation = *actionOperation_;
+    actionOne = *actionOne_;
+    actionOneValue = *actionOneValue_;
+    actionTwo = *actionTwo_;
+    actionTwoValue = *actionTwoValue_;
 
-    goods = *_goods;
-    goodsValue = *_goodsValue;
-    goodsSpecific = *_goodsSpecific;
+    goods = *goods_;
+    goodsValue = *goodsValue_;
+    goodsSpecific = *goodsSpecific_;
 }
 
 Cards::Cards(const Cards &copy){
-    this->name = copy.name;
-    this->goodsAndAction = copy.goodsAndAction;
-    this->cost = cost = copy.cost;
+    name = copy.name;
+    goodsAndAction = copy.goodsAndAction;
+    cost = cost = copy.cost;
 
-    this->actionOperation = copy.actionOperation;
-    this->actionOne = copy.actionOne;
-    this->actionOneValue = copy.actionOneValue;
-    this->actionTwo = copy.actionTwo;
-    this->actionTwoValue = copy.actionTwoValue;
+    actionOperation = copy.actionOperation;
+    actionOne = copy.actionOne;
+    actionOneValue = copy.actionOneValue;
+    actionTwo = copy.actionTwo;
+    actionTwoValue = copy.actionTwoValue;
 
-    this->goods = copy.goods;
-    this->goodsValue = copy.goodsValue;
-    this->goodsSpecific = copy.goodsSpecific;
+    goods = copy.goods;
+    goodsValue = copy.goodsValue;
+    goodsSpecific = copy.goodsSpecific;
 }
 
 // Accessors
@@ -90,15 +90,15 @@ int Cards::GetCost(){
 }
 
 // Mutators
-void Cards::SetCost(int _cost){
-    cost = _cost;
+void Cards::SetCost(int cost_){
+    cost = cost_;
 }
 
 // Assignment Operator
 Cards & Cards::operator =(const Cards &c){
-    this->name = c.name;
-    this->goodsAndAction = c.goodsAndAction;
-    this->cost = c.cost;
+    name = c.name;
+    goodsAndAction = c.goodsAndAction;
+    cost = c.cost;
     return *this;
 }
 
