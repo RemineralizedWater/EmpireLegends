@@ -10,8 +10,8 @@
  * default constructor
  */
 Territory::Territory() {
-    this->terrId = new int{0};
-    this->continentId = new int{0};
+    this->terrId = 0;
+    this->continentId = 0;
     this->armySizeForPlayer_ = std::unique_ptr<std::map<std::string, int>>(new std::map<std::string, int>);
     this->hasCity = std::unique_ptr<std::map<std::string, bool>>(new std::map<std::string, bool>);
 
@@ -23,7 +23,7 @@ Territory::Territory() {
  * @param continent
  * @param armySizeForPlayer
  */
-Territory::Territory(int *terrId, int *continent,
+Territory::Territory(int terrId, int continent,
                      const std::map<std::string, int> &armySizeForPlayer,
                      const std::map<std::string, bool> &hasCity) { //it is better to manually create to initlaize with new int
     this->terrId = terrId;
@@ -37,8 +37,8 @@ Territory::Territory(int *terrId, int *continent,
  * @param copy
  */
 Territory::Territory(const Territory &copy) {
-    this->terrId = new int(*(copy.terrId));
-    this->continentId = new int(*(copy.continentId));
+    this->terrId = copy.terrId;
+    this->continentId = copy.continentId;
     this->armySizeForPlayer_ = std::unique_ptr<std::map<std::string, int>>(new std::map<std::string, int>(*copy.armySizeForPlayer_));
     this->hasCity = std::unique_ptr<std::map<std::string, bool>>(new std::map<std::string, bool>(*copy.hasCity));
 }
@@ -47,14 +47,6 @@ Territory::Territory(const Territory &copy) {
  * destructor
  */
 Territory::~Territory() {
-    if(terrId != nullptr){
-        delete terrId;
-        terrId = nullptr;
-    }
-    if(continentId != nullptr){
-        delete continentId;
-        continentId = nullptr;
-    }
 
 }
 // Operators
@@ -64,8 +56,8 @@ Territory::~Territory() {
  * @return
  */
 Territory &Territory::operator=(const Territory &t) {
-    this->terrId = new int(*(t.terrId));
-    this->continentId = new int(*(t.continentId));
+    this->terrId = t.terrId;
+    this->continentId = t.continentId;
     this->armySizeForPlayer_ = std::unique_ptr<std::map<std::string, int>>(
             new std::map<std::string, int>(*t.armySizeForPlayer_));
     this->hasCity = std::unique_ptr<std::map<std::string, bool>>(
@@ -80,14 +72,14 @@ Territory &Territory::operator=(const Territory &t) {
  * @return
  */
 std::ostream &operator<<(std::ostream &out, const Territory &t) {
-    out << " Territory name: " << *(t.terrId) << " Continent: " << *(t.continentId) << std::endl;
+    out << " Territory name: " << t.terrId << " Continent: " << t.continentId << std::endl;
     return out;
 }
 
 std::istream &operator>>(std::istream &in, Territory &t) {
     std::cout << "Territory name and Continent name" << std::endl;
-    in >> *(t.terrId);
-    in >> *(t.continentId);
+    in >> t.terrId;
+    in >> t.continentId;
     for (int i = 0; i < 5; i++) {
         std::string playerName;
         int armySize;
@@ -113,7 +105,7 @@ std::istream &operator>>(std::istream &in, Territory &t) {
  * get territory id
  * @return
  */
-int *Territory::getTerrId() {
+int Territory::getTerrId() {
     return terrId;
 }
 
@@ -121,7 +113,7 @@ int *Territory::getTerrId() {
  * get continent id
  * @return
  */
-int *Territory::getContinent() {
+int Territory::getContinent() {
     return continentId;
 }
 
@@ -133,7 +125,7 @@ std::map<std::string, bool> &Territory::getHasCity() {
     return *hasCity;
 }
 
-Territory::Territory(int *terrId, int *continent) {
+Territory::Territory(int terrId, int continent) {
     this->terrId = terrId;
     this->continentId = continent;
 }
@@ -154,8 +146,8 @@ void Territory::InsertNewCityPlayerMapping(string playerName) {
  * Default constructor
  */
 Adjacency::Adjacency() {
-    this->adjId = new int{0};
-    this->isLandRoute = new bool{false};
+    this->adjId = 0;
+    this->isLandRoute = false;
 }
 
 /**
@@ -163,7 +155,7 @@ Adjacency::Adjacency() {
  * @param adjId
  * @param isLandRoute
  */
-Adjacency::Adjacency(int *adjId, bool *isLandRoute) {
+Adjacency::Adjacency(int adjId, bool isLandRoute) {
     this->adjId = adjId;
     this->isLandRoute = isLandRoute;
 }
@@ -173,23 +165,14 @@ Adjacency::Adjacency(int *adjId, bool *isLandRoute) {
  * @param copy
  */
 Adjacency::Adjacency(const Adjacency &copy) {
-    this->adjId = new int(*(copy.adjId));
-    this->isLandRoute = new bool(*(copy.isLandRoute));
+    this->adjId = copy.adjId;
+    this->isLandRoute = copy.isLandRoute;
 }
 
 /**
  * destructor
  */
 Adjacency::~Adjacency() {
-    if(adjId != nullptr){
-        delete adjId;
-        adjId = nullptr;
-    }
-
-    if(isLandRoute != nullptr){
-        delete isLandRoute;
-        isLandRoute = nullptr;
-    }
 
 }
 // Operators
@@ -199,8 +182,8 @@ Adjacency::~Adjacency() {
  * @return
  */
 Adjacency &Adjacency::operator=(const Adjacency &a) {
-    this->adjId = new int(*(a.adjId));
-    this->isLandRoute = new bool(*(a.isLandRoute));
+    this->adjId = a.adjId;
+    this->isLandRoute = a.isLandRoute;
     return *this;
 }
 
@@ -211,14 +194,14 @@ Adjacency &Adjacency::operator=(const Adjacency &a) {
  * @return
  */
 std::ostream &operator<<(std::ostream &out, const Adjacency &a) {
-    out << " Territory: " << *(a.adjId) << " Land: " << *(a.isLandRoute) << std::endl;
+    out << " Territory: " << a.adjId << " Land: " << a.isLandRoute << std::endl;
     return out;
 }
 
 std::istream &operator>>(std::istream &in, Adjacency &a) {
     std::cout << "Enter territory name and land type" << std::endl;
-    in >> *(a.adjId);
-    in >> *(a.isLandRoute);
+    in >> a.adjId;
+    in >> a.isLandRoute;
     return in;
 }
 // Accessors
@@ -226,7 +209,7 @@ std::istream &operator>>(std::istream &in, Adjacency &a) {
  * get adjacent territory
  * @return
  */
-int *Adjacency::getAdjId() {
+int Adjacency::getAdjId() {
     return adjId;
 }
 
@@ -234,7 +217,7 @@ int *Adjacency::getAdjId() {
  * get route type ex. land or water
  * @return
  */
-bool *Adjacency::getIsLandRoute() {
+bool Adjacency::getIsLandRoute() {
     return isLandRoute;
 }
 
@@ -247,17 +230,17 @@ bool *Adjacency::getIsLandRoute() {
 Map::Map() {
     this->rect = new bool{false};
     this->terrAndAdjsList = new vector<terrInfo>;       // memory leak
-    this->startingPoint=new int{0};
+    this->startingPoint=0;
 }
 
 /**
  * constructor: takes board shape
  * @param rect
  */
-Map::Map(bool *rect) {
+Map::Map(bool rect) {
     this->rect = rect;
     this->terrAndAdjsList = new vector<terrInfo>;       // memory leak
-    this->startingPoint=new int{0};
+    this->startingPoint=0;
 }
 
 /**
@@ -265,20 +248,15 @@ Map::Map(bool *rect) {
  * @param copy
  */
 Map::Map(const Map &copy) {
-    this->rect = new bool(*(copy.rect));
+    this->rect = copy.rect;
     this->terrAndAdjsList = new vector<terrInfo>(*(copy.terrAndAdjsList));       // memory leak?
-    this->startingPoint = new int(*(copy.startingPoint));
+    this->startingPoint = copy.startingPoint;
 }
 
 /**
  * destructor
  */
 Map::~Map() {
-    if(rect != nullptr){
-        delete rect;
-        rect = nullptr;
-    }
-
     if(terrAndAdjsList != nullptr){
         delete terrAndAdjsList;
         terrAndAdjsList = nullptr;
@@ -301,9 +279,9 @@ Map::~Map() {
  * @return
  */
 Map &Map::operator=(const Map &m) {
-    this->rect = new bool(*(m.rect));
+    this->rect = m.rect;
     this->terrAndAdjsList = new vector<terrInfo>(*(m.terrAndAdjsList));       // memory leak
-    this->startingPoint=new int(*(m.startingPoint));
+    this->startingPoint = m.startingPoint;
     return *this;
 }
 
@@ -314,13 +292,13 @@ Map &Map::operator=(const Map &m) {
  * @return
  */
 std::ostream &operator<<(std::ostream &out, const Map &m) {
-    out << " Rectangle: " << *(m.rect) << std::endl;
+    out << " Rectangle: " << m.rect << std::endl;
     return out;
 }
 
 std::istream &operator>>(std::istream &in, Map &m) {
     std::cout << "Is map shape rectangle?" << std::endl;
-    in >> *(m.rect);
+    in >> m.rect;
     return in;
 }
 /**
@@ -331,7 +309,7 @@ std::istream &operator>>(std::istream &in, Map &m) {
 Territory * Map::findTerritory(int terrId) {
     vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrAndAdjsList)->begin(); terrIt != (terrAndAdjsList)->end(); ++terrIt) {
-        if(*(*terrIt).first->getTerrId()==terrId){
+        if((*terrIt).first->getTerrId() == terrId){
             return (*terrIt).first;
         }
     }
@@ -343,10 +321,10 @@ Territory * Map::findTerritory(int terrId) {
  * @param adjId
  * @return
  */
-bool Map::territoryExists(int *adjId) {
+bool Map::territoryExists(int adjId) {
     vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrAndAdjsList)->begin(); terrIt != (terrAndAdjsList)->end(); ++terrIt) {
-        if (*(*terrIt).first->getTerrId() == *(adjId)) {
+        if ((*terrIt).first->getTerrId() == adjId) {
             return true;
         }
     }
@@ -358,10 +336,10 @@ bool Map::territoryExists(int *adjId) {
  * @param continent
  * @return
  */
-bool Map::continentExists(int *continent) {
+bool Map::continentExists(int continent) {
     vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrAndAdjsList)->begin(); terrIt != (terrAndAdjsList)->end(); ++terrIt) {
-        if (*(*terrIt).first->getContinent() == *(continent)) {
+        if ((*terrIt).first->getContinent() == continent) {
             return true;
         }
     }
@@ -378,15 +356,15 @@ return terrAndAdjsList->size();
  * Get the starting point
  * @return
  */
-int * Map::getStartingPoint() {
+int Map::getStartingPoint() {
     return startingPoint;
 }
 /**
  * set the starting point
  * @param terrId
  */
-void Map::setStartingPoint(int &terrId) {
-    startingPoint = &terrId;
+void Map::setStartingPoint(int terrId) {
+    startingPoint = terrId;
 }
 
 /**
@@ -394,12 +372,12 @@ void Map::setStartingPoint(int &terrId) {
  * @param adjId
  * @return
  */
-bool Map::isConnected(int *adjId) {
+bool Map::isConnected(int adjId) {
     vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrAndAdjsList)->begin(); terrIt != (terrAndAdjsList)->end(); ++terrIt) {
         vector<Adjacency>::iterator adjIt;
         for (adjIt = (*terrIt).second->begin(); adjIt != (*terrIt).second->end(); ++adjIt) {
-            if (*(adjIt->getAdjId()) == *(adjId)) {
+            if ((adjIt->getAdjId()) == adjId) {
                 return true;
             }
         }
@@ -414,7 +392,7 @@ bool Map::isConnected(int *adjId) {
  */
 bool Map::addTerritory(Territory *t) {
     vector<Adjacency> *adj = new vector<Adjacency>();       // memory leak
-    if (territoryExists(t->getTerrId()) == *(t->getTerrId())) {
+    if (territoryExists(t->getTerrId()) == t->getTerrId()) {
         cout << "Territory already exists. Territory belongs to more than one continent. Invalid Map!" << endl;
         /*if (continentExists(t->getContinent()) == *(t->getContinent())) {
             cout << "Territory belongs to more than one continent. Invalid Map!" << endl;
@@ -438,15 +416,15 @@ bool Map::addTerritory(Territory *t) {
 bool Map::addAdjacency(Territory *t, Adjacency *a) {
     vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrAndAdjsList)->begin(); terrIt != (terrAndAdjsList)->end(); ++terrIt) {
-        if (*(*terrIt).first->getTerrId() == *(t->getTerrId())) {
+        if ((*terrIt).first->getTerrId() == t->getTerrId()) {
             vector<Adjacency>::iterator adjIt;
             for (adjIt = (*terrIt).second->begin(); adjIt != (*terrIt).second->end(); ++adjIt) {
-                if (*(adjIt->getAdjId()) == *a->getAdjId() && *(adjIt->getIsLandRoute()) == *a->getIsLandRoute()) {
+                if (adjIt->getAdjId() == a->getAdjId() && adjIt->getIsLandRoute() == a->getIsLandRoute()) {
                     cout << "Edge already exists for the territory" << endl;
                     return false;
                 }
-                if (*(adjIt->getAdjId()) == *t->getTerrId()) {
-                    cout << *(adjIt->getAdjId()) << *t->getTerrId() << endl;
+                if (adjIt->getAdjId() == t->getTerrId()) {
+                    cout << adjIt->getAdjId() << t->getTerrId() << endl;
                     cout << "Edge cannot connect to itself" << endl;
                     return false;
                 }
@@ -462,12 +440,12 @@ bool Map::addAdjacency(Territory *t, Adjacency *a) {
  * removes any adjacency that contains the territory
  * @param adjId
  */
-void Map::removeAdjacency(int *adjId) {
+void Map::removeAdjacency(int adjId) {
     vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrAndAdjsList)->begin(); terrIt != (terrAndAdjsList)->end(); ++terrIt) {
         vector<Adjacency>::iterator adjIt;
         for (adjIt = terrIt->second->begin(); adjIt != (*terrIt).second->end(); ++adjIt) {
-            if (*(adjIt->getAdjId()) == *(adjId)) {
+            if (adjIt->getAdjId() == adjId) {
                 terrIt->second->erase(adjIt);
                 return;
             }
@@ -481,21 +459,21 @@ void Map::display() {
     cout << "______________________________________________________________________________" << endl
          << "Displaying Board Map"
          << endl << "______________________________________________________________________________" << endl;
-    if (*(rect)) {
+    if (rect) {
         cout << " Map shape: Rectangle" << endl;
     } else {
         cout << "Map shape: L-shape" << endl;
     }
     vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrAndAdjsList)->begin(); terrIt != (terrAndAdjsList)->end(); ++terrIt) {
-        cout << "territory:" << *(*terrIt).first->getTerrId() << " continent:" << *(*terrIt).first->getContinent()
+        cout << "territory:" << (*terrIt).first->getTerrId() << " continent:" << (*terrIt).first->getContinent()
              << " adjacency:";
         vector<Adjacency>::iterator adjIt;
         for (adjIt = (*terrIt).second->begin(); adjIt != (*terrIt).second->end(); ++adjIt) {
-            cout << "(" << *(adjIt->getAdjId()) << ",";
-            if (!*(adjIt->getIsLandRoute())) {
+            cout << "(" << (adjIt->getAdjId()) << ",";
+            if (!(adjIt->getIsLandRoute())) {
                 cout << "W" << ") ";
-            } else if (*(adjIt->getIsLandRoute())) {
+            } else if (adjIt->getIsLandRoute()) {
                 cout << "L" << ") ";
             }
         }
@@ -518,14 +496,14 @@ bool Map::validate() {
         //check if all terrs listed in adjacency are also listed as terrs
         for (adjIt = (*terrIt).second->begin(); adjIt != (*terrIt).second->end(); ++adjIt) {
             if (!territoryExists(adjIt->getAdjId())) {
-                cout << "Invalid Map! Territory " << *(*terrIt).first->getTerrId()
+                cout << "Invalid Map! Territory " << (*terrIt).first->getTerrId()
                      << " connects to another territory that does not exist" << endl;
                 return false;
             }
         }
         //check if territory is connected to rest of graph
         if (!isConnected((*terrIt).first->getTerrId())) {
-            cout << "Invalid Map! Map does not connect territory " << *(*terrIt).first->getTerrId() << endl;
+            cout << "Invalid Map! Map does not connect territory " << (*terrIt).first->getTerrId() << endl;
             return false;
         }
     }

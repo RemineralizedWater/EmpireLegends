@@ -23,11 +23,11 @@ void DemonstrateA2Part4() {
 
     std::unique_ptr<std::map<std::string, int>> armySizeForPlayer(new std::map<std::string, int>());
     std::unique_ptr<std::map<std::string, bool>> hasArmy(new std::map<std::string, bool>());
-    Territory territoryToTest(new int(rand()), new int(rand()), *armySizeForPlayer, *hasArmy);
+    Territory territoryToTest(rand(), rand(), *armySizeForPlayer, *hasArmy);
 
     std::unique_ptr<std::map<std::string, int>> map1(new std::map<std::string, int>());
     std::unique_ptr<std::map<std::string, bool>> map2(new std::map<std::string, bool>());
-    Territory territoryToTest2(new int(rand()), new int(rand()), *map1, *map2);
+    Territory territoryToTest2(rand(), rand(), *map1, *map2);
 
 
     playerSimon->BuildCity();
