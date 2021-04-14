@@ -18,17 +18,17 @@ using std::string;
 class Territory {
 private:
 
-    int *terrId;
-    int *continentId;
+    int terrId;
+    int continentId;
     std::unique_ptr<std::map<std::string, int>> armySizeForPlayer_;
     std::unique_ptr<std::map<std::string, bool>> hasCity;
 
 public:
-    Territory(int *terrId, int *continent);
+    Territory(int terrId, int continent);
     Territory();
 
-    Territory(int *terrId,
-              int *continentId,
+    Territory(int terrId,
+              int continentId,
               const std::map<std::string, int> &armySizeForPlayer,
               const std::map<std::string, bool> &hasCity
     );
@@ -43,9 +43,9 @@ public:
 
     friend std::istream &operator>>(std::istream &in, Territory &t);
 
-    int *getTerrId();
+    int getTerrId();
 
-    int *getContinent();
+    int getContinent();
 
     std::map<std::string, int> &getArmySizeForPlayer();
     std::map<std::string, bool> &getHasCity();
@@ -56,13 +56,13 @@ public:
 
 class Adjacency {
 private:
-    int *adjId;
-    bool *isLandRoute;
+    int adjId;
+    bool isLandRoute;
 
 public:
     Adjacency();
 
-    Adjacency(int *adjId, bool *isLandRoute);
+    Adjacency(int adjId, bool isLandRoute);
 
     Adjacency(const Adjacency &copy);
 
@@ -74,9 +74,9 @@ public:
 
     friend std::istream &operator>>(std::istream &in, Adjacency &a);
 
-    int *getAdjId();
+    int getAdjId();
 
-    bool *getIsLandRoute();
+    bool getIsLandRoute();
 };
 
 /*
@@ -102,23 +102,23 @@ public:
 
 class Map {
 private:
-    bool *rect;
+    bool rect;
     typedef pair<Territory *, vector<Adjacency> *> terrInfo;     // typedef keyword allows new names for types, pair holds two & had constructor/destructor
     vector<terrInfo> *terrAndAdjsList;
-    int* startingPoint;
+    int startingPoint;
 
     //struct terrInfo {Territory* terr; vector<Adjacency>* adj;};     // TODO Change typedef pair to struct? Need init?
     //vector<Territory*, vector<Adjacency>*>* terrs;
-    bool territoryExists(int *adjId);
+    bool territoryExists(int adjId);
 
-    bool continentExists(int *continent);
+    bool continentExists(int continent);
 
-    bool isConnected(int *adjId);
+    bool isConnected(int adjId);
 
 public:
     Map();
 
-    Map(bool *rect);
+    Map(bool rect);
 
     Map(const Map &copy);
 
@@ -134,9 +134,9 @@ public:
 
     bool addAdjacency(Territory *t, Adjacency *a);
 
-    int* getStartingPoint();
+    int getStartingPoint();
 
-    void setStartingPoint(int &terrId);
+    void setStartingPoint(int terrId);
 
     void display();
 
@@ -146,5 +146,5 @@ public:
 
     int getMapSize();
 
-    void removeAdjacency(int *adjId);
+    void removeAdjacency(int adjId);
 };

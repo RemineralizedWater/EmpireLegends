@@ -25,7 +25,7 @@ void DemonstrateA2Part6(){
     bool validMap=false;
     MapLoader *mapLoader = new MapLoader(numPlayers);
     Map* map=mapLoader->loadMap("../src/Map Boards/valid_map.txt", validMap);
-    vector<Player*> players=starter->createPlayers(*(map->getStartingPoint()));
+    vector<Player*> players=starter->createPlayers(map->getStartingPoint());
     Deck* deck=starter->createDeck();
 
 
@@ -77,7 +77,7 @@ void DemonstrateA2Part6(){
     for(int i=1;i<(map->getMapSize()+1);i++){
         t=map->findTerritory(i);
         t->getContinent();
-        cout<<"army/armies:"<<t->getArmySizeForPlayer()[players[0]->getName()]<<" city/cities:" << t->getHasCity()[players[0]->getName()]<<" Territory: " <<*t->getTerrId()<<" Continent: "<<*t->getContinent()<<endl;
+        cout<<"army/armies:"<<t->getArmySizeForPlayer()[players[0]->getName()]<<" city/cities:" << t->getHasCity()[players[0]->getName()]<<" Territory: " <<t->getTerrId()<<" Continent: "<<t->getContinent()<<endl;
     }
 
     cout<<"\n--Owned Cards--"<<endl;
@@ -92,7 +92,7 @@ void DemonstrateA2Part6(){
     for(int i=1;i<(map->getMapSize()+1);i++){
         t=map->findTerritory(i);
         t->getContinent();
-        cout<<"army/armies:"<<t->getArmySizeForPlayer()[players[1]->getName()]<<" city/cities:" << t->getHasCity()[players[1]->getName()]<<" Territory: " <<*t->getTerrId()<<" Continent: "<<*t->getContinent()<<endl;
+        cout<<"army/armies:"<<t->getArmySizeForPlayer()[players[1]->getName()]<<" city/cities:" << t->getHasCity()[players[1]->getName()]<<" Territory: " <<t->getTerrId()<<" Continent: "<<t->getContinent()<<endl;
     }
     cout<<"\n--Owned Cards--"<<endl;
     deck->PrintCardsIn(players[1]->hand_->GetHand());
