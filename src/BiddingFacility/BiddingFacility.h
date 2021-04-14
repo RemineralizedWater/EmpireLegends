@@ -14,24 +14,39 @@ private: // var camelCase
     int coins;
     int bidAmount;
     bool isStartingPlayer;
-    Player* owningPlayer;
+    Player *owningPlayer;
 public: // var PascalCase
     void ReceiveStartingCoins(int numberOfPlayers);
+
     void EnterBid();
+
     void RevealBid();
+
     void ResolveBid(bool hasWonBid);
+
     string GetLastName();
+
     void SetLastName(string lastName_);
+
     int GetCoins();
+
     int GetBidAmount();
+
     void SetOwningPlayer(Player *owningPlayer_);
+
     BiddingFacility();
+
     ~BiddingFacility();
-    BiddingFacility(const BiddingFacility &copy);
-    BiddingFacility(string lastName_, int coins_, int bidAmount_, Player* owningPlayer_, bool isStartingPlayer_);
-    BiddingFacility & operator =(const BiddingFacility &bf);
-    friend ostream & operator << (ostream &out, const BiddingFacility &bf);
-    friend istream & operator >> (istream &in, BiddingFacility &bf);
+
+    //BiddingFacility(BiddingFacility &copy);
+
+    BiddingFacility(string lastName_, int coins_, int bidAmount_, Player *owningPlayer_, bool isStartingPlayer_);
+
+    BiddingFacility &operator=(const BiddingFacility &bf);
+
+    friend ostream &operator<<(ostream &out, const BiddingFacility &bf);
+
+    friend istream &operator>>(istream &in, BiddingFacility &bf);
 };
 
 

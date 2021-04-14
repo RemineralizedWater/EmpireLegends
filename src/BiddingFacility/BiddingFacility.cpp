@@ -20,14 +20,14 @@ BiddingFacility::BiddingFacility() {
     owningPlayer = nullptr;
     isStartingPlayer = false;
 }
-
-BiddingFacility::BiddingFacility(const BiddingFacility &copy){
+/* // TODO figure out why this breaks clion
+BiddingFacility::BiddingFacility(BiddingFacility &copy){
     lastName = copy.lastName;
     coins = copy.coins;
     bidAmount = copy.bidAmount;
     owningPlayer = copy.owningPlayer;
     isStartingPlayer = copy.isStartingPlayer;
-}
+}*/
 
 BiddingFacility::BiddingFacility(string lastName_, int coins_, int bidAmount_, Player* owningPlayer_, bool isStartingPlayer_){
     lastName = lastName_;
@@ -87,13 +87,14 @@ void BiddingFacility::ReceiveStartingCoins(int numberOfPlayers){
 // Enable the Player Object to privately choose a number to bid
 void BiddingFacility::EnterBid(){
 
-    cout << "Enter starting bid (you have " << owningPlayer->getMoney() << " coins):";
+    cout << "Enter starting bid (you have " << owningPlayer->GetMoney() << " coins):";
     while(true){
-        if(cin >> bidAmount && bidAmount <= owningPlayer->getMoney() && bidAmount >= 0){
+
+        if(cin >> bidAmount && bidAmount <= owningPlayer->GetMoney() && bidAmount >= 0){
             cout << "Bid amount of (" << bidAmount << ") received." << endl;
             break;
         }else{
-            cout << "Please enter a valid bid (integer, no greater than " << owningPlayer->getMoney() << ")" << endl << ">>";
+            cout << "Please enter a valid bid (integer, no greater than " << owningPlayer->GetMoney() << ")" << endl << ">>";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
@@ -110,13 +111,13 @@ void BiddingFacility::RevealBid(){
 // name order wins the bid and will go first (if coins are bid they are paid).
 void BiddingFacility::ResolveBid(bool hasWonBid){
     if(hasWonBid){
-        cout << owningPlayer->getName() << " has won the bid! " << endl;
-        cout << owningPlayer->getName() << " has lost " << bidAmount << " coins and has " << owningPlayer->getMoney() << " coins left." << endl;
-        owningPlayer->PayCoin(bidAmount);
-        owningPlayer->supply += bidAmount;
+        cout << owningPlayer->GetName() << " has won the bid! " << endl;
+        cout << owningPlayer->GetName() << " has lost " << bidAmount << " coins and has " << owningPlayer->GetMoney() << " coins left." << endl;
+        owningPlayer->PaysCoinFromPlayer(bidAmount);
+        owningPlayer->Supply += bidAmount;
         cout << bidAmount << " has been added to the Supply." << endl;
     }else{
-        cout << owningPlayer->getName() << " has lost the bid. They keep their coins." << endl;
+        cout << owningPlayer->GetName() << " has lost the bid. They keep their coins." << endl;
     }
 }
 
