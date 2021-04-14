@@ -534,7 +534,7 @@ void Player::ComputeScore(int currentPlayerIndex,vector<Player*> players,Map* ma
 
         Territory* t=map->findTerritory(i);
         //when the current territory belongs to a continent that is different from the continent of the territories stored in  territoriesAndOwners then find out who controls the continent in the map
-        if(territoriesAndOwners.size() != 0 && to_string(*t->getContinent()) != territoriesAndOwners[0]){
+        if(territoriesAndOwners.size() != 0 && to_string(t->getContinent()) != territoriesAndOwners[0]){
 
             //will keep track of the amount of territories each users owns in a continent
             std::map<string,int> playerControlledContinentTerritoriesCount;
@@ -604,13 +604,13 @@ void Player::ComputeScore(int currentPlayerIndex,vector<Player*> players,Map* ma
         //adding one entry in map to help during checking which continent's territories are being stored
         //key does not exist so create an entry for territoriesAndOwners
         if(territoriesAndOwners.find(0) == territoriesAndOwners.end()){
-            territoriesAndOwners.insert(pair<int, string>(0, to_string(*t->getContinent())));
+            territoriesAndOwners.insert(pair<int, string>(0, to_string(t->getContinent())));
         }
         if(maxTerritoryArmySize!=currentPlayerTerritoryArmySize&&maxArmyPlayers.size()==1){
-            territoriesAndOwners.insert(pair<int, string>(*t->getTerrId(), maxArmyPlayers[0]->getName()));
+            territoriesAndOwners.insert(pair<int, string>(t->getTerrId(), maxArmyPlayers[0]->getName()));
         }
          if(maxTerritoryArmySize==currentPlayerTerritoryArmySize&&maxArmyPlayers.size()==0){
-             territoriesAndOwners.insert(pair<int, string>(*t->getTerrId(), *name_));
+             territoriesAndOwners.insert(pair<int, string>(t->getTerrId(), *name_));
              *victoryPoints_+=1;
          }
 

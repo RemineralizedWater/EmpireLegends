@@ -82,7 +82,7 @@ void MainGameLoop(Map *map, bool validMap) {
         switch (userInput) {
             case 1:
                 if(validMap){
-                    cout<<"Starting point token: "<<*(map->getStartingPoint())<<endl;
+                    cout<<"Starting point token: "<< map->getStartingPoint() <<endl;
                     map->display();
                 }
                 DemonstrateA2Part1();
