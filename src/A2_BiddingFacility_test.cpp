@@ -68,14 +68,14 @@ void DemonstrateA2BiddingFacility(){
     Player * winningBidPlayer;
     int highestBid = -1;
     for(int i = 0; i < 2; i++) {
-        if(*players[i]->getBiddingFacility()->GetBidAmount() > highestBid){
-            highestBid = *players[i]->getBiddingFacility()->GetBidAmount();
+        if(players[i]->getBiddingFacility()->GetBidAmount() > highestBid){
+            highestBid = players[i]->getBiddingFacility()->GetBidAmount();
             winningBidPlayer = players[i];
         }
     }
 
     for(int i = 0; i < 2; i++) {
-        if(*players[i]->getBiddingFacility()->GetBidAmount() == highestBid &&
+        if(players[i]->getBiddingFacility()->GetBidAmount() == highestBid &&
         players[i]->getName().compare(winningBidPlayer->getName()) < 0){
             winningBidPlayer = players[i];
         }

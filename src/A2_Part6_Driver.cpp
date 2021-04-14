@@ -72,7 +72,7 @@ void DemonstrateA2Part6(){
 
 
     cout<<"\n --------------PLayer 1 info-------------------"<<endl;
-    cout <<players[0]->getName()<< ": "<<*(players[0]->getBiddingFacility()->GetLastName()) <<" Money:"<<players[0]->getMoney()<<endl;
+    cout <<players[0]->getName()<< ": "<<players[0]->getBiddingFacility()->GetLastName() <<" Money:"<<players[0]->getMoney()<<endl;
     cout<<"--Armies--"<<endl;
     for(int i=1;i<(map->getMapSize()+1);i++){
         t=map->findTerritory(i);
@@ -87,7 +87,7 @@ void DemonstrateA2Part6(){
     cout<<"---------------------------------------------------"<<endl;
 
     cout<<"\n --------------PLayer 2 info-------------------"<<endl;
-    cout <<players[1]->getName()<< ": "<<*(players[1]->getBiddingFacility()->GetLastName()) <<" Money:"<<players[1]->getMoney()<<endl;
+    cout <<players[1]->getName()<< ": "<<players[1]->getBiddingFacility()->GetLastName() <<" Money:"<<players[1]->getMoney()<<endl;
     cout<<"--Armies--"<<endl;
     for(int i=1;i<(map->getMapSize()+1);i++){
         t=map->findTerritory(i);
@@ -116,21 +116,21 @@ void DemonstrateA2Part6(){
                 starter->countControlledTerritories(players,map);
                 starter->tied(players,winner);
                 cout<< "Winner! After Counting Most Controlled Territories on the board"<<endl;
-                cout <<players[winner]->getName()<< ": "<<*(players[winner]->getBiddingFacility()->GetLastName())<<endl;
+                cout <<players[winner]->getName()<< ": "<<players[winner]->getBiddingFacility()->GetLastName()<<endl;
             }
             else{
                 cout<< "Winner! After Counting Most Armies on the board"<<endl;
-                cout <<players[winner]->getName()<< ": "<<*(players[winner]->getBiddingFacility()->GetLastName())<<endl;
+                cout <<players[winner]->getName()<< ": "<<players[winner]->getBiddingFacility()->GetLastName()<<endl;
             }
         }
         else{
             cout<< "Winner! After Counting Money"<<endl;
-            cout <<players[winner]->getName()<< ": "<<*(players[winner]->getBiddingFacility()->GetLastName())<<endl;
+            cout <<players[winner]->getName()<< ": "<<players[winner]->getBiddingFacility()->GetLastName()<<endl;
         }
     }
     else{
         cout<< "Winner!"<<endl;
-        cout <<players[winner]->getName()<< ": "<<*(players[winner]->getBiddingFacility()->GetLastName())<<endl;
+        cout <<players[winner]->getName()<< ": "<<players[winner]->getBiddingFacility()->GetLastName()<<endl;
     }
 
 
