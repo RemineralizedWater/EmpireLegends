@@ -15,12 +15,13 @@
 using namespace std;
 
 class Hand;
+
 class BiddingFacility;
 
 class Player {
 public:
-    static int supply;
-    Hand *hand_;
+    static int Supply;
+    Hand *Hands;
 
     Player();
 
@@ -37,39 +38,39 @@ public:
 
     void RequestPlayerName();
 
-    void PayCoin(const int &amountToPay);
+    void PaysCoinFromPlayer(const int &amountToPay);
 
     void PlaceNewArmies(int numberOfArmiesToPlaced);
 
-    void MoveArmies(int numberOfArmiesHeWantsToMove);
+    void MoveArmiesForPlayer(int numberOfArmiesHeWantsToMove);
 
-    void MoveOverLand();
+    void MoveOverLandForPlayer();
 
-    void MoveOverWater();
+    void MoveOverWaterForPlayer();
 
-    void BuildCity();
+    void BuildCityForPlayer();
 
-    void DestroyArmy(int numberOfArmiesToDestroy);
+    void DestroysNumberOfArmyOfPlayer(int numberOfArmiesToDestroy);
 
     void AndOrAction();
 
-    const std::string &getName() const;
+    const std::string &GetName() const;
 
-    void setName(const std::string &name);
+    void SetName(const std::string &name);
 
-    int &getCostOverWater();
+    int &GetCostOverWater();
 
-    void setCostOverWater(const int &costToMoveOverWater);
+    void SetCostOverWater(const int &costToMoveOverWater);
 
-    int getMoney();
+    int GetMoney();
 
-    BiddingFacility *getBiddingFacility();
+    BiddingFacility *GetBiddingFacility();
 
-    void setMoney(int money);
+    void SetMoney(int money);
 
-    int &getTotalMovementPointsForRound();
+    int &GetTotalMovementPointsForRound();
 
-    void setTotalMovementPointsForRound(const int &totalMovementPointsForRound);
+    void SetTotalMovementPointsForRound(const int &totalMovementPointsForRound);
 
     friend std::istream &operator>>(std::istream &is, Player &player);
 
@@ -83,50 +84,43 @@ public:
 
     int GetCitiesDisks();
 
-    int GetElixers();
+    int GetElixirs();
 
-    void SetElixers(int numElixers);
+    void SetElixers(int numberOfElixirs);
 
     int GetVictoryPoints();
 
     void SetVictoryPoints(int points);
 
-    void ComputeScore(int currentPlayerIndex,vector<Player*> players,Map* map);
+    void ComputeScore(int currentPlayerIndex, vector<Player *> players, Map *map);
 
-    void ComputeVPFlying(Cards c);
+    void ComputeVPFlying(Cards cards);
 
-    void ComputeVPNoble(Cards c);
+    void ComputeVPNoble(Cards cards);
 
-    void ComputeVPMountain(Cards c);
+    void ComputeVPMountain(Cards cards);
 
     void ComputeCards();
 
-    void checkForMostElixers(int currentPlayerIndex,vector<Player*> players);
+    void CheckForMostElixirsForPlayer(int currentPlayerIndex, vector<Player *> players);
 
-    void applyAbility();
+    void ApplyAbility();
 
 private:
-    //just one attribute added for stream insertion operator
-    std::unique_ptr<std::string> region_;
-    BiddingFacility* biddingFacility_;
-    std::unique_ptr<Territory> territory_;
-    std::unique_ptr<Cards> cards_;
-    int tokenArmies_; //for now is an int, but maybe will change for class "Token"?
-    std::unique_ptr<int> cubes_;//for now is an int, but maybe will change for class "Cubes"?
-    int *victoryPoints_;
-    int *elixers_;
-    int disks_;//for now is an int, but maybe will change for class "Disks"?
-    int money_;
-    std::unique_ptr<std::string> name_;
-    std::unique_ptr<int> totalMovementPointsForRound_;
-    std::unique_ptr<int> costToMoveOverWater_;
-    std::unique_ptr<bool> canBeAttacked_;
-
-
-
-    //TODO add terrs
-    //TODO add hand of cards meaning cards class
-
+    std::unique_ptr<std::string> region;
+    BiddingFacility *biddingFacility;
+    std::unique_ptr<Territory> territory;
+    std::unique_ptr<Cards> cards;
+    int tokenArmies;
+    std::unique_ptr<int> cubes;
+    int *victoryPoints;
+    int *elixirs;
+    int disks;
+    int money;
+    std::unique_ptr<std::string> name;
+    std::unique_ptr<int> totalMovementPointsForRound;
+    std::unique_ptr<int> costToMoveOverWater;
+    std::unique_ptr<bool> canBeAttacked;
 
 };
 

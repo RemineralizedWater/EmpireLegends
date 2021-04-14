@@ -19,7 +19,7 @@ void DemonstrateA2Part3(){
                        0,
                        3,
                        true));
-    player1->hand_->SetOwningPlayer(player1);
+    player1->Hands->SetOwningPlayer(player1);
 
     Player *player2(
             new Player("Montreal",
@@ -35,7 +35,7 @@ void DemonstrateA2Part3(){
                        0,
                        3,
                        true));
-    player2->hand_->SetOwningPlayer(player2);
+    player2->Hands->SetOwningPlayer(player2);
 
     Player *players[2] = {player1, player2};
 
@@ -50,16 +50,16 @@ void DemonstrateA2Part3(){
 
     int index = 0;
     while(true){
-        cout << "======== " << players[index]->getName() << "'s TURN ========" << endl;
-        players[index]->hand_->Exchange(deck);
+        cout << "======== " << players[index]->GetName() << "'s TURN ========" << endl;
+        players[index]->Hands->Exchange(deck);
         players[index]->ResolveActiveCard();
 
         cout << "Cards in deck: " << endl;
         deck->PrintCardsIn(deck->GetDeck());
         cout << "Cards in Face Up Pile:" << endl;
         deck->PrintCardsIn((deck->GetFaceUpCards()));
-        cout << "Cards in " << players[index]->getName() << "'s hand:" << endl;
-        deck->PrintCardsIn(players[index]->hand_->GetHand());
+        cout << "Cards in " << players[index]->GetName() << "'s hand:" << endl;
+        deck->PrintCardsIn(players[index]->Hands->GetHand());
 
         if(index == 0) index = 1;
         else index = 0;

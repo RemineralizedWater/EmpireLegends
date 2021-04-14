@@ -30,14 +30,14 @@ void DemonstrateA2Part4() {
     Territory territoryToTest2(new int(rand()), new int(rand()), *map1, *map2);
 
 
-    playerSimon->BuildCity();
-    playerSimon->DestroyArmy(rand());
-    playerSimon->MoveArmies(2);
-    playerSimon->MoveOverLand();
-    playerSimon->PayCoin(1);
+    playerSimon->BuildCityForPlayer();
+    playerSimon->DestroysNumberOfArmyOfPlayer(rand());
+    playerSimon->MoveArmiesForPlayer(2);
+    playerSimon->MoveOverLandForPlayer();
+    playerSimon->PaysCoinFromPlayer(1);
     playerSimon->PlaceNewArmies(1);
-    playerSimon->MoveOverWater();
-    playerSimon->MoveOverLand();
+    playerSimon->MoveOverWaterForPlayer();
+    playerSimon->MoveOverLandForPlayer();
     //playerSimon->AndOrAction(); // needs a card to showcase - see part 3 demonstration
 
     /*
