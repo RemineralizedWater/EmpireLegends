@@ -63,4 +63,5 @@ void DemonstrateBiddingFacility(int numberOfPlayers){
     // Memory clean up
     delete bidWinner;
     bidWinner = nullptr;
+
 }

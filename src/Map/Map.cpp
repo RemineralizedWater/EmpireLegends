@@ -47,10 +47,15 @@ Territory::Territory(const Territory &copy) {
  * destructor
  */
 Territory::~Territory() {
-    delete terrId;
-    terrId = nullptr;
-    delete continentId;
-    continentId = nullptr;
+    if(terrId != nullptr){
+        delete terrId;
+        terrId = nullptr;
+    }
+    if(continentId != nullptr){
+        delete continentId;
+        continentId = nullptr;
+    }
+
 }
 // Operators
 /**
@@ -135,6 +140,7 @@ Territory::Territory(int *terrId, int *continent) {
 
 void Territory::InsertNewArmyPlayerMapping(string playerName) {
     armySizeForPlayer_->insert(std::pair<string, int>(playerName, 0));
+
 }
 
 void Territory::InsertNewCityPlayerMapping(string playerName) {
@@ -175,10 +181,16 @@ Adjacency::Adjacency(const Adjacency &copy) {
  * destructor
  */
 Adjacency::~Adjacency() {
-    delete adjId;
-    adjId = nullptr;
-    delete isLandRoute;
-    isLandRoute = nullptr;
+    if(adjId != nullptr){
+        delete adjId;
+        adjId = nullptr;
+    }
+
+    if(isLandRoute != nullptr){
+        delete isLandRoute;
+        isLandRoute = nullptr;
+    }
+
 }
 // Operators
 /**
@@ -262,12 +274,21 @@ Map::Map(const Map &copy) {
  * destructor
  */
 Map::~Map() {
-    delete rect;
-    rect = nullptr;
-    delete terrAndAdjsList;
-    terrAndAdjsList = nullptr;
-    delete startingPoint;
-    startingPoint= nullptr;
+    if(rect != nullptr){
+        delete rect;
+        rect = nullptr;
+    }
+
+    if(terrAndAdjsList != nullptr){
+        delete terrAndAdjsList;
+        terrAndAdjsList = nullptr;
+    }
+
+    //if(startingPoint != nullptr){
+    //    delete startingPoint;
+    //    startingPoint= nullptr;
+    //}
+
     /*while(!terrAndAdjsList->empty()) {
         delete terrAndAdjsList->back();
         terrAndAdjsList->pop_back();
@@ -302,6 +323,20 @@ std::istream &operator>>(std::istream &in, Map &m) {
     in >> *(m.rect);
     return in;
 }
+/**
+ * Find a specific territory by id
+ * @param terrId
+ * @return
+ */
+Territory * Map::findTerritory(int terrId) {
+    vector<terrInfo>::iterator terrIt;
+    for (terrIt = (terrAndAdjsList)->begin(); terrIt != (terrAndAdjsList)->end(); ++terrIt) {
+        if(*(*terrIt).first->getTerrId()==terrId){
+            return (*terrIt).first;
+        }
+    }
+    return 0;
+}
 // Private Methods
 /**
  * Check if territory is currently in graph
@@ -331,6 +366,13 @@ bool Map::continentExists(int *continent) {
         }
     }
     return false;
+}
+/**
+ * Get list of territories and adjacencies
+ * @return
+ */
+int Map::getMapSize() {
+return terrAndAdjsList->size();
 }
 /**
  * Get the starting point
@@ -413,6 +455,7 @@ bool Map::addAdjacency(Territory *t, Adjacency *a) {
             return true;
         }
     }
+    return false;
 }
 
 /**
@@ -431,7 +474,6 @@ void Map::removeAdjacency(int *adjId) {
         }
     }
 }
-
 /**
  * displays contents in graph
  */
@@ -467,6 +509,9 @@ void Map::display() {
  **/
 bool Map::validate() {
     vector<terrInfo>::iterator terrIt;
+    if (terrIt == (terrAndAdjsList)->end()) {
+        return false;
+    }
     for (terrIt = (terrAndAdjsList)->begin(); terrIt != (terrAndAdjsList)->end(); ++terrIt) {
         vector<Adjacency>::iterator adjIt;
 

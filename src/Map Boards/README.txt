@@ -23,9 +23,11 @@ L-shape board does not need a number of board pieces specified
         Rectangle of 3 board pieces
 
 continent
+    Continent id starts id starts at 1 and increment
     ex. 1,2,3,4,5,6 ...
 
 territory
+    Territory id starts id starts at 1 and increment
     ex. 1,2,3,4,5,6 ...
 
 adjacency

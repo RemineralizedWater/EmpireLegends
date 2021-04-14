@@ -42,4 +42,6 @@ void DemonstrateCards(int numberOfPlayers){
     cout << "Cards in player hand:" << endl;
     deck->PrintCardsIn(player->hand_->GetHand());
 
+    delete deck;
+    deck = nullptr;
 }

@@ -95,10 +95,7 @@ void DemonstrateA2BiddingFacility(){
     player1 = nullptr;
     delete player2;
     player2 = nullptr;
-    delete players[0];
-    players[0] = nullptr;
-    delete players[1];
-    players[1] = nullptr;
 
-    exit(0);
+
+    return;
 }
