@@ -6,26 +6,28 @@
 
 using namespace std;
 
-void DemonstrateCards(int numberOfPlayers){
+void DemonstrateCards(int numberOfPlayers) {
 
 
     std::unique_ptr<Player> player(
             new Player("Montreal",
                        new BiddingFacility(),
-                       Territory(),
-                       Cards(),
-                       new int(0),
+                       *(new Territory()),
+                       *(new Cards()),
+                       0,
                        1,
-                       new int(0),
+                       0,
                        new Hand(),
                        0,
                        "Player 1",
                        0,
                        3,
-                       true));
+                       true,
+                       0,
+                       0));
 
     cout << "Creating deck.." << endl;
-    Deck* deck = new Deck(numberOfPlayers);
+    Deck *deck = new Deck(numberOfPlayers);
     cout << "Populating Face Up Cards.." << endl;
     deck->PopulateFaceUpCards();
     cout << "Cards in deck: " << endl;

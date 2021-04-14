@@ -8,33 +8,39 @@ void DemonstrateA2Part3(){
     Player *player1(
             new Player("Montreal",
                        new BiddingFacility(),
-                       Territory(),
-                       Cards(),
-                       new int(18),
+                       *(new Territory()),
+                       *(new Cards()),
+                       0,
                        1,
-                       new int(3),
+                       0,
                        new Hand(),
                        0,
                        "Player 1",
                        0,
                        3,
-                       true));
+                       true,
+                       0,
+                       0
+            ));
     player1->Hands->SetOwningPlayer(player1);
 
     Player *player2(
             new Player("Montreal",
                        new BiddingFacility(),
-                       Territory(),
-                       Cards(),
-                       new int(18),
+                       *(new Territory()),
+                       *(new Cards()),
+                       0,
                        1,
-                       new int(3),
+                       0,
                        new Hand(),
                        0,
-                       "Player 2",
+                       "Player 1",
                        0,
                        3,
-                       true));
+                       true,
+                       0,
+                       0
+            ));
     player2->Hands->SetOwningPlayer(player2);
 
     Player *players[2] = {player1, player2};

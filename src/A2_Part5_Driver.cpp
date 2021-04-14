@@ -3,44 +3,48 @@
 #include <sstream>
 #include "Cards/Deck.h"
 
-void DemonstrateA2Part5(){
+void DemonstrateA2Part5() {
 
     Player *player1(
             new Player("Montreal",
                        new BiddingFacility(),
-                       Territory(),
-                       Cards(),
-                       new int(18),
+                       *(new Territory()),
+                       *(new Cards()),
+                       0,
                        1,
-                       new int(3),
+                       0,
                        new Hand(),
                        0,
                        "Player 1",
                        0,
                        3,
-                       true));
+                       true,
+                       0,
+                       0));
     player1->Hands->SetOwningPlayer(player1);
 
     Player *player2(
             new Player("Montreal",
                        new BiddingFacility(),
-                       Territory(),
-                       Cards(),
-                       new int(18),
+                       *(new Territory()),
+                       *(new Cards()),
+                       0,
                        1,
-                       new int(3),
+                       0,
                        new Hand(),
                        0,
-                       "Player 2",
+                       "Player 1",
                        0,
                        3,
-                       true));
+                       true,
+                       0,
+                       0));
     player2->Hands->SetOwningPlayer(player2);
 
     Player *players[2] = {player1, player2};
 
     //cout << "Creating deck.." << endl;
-    Deck* deck = new Deck(2);
+    Deck *deck = new Deck(2);
     //cout << "Populating Face Up Cards.." << endl;
     deck->PopulateFaceUpCards();
     //cout << "Cards in deck: " << endl;
@@ -49,7 +53,7 @@ void DemonstrateA2Part5(){
     deck->PrintCardsIn((deck->GetFaceUpCards()));
 
     int index = 0;
-    while(true){
+    while (true) {
         cout << "======== " << players[index]->GetName() << "'s TURN ========" << endl;
         players[index]->Hands->Exchange(deck);
         cout << "=======================================================================" << endl;
@@ -65,13 +69,13 @@ void DemonstrateA2Part5(){
         /*cout << "Cards in " << players[index]->GetName() << "'s hand:" << endl;
         deck->PrintCardsIn(players[index]->Hands->GetHand());*/
 
-        if(index == 0) index = 1;
+        if (index == 0) index = 1;
         else index = 0;
 
         string option;
         cout << "Enter 'X' to exit, or anything else to continue to next player turn." << endl;
         cin >> option;
-        if(option.compare("X") == 0 || option.compare("x") == 0){
+        if (option.compare("X") == 0 || option.compare("x") == 0) {
             break;
         }
         cout << "=======================================================================" << endl;

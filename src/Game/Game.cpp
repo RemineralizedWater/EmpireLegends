@@ -66,17 +66,19 @@ vector<Player*> Game::createPlayers(int startingPoint) {
         Player *player(
                 new Player(to_string(startingPoint),
                            new BiddingFacility(),
-                           Territory(),
-                           Cards(),
-                           new int(0),
+                           *(new Territory()),
+                           *(new Cards()),
+                           0,
                            1,
-                           new int(0),
+                           0,
                            new Hand(),
-                           new int{0},
-                           "Player "+to_string(i+1),
+                           0,
+                           "Player 1",
                            0,
                            3,
-                           true));
+                           true,
+                           0,
+                           0));
         player->Hands->SetOwningPlayer(player);
         player->GetBiddingFacility()->SetOwningPlayer(player);
 

@@ -19,30 +19,47 @@ class Hand;
 class BiddingFacility;
 
 class Player {
+private:
+    string region;
+    BiddingFacility *biddingFacility;
+    std::unique_ptr<Territory> territory;
+    std::unique_ptr<Cards> cards;
+    int tokenArmies;
+    int cubes;
+    int victoryPoints;
+    int elixirs;
+    int disks;
+    int money;
+    string name;
+    int totalMovementPointsForRound;
+    int costToMoveOverWater;
+    bool canBeAttacked;
+
 public:
     static int Supply;
+
     Hand *Hands;
 
     Player();
 
     ~Player();
 
-    Player(const Player &playerToCopy);
+    Player(Player &playerToCopy);
 
-    Player(const std::string &region, BiddingFacility *biddingFacility, const Territory &territory,
-           const Cards &cards, int *tokenArmies,
-           const int &cubes, int *disks, Hand *hand, int *money, const std::string &name,
-           const int &totalMovementPointsForRound, const int &costToMoveOverWater, const bool &canBeAttacked);
+    Player(string region_, BiddingFacility *biddingFacility_, Territory &territory_,
+           Cards &cards_, int tokenArmies_,
+           int cubes_, int disks_, Hand *hand_, int money_, string name_,
+           int totalMovementPointsForRound_, int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_, int elixirs_);
 
     Player &operator=(const Player &playerToCopy);
 
     void RequestPlayerName();
 
-    void PaysCoinFromPlayer(const int &amountToPay);
+    void PaysCoinFromPlayer(int amountToPay);
 
     void PlaceNewArmies(int numberOfArmiesToPlaced);
 
-    void MoveArmiesForPlayer(int numberOfArmiesHeWantsToMove);
+    void MoveArmiesForPlayer(int numberOfArmiesToMove);
 
     void MoveOverLandForPlayer();
 
@@ -54,13 +71,13 @@ public:
 
     void AndOrAction();
 
-    const std::string &GetName() const;
+    string GetName();
 
-    void SetName(const std::string &name);
+    void SetName(string name_);
 
-    int &GetCostOverWater();
+    int GetCostOverWater();
 
-    void SetCostOverWater(const int &costToMoveOverWater);
+    void SetCostOverWater(int costToMoveOverWater_);
 
     int GetMoney();
 
@@ -68,9 +85,9 @@ public:
 
     void SetMoney(int money);
 
-    int &GetTotalMovementPointsForRound();
+    int GetTotalMovementPointsForRound();
 
-    void SetTotalMovementPointsForRound(const int &totalMovementPointsForRound);
+    void SetTotalMovementPointsForRound(int totalMovementPointsForRound);
 
     friend std::istream &operator>>(std::istream &is, Player &player);
 
@@ -105,22 +122,6 @@ public:
     void CheckForMostElixirsForPlayer(int currentPlayerIndex, vector<Player *> players);
 
     void ApplyAbility();
-
-private:
-    std::unique_ptr<std::string> region;
-    BiddingFacility *biddingFacility;
-    std::unique_ptr<Territory> territory;
-    std::unique_ptr<Cards> cards;
-    int tokenArmies;
-    std::unique_ptr<int> cubes;
-    int *victoryPoints;
-    int *elixirs;
-    int disks;
-    int money;
-    std::unique_ptr<std::string> name;
-    std::unique_ptr<int> totalMovementPointsForRound;
-    std::unique_ptr<int> costToMoveOverWater;
-    std::unique_ptr<bool> canBeAttacked;
 
 };
 

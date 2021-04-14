@@ -1,7 +1,5 @@
 #include "BiddingFacility.h"
 #include <iostream>
-#include <string>
-#include <list>
 #include <vector>
 
 using namespace std;
@@ -41,14 +39,14 @@ void DemonstrateBiddingFacility(int numberOfPlayers){
     BiddingFacility *bidWinner;
     int highestBid = -1;
     for(int i = 0; i < numberOfPlayers; i++){
-        if(*(biddingFacilities[i].GetBidAmount()) > highestBid) {
-            highestBid = *(biddingFacilities[i].GetBidAmount());
+        if(biddingFacilities[i].GetBidAmount() > highestBid) {
+            highestBid = biddingFacilities[i].GetBidAmount();
             bidWinner = &biddingFacilities[i];
         }
     }
     for(int i = 0; i < numberOfPlayers; i++){
-        if(*(biddingFacilities[i].GetBidAmount()) == highestBid &&
-            (biddingFacilities[i].GetLastName())->compare(*(bidWinner->GetLastName())) < 0){
+        if(biddingFacilities[i].GetBidAmount() == highestBid &&
+            (biddingFacilities[i].GetLastName()).compare(bidWinner->GetLastName()) < 0){
             bidWinner = &biddingFacilities[i];
         }
     }

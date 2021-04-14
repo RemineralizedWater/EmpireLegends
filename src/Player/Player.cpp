@@ -9,7 +9,7 @@ using namespace std;
 int Player::Supply = 0;
 
 //Successfully pays coin and withdraws money from said player account (for Ass1. just returns
-void Player::PaysCoinFromPlayer(const int &amountToPay) {
+void Player::PaysCoinFromPlayer(int amountToPay) {
     money -= amountToPay;
     Supply += amountToPay;
     std::cout << "The transaction has been successful, we have removed: " << amountToPay << " coins." << std::endl;
@@ -22,11 +22,11 @@ void Player::PlaceNewArmies(int numberOfArmiesToPlaced) {
     cout << "Which territory would you like to place armies in? " << endl;
     cout << "Using placeholder territory.." << endl;
     Territory *terr = new Territory();  // placeholder for testing
-    terr->InsertNewArmyPlayerMapping(*name); // placeholder for testing
-    terr->InsertNewCityPlayerMapping(*name); // placeholder for testing
-    terr->getHasCity()[*name] = true; // placeholder for testing
+    terr->InsertNewArmyPlayerMapping(name); // placeholder for testing
+    terr->InsertNewCityPlayerMapping(name); // placeholder for testing
+    terr->getHasCity()[name] = true; // placeholder for testing
 
-    if (!terr->getHasCity()[*name]) {
+    if (!terr->getHasCity()[name]) {
         cout << "You do not have a city in this territory, please choose another territory." << endl;
         cout << "You have " << tokenArmies << " army tokens." << endl;
         //TODO LOOP
@@ -35,7 +35,7 @@ void Player::PlaceNewArmies(int numberOfArmiesToPlaced) {
     if (tokenArmies < numberOfArmiesToPlaced) {
         cout << "You do not have enough armies left to place." << endl;
     } else {
-        terr->getArmySizeForPlayer()[*name] += numberOfArmiesToPlaced;
+        terr->getArmySizeForPlayer()[name] += numberOfArmiesToPlaced;
         tokenArmies -= numberOfArmiesToPlaced;
         cout << "Your army has been successfully placed." << endl;
     }
@@ -116,7 +116,7 @@ void Player::AndOrAction() {
 }
 
 //Moves army for desired player
-void Player::MoveArmiesForPlayer(int numberOfArmiesHeWantsToMove) {
+void Player::MoveArmiesForPlayer(int numberOfArmiesToMove) {
 
     // TODO: "Which territory would you like to move FROM? >> enter Territory.
     cout << "Which territory would you like to move armies FROM?" << endl;
@@ -128,9 +128,9 @@ void Player::MoveArmiesForPlayer(int numberOfArmiesHeWantsToMove) {
     Territory *territoryToMoveTo = new Territory(); // placeholder
 
     //TODO: needs to move one at a time, not the full amount passed.
-    if (territoryToMoveFrom->getArmySizeForPlayer()[*name] >= numberOfArmiesHeWantsToMove) {
-        territoryToMoveFrom->getArmySizeForPlayer()[*name] -= numberOfArmiesHeWantsToMove;
-        territoryToMoveTo->getArmySizeForPlayer()[*name] += numberOfArmiesHeWantsToMove;
+    if (territoryToMoveFrom->getArmySizeForPlayer()[name] >= numberOfArmiesToMove) {
+        territoryToMoveFrom->getArmySizeForPlayer()[name] -= numberOfArmiesToMove;
+        territoryToMoveTo->getArmySizeForPlayer()[name] += numberOfArmiesToMove;
         std::cout << "Your army has been successfully moved" << std::endl;
     } else {
         std::cout
@@ -146,8 +146,8 @@ void Player::MoveArmiesForPlayer(int numberOfArmiesHeWantsToMove) {
 
 //Move over land for desired player
 void Player::MoveOverLandForPlayer() {
-    if (*totalMovementPointsForRound > 0) {
-        (*totalMovementPointsForRound)--;
+    if (totalMovementPointsForRound > 0) {
+        (totalMovementPointsForRound)--;
         std::cout << "You have successfully moved over land" << std::endl;
     } else {
         std::cout << "You have not successfully moved over land because your total movement points for round are at 0"
@@ -156,8 +156,8 @@ void Player::MoveOverLandForPlayer() {
 }
 
 void Player::MoveOverWaterForPlayer() {
-    if (*totalMovementPointsForRound > *costToMoveOverWater) {
-        (*totalMovementPointsForRound) -= *costToMoveOverWater;
+    if (totalMovementPointsForRound > costToMoveOverWater) {
+        (totalMovementPointsForRound) -= costToMoveOverWater;
         std::cout << "You have successfully moved over water" << std::endl;
     } else {
         std::cout
@@ -184,7 +184,7 @@ void Player::BuildCityForPlayer() {
 
     if (disks > 0) {
         disks -= 1;
-        terr->getHasCity()[*name] = true;
+        terr->getHasCity()[name] = true;
         cout << "You have successfully built the city." << endl;
     } else {
         cout << "You cannot build a city in this territory because you do not have an available city token." << endl;
@@ -203,7 +203,7 @@ void Player::DestroysNumberOfArmyOfPlayer(int numberOfArmiesToDestroy) {
     cout << "Using placeholder territory..." << endl;
     Territory *targetTerritory = new Territory(); // placeholder
 
-    if (targetTerritory->getArmySizeForPlayer()[*name] > 0) {
+    if (targetTerritory->getArmySizeForPlayer()[name] > 0) {
         cout << "You do not have an army in this territory and therefore can not attack anyone here. Please select"
                 "another territory." << endl;
         //TODO LOOP
@@ -226,52 +226,54 @@ void Player::DestroysNumberOfArmyOfPlayer(int numberOfArmiesToDestroy) {
 }
 
 //Copy constructor
-Player::Player(const Player &playerToCopy)
-        : region(new std::string(*playerToCopy.region)),
+Player::Player(Player &playerToCopy)
+        : region(playerToCopy.region),
           biddingFacility(new BiddingFacility(*playerToCopy.biddingFacility)),
           territory(new Territory(*playerToCopy.territory)),
           cards(new Cards(*playerToCopy.cards)),
           tokenArmies(playerToCopy.tokenArmies),
-          cubes(new int(*playerToCopy.cubes)),
+          cubes(playerToCopy.cubes),
           disks(playerToCopy.disks),
           money(playerToCopy.money),
-          name(new std::string(*playerToCopy.name)),
-          totalMovementPointsForRound(new int(*playerToCopy.totalMovementPointsForRound)),
-          costToMoveOverWater(new int(*playerToCopy.costToMoveOverWater)),
-          victoryPoints(new int(*playerToCopy.victoryPoints)),
-          elixirs(new int(*playerToCopy.elixirs)),
-          canBeAttacked(new bool(*playerToCopy.canBeAttacked)) {
+          name(playerToCopy.name),
+          totalMovementPointsForRound(playerToCopy.totalMovementPointsForRound),
+          costToMoveOverWater(playerToCopy.costToMoveOverWater),
+          victoryPoints(playerToCopy.victoryPoints),
+          elixirs(playerToCopy.elixirs),
+          canBeAttacked(playerToCopy.canBeAttacked) {
 }
 
 //Constructor
-Player::Player(const std::string &region,
-               BiddingFacility *biddingFacility,
-               const Territory &territory,
-               const Cards &cards,
-               int *tokenArmies,
-               const int &cubes,
-               int *disks,
-               Hand *hand,
-               int *money,
-               const std::string &name,
-               const int &totalMovementPointsForRound,
-               const int &costToMoveOverWater,
-               const bool &canBeAttacked)
-        : region(new std::string(region)),
-          biddingFacility(new BiddingFacility()),
-          territory(new Territory(territory)),
-          cards(new Cards(cards)),
-          tokenArmies(0),
-          cubes(new int(cubes)),
-          disks(0),
-          Hands(new Hand()),
-          money(0),
-          totalMovementPointsForRound(new int(0)),
-          costToMoveOverWater(new int(3)),
-          name(new std::string(name)),
-          canBeAttacked(new bool(canBeAttacked)),
-          victoryPoints(new int(0)),
-          elixirs(new int(0)) {
+Player::Player(string region_,
+               BiddingFacility *biddingFacility_,
+               Territory &territory_,
+               Cards &cards_,
+               int tokenArmies_,
+               int cubes_,
+               int disks_,
+               Hand *hand_,
+               int money_,
+               string name_,
+               int totalMovementPointsForRound_,
+               int costToMoveOverWater_,
+               bool canBeAttacked_,
+               int victoryPoints_,
+               int elixirs_)
+        : region(region_),
+          biddingFacility(biddingFacility_),
+          territory(&territory_),
+          cards(&cards_),
+          tokenArmies(tokenArmies_),
+          cubes(cubes_),
+          disks(disks_),
+          Hands(hand_),
+          money(money_),
+          totalMovementPointsForRound(totalMovementPointsForRound_),
+          costToMoveOverWater(costToMoveOverWater_),
+          name(name_),
+          canBeAttacked(canBeAttacked_),
+          victoryPoints(victoryPoints_),
+          elixirs(elixirs_) {
 }
 
 
@@ -283,24 +285,24 @@ Player &Player::operator=(const Player &playerToCopy) {
 
 //stream insertion operation
 std::istream &operator>>(std::istream &is, Player &player) {
-    is >> *player.region;
+    is >> player.region;
     is >> *player.biddingFacility;
     is >> *player.territory;
     is >> *player.cards;
     is >> player.tokenArmies;
-    is >> *player.cubes;
+    is >> player.cubes;
     is >> player.disks;
     is >> player.money;
-    is >> *player.totalMovementPointsForRound;
-    is >> *player.costToMoveOverWater;
-    is >> *player.victoryPoints;
-    is >> *player.elixirs;
+    is >> player.totalMovementPointsForRound;
+    is >> player.costToMoveOverWater;
+    is >> player.victoryPoints;
+    is >> player.elixirs;
     return is;
 }
 
 Player::Player() {
-    victoryPoints = new int(0);
-    elixirs = new int(0);
+    victoryPoints = 0;
+    elixirs = 0;
     // TODO need to build default constructor
 }
 
@@ -311,20 +313,20 @@ Player::~Player() {
     }
 }
 
-const std::string &Player::GetName() const {
-    return *name;
+string Player::GetName() {
+    return name;
 }
 
-void Player::SetName(const string &name) {
-    name = std::unique_ptr<std::string>(new std::string(name));
+void Player::SetName(string name_) {
+    name = name_;
 }
 
-int &Player::GetCostOverWater() {
-    return *costToMoveOverWater;
+int Player::GetCostOverWater() {
+    return costToMoveOverWater;
 }
 
-void Player::SetCostOverWater(const int &costToMoveOverWater) {
-    costToMoveOverWater = std::unique_ptr<int>(new int(costToMoveOverWater));
+void Player::SetCostOverWater(int costToMoveOverWater_) {
+    costToMoveOverWater = costToMoveOverWater_;
 }
 
 int Player::GetMoney() {
@@ -340,27 +342,27 @@ void Player::SetMoney(int money) {
 }
 
 int Player::GetElixirs() {
-    return *elixirs;
+    return elixirs;
 }
 
 void Player::SetElixers(int numberOfElixirs) {
-    elixirs = new int{numberOfElixirs};
+    elixirs = numberOfElixirs;
 }
 
 int Player::GetVictoryPoints() {
-    return *victoryPoints;
+    return victoryPoints;
 }
 
 void Player::SetVictoryPoints(int points) {
-    *victoryPoints = points;
+    victoryPoints = points;
 }
 
-int &Player::GetTotalMovementPointsForRound() {
-    return *totalMovementPointsForRound;
+int Player::GetTotalMovementPointsForRound() {
+    return totalMovementPointsForRound;
 }
 
-void Player::SetTotalMovementPointsForRound(const int &totalMovementPointsForRound) {
-    totalMovementPointsForRound = std::unique_ptr<int>(new int(totalMovementPointsForRound));
+void Player::SetTotalMovementPointsForRound(int totalMovementPointsForRound_) {
+    totalMovementPointsForRound = totalMovementPointsForRound_;
 }
 
 void Player::ApplyAbility() {
@@ -378,11 +380,11 @@ void Player::ApplyAbility() {
     }
         //"+ elixirs"
     else if (Hands->GetActiveCard()->GetGoods() == 4) {
-        *elixirs += Hands->GetActiveCard()->GetGoodsValue();
+        elixirs += Hands->GetActiveCard()->GetGoodsValue();
     }
         //"+ coins and 1+ elixirs"
     else if (Hands->GetActiveCard()->GetGoods() == 5) {
-        *elixirs += 1;
+        elixirs += 1;
         money += Hands->GetActiveCard()->GetGoodsValue();
     }
         // "immune to attack"
@@ -443,7 +445,7 @@ void Player::ComputeVPFlying(Cards cards) {
     for (Cards c2:*hand) {
         std::string::size_type pos = (cards.GetName()).find(' ');
         if (cards.GetGoodsSpecific() == (cards.GetName()).substr(0, pos)) {
-            *victoryPoints += 1;
+            victoryPoints += 1;
         }
     }
 }
@@ -457,7 +459,7 @@ void Player::ComputeVPNoble(Cards cards) {
             nobleCards++;
         }
         if (nobleCards == 3) {
-            *victoryPoints += cards.GetGoodsValue();
+            victoryPoints += cards.GetGoodsValue();
         }
     }
 }
@@ -471,7 +473,7 @@ void Player::ComputeVPMountain(Cards cards) {
             mountainCards++;
         }
         if (mountainCards == 2) {
-            *victoryPoints += cards.GetGoodsValue();
+            victoryPoints += cards.GetGoodsValue();
         }
     }
 
@@ -490,7 +492,7 @@ void Player::ComputeCards() {
         }
             //+ VP per 3 coins
         else if (c.GetGoods() == 8) {
-            *victoryPoints += money * c.GetGoodsValue();
+            victoryPoints += money * c.GetGoodsValue();
         }
             //+ VP for card: Mountain x2
         else if (c.GetGoods() == 10) {
@@ -501,7 +503,7 @@ void Player::ComputeCards() {
 }
 
 void Player::CheckForMostElixirsForPlayer(int currentPlayerIndex, vector<Player *> players) {
-    int maxElixers = *elixirs;
+    int maxElixers = elixirs;
     vector<Player *> maxElixerPlayers;
     for (int i = 0; i < players.size(); i++) {
         if (currentPlayerIndex == i) {
@@ -515,10 +517,10 @@ void Player::CheckForMostElixirsForPlayer(int currentPlayerIndex, vector<Player 
             maxElixerPlayers.push_back(players[i]);
         }
     }
-    if (maxElixers == *elixirs && maxElixerPlayers.size() == 0) {
-        *victoryPoints += 2;
-    } else if (maxElixers == *elixirs && maxElixerPlayers.size() != 0) {
-        *victoryPoints += 1;
+    if (maxElixers == elixirs && maxElixerPlayers.size() == 0) {
+        victoryPoints += 2;
+    } else if (maxElixers == elixirs && maxElixerPlayers.size() != 0) {
+        victoryPoints += 1;
     }
 }
 
@@ -542,7 +544,8 @@ void Player::ComputeScore(int currentPlayerIndex, vector<Player *> players, Map 
 
         Territory *t = map->findTerritory(i);
         //when the current territory belongs to a continent that is different from the continent of the territories stored in  territoriesAndOwners then find out who controls the continent in the map
-        if (territoriesAndOwners.size() != 0 && to_string(*t->getContinent()) != territoriesAndOwners[0]) {
+
+        if (territoriesAndOwners.size() != 0 && to_string(t->getContinent()) != territoriesAndOwners[0]) {
 
             //will keep track of the amount of territories each users owns in a continent
             std::map<string, int> playerControlledContinentTerritoriesCount;
@@ -582,17 +585,17 @@ void Player::ComputeScore(int currentPlayerIndex, vector<Player *> players, Map 
                     maxTerritoriesControlledPlayerNames.push_back(playerControlledContinentTerritoriesCountIt->first);
                 }
             }
-            if (maxTerritoriesControlledPlayerNames.size() == 1 && maxTerritoriesControlledPlayerNames[0] == *name) {
-                *victoryPoints += 1;
+            if (maxTerritoriesControlledPlayerNames.size() == 1 && maxTerritoriesControlledPlayerNames[0] == name) {
+                victoryPoints += 1;
             }
         }
 
         ////////////////////////////////////////////////////////////////////////////////
         //TODO last and final run through
 
-        int maxTerritoryArmySize = t->getArmySizeForPlayer()[*name];
-        int currentPlayerTerritoryArmySize = t->getArmySizeForPlayer()[*name];
-        if (t->getHasCity()[*name]) {
+        int maxTerritoryArmySize = t->getArmySizeForPlayer()[name];
+        int currentPlayerTerritoryArmySize = t->getArmySizeForPlayer()[name];
+        if (t->getHasCity()[name]) {
             currentPlayerTerritoryArmySize += 1;
             maxTerritoryArmySize += 1;
         }
@@ -617,15 +620,16 @@ void Player::ComputeScore(int currentPlayerIndex, vector<Player *> players, Map 
 
         //adding one entry in map to help during checking which continent's territories are being stored
         //key does not exist so create an entry for territoriesAndOwners
+
         if (territoriesAndOwners.find(0) == territoriesAndOwners.end()) {
-            territoriesAndOwners.insert(pair<int, string>(0, to_string(*t->getContinent())));
+            territoriesAndOwners.insert(pair<int, string>(0, to_string(t->getContinent())));
         }
         if (maxTerritoryArmySize != currentPlayerTerritoryArmySize && maxArmyPlayers.size() == 1) {
-            territoriesAndOwners.insert(pair<int, string>(*t->getTerrId(), maxArmyPlayers[0]->GetName()));
+            territoriesAndOwners.insert(pair<int, string>(t->getTerrId(), maxArmyPlayers[0]->GetName()));
         }
         if (maxTerritoryArmySize == currentPlayerTerritoryArmySize && maxArmyPlayers.size() == 0) {
-            territoriesAndOwners.insert(pair<int, string>(*t->getTerrId(), *name));
-            *victoryPoints += 1;
+            territoriesAndOwners.insert(pair<int, string>(t->getTerrId(), name));
+            victoryPoints += 1;
         }
 
 

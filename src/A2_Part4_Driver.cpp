@@ -8,26 +8,28 @@ void DemonstrateA2Part4() {
 
     std::unique_ptr<Player> playerSimon(new Player("Montreal",
                                                    new BiddingFacility(),
-                                                   Territory(),
-                                                   Cards(),
-                                                   new int(0),
+                                                   *(new Territory()),
+                                                   *(new Cards()),
+                                                   0,
                                                    1,
-                                                   new int(0),
+                                                   0,
                                                    new Hand(),
                                                    0,
                                                    "Player 1",
                                                    0,
                                                    3,
-                                                   true));
+                                                   true,
+                                                   0,
+                                                   0));
 
 
     std::unique_ptr<std::map<std::string, int>> armySizeForPlayer(new std::map<std::string, int>());
     std::unique_ptr<std::map<std::string, bool>> hasArmy(new std::map<std::string, bool>());
-    Territory territoryToTest(new int(rand()), new int(rand()), *armySizeForPlayer, *hasArmy);
+    Territory territoryToTest(rand(), rand(), *armySizeForPlayer, *hasArmy);
 
     std::unique_ptr<std::map<std::string, int>> map1(new std::map<std::string, int>());
     std::unique_ptr<std::map<std::string, bool>> map2(new std::map<std::string, bool>());
-    Territory territoryToTest2(new int(rand()), new int(rand()), *map1, *map2);
+    Territory territoryToTest2(rand(), rand(), *map1, *map2);
 
 
     playerSimon->BuildCityForPlayer();
@@ -38,14 +40,5 @@ void DemonstrateA2Part4() {
     playerSimon->PlaceNewArmies(1);
     playerSimon->MoveOverWaterForPlayer();
     playerSimon->MoveOverLandForPlayer();
-    //playerSimon->AndOrAction(); // needs a card to showcase - see part 3 demonstration
-
-    /*
-    std::unique_ptr<Player> copyPlayerConstructor(new Player(*playerSimon.get())); //copy constructor
-    *copyPlayerConstructor = *playerSimon;//assignment operator
-
-    std::istringstream istringstream("Another city");//creating stream of string
-    istringstream >> *copyPlayerConstructor;//stream insertion operation
-    */
     return;
 }
