@@ -17,13 +17,13 @@ void DemonstrateA2Part1(){
     }
 
     cout<<"\n\n\n\n"<<endl;
-    vector<Player*> players=starter->createPlayers(map->GetStartingPoint());
+    vector<Player*> players= starter->CreatePlayers(map->GetStartingPoint());
     for (Player* p : players){
         cout <<p->GetName()<< ": "<<p->GetBiddingFacility()->GetLastName() <<" Money:"<<p->GetMoney()<< " Bid Amount:" <<p->GetBiddingFacility()->GetBidAmount()<<endl;
     }
 
     cout<<"\n\n\n\n"<<endl;
-    Deck* deck=starter->createDeck();
+    Deck* deck= starter->CreateDeck();
     cout << "Cards in deck: " << endl;
     deck->PrintCardsIn(deck->GetDeck());
 

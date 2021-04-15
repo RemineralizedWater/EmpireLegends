@@ -241,7 +241,7 @@ bool Adjacency::GetIsLandRoute() {
  * default constructor
  */
 Map::Map() {
-    this->rect = false;
+    this->rectangle = false;
     this->terrAndAdjsList = new vector<terrInfo>;
     this->startingPoint = 0;
 }
@@ -250,8 +250,8 @@ Map::Map() {
  * constructor: takes board shape
  * @param rect
  */
-Map::Map(bool rect_) {
-    this->rect = rect_;
+Map::Map(bool rectangle_) {
+    this->rectangle = rectangle_;
     this->terrAndAdjsList = new vector<terrInfo>;
     this->startingPoint = 0;
 }
@@ -261,7 +261,7 @@ Map::Map(bool rect_) {
  * @param copy
  */
 Map::Map(const Map &copy) {
-    this->rect = copy.rect;
+    this->rectangle = copy.rectangle;
     this->terrAndAdjsList = new vector<terrInfo>(*(copy.terrAndAdjsList));
     this->startingPoint = copy.startingPoint;
 }
@@ -283,7 +283,7 @@ Map::~Map() {
  * @return
  */
 Map &Map::operator=(const Map &m) {
-    this->rect = m.rect;
+    this->rectangle = m.rectangle;
     this->terrAndAdjsList = new vector<terrInfo>(*(m.terrAndAdjsList));       // memory leak
     this->startingPoint = m.startingPoint;
     return *this;
@@ -296,13 +296,13 @@ Map &Map::operator=(const Map &m) {
  * @return
  */
 std::ostream &operator<<(std::ostream &out, const Map &m) {
-    out << " Rectangle: " << m.rect << std::endl;
+    out << " Rectangle: " << m.rectangle << std::endl;
     return out;
 }
 
 std::istream &operator>>(std::istream &in, Map &m) {
     std::cout << "Is map shape rectangle?" << std::endl;
-    in >> m.rect;
+    in >> m.rectangle;
     return in;
 }
 
@@ -466,7 +466,7 @@ void Map::Display() {
     cout << "______________________________________________________________________________" << endl
          << "Displaying Board Map"
          << endl << "______________________________________________________________________________" << endl;
-    if (rect) {
+    if (rectangle) {
         cout << " Map shape: Rectangle" << endl;
     } else {
         cout << "Map shape: L-shape" << endl;

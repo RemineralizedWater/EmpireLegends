@@ -6,16 +6,16 @@
 #include "Game/Game.h"
 
 /**
- *  //count the player with most elixirs win 2 victory points.if tied then each receive 1
+ *  //count the player with most elixirs win 2 victory points.if Tied then each receive 1
     //ability 1 extra victory point per card you own with the same name done
     //gain specified victory points if you own the specific set
     //gain specified victory point per amount of coins owned
     //one victory point for each region controlled by most armies and cities, if same number then noone controls it
     //one victory point for controlled continents, none if same amount
 
-    //if tied most coins wins
-    //if tied player with most armies on the board wins
-    //if tied player with most controlled regions wins
+    //if Tied most coins wins
+    //if Tied player with most armies on the board wins
+    //if Tied player with most controlled regions wins
  */
 
 void DemonstrateA2Part6() {
@@ -25,9 +25,9 @@ void DemonstrateA2Part6() {
     //setup
     bool validMap = false;
     MapLoader *mapLoader = new MapLoader(numPlayers);
-    Map *map = mapLoader->loadMap("../src/Map Boards/valid_map.txt", validMap);
-    vector<Player *> players = starter->createPlayers(map->GetStartingPoint());
-    Deck *deck = starter->createDeck();
+    Map *map = mapLoader->LoadMap("../src/Map Boards/valid_map.txt", validMap);
+    vector<Player *> players = starter->CreatePlayers(map->GetStartingPoint());
+    Deck *deck = starter->CreateDeck();
 
 
     for (int i = 0; i < players.size(); i++) {
@@ -112,17 +112,17 @@ void DemonstrateA2Part6() {
     players[1]->SetVictoryPoints(0);
      */
 
-    //tied
+    //Tied
     int winner = 0;
-    if (starter->tied(players, winner)) {
+    if (starter->Tied(players, winner)) {
         //money
-        starter->countMoney(players);
-        if (starter->tied(players, winner)) {
+        starter->CountMoney(players);
+        if (starter->Tied(players, winner)) {
             //armies
-            starter->countArmies(players, map);
-            if (starter->tied(players, winner)) {
-                starter->countControlledTerritories(players, map);
-                starter->tied(players, winner);
+            starter->CountArmies(players, map);
+            if (starter->Tied(players, winner)) {
+                starter->CountControlledTerritories(players, map);
+                starter->Tied(players, winner);
                 cout << "Winner! After Counting Most Controlled Territories on the board" << endl;
                 cout << players[winner]->GetName() << ": " << players[winner]->GetBiddingFacility()->GetLastName()
                      << endl;

@@ -84,7 +84,7 @@ public:
 
 class Map {
 private:
-    bool rect;
+    bool rectangle;
     // typedef keyword allows new names for types; pair holds two variables & has auto constructor/destructor
     typedef pair<Territory *, vector<Adjacency> *> terrInfo;
     vector<terrInfo> *terrAndAdjsList;
@@ -99,7 +99,7 @@ private:
 public:
     Map();
 
-    Map(bool rect_);
+    Map(bool rectangle_);
 
     Map(const Map &copy);
 
