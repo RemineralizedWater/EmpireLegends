@@ -17,7 +17,6 @@ using std::string;
 
 class Territory {
 private:
-
     int terrId;
     int continentId;
     std::unique_ptr<std::map<std::string, int>> armySizeForPlayer_;
@@ -25,6 +24,7 @@ private:
 
 public:
     Territory(int terrId, int continent);
+
     Territory();
 
     Territory(int terrId,
@@ -43,14 +43,16 @@ public:
 
     friend std::istream &operator>>(std::istream &in, Territory &t);
 
-    int getTerrId();
+    int GetTerrId();
 
-    int getContinent();
+    int GetContinent();
 
-    std::map<std::string, int> &getArmySizeForPlayer();
-    std::map<std::string, bool> &getHasCity();
+    std::map<std::string, int> &GetArmySizeForPlayer();
+
+    std::map<std::string, bool> &GetHasCity();
 
     void InsertNewArmyPlayerMapping(string playerName);
+
     void InsertNewCityPlayerMapping(string playerName);
 };
 
@@ -74,30 +76,10 @@ public:
 
     friend std::istream &operator>>(std::istream &in, Adjacency &a);
 
-    int getAdjId();
+    int GetAdjId();
 
-    bool getIsLandRoute();
+    bool GetIsLandRoute();
 };
-
-/*
-class terrAndAdjs {
-private:
-    Territory* terrWithAdjs;
-    vector<Adjacency>* adjsForTerr;
-public:
-    Map();
-    Map(bool* rect);
-    Map(const Map& copy);
-    ~Map();
-
-    Map& operator =(const Map& map);
-    friend std::ostream& operator << (std::ostream& out, const Map& map);
-    friend std::istream& operator >> (std::istream& in, Map& map);
-
-    Territory* getTerrWithAdjs();
-    vector<Adjacency>* getAdjsForTerr();
-};
- */
 
 
 class Map {

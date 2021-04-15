@@ -42,8 +42,8 @@ void DemonstrateA2Part6() {
     Territory *t = map->findTerritory(1);
     t->InsertNewArmyPlayerMapping(players[0]->GetName());
     t->InsertNewCityPlayerMapping(players[0]->GetName());
-    t->getHasCity()[players[0]->GetName()] = true;
-    t->getArmySizeForPlayer()[players[0]->GetName()] += 1;
+    t->GetHasCity()[players[0]->GetName()] = true;
+    t->GetArmySizeForPlayer()[players[0]->GetName()] += 1;
 
 
 
@@ -62,14 +62,14 @@ void DemonstrateA2Part6() {
     players[1]->ApplyAbility();
     t->InsertNewArmyPlayerMapping(players[1]->GetName());
     t->InsertNewCityPlayerMapping(players[1]->GetName());
-    t->getHasCity()[players[1]->GetName()] = true;
-    t->getArmySizeForPlayer()[players[1]->GetName()] += 1;
+    t->GetHasCity()[players[1]->GetName()] = true;
+    t->GetArmySizeForPlayer()[players[1]->GetName()] += 1;
 
     t = map->findTerritory(6);
     t->InsertNewArmyPlayerMapping(players[1]->GetName());
     t->InsertNewCityPlayerMapping(players[1]->GetName());
-    t->getHasCity()[players[1]->GetName()] = false;
-    t->getArmySizeForPlayer()[players[1]->GetName()] += 1;
+    t->GetHasCity()[players[1]->GetName()] = false;
+    t->GetArmySizeForPlayer()[players[1]->GetName()] += 1;
 
 
     cout << "\n --------------PLayer 1 info-------------------" << endl;
@@ -79,10 +79,10 @@ void DemonstrateA2Part6() {
     cout << "--Armies--" << endl;
     for (int i = 1; i < (map->getMapSize() + 1); i++) {
         t = map->findTerritory(i);
-        t->getContinent();
-        cout << "army/armies:" << t->getArmySizeForPlayer()[players[0]->GetName()] << " city/cities:"
-             << t->getHasCity()[players[0]->GetName()] << " Territory: " << t->getTerrId() << " Continent: "
-             << t->getContinent() << endl;
+        t->GetContinent();
+        cout << "army/armies:" << t->GetArmySizeForPlayer()[players[0]->GetName()] << " city/cities:"
+             << t->GetHasCity()[players[0]->GetName()] << " Territory: " << t->GetTerrId() << " Continent: "
+             << t->GetContinent() << endl;
     }
 
     cout << "\n--Owned Cards--" << endl;
@@ -97,10 +97,10 @@ void DemonstrateA2Part6() {
     cout << "--Armies--" << endl;
     for (int i = 1; i < (map->getMapSize() + 1); i++) {
         t = map->findTerritory(i);
-        t->getContinent();
-        cout << "army/armies:" << t->getArmySizeForPlayer()[players[1]->GetName()] << " city/cities:"
-             << t->getHasCity()[players[1]->GetName()] << " Territory: " << t->getTerrId() << " Continent: "
-             << t->getContinent() << endl;
+        t->GetContinent();
+        cout << "army/armies:" << t->GetArmySizeForPlayer()[players[1]->GetName()] << " city/cities:"
+             << t->GetHasCity()[players[1]->GetName()] << " Territory: " << t->GetTerrId() << " Continent: "
+             << t->GetContinent() << endl;
     }
     cout << "\n--Owned Cards--" << endl;
     deck->PrintCardsIn(players[1]->Hands->GetHand());

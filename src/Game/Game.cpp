@@ -131,8 +131,8 @@ bool Game::countControlledTerritories(vector<Player *> players, Map *map) {
 
         //finds which player controls a territory by counting armies and cities
         for(int k=0;k<*numberOfPlayers;k++){
-            int currentArmiesSize=temp->getArmySizeForPlayer()[players[k]->GetName()];
-            if(temp->getHasCity()[players[k]->GetName()]){
+            int currentArmiesSize= temp->GetArmySizeForPlayer()[players[k]->GetName()];
+            if(temp->GetHasCity()[players[k]->GetName()]){
                 currentArmiesSize+=1;
             }
             if(maxArmiesSize==currentArmiesSize) {
@@ -183,10 +183,10 @@ bool Game::countArmies(vector<Player *> players, Map* map) {
         Territory* temp=map->findTerritory(i);
         for(int k=0;k<*numberOfPlayers;k++){
             if(playersAndArmies.find(k) != playersAndArmies.end()){
-                playersAndArmies[k]=(playersAndArmies[k] + temp->getArmySizeForPlayer()[players[k]->GetName()]);
+                playersAndArmies[k]=(playersAndArmies[k] + temp->GetArmySizeForPlayer()[players[k]->GetName()]);
             }
             else{
-                playersAndArmies.insert(pair<int, int>(k, temp->getArmySizeForPlayer()[players[k]->GetName()]));
+                playersAndArmies.insert(pair<int, int>(k, temp->GetArmySizeForPlayer()[players[k]->GetName()]));
             }
         }
     }
