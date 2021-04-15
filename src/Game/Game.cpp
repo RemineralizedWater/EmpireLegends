@@ -247,7 +247,7 @@ bool Game::CountMoney(vector<Player *> players) {
     return false;
 }
 
-Map *Game::selectMap(bool &validMap) {
+Map *Game::SelectMap(bool &validMap) {
     std::string input;
     std::string file;
     std::cout << "\nChoose a map file to load \n1) valid_map.txt \n2) invalid1_map.txt \n3) invalid2_map.txt \n4) invalid3_map.txt" << std::endl;

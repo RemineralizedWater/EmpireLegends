@@ -6,16 +6,16 @@
 #include "Game/Game.h"
 
 /**
- *  //count the player with most elixirs win 2 victory points.if Tied then each receive 1
+ *  //count the player with most elixirs win 2 victory points.if tied then each receive 1
     //ability 1 extra victory point per card you own with the same name done
     //gain specified victory points if you own the specific set
     //gain specified victory point per amount of coins owned
     //one victory point for each region controlled by most armies and cities, if same number then noone controls it
     //one victory point for controlled continents, none if same amount
 
-    //if Tied most coins wins
-    //if Tied player with most armies on the board wins
-    //if Tied player with most controlled regions wins
+    //if tied most coins wins
+    //if tied player with most armies on the board wins
+    //if tied player with most controlled regions wins
  */
 
 void DemonstrateA2Part6() {
@@ -112,7 +112,7 @@ void DemonstrateA2Part6() {
     players[1]->SetVictoryPoints(0);
      */
 
-    //Tied
+    //tied
     int winner = 0;
     if (starter->Tied(players, winner)) {
         //money

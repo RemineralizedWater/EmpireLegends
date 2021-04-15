@@ -54,7 +54,7 @@ int main() {
     game = new Game(numberOfPlayers);
 
     while (!validMap) {
-        map = game->selectMap(validMap);
+        map = game->SelectMap(validMap);
         validMap = map->Validate();
     }
 

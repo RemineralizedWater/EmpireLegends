@@ -37,7 +37,7 @@ public:
 
     bool CountControlledTerritories(vector<Player *> players, Map *map);
 
-    Map* selectMap(bool &validMap);  // bool &validMap pass by reference
+    Map* SelectMap(bool &validMap);  // bool &validMap pass by reference
 };
 
 #endif //EMPIRELEGENDS_GAME_H
