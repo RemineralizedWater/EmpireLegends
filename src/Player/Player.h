@@ -15,61 +15,79 @@
 using namespace std;
 
 class Hand;
+
 class BiddingFacility;
 
 class Player {
+private:
+    string region;
+    BiddingFacility *biddingFacility;
+    std::unique_ptr<Territory> territory;
+    std::unique_ptr<Cards> cards;
+    int tokenArmies;
+    int cubes;
+    int victoryPoints;
+    int elixirs;
+    int disks;
+    int money;
+    string name;
+    int totalMovementPointsForRound;
+    int costToMoveOverWater;
+    bool canBeAttacked;
+
 public:
-    static int supply;
-    Hand *hand_;
+    static int Supply;
+
+    Hand *Hands;
 
     Player();
 
     ~Player();
 
-    Player(const Player &playerToCopy);
+    Player(Player &playerToCopy);
 
-    Player(const std::string &region, BiddingFacility *biddingFacility, const Territory &territory,
-           const Cards &cards, int *tokenArmies,
-           const int &cubes, int *disks, Hand *hand, int *money, const std::string &name,
-           const int &totalMovementPointsForRound, const int &costToMoveOverWater, const bool &canBeAttacked);
+    Player(string region_, BiddingFacility *biddingFacility_, Territory &territory_,
+           Cards &cards_, int tokenArmies_,
+           int cubes_, int disks_, Hand *hand_, int money_, string name_,
+           int totalMovementPointsForRound_, int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_, int elixirs_);
 
     Player &operator=(const Player &playerToCopy);
 
     void RequestPlayerName();
 
-    void PayCoin(const int &amountToPay);
+    void PaysCoinFromPlayer(int amountToPay);
 
     void PlaceNewArmies(int numberOfArmiesToPlaced);
 
-    void MoveArmies(int numberOfArmiesHeWantsToMove);
+    void MoveArmiesForPlayer(int numberOfArmiesToMove);
 
-    void MoveOverLand();
+    void MoveOverLandForPlayer();
 
-    void MoveOverWater();
+    void MoveOverWaterForPlayer();
 
-    void BuildCity();
+    void BuildCityForPlayer();
 
-    void DestroyArmy(int numberOfArmiesToDestroy);
+    void DestroysNumberOfArmyOfPlayer(int numberOfArmiesToDestroy);
 
     void AndOrAction();
 
-    const std::string &getName() const;
+    string GetName();
 
-    void setName(const std::string &name);
+    void SetName(string name_);
 
-    int &getCostOverWater();
+    int GetCostOverWater();
 
-    void setCostOverWater(const int &costToMoveOverWater);
+    void SetCostOverWater(int costToMoveOverWater_);
 
-    int getMoney();
+    int GetMoney();
 
-    BiddingFacility *getBiddingFacility();
+    BiddingFacility *GetBiddingFacility();
 
-    void setMoney(int money);
+    void SetMoney(int money);
 
-    int &getTotalMovementPointsForRound();
+    int GetTotalMovementPointsForRound();
 
-    void setTotalMovementPointsForRound(const int &totalMovementPointsForRound);
+    void SetTotalMovementPointsForRound(int totalMovementPointsForRound);
 
     friend std::istream &operator>>(std::istream &is, Player &player);
 
@@ -83,50 +101,27 @@ public:
 
     int GetCitiesDisks();
 
-    int GetElixers();
+    int GetElixirs();
 
-    void SetElixers(int numElixers);
+    void SetElixers(int numberOfElixirs);
 
     int GetVictoryPoints();
 
     void SetVictoryPoints(int points);
 
-    void ComputeScore(int currentPlayerIndex,vector<Player*> players,Map* map);
+    void ComputeScore(int currentPlayerIndex, vector<Player *> players, Map *map);
 
-    void ComputeVPFlying(Cards c);
+    void ComputeVPFlying(Cards cards);
 
-    void ComputeVPNoble(Cards c);
+    void ComputeVPNoble(Cards cards);
 
-    void ComputeVPMountain(Cards c);
+    void ComputeVPMountain(Cards cards);
 
     void ComputeCards();
 
-    void checkForMostElixers(int currentPlayerIndex,vector<Player*> players);
+    void CheckForMostElixirsForPlayer(int currentPlayerIndex, vector<Player *> players);
 
-    void applyAbility();
-
-private:
-    //just one attribute added for stream insertion operator
-    std::unique_ptr<std::string> region_;
-    BiddingFacility* biddingFacility_;
-    std::unique_ptr<Territory> territory_;
-    std::unique_ptr<Cards> cards_;
-    int tokenArmies_; //for now is an int, but maybe will change for class "Token"?
-    std::unique_ptr<int> cubes_;//for now is an int, but maybe will change for class "Cubes"?
-    int *victoryPoints_;
-    int *elixers_;
-    int disks_;//for now is an int, but maybe will change for class "Disks"?
-    int money_;
-    std::unique_ptr<std::string> name_;
-    std::unique_ptr<int> totalMovementPointsForRound_;
-    std::unique_ptr<int> costToMoveOverWater_;
-    std::unique_ptr<bool> canBeAttacked_;
-
-
-
-    //TODO add terrs
-    //TODO add hand of cards meaning cards class
-
+    void ApplyAbility();
 
 };
 

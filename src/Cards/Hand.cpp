@@ -14,7 +14,7 @@ void Hand::Exchange(Deck* deck) {
     int index = positionToPickUp - 1;
 
     while(true){
-        if(owningPlayer->getMoney() >= deck->GetFaceUpCards()->at(index).GetCost()){
+        if(owningPlayer->GetMoney() >= deck->GetFaceUpCards()->at(index).GetCost()){
             break;
         }else{
             cout << "Player does not have enough money to buy this card. Please select another." << endl;
@@ -28,7 +28,7 @@ void Hand::Exchange(Deck* deck) {
 
     cout << "Picked up " << drawnCard.GetName() << " from position: " << positionToPickUp << endl;
 
-    owningPlayer->PayCoin(drawnCard.GetCost());
+    owningPlayer->PaysCoinFromPlayer(drawnCard.GetCost());
 
     //reorganize cards in faceup pile
     for(int i = index; i < deck->GetFaceUpCards()->size() - 1; i++){
@@ -64,16 +64,6 @@ Hand::~Hand() {
         delete hand;
         hand = nullptr;
     }
-
-    //if(activeCard != nullptr){
-    //    delete activeCard;
-    //    activeCard = nullptr;
-    //}
-
-    //if(owningPlayer != nullptr){
-    //    delete owningPlayer;
-    //    owningPlayer = nullptr;
-    //}
 }
 
 vector<Cards> *Hand::GetHand() {
