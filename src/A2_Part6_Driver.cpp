@@ -26,7 +26,7 @@ void DemonstrateA2Part6() {
     bool validMap = false;
     MapLoader *mapLoader = new MapLoader(numPlayers);
     Map *map = mapLoader->loadMap("../src/Map Boards/valid_map.txt", validMap);
-    vector<Player *> players = starter->createPlayers(map->getStartingPoint());
+    vector<Player *> players = starter->createPlayers(map->GetStartingPoint());
     Deck *deck = starter->createDeck();
 
 
@@ -39,7 +39,7 @@ void DemonstrateA2Part6() {
                                        new int{0}, new int{0},
                                        new int{4}, new int{3}, new string{""}));
     players[0]->ApplyAbility();
-    Territory *t = map->findTerritory(1);
+    Territory *t = map->FindTerritory(1);
     t->InsertNewArmyPlayerMapping(players[0]->GetName());
     t->InsertNewCityPlayerMapping(players[0]->GetName());
     t->GetHasCity()[players[0]->GetName()] = true;
@@ -65,7 +65,7 @@ void DemonstrateA2Part6() {
     t->GetHasCity()[players[1]->GetName()] = true;
     t->GetArmySizeForPlayer()[players[1]->GetName()] += 1;
 
-    t = map->findTerritory(6);
+    t = map->FindTerritory(6);
     t->InsertNewArmyPlayerMapping(players[1]->GetName());
     t->InsertNewCityPlayerMapping(players[1]->GetName());
     t->GetHasCity()[players[1]->GetName()] = false;
@@ -77,8 +77,8 @@ void DemonstrateA2Part6() {
          << players[0]->GetMoney() << endl;
 
     cout << "--Armies--" << endl;
-    for (int i = 1; i < (map->getMapSize() + 1); i++) {
-        t = map->findTerritory(i);
+    for (int i = 1; i < (map->GetMapSize() + 1); i++) {
+        t = map->FindTerritory(i);
         t->GetContinent();
         cout << "army/armies:" << t->GetArmySizeForPlayer()[players[0]->GetName()] << " city/cities:"
              << t->GetHasCity()[players[0]->GetName()] << " Territory: " << t->GetTerrId() << " Continent: "
@@ -95,8 +95,8 @@ void DemonstrateA2Part6() {
     cout << players[1]->GetName() << ": " << players[1]->GetBiddingFacility()->GetLastName() << " Money:"
          << players[1]->GetMoney() << endl;
     cout << "--Armies--" << endl;
-    for (int i = 1; i < (map->getMapSize() + 1); i++) {
-        t = map->findTerritory(i);
+    for (int i = 1; i < (map->GetMapSize() + 1); i++) {
+        t = map->FindTerritory(i);
         t->GetContinent();
         cout << "army/armies:" << t->GetArmySizeForPlayer()[players[1]->GetName()] << " city/cities:"
              << t->GetHasCity()[players[1]->GetName()] << " Territory: " << t->GetTerrId() << " Continent: "

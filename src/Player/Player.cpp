@@ -538,10 +538,10 @@ void Player::ComputeScore(int currentPlayerIndex, vector<Player *> players, Map 
 
     //keeps track of all territories controlled by players in a continent
     std::map<int, string> territoriesAndOwners;
-    for (int i = 1; i < (map->getMapSize() + 1); i++) {
+    for (int i = 1; i < (map->GetMapSize() + 1); i++) {
         vector<Player *> maxArmyPlayers;
 
-        Territory *t = map->findTerritory(i);
+        Territory *t = map->FindTerritory(i);
         //when the current territory belongs to a continent that is different from the continent of the territories stored in  territoriesAndOwners then find out who controls the continent in the map
 
         if (territoriesAndOwners.size() != 0 && to_string(t->GetContinent()) != territoriesAndOwners[0]) {

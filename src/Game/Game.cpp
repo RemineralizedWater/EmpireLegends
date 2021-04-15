@@ -126,8 +126,8 @@ bool Game::countControlledTerritories(vector<Player *> players, Map *map) {
     int winner=0;
     std::map<int,int> playersAndControlledTerritoriesCount;
 
-    for(int i=1;i<(map->getMapSize()+1);i++){
-        Territory* temp=map->findTerritory(i);
+    for(int i=1;i<(map->GetMapSize() + 1); i++){
+        Territory* temp= map->FindTerritory(i);
 
         //finds which player controls a territory by counting armies and cities
         for(int k=0;k<*numberOfPlayers;k++){
@@ -179,8 +179,8 @@ bool Game::countArmies(vector<Player *> players, Map* map) {
 
     //counting total armies for each player from board
     std::map<int,int> playersAndArmies;
-    for(int i=1;i<(map->getMapSize()+1);i++){
-        Territory* temp=map->findTerritory(i);
+    for(int i=1;i<(map->GetMapSize() + 1); i++){
+        Territory* temp= map->FindTerritory(i);
         for(int k=0;k<*numberOfPlayers;k++){
             if(playersAndArmies.find(k) != playersAndArmies.end()){
                 playersAndArmies[k]=(playersAndArmies[k] + temp->GetArmySizeForPlayer()[players[k]->GetName()]);

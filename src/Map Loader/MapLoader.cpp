@@ -143,7 +143,7 @@ Map* MapLoader::loadMap(std::string file, bool &validMap) {
                 return map;
             }
             startingPointFound=true;
-            map->setStartingPoint(startingPoint);
+            map->SetStartingPoint(startingPoint);
         }
             //checking if map file contains configuration for Rectangle or L-shape
         else if(line=="Rectangle(3){"&&*rectangle==true&&*numberOfBoardPieces==3){
@@ -195,7 +195,7 @@ Map* MapLoader::loadMap(std::string file, bool &validMap) {
             }
             const std::map<std::string, int> armySizeForPlayer;
             const std::map<std::string, bool> hasCity;
-            if(!map->addTerritory(new Territory(territory,continent,armySizeForPlayer,hasCity))){
+            if(!map->AddTerritory(new Territory(territory, continent, armySizeForPlayer, hasCity))){
                 validMap=false;
                 return map;
             }
@@ -232,8 +232,8 @@ Map* MapLoader::loadMap(std::string file, bool &validMap) {
         validMap=false;
         return map;
     }
-    //validate the values in map
-    if(!map->validate()){
+    //Validate the values in map
+    if(!map->Validate()){
         validMap=false;
         return map;
     }
@@ -288,7 +288,7 @@ bool MapLoader::parseAdjacency(std::string adjacency, Territory* territory) {
         currentIndex = closingParenthesisIndex + 1;
 
         Adjacency* adj =new Adjacency(adjacentTerritory,land);
-        if(!map->addAdjacency(territory,adj)){
+        if(!map->AddAdjacency(territory, adj)){
             return false;
         }
     }

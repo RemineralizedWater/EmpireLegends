@@ -12,12 +12,12 @@ void DemonstrateA2Part1(){
     Map* map=starter->selectMap(validMap);
 
     if(validMap){
-        cout<<"Starting point token: " << map->getStartingPoint() << endl;
-        map->display();
+        cout << "Starting point token: " << map->GetStartingPoint() << endl;
+        map->Display();
     }
 
     cout<<"\n\n\n\n"<<endl;
-    vector<Player*> players=starter->createPlayers(map->getStartingPoint());
+    vector<Player*> players=starter->createPlayers(map->GetStartingPoint());
     for (Player* p : players){
         cout <<p->GetName()<< ": "<<p->GetBiddingFacility()->GetLastName() <<" Money:"<<p->GetMoney()<< " Bid Amount:" <<p->GetBiddingFacility()->GetBidAmount()<<endl;
     }

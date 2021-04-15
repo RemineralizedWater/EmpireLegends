@@ -55,7 +55,7 @@ int main() {
 
     while (!validMap) {
         map = game->selectMap(validMap);
-        validMap = map->validate();
+        validMap = map->Validate();
     }
 
     // Main Game Loop
@@ -95,8 +95,8 @@ void MainGameLoop(Map *map, bool validMap) {
         switch (userInput) {
             case 1:
                 if (validMap) {
-                    cout << "Starting point token: " << map->getStartingPoint() << endl;
-                    map->display();
+                    cout << "Starting point token: " << map->GetStartingPoint() << endl;
+                    map->Display();
                 }
                 DemonstrateA2Part1();
                 break;
