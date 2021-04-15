@@ -26,17 +26,17 @@ public:
     string GetName();
     string GetGoodsAndAction();
     int GetCost();
-    void SetCost(int _cost);
+    void SetCost(int cost_);
     Cards();
     ~Cards();
-    Cards(string _name, string _goodsAndAction, int _cost,
-          int _actionOne, int _actionOneValue, string actionOperation,
-          int _actionTwo, int _actionTwoValue,
-          int _goods, int _goodsValue, string _goodsSpecific);
-    Cards(string* _name, string* _goodsAndAction, int* _cost,
-          int* _actionOne, int* _actionOneValue, string* _actionOperation,
-          int* _actionTwo, int* _actionTwoValue,
-          int* _goods, int* _goodsValue, string* _goodsSpecific);
+    Cards(string name_, string goodsAndAction_, int cost_,
+          int actionOne_, int actionOneValue_, string actionOperation_,
+          int actionTwo_, int actionTwoValue_,
+          int goods_, int goodsValue_, string goodsSpecific_);
+    Cards(string* name_, string* goodsAndAction_, int* cost_,
+          int* actionOne_, int* actionOneValue_, string* actionOperation_,
+          int* actionTwo_, int* actionTwoValue_,
+          int* goods_, int* goodsValue_, string* goodsSpecific_);
     Cards(const Cards &copy);
     Cards & operator =(const Cards &c);
     friend ostream & operator << (ostream &out, const Cards &c);

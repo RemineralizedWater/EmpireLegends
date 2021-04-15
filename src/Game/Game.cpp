@@ -66,22 +66,24 @@ vector<Player*> Game::createPlayers(int startingPoint) {
         Player *player(
                 new Player(to_string(startingPoint),
                            new BiddingFacility(),
-                           Territory(),
-                           Cards(),
-                           new int(0),
+                           *(new Territory()),
+                           *(new Cards()),
+                           0,
                            1,
-                           new int(0),
+                           0,
                            new Hand(),
-                           new int{0},
-                           "Player "+to_string(i+1),
+                           0,
+                           "Player 1",
                            0,
                            3,
-                           true));
-        player->hand_->SetOwningPlayer(player);
-        player->getBiddingFacility()->SetOwningPlayer(player);
+                           true,
+                           0,
+                           0));
+        player->Hands->SetOwningPlayer(player);
+        player->GetBiddingFacility()->SetOwningPlayer(player);
 
         cout << "Providing player 18 coins.." << endl;
-        player->setMoney(18);
+        player->SetMoney(18);
         players.push_back(player);
     }
     return players;
@@ -129,8 +131,8 @@ bool Game::countControlledTerritories(vector<Player *> players, Map *map) {
 
         //finds which player controls a territory by counting armies and cities
         for(int k=0;k<*numberOfPlayers;k++){
-            int currentArmiesSize=temp->getArmySizeForPlayer()[players[k]->getName()];
-            if(temp->getHasCity()[players[k]->getName()]){
+            int currentArmiesSize=temp->getArmySizeForPlayer()[players[k]->GetName()];
+            if(temp->getHasCity()[players[k]->GetName()]){
                 currentArmiesSize+=1;
             }
             if(maxArmiesSize==currentArmiesSize) {
@@ -181,10 +183,10 @@ bool Game::countArmies(vector<Player *> players, Map* map) {
         Territory* temp=map->findTerritory(i);
         for(int k=0;k<*numberOfPlayers;k++){
             if(playersAndArmies.find(k) != playersAndArmies.end()){
-                playersAndArmies[k]=(playersAndArmies[k] + temp->getArmySizeForPlayer()[players[k]->getName()]);
+                playersAndArmies[k]=(playersAndArmies[k] + temp->getArmySizeForPlayer()[players[k]->GetName()]);
             }
             else{
-                playersAndArmies.insert(pair<int, int>(k, temp->getArmySizeForPlayer()[players[k]->getName()]));
+                playersAndArmies.insert(pair<int, int>(k, temp->getArmySizeForPlayer()[players[k]->GetName()]));
             }
         }
     }
@@ -221,11 +223,11 @@ bool Game::countMoney(vector<Player *> players) {
     int ties=0;
 
     for(int i=0;i<*numberOfPlayers;i++){
-        if(maxMoney==players[i]->getMoney()){
+        if(maxMoney== players[i]->GetMoney()){
             ties+=1;
         }
-        if(maxMoney<(players[i])->getMoney()){
-            maxMoney=(players[i])->getMoney();
+        if(maxMoney< (players[i])->GetMoney()){
+            maxMoney= (players[i])->GetMoney();
             winner=i;
             ties=0;
         }
