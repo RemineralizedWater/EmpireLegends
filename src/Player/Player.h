@@ -103,7 +103,7 @@ public:
 
     int GetElixirs();
 
-    void SetElixers(int numberOfElixirs);
+    void SetElixirs(int numberOfElixirs);
 
     int GetVictoryPoints();
 

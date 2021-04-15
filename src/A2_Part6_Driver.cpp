@@ -6,9 +6,9 @@
 #include "Game/Game.h"
 
 /**
- *  //count the player with most elixers win 2 victory points.if tied then each receive 1
+ *  //count the player with most elixirs win 2 victory points.if tied then each receive 1
     //ability 1 extra victory point per card you own with the same name done
-    //gain specified victory points if you own the specif set
+    //gain specified victory points if you own the specific set
     //gain specified victory point per amount of coins owned
     //one victory point for each region controlled by most armies and cities, if same number then noone controls it
     //one victory point for controlled continents, none if same amount

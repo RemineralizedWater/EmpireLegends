@@ -345,7 +345,7 @@ int Player::GetElixirs() {
     return elixirs;
 }
 
-void Player::SetElixers(int numberOfElixirs) {
+void Player::SetElixirs(int numberOfElixirs) {
     elixirs = numberOfElixirs;
 }
 
@@ -503,23 +503,23 @@ void Player::ComputeCards() {
 }
 
 void Player::CheckForMostElixirsForPlayer(int currentPlayerIndex, vector<Player *> players) {
-    int maxElixers = elixirs;
-    vector<Player *> maxElixerPlayers;
+    int maxElixirs = elixirs;
+    vector<Player *> maxElixirPlayers;
     for (int i = 0; i < players.size(); i++) {
         if (currentPlayerIndex == i) {
             continue;
         }
-        if (players[i]->GetElixirs() > maxElixers) {
-            maxElixers = players[i]->GetElixirs();
-            maxElixerPlayers.clear();
+        if (players[i]->GetElixirs() > maxElixirs) {
+            maxElixirs = players[i]->GetElixirs();
+            maxElixirPlayers.clear();
         }
-        if (players[i]->GetElixirs() == maxElixers) {
-            maxElixerPlayers.push_back(players[i]);
+        if (players[i]->GetElixirs() == maxElixirs) {
+            maxElixirPlayers.push_back(players[i]);
         }
     }
-    if (maxElixers == elixirs && maxElixerPlayers.size() == 0) {
+    if (maxElixirs == elixirs && maxElixirPlayers.size() == 0) {
         victoryPoints += 2;
-    } else if (maxElixers == elixirs && maxElixerPlayers.size() != 0) {
+    } else if (maxElixirs == elixirs && maxElixirPlayers.size() != 0) {
         victoryPoints += 1;
     }
 }
@@ -534,7 +534,7 @@ void Player::ComputeScore(int currentPlayerIndex, vector<Player *> players, Map 
     //looks at abilities from some of the cards the user owns and update VP if possible
     ComputeCards();
 
-    //compare if this player has the most elixers and update victory points if it does
+    //compare if this player has the most elixirs and update victory points if it does
     CheckForMostElixirsForPlayer(currentPlayerIndex, players);
 
     //keeps track of all territories controlled by players in a continent
