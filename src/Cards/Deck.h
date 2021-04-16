@@ -2,8 +2,7 @@
 // Created by Wayne on 3/8/2021.
 //
 
-#ifndef EMPIRELEGENDS_DECK_H
-#define EMPIRELEGENDS_DECK_H
+#pragma once
 
 #include <vector>
 #include "Cards.h"
@@ -23,7 +22,3 @@ public:
     void SetFaceUpCardsCost();
     void ShuffleDeck();
 };
-
-
-
-#endif //EMPIRELEGENDS_DECK_H

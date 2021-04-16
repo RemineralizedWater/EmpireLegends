@@ -1,5 +1,4 @@
-#ifndef EMPIRELEGENDS_GAME_H
-#define EMPIRELEGENDS_GAME_H
+#pragma once
 
 #include <iostream>
 #include "../Map/Map.h"
@@ -39,5 +38,3 @@ public:
 
     Map* SelectMap(bool &validMap);  // bool &validMap pass by reference
 };
-
-#endif //EMPIRELEGENDS_GAME_H

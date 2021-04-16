@@ -2,9 +2,6 @@
 // Created by Wayne on 3/8/2021.
 //
 
-#ifndef EMPIRELEGENDS_HAND_H
-#define EMPIRELEGENDS_HAND_H
-
 #pragma once
 
 #include <vector>
@@ -29,6 +26,3 @@ public:
     void SetActiveCard(Cards* card);
     void SetOwningPlayer(Player* owningPlayer);
 };
-
-
-#endif //EMPIRELEGENDS_HAND_H

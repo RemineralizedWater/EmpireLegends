@@ -1,8 +1,8 @@
 //
 // Created by 06spa on 2/8/2021.
 //
-#ifndef EMPIRELEGENDS_MAPLOADER_H
-#define EMPIRELEGENDS_MAPLOADER_H
+
+#pragma once
 
 #include <iostream>
 #include "../Map/Map.h"
@@ -43,5 +43,3 @@ public:
 
     Map *LoadMap(string file, bool &validMap);  // bool &validMap pass by reference
 };
-
-#endif //EMPIRELEGENDS_MAPLOADER_H
