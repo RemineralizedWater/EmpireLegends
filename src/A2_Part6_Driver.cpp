@@ -6,9 +6,9 @@
 #include "Game/Game.h"
 
 /**
- *  //count the player with most elixers win 2 victory points.if tied then each receive 1
+ *  //count the player with most elixirs win 2 victory points.if tied then each receive 1
     //ability 1 extra victory point per card you own with the same name done
-    //gain specified victory points if you own the specif set
+    //gain specified victory points if you own the specific set
     //gain specified victory point per amount of coins owned
     //one victory point for each region controlled by most armies and cities, if same number then noone controls it
     //one victory point for controlled continents, none if same amount
@@ -25,9 +25,9 @@ void DemonstrateA2Part6() {
     //setup
     bool validMap = false;
     MapLoader *mapLoader = new MapLoader(numPlayers);
-    Map *map = mapLoader->loadMap("../src/Map Boards/valid_map.txt", validMap);
-    vector<Player *> players = starter->createPlayers(map->getStartingPoint());
-    Deck *deck = starter->createDeck();
+    Map *map = mapLoader->LoadMap("../src/Map Boards/valid_map.txt", validMap);
+    vector<Player *> players = starter->CreatePlayers(map->GetStartingPoint());
+    Deck *deck = starter->CreateDeck();
 
 
     for (int i = 0; i < players.size(); i++) {
@@ -39,11 +39,11 @@ void DemonstrateA2Part6() {
                                        new int{0}, new int{0},
                                        new int{4}, new int{3}, new string{""}));
     players[0]->ApplyAbility();
-    Territory *t = map->findTerritory(1);
+    Territory *t = map->FindTerritory(1);
     t->InsertNewArmyPlayerMapping(players[0]->GetName());
     t->InsertNewCityPlayerMapping(players[0]->GetName());
-    t->getHasCity()[players[0]->GetName()] = true;
-    t->getArmySizeForPlayer()[players[0]->GetName()] += 1;
+    t->GetHasCity()[players[0]->GetName()] = true;
+    t->GetArmySizeForPlayer()[players[0]->GetName()] += 1;
 
 
 
@@ -62,14 +62,14 @@ void DemonstrateA2Part6() {
     players[1]->ApplyAbility();
     t->InsertNewArmyPlayerMapping(players[1]->GetName());
     t->InsertNewCityPlayerMapping(players[1]->GetName());
-    t->getHasCity()[players[1]->GetName()] = true;
-    t->getArmySizeForPlayer()[players[1]->GetName()] += 1;
+    t->GetHasCity()[players[1]->GetName()] = true;
+    t->GetArmySizeForPlayer()[players[1]->GetName()] += 1;
 
-    t = map->findTerritory(6);
+    t = map->FindTerritory(6);
     t->InsertNewArmyPlayerMapping(players[1]->GetName());
     t->InsertNewCityPlayerMapping(players[1]->GetName());
-    t->getHasCity()[players[1]->GetName()] = false;
-    t->getArmySizeForPlayer()[players[1]->GetName()] += 1;
+    t->GetHasCity()[players[1]->GetName()] = false;
+    t->GetArmySizeForPlayer()[players[1]->GetName()] += 1;
 
 
     cout << "\n --------------PLayer 1 info-------------------" << endl;
@@ -77,12 +77,12 @@ void DemonstrateA2Part6() {
          << players[0]->GetMoney() << endl;
 
     cout << "--Armies--" << endl;
-    for (int i = 1; i < (map->getMapSize() + 1); i++) {
-        t = map->findTerritory(i);
-        t->getContinent();
-        cout << "army/armies:" << t->getArmySizeForPlayer()[players[0]->GetName()] << " city/cities:"
-             << t->getHasCity()[players[0]->GetName()] << " Territory: " << t->getTerrId() << " Continent: "
-             << t->getContinent() << endl;
+    for (int i = 1; i < (map->GetMapSize() + 1); i++) {
+        t = map->FindTerritory(i);
+        t->GetContinent();
+        cout << "army/armies:" << t->GetArmySizeForPlayer()[players[0]->GetName()] << " city/cities:"
+             << t->GetHasCity()[players[0]->GetName()] << " Territory: " << t->GetTerrId() << " Continent: "
+             << t->GetContinent() << endl;
     }
 
     cout << "\n--Owned Cards--" << endl;
@@ -95,12 +95,12 @@ void DemonstrateA2Part6() {
     cout << players[1]->GetName() << ": " << players[1]->GetBiddingFacility()->GetLastName() << " Money:"
          << players[1]->GetMoney() << endl;
     cout << "--Armies--" << endl;
-    for (int i = 1; i < (map->getMapSize() + 1); i++) {
-        t = map->findTerritory(i);
-        t->getContinent();
-        cout << "army/armies:" << t->getArmySizeForPlayer()[players[1]->GetName()] << " city/cities:"
-             << t->getHasCity()[players[1]->GetName()] << " Territory: " << t->getTerrId() << " Continent: "
-             << t->getContinent() << endl;
+    for (int i = 1; i < (map->GetMapSize() + 1); i++) {
+        t = map->FindTerritory(i);
+        t->GetContinent();
+        cout << "army/armies:" << t->GetArmySizeForPlayer()[players[1]->GetName()] << " city/cities:"
+             << t->GetHasCity()[players[1]->GetName()] << " Territory: " << t->GetTerrId() << " Continent: "
+             << t->GetContinent() << endl;
     }
     cout << "\n--Owned Cards--" << endl;
     deck->PrintCardsIn(players[1]->Hands->GetHand());
@@ -114,15 +114,15 @@ void DemonstrateA2Part6() {
 
     //tied
     int winner = 0;
-    if (starter->tied(players, winner)) {
+    if (starter->Tied(players, winner)) {
         //money
-        starter->countMoney(players);
-        if (starter->tied(players, winner)) {
+        starter->CountMoney(players);
+        if (starter->Tied(players, winner)) {
             //armies
-            starter->countArmies(players, map);
-            if (starter->tied(players, winner)) {
-                starter->countControlledTerritories(players, map);
-                starter->tied(players, winner);
+            starter->CountArmies(players, map);
+            if (starter->Tied(players, winner)) {
+                starter->CountControlledTerritories(players, map);
+                starter->Tied(players, winner);
                 cout << "Winner! After Counting Most Controlled Territories on the board" << endl;
                 cout << players[winner]->GetName() << ": " << players[winner]->GetBiddingFacility()->GetLastName()
                      << endl;
@@ -139,6 +139,4 @@ void DemonstrateA2Part6() {
         cout << "Winner!" << endl;
         cout << players[winner]->GetName() << ": " << players[winner]->GetBiddingFacility()->GetLastName() << endl;
     }
-
-
 }

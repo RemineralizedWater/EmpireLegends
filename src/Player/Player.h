@@ -42,16 +42,52 @@ public:
 
     Player();
 
-    ~Player();
-
-    Player(Player &playerToCopy);
-
     Player(string region_, BiddingFacility *biddingFacility_, Territory &territory_,
            Cards &cards_, int tokenArmies_,
            int cubes_, int disks_, Hand *hand_, int money_, string name_,
            int totalMovementPointsForRound_, int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_, int elixirs_);
 
+    Player(Player &playerToCopy);
+
+    ~Player();
+
     Player &operator=(const Player &playerToCopy);
+
+    friend std::istream &operator>>(std::istream &is, Player &player);
+
+    string GetName();
+
+    int GetCostOverWater();
+
+    int GetMoney();
+
+    int GetCitiesDisks();
+
+    int GetElixirs();
+
+    BiddingFacility *GetBiddingFacility();
+
+    int GetArmiesTokens();
+
+    int GetTotalMovementPointsForRound();
+
+    int GetVictoryPoints();
+
+    void SetElixirs(int numberOfElixirs);
+
+    void SetVictoryPoints(int points);
+
+    void SetName(string name_);
+
+    void SetCostOverWater(int costToMoveOverWater_);
+
+    void SetMoney(int money_);
+
+    void SetArmiesTokens(int numberOfTokens);
+
+    void SetCitiesDisks(int numberOfDisks);
+
+    void SetTotalMovementPointsForRound(int totalMovementPointsForRound_);
 
     void RequestPlayerName();
 
@@ -71,51 +107,15 @@ public:
 
     void AndOrAction();
 
-    string GetName();
-
-    void SetName(string name_);
-
-    int GetCostOverWater();
-
-    void SetCostOverWater(int costToMoveOverWater_);
-
-    int GetMoney();
-
-    BiddingFacility *GetBiddingFacility();
-
-    void SetMoney(int money);
-
-    int GetTotalMovementPointsForRound();
-
-    void SetTotalMovementPointsForRound(int totalMovementPointsForRound);
-
-    friend std::istream &operator>>(std::istream &is, Player &player);
-
     void ResolveActiveCard();
-
-    void SetArmiesTokens(int numberOfTokens);
-
-    int GetArmiesTokens();
-
-    void SetCitiesDisks(int numberOfDisks);
-
-    int GetCitiesDisks();
-
-    int GetElixirs();
-
-    void SetElixers(int numberOfElixirs);
-
-    int GetVictoryPoints();
-
-    void SetVictoryPoints(int points);
 
     void ComputeScore(int currentPlayerIndex, vector<Player *> players, Map *map);
 
-    void ComputeVPFlying(Cards cards);
+    void ComputeVPFlying(Cards cards_);
 
-    void ComputeVPNoble(Cards cards);
+    void ComputeVPNoble(Cards cards_);
 
-    void ComputeVPMountain(Cards cards);
+    void ComputeVPMountain(Cards cards_);
 
     void ComputeCards();
 

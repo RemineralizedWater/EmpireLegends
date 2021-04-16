@@ -90,7 +90,7 @@ void DemonstrateA2Part2() {
     terr->InsertNewArmyPlayerMapping(player1->GetName());
     terr->InsertNewCityPlayerMapping(player1->GetName());
 
-    terr->getHasCity()[player1->GetName()] = true;
+    terr->GetHasCity()[player1->GetName()] = true;
     player1->PlaceNewArmies(4);
     cout << "----------------------------------" << endl;
 
@@ -119,7 +119,7 @@ void DemonstrateA2Part2() {
     terr2->InsertNewArmyPlayerMapping(player2->GetName());
     terr2->InsertNewCityPlayerMapping(player2->GetName());
 
-    terr2->getHasCity()[player2->GetName()] = true;
+    terr2->GetHasCity()[player2->GetName()] = true;
     player2->PlaceNewArmies(4);
     cout << "----------------------------------" << endl;
 
