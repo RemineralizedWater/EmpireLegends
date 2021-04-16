@@ -38,7 +38,7 @@ MapLoader::MapLoader(int numberOfPlayers) {
  * Copy Constructor
  * @param copy
  */
-MapLoader::MapLoader(MapLoader &copy){
+MapLoader::MapLoader(const MapLoader &copy){
     this->numberOfBoardPieces = copy.numberOfBoardPieces;
     this->rectangle = copy.rectangle;
     this->mapFilePath = copy.mapFilePath;

@@ -47,7 +47,7 @@ public:
            int cubes_, int disks_, Hand *hand_, int money_, string name_,
            int totalMovementPointsForRound_, int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_, int elixirs_);
 
-    Player(Player &playerToCopy);
+    Player(const Player &playerToCopy);
 
     ~Player();
 

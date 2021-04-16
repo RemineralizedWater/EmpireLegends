@@ -15,7 +15,7 @@ public:
 
     Game(int numberOfPlayers_);
 
-    Game(Game &copy);
+    Game(const Game &copy);
 
     ~Game();
 

@@ -32,7 +32,7 @@ Game::~Game() {
  * Copy Constructor
  * @param copy
  */
-Game::Game(Game &copy) {
+Game::Game(const Game &copy) {
     this->numberOfPlayers = copy.numberOfPlayers;
 }
 

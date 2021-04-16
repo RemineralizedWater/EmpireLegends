@@ -31,7 +31,7 @@ public:
 
     MapLoader(int numberOfPlayers);
 
-    MapLoader(MapLoader &copy);
+    MapLoader(const MapLoader &copy);
 
     ~MapLoader();
 

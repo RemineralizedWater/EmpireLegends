@@ -49,7 +49,7 @@ Player::Player(string region_,
 }
 
 //Copy constructor
-Player::Player(Player &playerToCopy)
+Player::Player(const Player &playerToCopy)
         : region(playerToCopy.region),
           biddingFacility(new BiddingFacility(*playerToCopy.biddingFacility)),
           territory(new Territory(*playerToCopy.territory)),

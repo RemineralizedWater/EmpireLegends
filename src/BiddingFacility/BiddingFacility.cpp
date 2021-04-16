@@ -3,7 +3,6 @@
 #include "BiddingFacility.h"
 #include <iostream>
 #include <string>
-#include <utility>
 #include <limits>
 
 using namespace std;
@@ -17,14 +16,13 @@ BiddingFacility::BiddingFacility() {
     isStartingPlayer = false;
 }
 
-/* // TODO figure out why this breaks clion
-BiddingFacility::BiddingFacility(BiddingFacility &copy) {
+BiddingFacility::BiddingFacility(const BiddingFacility &copy) {
     lastName = copy.lastName;
     coins = copy.coins;
     bidAmount = copy.bidAmount;
-    owningPlayer = copy.owningPlayer;
+    owningPlayer = new Player(*copy.owningPlayer);
     isStartingPlayer = copy.isStartingPlayer;
-}*/
+}
 
 BiddingFacility::BiddingFacility(string lastName_, int coins_, int bidAmount_, Player* owningPlayer_, bool isStartingPlayer_) {
     lastName = lastName_;
@@ -36,15 +34,16 @@ BiddingFacility::BiddingFacility(string lastName_, int coins_, int bidAmount_, P
 
 // Destructor
 BiddingFacility::~BiddingFacility() {
-
+    delete owningPlayer;
+    owningPlayer = nullptr;
 }
 
 // Assignment Operator
-BiddingFacility& BiddingFacility::operator =(const BiddingFacility &bf) {
+BiddingFacility& BiddingFacility::operator=(const BiddingFacility &bf) {
     lastName = bf.lastName;
     coins = bf.coins;
     bidAmount = bf.bidAmount;
-    owningPlayer = bf.owningPlayer;
+    owningPlayer = new Player(*bf.owningPlayer);
     isStartingPlayer = bf.isStartingPlayer;
     return *this;
 }

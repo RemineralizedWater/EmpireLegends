@@ -1,5 +1,4 @@
-#ifndef EMPIRELEGENDS_BIDDINGFACILITY_H
-#define EMPIRELEGENDS_BIDDINGFACILITY_H
+#pragma once
 
 #include <string>
 #include "../Player/Player.h"
@@ -19,7 +18,7 @@ private: // var camelCase
 public: // var PascalCase
     BiddingFacility();
 
-    //BiddingFacility(BiddingFacility &copy);
+    BiddingFacility(const BiddingFacility &copy);
 
     BiddingFacility(string lastName_, int coins_, int bidAmount_, Player *owningPlayer_, bool isStartingPlayer_);
 
@@ -49,6 +48,3 @@ public: // var PascalCase
 
     void ResolveBid(bool hasWonBid);
 };
-
-
-#endif //EMPIRELEGENDS_BIDDINGFACILITY_H
