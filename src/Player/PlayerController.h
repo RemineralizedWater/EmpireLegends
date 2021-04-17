@@ -7,7 +7,9 @@ class PlayerController {
 private:
     PlayerObserver *playerView;
     Player *playerModel;
+
 public:
     PlayerController(PlayerObserver *newView, Player *newModel);
+
     void ControlPlayer();
 };

@@ -1,6 +1,3 @@
-#ifndef EMPIRELEGENDS_PLAYER_H
-#define EMPIRELEGENDS_PLAYER_H
-
 # pragma once
 
 #include <string>
@@ -48,11 +45,11 @@ public:
            int cubes_, int disks_, Hand *myHand_, int money_, string name_,
            int totalMovementPointsForRound_, int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_, int elixirs_);
 
-    Player(Player &playerToCopy);
+    Player(const Player &playerToCopy);
 
     ~Player();
 
-    Player &operator=(const Player &playerToCopy);
+    Player &operator=(Player &playerToCopy);
 
     friend std::istream &operator>>(std::istream &is, Player &player);
 
@@ -127,6 +124,3 @@ public:
 };
 
 std::istream &operator>>(std::istream &is, Player &player);
-
-#endif //EMPIRELEGENDS_PLAYER_H
-

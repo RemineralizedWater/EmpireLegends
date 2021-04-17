@@ -2,9 +2,6 @@
 // Created by Wayne on 3/8/2021.
 //
 
-#ifndef EMPIRELEGENDS_HAND_H
-#define EMPIRELEGENDS_HAND_H
-
 #pragma once
 
 #include <vector>
@@ -14,21 +11,26 @@
 
 class Player;
 
-class Hand{
+class Hand {
 private:
-    vector<Cards>* hand;
-    Cards* activeCard;
-    Player* owningPlayer;
+    vector<Cards> *hand;
+    Cards *activeCard;
+    Player *owningPlayer;
+
 public:
     Hand();
+
     ~Hand();
+
+    vector<Cards> *GetHand();
+
+    Cards *GetActiveCard();
+
+    void SetActiveCard(Cards *card);
+
+    void SetOwningPlayer(Player *owningPlayer);
+
     void AddToHand(Cards card);
-    void Exchange(Deck* deck);
-    vector<Cards>* GetHand();
-    Cards* GetActiveCard();
-    void SetActiveCard(Cards* card);
-    void SetOwningPlayer(Player* owningPlayer);
+
+    void Exchange(Deck *deck);
 };
-
-
-#endif //EMPIRELEGENDS_HAND_H

@@ -1,5 +1,4 @@
-#ifndef EMPIRELEGENDS_BIDDINGFACILITY_H
-#define EMPIRELEGENDS_BIDDINGFACILITY_H
+#pragma once
 
 #include <string>
 #include "../Player/Player.h"
@@ -15,7 +14,32 @@ private: // var camelCase
     int bidAmount;
     bool isStartingPlayer;
     Player *owningPlayer;
+
 public: // var PascalCase
+    BiddingFacility();
+
+    BiddingFacility(const BiddingFacility &copy);
+
+    BiddingFacility(string lastName_, int coins_, int bidAmount_, Player *owningPlayer_, bool isStartingPlayer_);
+
+    ~BiddingFacility();
+
+    BiddingFacility &operator=(BiddingFacility &bf);
+
+    friend ostream &operator<<(ostream &out, const BiddingFacility &bf);
+
+    friend istream &operator>>(istream &in, BiddingFacility &bf);
+
+    string GetLastName();
+
+    int GetCoins();
+
+    int GetBidAmount();
+
+    void SetLastName(string lastName_);
+
+    void SetOwningPlayer(Player *owningPlayer_);
+
     void ReceiveStartingCoins(int numberOfPlayers);
 
     void EnterBid();
@@ -23,31 +47,4 @@ public: // var PascalCase
     void RevealBid();
 
     void ResolveBid(bool hasWonBid);
-
-    string GetLastName();
-
-    void SetLastName(string lastName_);
-
-    int GetCoins();
-
-    int GetBidAmount();
-
-    void SetOwningPlayer(Player *owningPlayer_);
-
-    BiddingFacility();
-
-    ~BiddingFacility();
-
-    //BiddingFacility(BiddingFacility &copy);
-
-    BiddingFacility(string lastName_, int coins_, int bidAmount_, Player *owningPlayer_, bool isStartingPlayer_);
-
-    BiddingFacility &operator=(const BiddingFacility &bf);
-
-    friend ostream &operator<<(ostream &out, const BiddingFacility &bf);
-
-    friend istream &operator>>(istream &in, BiddingFacility &bf);
 };
-
-
-#endif //EMPIRELEGENDS_BIDDINGFACILITY_H

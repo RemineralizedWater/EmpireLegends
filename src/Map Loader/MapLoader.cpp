@@ -38,7 +38,7 @@ MapLoader::MapLoader(int numberOfPlayers) {
  * Copy Constructor
  * @param copy
  */
-MapLoader::MapLoader(MapLoader &copy){
+MapLoader::MapLoader(const MapLoader &copy) {
     this->numberOfBoardPieces = copy.numberOfBoardPieces;
     this->rectangle = copy.rectangle;
     this->mapFilePath = copy.mapFilePath;
@@ -49,9 +49,11 @@ MapLoader::MapLoader(MapLoader &copy){
  * destructor
  */
 MapLoader::~MapLoader() {
-    delete map;
-    mapFilePath = nullptr;
-    map = nullptr;
+    if (map != nullptr) {
+        delete map;
+        mapFilePath = nullptr;
+        map = nullptr;
+    }
 }
 
 /**
@@ -227,7 +229,7 @@ Map* MapLoader::LoadMap(string file, bool &validMap) {  // bool &validMap pass b
         return map;
     }
     //Validate the values in map
-    if (!map->Validate()){
+    if (!map->Validate()) {
         validMap = false;
         return map;
     }

@@ -1,10 +1,7 @@
-
 #include <iostream>
-#include <vector>
 #include "Cards.h"
 
 using namespace std;
-
 
 // Constructors
 Cards::Cards() {
@@ -60,7 +57,7 @@ Cards::Cards(string *name_, string *goodsAndAction_, int *cost_, int *actionOne_
     goodsSpecific = *goodsSpecific_;
 }
 
-Cards::Cards(const Cards &copy){
+Cards::Cards(const Cards &copy) {
     name = copy.name;
     goodsAndAction = copy.goodsAndAction;
     cost = cost = copy.cost;
@@ -76,6 +73,50 @@ Cards::Cards(const Cards &copy){
     goodsSpecific = copy.goodsSpecific;
 }
 
+// Destructor
+Cards::~Cards() {
+
+}
+
+// Assignment Operator
+Cards &Cards::operator=(const Cards &c) {
+    name = c.name;
+    goodsAndAction = c.goodsAndAction;
+    cost = c.cost;
+    return *this;
+}
+
+// Stream Insertion Operators
+ostream &operator<<(ostream &out, const Cards &c) {
+    //out << "(cost: " << *(c.cost) << ") name: " << *(c.name) << ", goods and actions: " << *(c.goodsAndAction) << endl;
+    string actions[5] = {"", "Place Armies: ", "Move Armies: ", "Build City: ", "Destroy Armies: "};
+    string goods[11] = {"", "+ to move armies", "+ to place armies", "- to move over water", "+ elixirs",
+                        "+ coins and 1+ elixirs", "+ VP per card: ", "+ VP for card: Noble x3", "+ VP per 3 coins",
+                        "immune to attack", "+ VP for card: Mountain x2"};
+
+    out << "(cost: " << c.cost << ") name: " << c.name << ", actions = " << actions[c.actionOne] << c.actionOneValue;
+    if (c.actionTwo != 0) {
+        out << " " << c.actionOperation << " " << actions[c.actionTwo] << c.actionTwoValue;
+    }
+    if (c.goods == 6) {
+        out << " goods = " << goods[6] << c.goodsSpecific;
+    }
+    else {
+        out << " goods = " << to_string(c.goodsValue) << goods[c.goods];
+    }
+
+    out << endl;
+    return out;
+}
+
+// Note: obj needs to be dereferenced when using cout (ie, cout << *foo)
+istream &operator>>(istream &in, Cards &c) {
+    in >> c.name;
+    in >> c.goodsAndAction;
+    in >> c.cost;
+    return in;
+}
+
 // Accessors
 string Cards::GetName() {
     return name;
@@ -85,55 +126,8 @@ string Cards::GetGoodsAndAction() {
     return goodsAndAction;
 }
 
-int Cards::GetCost(){
+int Cards::GetCost() {
     return cost;
-}
-
-// Mutators
-void Cards::SetCost(int cost_){
-    cost = cost_;
-}
-
-// Assignment Operator
-Cards & Cards::operator =(const Cards &c){
-    name = c.name;
-    goodsAndAction = c.goodsAndAction;
-    cost = c.cost;
-    return *this;
-}
-
-// Stream Insertion Operators
-ostream& operator << (ostream &out, const Cards &c){
-    //out << "(cost: " << *(c.cost) << ") name: " << *(c.name) << ", goods and actions: " << *(c.goodsAndAction) << endl;
-    string actions[5] = {"", "Place Armies: ", "Move Armies: ", "Build City: ", "Destroy Armies: "};
-    string goods[11] = {"", "+ to move armies", "+ to place armies", "- to move over water", "+ elixirs",
-                        "+ coins and 1+ elixirs", "+ VP per card: ", "+ VP for card: Noble x3", "+ VP per 3 coins",
-                        "immune to attack", "+ VP for card: Mountain x2"};
-
-    out << "(cost: " << c.cost << ") name: " << c.name << ", actions = " << actions[c.actionOne] << c.actionOneValue;
-    if(c.actionTwo != 0){
-        out << " " << c.actionOperation << " " << actions[c.actionTwo] << c.actionTwoValue;
-    }
-    if(c.goods == 6){
-        out << " goods = " << goods[6] << c.goodsSpecific;
-    }else{
-        out<< " goods = " << to_string(c.goodsValue) << goods[c.goods];
-    }
-
-    out << endl;
-    return out;
-}
-
-// Note: obj needs to be dereferenced when using cout (ie, cout << *foo)
-istream& operator >> (istream &in, Cards &c){
-    in >> c.name;
-    in >> c.goodsAndAction;
-    in >> c.cost;
-    return in;
-}
-
-Cards::~Cards() {
-
 }
 
 int Cards::GetActionOne() {
@@ -168,6 +162,7 @@ string Cards::GetGoodsSpecific() {
     return goodsSpecific;
 }
 
-
-
-
+// Mutators
+void Cards::SetCost(int cost_) {
+    cost = cost_;
+}

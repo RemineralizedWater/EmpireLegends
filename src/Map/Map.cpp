@@ -270,7 +270,7 @@ Map::Map(const Map &copy) {
  * destructor
  */
 Map::~Map() {
-    if(terrAndAdjsList != nullptr){
+    if (terrAndAdjsList != nullptr) {
         delete terrAndAdjsList;
         terrAndAdjsList = nullptr;
     }
@@ -452,7 +452,7 @@ void Map::RemoveAdjacency(int adjId_) {
 Territory *Map::FindTerritory(int terrId_) {
     vector<terrInfo>::iterator terrIt;
     for (terrIt = (terrAndAdjsList)->begin(); terrIt != (terrAndAdjsList)->end(); ++terrIt) {
-        if((*terrIt).first->GetTerrId() == terrId_){
+        if ((*terrIt).first->GetTerrId() == terrId_) {
             return (*terrIt).first;
         }
     }

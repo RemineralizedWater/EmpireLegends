@@ -287,10 +287,14 @@ int DemonstrateMap(int numberOfPlayers) {
         map->Display();
         map->Validate();
         cout << "Valid Map!" << endl;
+
+        // Memory clean up
         cleanTerr(terr);
         cleanAdj(adj);
-        delete map;
-        map = nullptr;
+        if (map != nullptr) {
+            delete map;
+            map = nullptr;
+        }
     }
 }
 

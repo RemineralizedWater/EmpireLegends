@@ -1,11 +1,13 @@
 #include "GameObservers.h"
 
 // PLAYER OBSERVER
-PlayerObserver::PlayerObserver(Player *subject_){
+// Constructor
+PlayerObserver::PlayerObserver(Player *subject_) {
     subject = subject_;
     subject_->Attach(this);
 }
 
+// Destructor
 PlayerObserver::~PlayerObserver() {
     subject->Detach(this);
     if (subject != nullptr) {
@@ -33,20 +35,23 @@ void PlayerObserver::Display() {
         to_string(victoryPoints) + " total victory points." << endl;
 
     cout << playerName + "\'s hand: " << endl;
-    if(!subject->MyHand->GetHand()->empty()){
+    if (!subject->MyHand->GetHand()->empty()) {
         for (int i = 0; i < subject->MyHand->GetHand()->size(); i++)
             cout << (i + 1) << ". " << subject->MyHand->GetHand()->at(i);
-    }else{
+    } else {
         cout << "Empty." << endl;
     }
 }
 
+// ------------------------
 // DECK OBSERVER
-DeckObserver::DeckObserver(Deck *subject_){
+// Constructor
+DeckObserver::DeckObserver(Deck *subject_) {
     subject = subject_;
     subject_->Attach(this);
 }
 
+// Destructor
 DeckObserver::~DeckObserver() {
     subject->Detach(this);
     if (subject != nullptr) {

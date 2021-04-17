@@ -83,12 +83,19 @@ void DemonstrateA2Part5() {
         cout << "=======================================================================" << endl;
     }
 
-    delete player1;
-    player1 = nullptr;
-    delete player2;
-    player2 = nullptr;
-    delete deck;
-    deck = nullptr;
+    // Memory clean up
+    if (player1 != nullptr) {
+        delete player1;
+        player1 = nullptr;
+    }
+    if (player2 != nullptr) {
+        delete player2;
+        player2 = nullptr;
+    }
+    if (deck != nullptr) {
+        delete deck;
+        deck = nullptr;
+    }
 
     return;
 }
