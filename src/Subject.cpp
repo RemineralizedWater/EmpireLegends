@@ -4,11 +4,11 @@
 using namespace std;
 
 Subject::Subject() {
-    observers = new list<Observer*>;
+    observers = new list<Observer *>;
 }
 
 Subject::~Subject() {
-    if(observers != nullptr){
+    if (observers != nullptr) {
         delete observers;
         observers = nullptr;
     }
@@ -23,8 +23,8 @@ void Subject::Detach(Observer *o) {
 }
 
 void Subject::Notify() {
-    list<Observer*>::iterator i = observers->begin();
-    for(; i != observers->end(); i++){
+    list<Observer *>::iterator i = observers->begin();
+    for (; i != observers->end(); i++) {
         (*i)->Update(); // calls update on all observers
     }
 }
