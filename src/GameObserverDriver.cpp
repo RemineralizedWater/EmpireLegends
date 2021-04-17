@@ -60,24 +60,22 @@ void GameObservers(Map map){
     }
 
     // memory clean up
-    delete controllerDeck;
-    controllerDeck = nullptr;
-    delete viewDeck;
-    viewDeck = nullptr;
-    delete modelDeck;
-    modelDeck = nullptr;
-
-    delete controllerPlayer1;
-    controllerPlayer1 = nullptr;
-    delete viewPlayer1;
-    viewPlayer1 = nullptr;
-    delete modelPlayer1;
-    modelPlayer1 = nullptr;
-
-    delete controllerPlayer2;
-    controllerPlayer2 = nullptr;
-    delete viewPlayer2;
-    viewPlayer2 = nullptr;
-    delete modelPlayer2;
-    modelPlayer2 = nullptr;
+    if (controllerDeck != nullptr && viewDeck != nullptr && modelDeck != nullptr) {
+        delete controllerDeck;
+        controllerDeck = nullptr;
+        viewDeck = nullptr;
+        modelDeck = nullptr;
+    }
+    if (controllerPlayer1 != nullptr && viewPlayer1 != nullptr && modelPlayer1 != nullptr) {
+        delete controllerPlayer1;
+        controllerPlayer1 = nullptr;
+        viewPlayer1 = nullptr;
+        modelPlayer1 = nullptr;
+    }
+    if (controllerPlayer2 != nullptr && viewPlayer2 != nullptr && modelPlayer2 != nullptr) {
+        delete controllerPlayer2;
+        controllerPlayer2 = nullptr;
+        viewPlayer2 = nullptr;
+        modelPlayer2 = nullptr;
+    }
 }
