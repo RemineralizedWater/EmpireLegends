@@ -27,15 +27,35 @@ void PlayerObserver::Display() {
     int victoryPoints = subject->GetVictoryPoints();
     int cities = subject->GetCitiesDisks(); // disks
     int money = subject->GetMoney();
-
+    Map* modelMap = subject->GetMap();
+    cout << "__________________________________________________________________________" << endl;
     cout << "Player: " + playerName + " has " +
-        to_string(money) + " money left, " +
-        to_string(tokenArmies) + " armies to place, " +
-        to_string(cities) + " cities to place, and " +
+        to_string(money) + " money left, and " +
         to_string(victoryPoints) + " total victory points." << endl;
+    cout << to_string(tokenArmies) + " : Armies can be placed" << endl;
+    cout << to_string(cities) + " : Cities can be placed" << endl;
 
-    cout << playerName + "\'s hand: " << endl;
-    if (!subject->MyHand->GetHand()->empty()) {
+    int terrCount = 0;
+    typedef pair<Territory *, vector<Adjacency> *> terrInfo;
+    vector<terrInfo>::iterator terrIt;
+    for (terrIt = modelMap->GetTerrAndAdjsList()->begin();
+         terrIt != modelMap->GetTerrAndAdjsList()->end(); ++terrIt) {
+
+        if((*terrIt).first->GetArmySizeForPlayer()[playerName] != 0 || (*terrIt).first->HasCity(playerName)){
+            terrCount += 1;
+            cout << "Territory: " << (*terrIt).first->GetTerrId();
+            cout <<" | Continent: " << (*terrIt).first->GetContinent();
+            cout << " | Cities: " << (*terrIt).first->GetHasCity()[playerName];
+            cout << " | Armies: " << (*terrIt).first->GetArmySizeForPlayer()[playerName] << endl;
+        }
+    }
+
+    if (terrCount == 0) {
+        cout << "No armies in any territory." << endl;
+    }
+
+    cout << playerName + "\'s Hand: " << endl;
+    if(!subject->MyHand->GetHand()->empty()){
         for (int i = 0; i < subject->MyHand->GetHand()->size(); i++)
             cout << (i + 1) << ". " << subject->MyHand->GetHand()->at(i);
     } else {
@@ -65,9 +85,33 @@ void DeckObserver::Update() {
 }
 
 void DeckObserver::Display() {
-    cout << "- - - - - - - - - - - - CARDS IN DECK - - - - - - - - - - - -" << endl;
+    subject->ShuffleDeck();
+    cout << "- - - - - - - - - - CARDS LEFT IN DECK - - - - - - - - - - - -" << endl;
     subject->PrintCardsIn(subject->GetDeck());
     cout << "- - - - - - - - - - CARDS IN FACE UP PILE - - - - - - - - - -" << endl;
     subject->PrintCardsIn(subject->GetFaceUpCards());
     cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
 }
+
+// MAP OBSERVER
+MapObserver::MapObserver(Map *subject_){
+    subject = subject_;
+    subject_->Attach(this);
+}
+
+MapObserver::~MapObserver() {
+    subject->Detach(this);
+    if(subject != nullptr){
+        delete subject;
+        subject = nullptr;
+    }
+}
+
+void MapObserver::Update() {
+    Display();
+}
+
+void MapObserver::Display() {
+    subject->Display();
+}
+

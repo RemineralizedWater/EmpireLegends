@@ -8,6 +8,7 @@
 #include <iostream>
 #include <map>
 #include "memory"
+#include "../Subject.h"
 
 using std::vector;
 using std::pair;
@@ -19,16 +20,16 @@ class Territory {
 private:
     int terrId;
     int continentId;
-    std::unique_ptr<std::map<string, int>> armySizeForPlayer;  // <player, armySize>
-    std::unique_ptr<std::map<string, bool>> hasCityForPlayer;  // <player, hasCity>
+    std::map<string, int> armySizeForPlayer;  // <player, armySize>
+    std::map<string, bool> hasCityForPlayer;  // <player, hasCity>
 
 public:
     Territory();
 
     Territory(int terrId_,
               int continentId_,
-              const std::map<string, int> &armySizeForPlayer_,
-              const std::map<string, bool> &hasCityForPlayer_
+              std::map<string, int> armySizeForPlayer_,
+              std::map<string, bool> hasCityForPlayer_
     );
 
     Territory(int terrId_, int continentId_);
@@ -47,7 +48,19 @@ public:
 
     int GetContinent();
 
+    int GetNumberOfArmies(string playerName);
+
+    bool HasCity(string playerName);
+
+    bool HasArmies(string playerName);
+
     std::map<string, int> &GetArmySizeForPlayer();
+
+    void AddArmySizeForPlayer(string playerName, int amount);
+
+    void RemoveArmySizeForPlayer(string playerName, int amount);
+
+    void AddCityForPlayer(string playerName);
 
     std::map<string, bool> &GetHasCity();
 
@@ -82,7 +95,7 @@ public:
 };
 
 
-class Map {
+class Map : public Subject {
 private:
     bool rectangle;
     // typedef keyword allows new names for types; pair holds two variables & has auto constructor/destructor
@@ -114,6 +127,8 @@ public:
     int GetStartingPoint();
 
     int GetMapSize();
+
+    vector<terrInfo>* GetTerrAndAdjsList();
 
     void SetStartingPoint(int terrId_);
 

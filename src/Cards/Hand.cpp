@@ -1,7 +1,3 @@
-//
-// Created by Wayne on 3/8/2021.
-//
-
 #include "Hand.h"
 #include <vector>
 #include <iostream>
@@ -36,7 +32,7 @@ void Hand::SetActiveCard(Cards *card) {
 }
 
 void Hand::SetOwningPlayer(Player *owningPlayer_) {
-    this->owningPlayer = owningPlayer_;
+    owningPlayer = owningPlayer_;
 }
 
 void Hand::AddToHand(Cards card) {
@@ -79,4 +75,8 @@ void Hand::Exchange(Deck *deck) {
     deck->GetFaceUpCards()->push_back(replacementCard);
 
     deck->SetFaceUpCardsCost();
+}
+
+int Hand::NumberOfCardsInHand() {
+    return hand->size();
 }

@@ -1,7 +1,3 @@
-//
-// Created by RemineralizedWater on 2021-02-21.
-//
-
 #include "Map.h"
 
 // TERRITORY METHODS
@@ -10,10 +6,8 @@
  * default constructor
  */
 Territory::Territory() {
-    this->terrId = 0;
-    this->continentId = 0;
-    this->armySizeForPlayer = std::unique_ptr<std::map<std::string, int>>(new std::map<std::string, int>);
-    this->hasCityForPlayer = std::unique_ptr<std::map<std::string, bool>>(new std::map<std::string, bool>);
+    terrId = 0;
+    continentId = 0;
 }
 
 /**
@@ -23,19 +17,17 @@ Territory::Territory() {
  * @param armySizeForPlayer
  */
 Territory::Territory(int terrId_, int continentId_,
-                     const std::map<std::string, int> &armySizeForPlayer_,
-                     const std::map<std::string, bool> &hasCityForPlayer_) {
-    this->terrId = terrId_;
-    this->continentId = continentId_;
-    this->armySizeForPlayer = std::unique_ptr<std::map<std::string, int>>(new std::map<std::string, int>(armySizeForPlayer_));
-    this->hasCityForPlayer = std::unique_ptr<std::map<std::string, bool>>(new std::map<std::string, bool>(hasCityForPlayer_));
+                    std::map<std::string, int> armySizeForPlayer_,
+                    std::map<std::string, bool> hasCityForPlayer_) {
+    terrId = terrId_;
+    continentId = continentId_;
+    armySizeForPlayer = armySizeForPlayer_;
+    hasCityForPlayer = hasCityForPlayer_;
 }
 
 Territory::Territory(int terrId_, int continentId_) {
-    this->terrId = terrId_;
-    this->continentId = continentId_;
-    this->armySizeForPlayer = std::unique_ptr<std::map<std::string, int>>(new std::map<std::string, int>);
-    this->hasCityForPlayer = std::unique_ptr<std::map<std::string, bool>>(new std::map<std::string, bool>);
+    terrId = terrId_;
+    continentId = continentId_;
 }
 
 /**
@@ -43,10 +35,10 @@ Territory::Territory(int terrId_, int continentId_) {
  * @param copy
  */
 Territory::Territory(const Territory &copy) {
-    this->terrId = copy.terrId;
-    this->continentId = copy.continentId;
-    this->armySizeForPlayer = std::unique_ptr<std::map<std::string, int>>(new std::map<std::string, int>(*copy.armySizeForPlayer));
-    this->hasCityForPlayer = std::unique_ptr<std::map<std::string, bool>>(new std::map<std::string, bool>(*copy.hasCityForPlayer));
+    terrId = copy.terrId;
+    continentId = copy.continentId;
+    armySizeForPlayer = copy.armySizeForPlayer;
+    hasCityForPlayer = copy.hasCityForPlayer;
 }
 
 /**
@@ -63,12 +55,10 @@ Territory::~Territory() {
  * @return
  */
 Territory &Territory::operator=(const Territory &t) {
-    this->terrId = t.terrId;
-    this->continentId = t.continentId;
-    this->armySizeForPlayer = std::unique_ptr<std::map<std::string, int>>(
-            new std::map<std::string, int>(*t.armySizeForPlayer));
-    this->hasCityForPlayer = std::unique_ptr<std::map<std::string, bool>>(
-            new std::map<std::string, bool>(*t.hasCityForPlayer));
+    terrId = t.terrId;
+    continentId = t.continentId;
+    armySizeForPlayer = t.armySizeForPlayer;
+    hasCityForPlayer = t.hasCityForPlayer;
     return *this;
 }
 
@@ -94,7 +84,7 @@ std::istream &operator>>(std::istream &in, Territory &t) {
         in >> playerName;
         in >> armySize;
 
-        (*t.armySizeForPlayer)[playerName] = armySize;
+        t.armySizeForPlayer[playerName] = armySize;
     }
     for (int i = 0; i < 5; i++) {
         std::string playerName;
@@ -103,7 +93,7 @@ std::istream &operator>>(std::istream &in, Territory &t) {
         in >> playerName;
         in >> hasCity;
 
-        (*t.hasCityForPlayer)[playerName] = hasCity;
+        t.hasCityForPlayer[playerName] = hasCity;
     }
     return in;
 }
@@ -130,7 +120,7 @@ int Territory::GetContinent() {
  * @return
  */
 std::map<std::string, int> &Territory::GetArmySizeForPlayer() {
-    return *armySizeForPlayer;
+    return armySizeForPlayer;
 }
 
 /**
@@ -138,16 +128,42 @@ std::map<std::string, int> &Territory::GetArmySizeForPlayer() {
  * @return
  */
 std::map<std::string, bool> &Territory::GetHasCity() {
-    return *hasCityForPlayer;
+    return hasCityForPlayer;
 }
 
 // Public Methods
 void Territory::InsertNewArmyPlayerMapping(string playerName) {
-    armySizeForPlayer->insert(std::pair<string, int>(playerName, 0));
+    armySizeForPlayer.insert({playerName, 0});
 }
 
 void Territory::InsertNewCityPlayerMapping(string playerName) {
-    hasCityForPlayer->insert(std::pair<string, bool>(playerName, false));
+    hasCityForPlayer.insert({playerName, false});
+}
+
+void Territory::AddArmySizeForPlayer(string playerName, int amount) {
+    armySizeForPlayer[playerName] += amount;
+}
+
+void Territory::AddCityForPlayer(string playerName) {
+    hasCityForPlayer[playerName] = true;
+}
+
+int Territory::GetNumberOfArmies(string playerName) {
+    return armySizeForPlayer[playerName];
+}
+
+void Territory::RemoveArmySizeForPlayer(string playerName, int amount) {
+    armySizeForPlayer[playerName] -= amount;
+    if(armySizeForPlayer[playerName] < 0)
+        armySizeForPlayer[playerName] = 0;
+}
+
+bool Territory::HasCity(string playerName) {
+    return hasCityForPlayer[playerName];
+}
+
+bool Territory::HasArmies(string playerName) {
+    return armySizeForPlayer.count(playerName) != 0; // this is 0 if not exist, 1 if exist, not a real count
 }
 
 // ------------------------
@@ -515,4 +531,9 @@ bool Map::Validate() {
         }
     }
     return true;
+}
+
+typedef pair<Territory *, vector<Adjacency> *> terrInfo;
+vector<terrInfo>* Map::GetTerrAndAdjsList() {
+    return terrAndAdjsList;
 }

@@ -33,4 +33,6 @@ public:
     void AddToHand(Cards card);
 
     void Exchange(Deck *deck);
+
+    int NumberOfCardsInHand();
 };

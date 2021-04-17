@@ -25,6 +25,26 @@ Player::Player() {
     totalMovementPointsForRound = 0;
     costToMoveOverWater = 3;
     canBeAttacked = true;
+    map = new Map();
+}
+
+Player::Player(string name_) {
+    region = "none";
+    biddingFacility = new BiddingFacility();
+    territory = unique_ptr<Territory>(new Territory());
+    cards = unique_ptr<Cards>(new Cards());
+    MyHand = new Hand();
+    tokenArmies = 0;
+    cubes = 0;
+    victoryPoints = 0;
+    elixirs = 0;
+    disks = 0;
+    money = 0;
+    name = name_;
+    totalMovementPointsForRound = 0;
+    costToMoveOverWater = 3;
+    canBeAttacked = true;
+    map = new Map();
 }
 
 //Parametric constructor
@@ -42,7 +62,8 @@ Player::Player(string region_,
                int costToMoveOverWater_,
                bool canBeAttacked_,
                int victoryPoints_,
-               int elixirs_)
+               int elixirs_,
+               Map *map_)
         : region(region_),
           biddingFacility(biddingFacility_),
           territory(&territory_),
@@ -57,7 +78,8 @@ Player::Player(string region_,
           name(name_),
           canBeAttacked(canBeAttacked_),
           victoryPoints(victoryPoints_),
-          elixirs(elixirs_) {
+          elixirs(elixirs_),
+          map(map_){
 }
 
 //Copy constructor
@@ -75,7 +97,8 @@ Player::Player(const Player &playerToCopy)
           costToMoveOverWater(playerToCopy.costToMoveOverWater),
           victoryPoints(playerToCopy.victoryPoints),
           elixirs(playerToCopy.elixirs),
-          canBeAttacked(playerToCopy.canBeAttacked) {
+          canBeAttacked(playerToCopy.canBeAttacked),
+          map(playerToCopy.map){
 }
 
 //Destructor
@@ -173,8 +196,16 @@ int Player::GetTotalMovementPointsForRound() {
     return totalMovementPointsForRound;
 }
 
+Map *Player::GetMap() {
+    return map;
+}
+
 void Player::SetTotalMovementPointsForRound(int totalMovementPointsForRound_) {
     totalMovementPointsForRound = totalMovementPointsForRound_;
+}
+
+void Player::SetMap(Map *map_) {
+    map = map_;
 }
 
 void Player::SetArmiesTokens(int numberOfTokens) {
@@ -195,7 +226,7 @@ void Player::SetCitiesDisks(int numberOfDisks) {
     Notify();
 }
 
-//Successfully pays coin and withdraws money from said player account (for Ass1. just returns
+//Successfully pays coin and withdraws money from said player account
 void Player::PaysCoinFromPlayer(int amountToPay) {
     money -= amountToPay;
     Supply += amountToPay;
@@ -204,33 +235,41 @@ void Player::PaysCoinFromPlayer(int amountToPay) {
 
 //Places armies for desired player
 void Player::PlaceNewArmies(int numberOfArmiesToPlaced) {
+    int armiesToPlace = numberOfArmiesToPlaced;
+    int position;
+    bool placedCity = false;
 
-    // TODO: "Which territory would you like to place armies in?" >> get territory id
-    cout << "Which territory would you like to place armies in? " << endl;
-    cout << "Using placeholder territory.." << endl;
-    Territory *terr = new Territory();  // placeholder for testing
-    terr->InsertNewArmyPlayerMapping(name); // placeholder for testing
-    terr->InsertNewCityPlayerMapping(name); // placeholder for testing
-    terr->GetHasCity()[name] = true; // placeholder for testing
+    if(tokenArmies < armiesToPlace)
+        armiesToPlace = tokenArmies;
 
-    if (!terr->GetHasCity()[name]) {
-        cout << "You do not have a city in this territory, please choose another territory." << endl;
-        cout << "You have " << tokenArmies << " army tokens." << endl;
-        //TODO LOOP
+    if (armiesToPlace == 0) {
+        cout << "You do not have any armies left to place." << endl;
+        return;
     }
 
-    if (tokenArmies < numberOfArmiesToPlaced) {
-        cout << "You do not have enough armies left to place." << endl;
-    } else {
-        terr->GetArmySizeForPlayer()[name] += numberOfArmiesToPlaced;
-        tokenArmies -= numberOfArmiesToPlaced;
-        cout << "Your army has been successfully placed." << endl;
-    }
+    map->Display();
 
-    // Memory clean up
-    if (terr != nullptr) {
-        delete terr;
-        terr = nullptr;
+    while(!placedCity){
+        cout << "Which territory would you like to place armies in? " << endl;
+        cin >> position;
+
+        typedef pair<Territory *, vector<Adjacency> *> terrInfo;
+        vector<terrInfo>::iterator terrIt;
+        for (terrIt = map->GetTerrAndAdjsList()->begin();
+             terrIt != map->GetTerrAndAdjsList()->end(); ++terrIt) {
+
+            if((*terrIt).first->GetTerrId() == position){
+                if((*terrIt).first->GetHasCity()[name]){
+                    (*terrIt).first->AddArmySizeForPlayer(name, armiesToPlace);
+                    cout << armiesToPlace << " armies have been added to the territory!" << endl;
+                    tokenArmies -= armiesToPlace;
+                    placedCity = true;
+                }else{
+                    cout << "You do not have a city in this territory, choose a different territory." << endl;
+                }
+                break;
+            }
+        }
     }
 }
 
@@ -311,34 +350,47 @@ void Player::AndOrAction() {
 //Moves army for desired player
 void Player::MoveArmiesForPlayer(int numberOfArmiesToMove) {
 
-    // TODO: "Which territory would you like to move FROM? >> enter Territory.
-    cout << "Which territory would you like to move armies FROM?" << endl;
-    cout << "Using placeholder territory..." << endl;
-    Territory *territoryToMoveFrom = new Territory(); // placeholder
-    // TODO: "Which territory would you like to move TO? >> enter Territory.
-    cout << "Which territory would you like to move armies TO?" << endl;
-    cout << "Using placeholder territory..." << endl;
-    Territory *territoryToMoveTo = new Territory(); // placeholder
+    int toID, fromID;
+    bool movedArmies = false;
 
-    //TODO: needs to move one at a time, not the full amount passed.
-    if (territoryToMoveFrom->GetArmySizeForPlayer()[name] >= numberOfArmiesToMove) {
-        territoryToMoveFrom->GetArmySizeForPlayer()[name] -= numberOfArmiesToMove;
-        territoryToMoveTo->GetArmySizeForPlayer()[name] += numberOfArmiesToMove;
-        std::cout << "Your army has been successfully moved" << std::endl;
-    } else {
-        std::cout
-                << "Your army has not been moved because the armies you want to move are bigger than the armies you own in your source territory"
-                << std::endl;
-    }
+    map->Display();
 
-    // Memory clean up
-    if (territoryToMoveFrom != nullptr) {
-        delete territoryToMoveFrom;
-        territoryToMoveFrom = nullptr;
-    }
-    if (territoryToMoveTo != nullptr) {
-        delete territoryToMoveTo;
-        territoryToMoveTo = nullptr;
+    while(!movedArmies) {
+        int armiesToMove = numberOfArmiesToMove;
+
+        cout << "Which territory would you like to move armies FROM?" << endl;
+        cin >> fromID;
+        cout << "Which territory would you like to move armies TO?" << endl;
+        cin >> toID;
+
+        typedef pair<Territory *, vector<Adjacency> *> terrInfo;
+        vector<terrInfo>::iterator terrIt;
+        for (terrIt = map->GetTerrAndAdjsList()->begin();
+             terrIt != map->GetTerrAndAdjsList()->end(); ++terrIt) {
+
+            if ((*terrIt).first->GetTerrId() == fromID) {
+                if ((*terrIt).first->GetNumberOfArmies(name) > 0) {
+
+                    if((*terrIt).first->GetNumberOfArmies(name) < armiesToMove)
+                        armiesToMove = (*terrIt).first->GetNumberOfArmies(name);
+
+                    vector<terrInfo>::iterator terrIt2;
+                    for (terrIt2 = map->GetTerrAndAdjsList()->begin();
+                         terrIt2 != map->GetTerrAndAdjsList()->end(); ++terrIt2) {
+
+                        if ((*terrIt2).first->GetTerrId() == toID) {
+                            (*terrIt2).first->AddArmySizeForPlayer(name, armiesToMove);
+                            (*terrIt).first->RemoveArmySizeForPlayer(name, armiesToMove);
+                            movedArmies = true;
+                        }
+                    }
+                } else {
+                    cout << "You do not have enough armies to move, cannot move armies." << endl;
+                    movedArmies = true;
+                    break;
+                }
+            }
+        }
     }
 }
 
@@ -368,64 +420,72 @@ void Player::MoveOverWaterForPlayer() {
 //Builds city for desired player
 void Player::BuildCityForPlayer() {
 
-    //TODO: "Which territory would you like to build a city in?" >> enter city.
-    cout << "Which territory would you like to build a city in?" << endl;
-    cout << "Using placeholder city..." << endl;
-    Territory *terr = new Territory(); // placeholder
+    bool builtCity = false;
+    int cityTargetID;
 
-    for (const std::pair<std::string, bool> &pair: terr->GetHasCity()) {
-        if (pair.second) {
-            cout << "The player " << pair.first << " has already built a city in this territory." << endl;
-            //TODO: LOOP
+    if(disks <= 0){
+        cout << "You do not have enough cities to build a new one." << endl;
+        return;
+    }
+
+    while(!builtCity){
+        cout << "Which territory would you like to build a city in? (a city will be built regardless if you already have a city there)" << endl;
+        cin >> cityTargetID;
+
+        typedef pair<Territory *, vector<Adjacency> *> terrInfo;
+        vector<terrInfo>::iterator terrIt;
+        for (terrIt = map->GetTerrAndAdjsList()->begin();
+             terrIt != map->GetTerrAndAdjsList()->end(); ++terrIt) {
+
+            if((*terrIt).first->GetTerrId() == cityTargetID){
+                (*terrIt).first->AddCityForPlayer(name);
+                disks -= 1;
+                builtCity = true;
+                break;
+            }
         }
-    }
-
-    if (disks > 0) {
-        disks -= 1;
-        terr->GetHasCity()[name] = true;
-        cout << "You have successfully built the city." << endl;
-    } else {
-        cout << "You cannot build a city in this territory because you do not have an available city token." << endl;
-        // OK TO END, no need to loop
-    }
-
-    // Memory clean up
-    if (terr != nullptr) {
-        delete terr;
-        terr = nullptr;
+        if(!builtCity)
+            cout << "Enter a valid territory ID." << endl;
     }
 }
 
 //Destroys the army of the selected played
 void Player::DestroysNumberOfArmyOfPlayer(int numberOfArmiesToDestroy) {
 
-    // TODO: "Which territory are you targeting? >> enter territory
-    cout << "Which territory are you targeting?" << endl;
-    cout << "Using placeholder territory..." << endl;
-    Territory *targetTerritory = new Territory(); // placeholder
+    int targetTerritoryID;
+    bool hasAttacked = false;
 
-    if (targetTerritory->GetArmySizeForPlayer()[name] > 0) {
-        cout << "You do not have an army in this territory and therefore can not attack anyone here. Please select"
-                "another territory." << endl;
-        //TODO LOOP
-    }
+    while(!hasAttacked){
+        int armiesToDestroy = numberOfArmiesToDestroy;
+        string targetName;
 
-    //TODO: "Which player would you like to attack?" >> list players who have armies on that territory
-    cout << "Which player would you like to attach?" << endl;
-    cout << "Using placeholder player..." << endl;
-    string targetPlayer = "placeholder_name"; // placeholder
+        cout << "Who are you targeting?" << endl;
+        cin >> targetName;
+        cout << "Which territory are you targeting?" << endl;
+        cin >> targetTerritoryID;
 
-    //TODO: confirm player can be attacked
-    targetTerritory->GetArmySizeForPlayer()[targetPlayer] -= numberOfArmiesToDestroy;
-    std::cout << "Army successfully destroyed" << std::endl;
-    if (targetTerritory->GetArmySizeForPlayer()[targetPlayer] < 0) {
-        targetTerritory->GetArmySizeForPlayer()[targetPlayer] = 0;
-    }
+        typedef pair<Territory *, vector<Adjacency> *> terrInfo;
+        vector<terrInfo>::iterator terrIt;
+        for (terrIt = map->GetTerrAndAdjsList()->begin();
+             terrIt != map->GetTerrAndAdjsList()->end(); ++terrIt) {
 
-    // Memory clean up
-    if (targetTerritory != nullptr) {
-        delete targetTerritory;
-        targetTerritory = nullptr;
+            if((*terrIt).first->GetTerrId() == targetTerritoryID && (*terrIt).first->HasArmies(name)){
+                if((*terrIt).first->HasArmies(targetName)){
+                    if((*terrIt).first->GetNumberOfArmies(targetName) < armiesToDestroy)
+                        armiesToDestroy = (*terrIt).first->GetNumberOfArmies(targetName);
+
+                    (*terrIt).first->RemoveArmySizeForPlayer(targetName, armiesToDestroy);
+                    cout << armiesToDestroy << " armies have been removed from territory " << targetTerritoryID << endl;
+                }else{
+                    cout << "That player does not have armies in this territory to attack. No armies have been removed." << endl;
+                }
+
+                hasAttacked = true;
+                break;
+            }
+        }
+        if(!hasAttacked)
+            cout << "Enter a valid territory ID that you have armies in." << endl;
     }
 }
 

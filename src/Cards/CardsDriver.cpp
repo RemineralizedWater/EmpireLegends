@@ -21,7 +21,8 @@ void DemonstrateCards(int numberOfPlayers) {
                        3,
                        true,
                        0,
-                       0));
+                       0,
+                       new Map()));
 
     cout << "Creating deck.." << endl;
     Deck *deck = new Deck(numberOfPlayers);

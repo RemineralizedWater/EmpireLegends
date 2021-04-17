@@ -1,6 +1,9 @@
 #include <iostream>
 #include <limits>
 #include "Game/Game.h"
+#include "Map/Map.h"
+#include "GameObservers.h"
+#include "Map/MapController.h"
 
 using namespace std;
 
@@ -26,51 +29,43 @@ void DemonstrateA2Part6();
 
 void DemonstrateA2BiddingFacility();
 
-void MainGameLoop(Map *map, bool validMap);
+void MainGameLoop(Map *map, bool validMap, Game *game);
 
-void GameObservers();
+void GameObservers(Map *map, Game *game);
 
 int main() {
-    Game *game;
-    Map *map;
-    int numberOfPlayers = 0;
 
-    // Determine the number of players
-    cout << "Enter the number of players:";
-    while (true) {
-        if (cin >> numberOfPlayers && numberOfPlayers >= 2 && numberOfPlayers <= 4) {
-            break;
-        } else {
-            cout << "Please enter a valid number of players (integer, no greater than 4 and no less than 2)" << endl
-                 << ">>";
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        }
-    }
-
+    int numberOfPlayers = 2;
     bool validMap = false;
-    game = new Game(numberOfPlayers);
+
+    Game *game = new Game(numberOfPlayers);
+
+    Map *modelMap(game->SelectMap(validMap));
+    MapObserver *viewMap = new MapObserver(modelMap);
+    MapController *controllerMap = new MapController(viewMap, modelMap);
 
     while (!validMap) {
-        map = game->SelectMap(validMap);
-        validMap = map->Validate();
+        modelMap = game->SelectMap(validMap);
+        validMap = modelMap->Validate();
     }
 
+    controllerMap->ControlMap();
     // Main Game Loop
-    MainGameLoop(map, validMap);
+    MainGameLoop(modelMap, validMap, game);
 
-    // Memory clean up
-    if (map != nullptr) {
-        delete map;
-        map = nullptr;}
-    if (game != nullptr) {
+    if(modelMap != nullptr){
+        delete modelMap;
+        modelMap = nullptr;
+    }
+    if(game != nullptr){
         delete game;
-        game = nullptr;}
+        game = nullptr;
+    }
 
     return 0;
 }
 
-void MainGameLoop(Map *map, bool validMap) {
+void MainGameLoop(Map *modelMap, bool validMap, Game *game) {
     int userInput = 0;
 
     while (true) {
@@ -81,10 +76,11 @@ void MainGameLoop(Map *map, bool validMap) {
         cout << "4 - Part 4: Main game loop: The player actions" << endl;
         cout << "5 - Part 5: Main game loop: after the action" << endl;
         cout << "6 - Part 6: Main Game loop: Compute the game score" << endl;
-        cout << "7 - Exit" << endl;
+        cout << "7 - A3 Part 3: GameObservers" << endl;
+        cout << "8 - Exit" << endl;
 
         while (true) {
-            if (cin >> userInput && userInput >= 1 && userInput <= 7) {
+            if (cin >> userInput && userInput >= 1 && userInput <= 8) {
                 break;
             } else {
                 cout << "Please enter a valid selection (integer, no greater than 6 and no less than 1)" << endl
@@ -96,8 +92,8 @@ void MainGameLoop(Map *map, bool validMap) {
         switch (userInput) {
             case 1:
                 if (validMap) {
-                    cout << "Starting point token: " << map->GetStartingPoint() << endl;
-                    map->Display();
+                    cout << "Starting point token: " << modelMap->GetStartingPoint() << endl;
+                    modelMap->Display();
                 }
                 DemonstrateA2Part1();
                 break;
@@ -117,6 +113,9 @@ void MainGameLoop(Map *map, bool validMap) {
                 DemonstrateA2Part6();
                 break;
             case 7:
+                GameObservers(modelMap, game);
+                break;
+            case 8:
             default:
                 return;
         }
