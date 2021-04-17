@@ -155,7 +155,7 @@ void Deck::PopulateFaceUpCards() {
         deck->pop_back();
         faceUpCards->push_back(drawnCard);
     }
-        SetFaceUpCardsCost();
+    SetFaceUpCardsCost();
 }
 
 void Deck::PrintCardsIn(vector<Cards> *vectorOfCards) {
@@ -192,6 +192,7 @@ void Deck::SetFaceUpCardsCost() {
         }
         faceUpCards->at(i).SetCost(cost);
     }
+    Notify();
 }
 
 Deck::~Deck()

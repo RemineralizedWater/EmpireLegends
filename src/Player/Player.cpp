@@ -10,9 +10,21 @@ int Player::Supply = 0;
 
 //Default constructor
 Player::Player() {
+    region = "none";
+    biddingFacility = new BiddingFacility();
+    territory = unique_ptr<Territory>(new Territory());
+    cards = unique_ptr<Cards>(new Cards());
+    MyHand = new Hand();
+    tokenArmies = 0;
+    cubes = 0;
     victoryPoints = 0;
     elixirs = 0;
-    // TODO need to build default constructor
+    disks = 0;
+    money = 0;
+    name = "none";
+    totalMovementPointsForRound = 0;
+    costToMoveOverWater = 3;
+    canBeAttacked = true;
 }
 
 //Parametric constructor
@@ -23,7 +35,7 @@ Player::Player(string region_,
                int tokenArmies_,
                int cubes_,
                int disks_,
-               Hand *hand_,
+               Hand *MyHand_,
                int money_,
                string name_,
                int totalMovementPointsForRound_,
@@ -38,7 +50,7 @@ Player::Player(string region_,
           tokenArmies(tokenArmies_),
           cubes(cubes_),
           disks(disks_),
-          Hands(hand_),
+          MyHand(MyHand_),
           money(money_),
           totalMovementPointsForRound(totalMovementPointsForRound_),
           costToMoveOverWater(costToMoveOverWater_),
@@ -68,9 +80,9 @@ Player::Player(const Player &playerToCopy)
 
 //Destructor
 Player::~Player() {
-    if (Hands != nullptr) {
-        delete Hands;
-        Hands = nullptr;
+    if (MyHand != nullptr) {
+        delete MyHand;
+        MyHand = nullptr;
     }
 }
 
@@ -103,6 +115,7 @@ string Player::GetName() {
 
 void Player::SetName(string name_) {
     name = name_;
+    Notify();
 }
 
 int Player::GetCostOverWater() {
@@ -123,6 +136,7 @@ BiddingFacility *Player::GetBiddingFacility() {
 
 void Player::SetMoney(int money_) {
     money = money_;
+    Notify();
 }
 
 int Player::GetElixirs() {
@@ -139,6 +153,7 @@ int Player::GetVictoryPoints() {
 
 void Player::SetVictoryPoints(int points) {
     victoryPoints = points;
+    Notify();
 }
 
 int Player::GetTotalMovementPointsForRound() {
@@ -151,6 +166,7 @@ void Player::SetTotalMovementPointsForRound(int totalMovementPointsForRound_) {
 
 void Player::SetArmiesTokens(int numberOfTokens) {
     tokenArmies = numberOfTokens;
+    Notify();
 }
 
 int Player::GetArmiesTokens() {
@@ -163,6 +179,7 @@ int Player::GetCitiesDisks() {
 
 void Player::SetCitiesDisks(int numberOfDisks) {
     disks = numberOfDisks;
+    Notify();
 }
 
 //Successfully pays coin and withdraws money from said player account (for Ass1. just returns
@@ -202,7 +219,7 @@ void Player::PlaceNewArmies(int numberOfArmiesToPlaced) {
 }
 
 void Player::AndOrAction() {
-    Cards *activeCard = Hands->GetActiveCard();
+    Cards *activeCard = MyHand->GetActiveCard();
 
     string actionOneValue = to_string(activeCard->GetActionOneValue());
     string actionTwoValue = to_string(activeCard->GetActionTwoValue());
@@ -384,28 +401,28 @@ void Player::DestroysNumberOfArmyOfPlayer(int numberOfArmiesToDestroy) {
 
 void Player::ApplyAbility() {
     //+ to move armies
-    if (Hands->GetActiveCard()->GetGoods() == 1) {
+    if (MyHand->GetActiveCard()->GetGoods() == 1) {
         //TODO 1 extra move each time player movesArmy
     }
         //"+ to place armies"
-    else if (Hands->GetActiveCard()->GetGoods() == 2) {
+    else if (MyHand->GetActiveCard()->GetGoods() == 2) {
         //TODO gain one more army when placeArmies performed
     }
         //"- to move over water"
-    else if (Hands->GetActiveCard()->GetGoods() == 3) {
+    else if (MyHand->GetActiveCard()->GetGoods() == 3) {
         //TODO reduce cost to move over water
     }
         //"+ elixirs"
-    else if (Hands->GetActiveCard()->GetGoods() == 4) {
-        elixirs += Hands->GetActiveCard()->GetGoodsValue();
+    else if (MyHand->GetActiveCard()->GetGoods() == 4) {
+        elixirs += MyHand->GetActiveCard()->GetGoodsValue();
     }
         //"+ coins and 1+ elixirs"
-    else if (Hands->GetActiveCard()->GetGoods() == 5) {
+    else if (MyHand->GetActiveCard()->GetGoods() == 5) {
         elixirs += 1;
-        money += Hands->GetActiveCard()->GetGoodsValue();
+        money += MyHand->GetActiveCard()->GetGoodsValue();
     }
         // "immune to attack"
-    else if (Hands->GetActiveCard()->GetGoods() == 9) {
+    else if (MyHand->GetActiveCard()->GetGoods() == 9) {
         //TODO make immune to attack
 
     }
@@ -413,24 +430,25 @@ void Player::ApplyAbility() {
 
 void Player::ResolveActiveCard() {
     ApplyAbility();
-    if (Hands->GetActiveCard()->GetActionTwo() != 0) { // if a second action exists
+    if (MyHand->GetActiveCard()->GetActionTwo() != 0) { // if a second action exists
         AndOrAction();
     } else {
-        switch (Hands->GetActiveCard()->GetActionOne()) {
+        switch (MyHand->GetActiveCard()->GetActionOne()) {
             case 1: //place i armies
-                PlaceNewArmies(Hands->GetActiveCard()->GetActionOneValue());
+                PlaceNewArmies(MyHand->GetActiveCard()->GetActionOneValue());
                 break;
             case 2: //move i armies
-                MoveArmiesForPlayer(Hands->GetActiveCard()->GetActionOneValue());
+                MoveArmiesForPlayer(MyHand->GetActiveCard()->GetActionOneValue());
                 break;
             case 3: // build city
                 BuildCityForPlayer();
                 break;
             case 4: // destroy armies
-                DestroysNumberOfArmyOfPlayer(Hands->GetActiveCard()->GetActionOneValue());
+                DestroysNumberOfArmyOfPlayer(MyHand->GetActiveCard()->GetActionOneValue());
                 break;
         }
     }
+    Notify();
 }
 
 void Player::RequestPlayerName() {
@@ -442,8 +460,8 @@ void Player::RequestPlayerName() {
 }
 
 void Player::ComputeVPFlying(Cards cards) {
-    vector<Cards> *hand = Hands->GetHand();
-    for (Cards c2:*hand) {
+    vector<Cards> *tempHand = MyHand->GetHand();
+    for (Cards c2:*tempHand) {
         std::string::size_type pos = (cards.GetName()).find(' ');
         if (cards.GetGoodsSpecific() == (cards.GetName()).substr(0, pos)) {
             victoryPoints += 1;
@@ -453,7 +471,7 @@ void Player::ComputeVPFlying(Cards cards) {
 
 void Player::ComputeVPNoble(Cards cards) {
     int nobleCards = 0;
-    vector<Cards> *hand = Hands->GetHand();
+    vector<Cards> *hand = MyHand->GetHand();
     for (Cards c2:*hand) {
         std::string::size_type pos = (cards.GetName()).find(' ');
         if ("Noble" == (cards.GetName()).substr(0, pos)) {
@@ -466,7 +484,7 @@ void Player::ComputeVPNoble(Cards cards) {
 }
 
 void Player::ComputeVPMountain(Cards cards) {
-    vector<Cards> *hand = Hands->GetHand();
+    vector<Cards> *hand = MyHand->GetHand();
     int mountainCards = 0;
     for (Cards c2:*hand) {
         std::string::size_type pos = (cards.GetName()).find(' ');
@@ -480,7 +498,7 @@ void Player::ComputeVPMountain(Cards cards) {
 }
 
 void Player::ComputeCards() {
-    vector<Cards> *hand = Hands->GetHand();
+    vector<Cards> *hand = MyHand->GetHand();
     for (Cards c:*hand) {
         //+ VP per card: flying
         if (c.GetGoods() == 6) {

@@ -84,7 +84,7 @@ vector<Player *> Game::CreatePlayers(int startingPoint) {
                            true,
                            0,
                            0));
-        player->Hands->SetOwningPlayer(player);
+        player->MyHand->SetOwningPlayer(player);
         player->GetBiddingFacility()->SetOwningPlayer(player);
 
         cout << "Providing player 18 coins.." << endl;

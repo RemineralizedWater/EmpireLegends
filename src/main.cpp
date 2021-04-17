@@ -31,6 +31,8 @@ void DemonstrateA2BiddingFacility();
 
 void MainGameLoop(Map *map, bool validMap);
 
+void GameObservers();
+
 int main() {
 
     Game *game;

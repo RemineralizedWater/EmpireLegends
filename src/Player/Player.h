@@ -8,6 +8,7 @@
 #include "../Cards/Cards.h"
 #include "../Cards/Hand.h"
 #include "../Cards/Deck.h"
+#include "../Subject.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ class Hand;
 
 class BiddingFacility;
 
-class Player {
+class Player: public Subject {
 private:
     string region;
     BiddingFacility *biddingFacility;
@@ -35,13 +36,13 @@ private:
 public:
     static int Supply;
 
-    Hand *Hands;
+    Hand *MyHand;
 
     Player();
 
     Player(string region_, BiddingFacility *biddingFacility_, Territory &territory_,
            Cards &cards_, int tokenArmies_,
-           int cubes_, int disks_, Hand *hand_, int money_, string name_,
+           int cubes_, int disks_, Hand *myHand_, int money_, string name_,
            int totalMovementPointsForRound_, int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_, int elixirs_);
 
     Player(const Player &playerToCopy);
@@ -74,7 +75,7 @@ public:
 
     void SetVictoryPoints(int points);
 
-    void SetName(string name_);
+    void SetName(string name_); // Notify();
 
     void SetCostOverWater(int costToMoveOverWater_);
 
