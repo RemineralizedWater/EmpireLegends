@@ -10,5 +10,6 @@ private:
 
 public:
     DeckController(DeckObserver *newView, Deck *newModel);
+
     void ControlDeck();
 };

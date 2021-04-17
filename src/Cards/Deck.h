@@ -10,16 +10,25 @@
 
 class Deck : public Subject {
 private:
-    vector<Cards>* deck;
-    vector<Cards>* faceUpCards;
+    vector<Cards> *deck;
+    vector<Cards> *faceUpCards;
+
 public:
     Deck();
+
     Deck(int numberOfPlayers);
+
     ~Deck();
-    vector<Cards>* GetDeck();
-    vector<Cards>* GetFaceUpCards();
-    void PrintCardsIn(vector<Cards>* vectorOfCards);
-    void PopulateFaceUpCards();
+
+    vector<Cards> *GetDeck();
+
+    vector<Cards> *GetFaceUpCards();
+
     void SetFaceUpCardsCost();
+
+    void PrintCardsIn(vector<Cards> *vectorOfCards);
+
+    void PopulateFaceUpCards();
+
     void ShuffleDeck();
 };

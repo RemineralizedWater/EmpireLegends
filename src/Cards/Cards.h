@@ -1,4 +1,5 @@
 # pragma once
+
 #include <string>
 #include <vector>
 
@@ -23,33 +24,49 @@ private:
     string goodsSpecific;
 
 public:
-    string GetName();
-    string GetGoodsAndAction();
-    int GetCost();
-    void SetCost(int cost_);
     Cards();
-    ~Cards();
+
     Cards(string name_, string goodsAndAction_, int cost_,
           int actionOne_, int actionOneValue_, string actionOperation_,
           int actionTwo_, int actionTwoValue_,
           int goods_, int goodsValue_, string goodsSpecific_);
-    Cards(string* name_, string* goodsAndAction_, int* cost_,
-          int* actionOne_, int* actionOneValue_, string* actionOperation_,
-          int* actionTwo_, int* actionTwoValue_,
-          int* goods_, int* goodsValue_, string* goodsSpecific_);
+
+    Cards(string *name_, string *goodsAndAction_, int *cost_,
+          int *actionOne_, int *actionOneValue_, string *actionOperation_,
+          int *actionTwo_, int *actionTwoValue_,
+          int *goods_, int *goodsValue_, string *goodsSpecific_);
+
     Cards(const Cards &copy);
-    Cards & operator =(const Cards &c);
-    friend ostream & operator << (ostream &out, const Cards &c);
-    friend istream & operator >> (istream &in, Cards &c);
+
+    ~Cards();
+
+    Cards &operator=(const Cards &c);
+
+    friend ostream &operator<<(ostream &out, const Cards &c);
+
+    friend istream &operator>>(istream &in, Cards &c);
+
+    string GetName();
+
+    string GetGoodsAndAction();
+
+    int GetCost();
+
+    void SetCost(int cost_);
 
     int GetActionOne();
+
     int GetActionOneValue();
+
     int GetActionTwo();
+
     int GetActionTwoValue();
+
     string GetActionOperator();
 
     int GetGoods();
+
     int GetGoodsValue();
+
     string GetGoodsSpecific();
 };
-

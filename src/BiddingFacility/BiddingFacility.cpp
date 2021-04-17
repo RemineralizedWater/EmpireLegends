@@ -24,7 +24,7 @@ BiddingFacility::BiddingFacility(const BiddingFacility &copy) {
     isStartingPlayer = copy.isStartingPlayer;
 }
 
-BiddingFacility::BiddingFacility(string lastName_, int coins_, int bidAmount_, Player* owningPlayer_, bool isStartingPlayer_) {
+BiddingFacility::BiddingFacility(string lastName_, int coins_, int bidAmount_, Player *owningPlayer_, bool isStartingPlayer_) {
     lastName = lastName_;
     coins = coins_;
     bidAmount = bidAmount_;
@@ -34,8 +34,10 @@ BiddingFacility::BiddingFacility(string lastName_, int coins_, int bidAmount_, P
 
 // Destructor
 BiddingFacility::~BiddingFacility() {
-    delete owningPlayer;
-    owningPlayer = nullptr;
+    if (owningPlayer != nullptr) {
+        delete owningPlayer;
+        owningPlayer = nullptr;
+    }
 }
 
 // Assignment Operator
@@ -69,7 +71,7 @@ string BiddingFacility::GetLastName() {
     return lastName;
 }
 
-int BiddingFacility::GetCoins(){
+int BiddingFacility::GetCoins() {
     return coins;
 }
 

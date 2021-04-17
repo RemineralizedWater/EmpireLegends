@@ -173,14 +173,24 @@ void DemonstrateA2Part2() {
             players[i]->GetBiddingFacility()->ResolveBid(false);
         }
     }
-    delete player1;
-    player1 = nullptr;
-    delete player2;
-    player2 = nullptr;
-    delete deck;
-    deck = nullptr;
-    delete terr;
-    terr = nullptr;
+
+    // Memory clean up
+    if (player1 != nullptr) {
+        delete player1;
+        player1 = nullptr;
+    }
+    if (player2 != nullptr) {
+        delete player2;
+        player2 = nullptr;
+    }
+    if (deck != nullptr) {
+        delete deck;
+        deck = nullptr;
+    }
+    if (terr != nullptr) {
+        delete terr;
+        terr = nullptr;
+    }
 
     return;
 }

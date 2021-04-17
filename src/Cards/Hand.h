@@ -11,18 +11,26 @@
 
 class Player;
 
-class Hand{
+class Hand {
 private:
-    vector<Cards>* hand;
-    Cards* activeCard;
-    Player* owningPlayer;
+    vector<Cards> *hand;
+    Cards *activeCard;
+    Player *owningPlayer;
+
 public:
     Hand();
+
     ~Hand();
+
+    vector<Cards> *GetHand();
+
+    Cards *GetActiveCard();
+
+    void SetActiveCard(Cards *card);
+
+    void SetOwningPlayer(Player *owningPlayer);
+
     void AddToHand(Cards card);
-    void Exchange(Deck* deck);
-    vector<Cards>* GetHand();
-    Cards* GetActiveCard();
-    void SetActiveCard(Cards* card);
-    void SetOwningPlayer(Player* owningPlayer);
+
+    void Exchange(Deck *deck);
 };

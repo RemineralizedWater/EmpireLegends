@@ -48,18 +48,18 @@ void GameObservers(Map map) {
         //players[index]->ComputeScore(index, players, map)
         //players[0]->ComputeScore(0, players, map);
 
-        if(index == 0) index = 1;
+        if (index == 0) index = 1;
         else index = 0;
 
         string option;
         cout << "Enter 'X' to exit, or anything else to continue to next player turn." << endl;
         cin >> option;
-        if(option.compare("X") == 0 || option.compare("x") == 0){
+        if (option.compare("X") == 0 || option.compare("x") == 0) {
             break;
         }
     }
 
-    // memory clean up
+    // Memory clean up
     if (controllerDeck != nullptr && viewDeck != nullptr && modelDeck != nullptr) {
         delete controllerDeck;
         controllerDeck = nullptr;

@@ -227,8 +227,11 @@ void Player::PlaceNewArmies(int numberOfArmiesToPlaced) {
         cout << "Your army has been successfully placed." << endl;
     }
 
-    delete terr;
-    terr = nullptr;
+    // Memory clean up
+    if (terr != nullptr) {
+        delete terr;
+        terr = nullptr;
+    }
 }
 
 void Player::AndOrAction() {
@@ -298,8 +301,11 @@ void Player::AndOrAction() {
         exit(0);
     }
 
-    delete activeCard;
-    activeCard = nullptr;
+    // Memory clean up
+    if (activeCard != nullptr) {
+        delete activeCard;
+        activeCard = nullptr;
+    }
 }
 
 //Moves army for desired player
@@ -325,10 +331,15 @@ void Player::MoveArmiesForPlayer(int numberOfArmiesToMove) {
                 << std::endl;
     }
 
-    delete territoryToMoveFrom;
-    territoryToMoveFrom = nullptr;
-    delete territoryToMoveTo;
-    territoryToMoveTo = nullptr;
+    // Memory clean up
+    if (territoryToMoveFrom != nullptr) {
+        delete territoryToMoveFrom;
+        territoryToMoveFrom = nullptr;
+    }
+    if (territoryToMoveTo != nullptr) {
+        delete territoryToMoveTo;
+        territoryToMoveTo = nullptr;
+    }
 }
 
 //Move over land for desired player
@@ -378,8 +389,11 @@ void Player::BuildCityForPlayer() {
         // OK TO END, no need to loop
     }
 
-    delete terr;
-    terr = nullptr;
+    // Memory clean up
+    if (terr != nullptr) {
+        delete terr;
+        terr = nullptr;
+    }
 }
 
 //Destroys the army of the selected played
@@ -408,8 +422,11 @@ void Player::DestroysNumberOfArmyOfPlayer(int numberOfArmiesToDestroy) {
         targetTerritory->GetArmySizeForPlayer()[targetPlayer] = 0;
     }
 
-    delete targetTerritory;
-    targetTerritory = nullptr;
+    // Memory clean up
+    if (targetTerritory != nullptr) {
+        delete targetTerritory;
+        targetTerritory = nullptr;
+    }
 }
 
 void Player::ApplyAbility() {
@@ -523,7 +540,7 @@ void Player::ComputeCards() {
         }
             //+ VP per 3 coins
         else if (c.GetGoods() == 8) {
-            victoryPoints += money * c.GetGoodsValue();
+            victoryPoints += money *c.GetGoodsValue();
         }
             //+ VP for card: Mountain x2
         else if (c.GetGoods() == 10) {

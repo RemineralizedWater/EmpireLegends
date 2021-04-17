@@ -24,7 +24,7 @@ private:
 
     bool IsRectangle();
 
-    bool ParseAdjacency(string adjacency, Territory* territory);
+    bool ParseAdjacency(string adjacency, Territory *territory);
 
 public:
     MapLoader();
