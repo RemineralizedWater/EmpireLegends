@@ -1,12 +1,12 @@
-#include "Player/Player.h"
 #include <memory>
 #include <sstream>
-#include "Cards/Deck.h"
-#include "GameObservers.h"
+#include "Player/Player.h"
 #include "Player/PlayerController.h"
+#include "Cards/Deck.h"
+#include "Cards/DeckController.h"
+#include "GameObservers.h"
 
-void DemonstrateA2Part3(){
-
+void GameObservers(Map map){
 
     // Player 1 Setup
     Player *modelPlayer1(new Player());
@@ -32,27 +32,21 @@ void DemonstrateA2Part3(){
 
     Player *players[2] = {modelPlayer1, modelPlayer2};
 
+
     cout << "Creating deck.." << endl;
-    Deck* deck = new Deck(2);
-    cout << "Populating Face Up Cards.." << endl;
-    deck->PopulateFaceUpCards();
-    cout << "Cards in deck: " << endl;
-    deck->PrintCardsIn(deck->GetDeck());
-    cout << "Cards in Face Up Pile:" << endl;
-    deck->PrintCardsIn((deck->GetFaceUpCards()));
+    Deck *modelDeck = new Deck(2);
+    DeckObserver *viewDeck = new DeckObserver(modelDeck);
+    DeckController *controllerDeck = new DeckController(viewDeck, modelDeck);
+
+    controllerDeck->ControlDeck();
 
     int index = 0;
     while(true){
         cout << "======== " << players[index]->GetName() << "'s TURN ========" << endl;
-        players[index]->MyHand->Exchange(deck);
+        players[index]->MyHand->Exchange(modelDeck);
         players[index]->ResolveActiveCard();
-
-        cout << "Cards in deck: " << endl;
-        deck->PrintCardsIn(deck->GetDeck());
-        cout << "Cards in Face Up Pile:" << endl;
-        deck->PrintCardsIn((deck->GetFaceUpCards()));
-        cout << "Cards in " << players[index]->GetName() << "'s MyHand:" << endl;
-        deck->PrintCardsIn(players[index]->MyHand->GetHand());
+        //players[index]->ComputeScore(index, players, map)
+        //players[0]->ComputeScore(0, players, map);
 
         if(index == 0) index = 1;
         else index = 0;
@@ -65,23 +59,25 @@ void DemonstrateA2Part3(){
         }
     }
 
-
     // memory clean up
-    delete modelPlayer1;
-    modelPlayer1 = nullptr;
-    delete modelPlayer2;
-    modelPlayer2 = nullptr;
-
-    delete viewPlayer1;
-    viewPlayer1 = nullptr;
-    delete viewPlayer2;
-    viewPlayer2 = nullptr;
+    delete controllerDeck;
+    controllerDeck = nullptr;
+    delete viewDeck;
+    viewDeck = nullptr;
+    delete modelDeck;
+    modelDeck = nullptr;
 
     delete controllerPlayer1;
     controllerPlayer1 = nullptr;
+    delete viewPlayer1;
+    viewPlayer1 = nullptr;
+    delete modelPlayer1;
+    modelPlayer1 = nullptr;
+
     delete controllerPlayer2;
     controllerPlayer2 = nullptr;
-
-
-    return;
+    delete viewPlayer2;
+    viewPlayer2 = nullptr;
+    delete modelPlayer2;
+    modelPlayer2 = nullptr;
 }

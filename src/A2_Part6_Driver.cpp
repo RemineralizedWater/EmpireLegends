@@ -31,13 +31,13 @@ void DemonstrateA2Part6() {
 
 
     for (int i = 0; i < players.size(); i++) {
-        players[i]->Hands->SetOwningPlayer(players[i]);
+        players[i]->MyHand->SetOwningPlayer(players[i]);
     }
     //player1
-    players[0]->Hands->AddToHand(Cards(new string("Forest Gnome"), new string("3Potions|-|2cubeMoves"), new int{0},
-                                       new int{2}, new int{2}, new string(""),
-                                       new int{0}, new int{0},
-                                       new int{4}, new int{3}, new string{""}));
+    players[0]->MyHand->AddToHand(Cards(new string("Forest Gnome"), new string("3Potions|-|2cubeMoves"), new int{0},
+                                        new int{2}, new int{2}, new string(""),
+                                        new int{0}, new int{0},
+                                        new int{4}, new int{3}, new string{""}));
     players[0]->ApplyAbility();
     Territory *t = map->FindTerritory(1);
     t->InsertNewArmyPlayerMapping(players[0]->GetName());
@@ -48,13 +48,13 @@ void DemonstrateA2Part6() {
 
 
     //player2
-    players[1]->Hands->AddToHand(Cards(new string("Cursed Banshee"), new string("2potions|-|6cubeMoves"), new int{0},
-                                       new int{2}, new int{6}, new string(""),
-                                       new int{0}, new int{0},
-                                       new int{4}, new int{2}, new string{""}));
+    players[1]->MyHand->AddToHand(Cards(new string("Cursed Banshee"), new string("2potions|-|6cubeMoves"), new int{0},
+                                        new int{2}, new int{6}, new string(""),
+                                        new int{0}, new int{0},
+                                        new int{4}, new int{2}, new string{""}));
     players[1]->ApplyAbility();
 
-    players[1]->Hands->AddToHand(
+    players[1]->MyHand->AddToHand(
             Cards(new string("Mountain Treasury"), new string("1Potion2BronzeCoins|-|3cubesMove"), new int{0},
                   new int{2}, new int{3}, new string(""),
                   new int{0}, new int{0},
@@ -86,7 +86,7 @@ void DemonstrateA2Part6() {
     }
 
     cout << "\n--Owned Cards--" << endl;
-    deck->PrintCardsIn(players[0]->Hands->GetHand());
+    deck->PrintCardsIn(players[0]->MyHand->GetHand());
     players[0]->ComputeScore(0, players, map);
     cout << "\nVictory Points: " << players[0]->GetVictoryPoints() << endl;
     cout << "---------------------------------------------------" << endl;
@@ -103,7 +103,7 @@ void DemonstrateA2Part6() {
              << t->GetContinent() << endl;
     }
     cout << "\n--Owned Cards--" << endl;
-    deck->PrintCardsIn(players[1]->Hands->GetHand());
+    deck->PrintCardsIn(players[1]->MyHand->GetHand());
     players[1]->ComputeScore(1, players, map);
     cout << "\nVictory Points: " << players[1]->GetVictoryPoints() << "\n" << endl;
     cout << "---------------------------------------------------" << endl;

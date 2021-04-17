@@ -4,7 +4,7 @@
 
 using namespace std;
 
-class Cards {
+class Cards{
 private:
     string name;
     string goodsAndAction;

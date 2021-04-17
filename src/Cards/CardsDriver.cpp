@@ -35,14 +35,14 @@ void DemonstrateCards(int numberOfPlayers) {
     cout << "Cards in Face Up Pile:" << endl;
     deck->PrintCardsIn((deck->GetFaceUpCards()));
 
-    player->Hands->Exchange(deck);
+    player->MyHand->Exchange(deck);
 
     cout << "Cards in deck: " << endl;
     deck->PrintCardsIn(deck->GetDeck());
     cout << "Cards in Face Up Pile:" << endl;
     deck->PrintCardsIn((deck->GetFaceUpCards()));
-    cout << "Cards in player hand:" << endl;
-    deck->PrintCardsIn(player->Hands->GetHand());
+    cout << "Cards in player MyHand:" << endl;
+    deck->PrintCardsIn(player->MyHand->GetHand());
 
     delete deck;
     deck = nullptr;
