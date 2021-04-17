@@ -6,7 +6,7 @@
 #include "Cards/DeckController.h"
 #include "GameObservers.h"
 
-void GameObservers(Map map){
+void GameObservers(Map map) {
 
     // Player 1 Setup
     Player *modelPlayer1(new Player());
@@ -41,7 +41,7 @@ void GameObservers(Map map){
     controllerDeck->ControlDeck();
 
     int index = 0;
-    while(true){
+    while (true) {
         cout << "======== " << players[index]->GetName() << "'s TURN ========" << endl;
         players[index]->MyHand->Exchange(modelDeck);
         players[index]->ResolveActiveCard();

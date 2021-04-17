@@ -8,7 +8,7 @@ PlayerObserver::PlayerObserver(Player *subject_){
 
 PlayerObserver::~PlayerObserver() {
     subject->Detach(this);
-    if(subject != nullptr){
+    if (subject != nullptr) {
         delete subject;
         subject = nullptr;
     }
@@ -49,7 +49,7 @@ DeckObserver::DeckObserver(Deck *subject_){
 
 DeckObserver::~DeckObserver() {
     subject->Detach(this);
-    if(subject != nullptr){
+    if (subject != nullptr) {
         delete subject;
         subject = nullptr;
     }

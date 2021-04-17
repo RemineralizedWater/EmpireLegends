@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Observer.h"
 #include "Player/Player.h"
 
@@ -6,22 +7,24 @@ class Player;
 class Deck;
 class Hand;
 
-class PlayerObserver : public Observer{
+class PlayerObserver : public Observer {
+private:
+    Player *subject;
+
 public:
     PlayerObserver(Player *subject_);
     ~PlayerObserver();
     void Update();
     void Display();
-private:
-    Player *subject;
 };
 
-class DeckObserver : public Observer{
+class DeckObserver : public Observer {
+private:
+    Deck *subject;
+
 public:
     DeckObserver(Deck *subject_);
     ~DeckObserver();
     void Update();
     void Display();
-private:
-    Deck *subject;
 };

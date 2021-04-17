@@ -13,7 +13,7 @@ void PlayerController::ControlPlayer() {
     /**
      * Testing Observer
 
-    while(true){
+    while (true) {
         int command = 0;
         cout << "1. Set player name" << endl;
         cout << "2. Set number of armies" << endl;
