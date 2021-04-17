@@ -17,21 +17,21 @@ using std::string;
 
 class Territory {
 private:
-
     int terrId;
     int continentId;
-    std::unique_ptr<std::map<std::string, int>> armySizeForPlayer_;
-    std::unique_ptr<std::map<std::string, bool>> hasCity;
+    std::unique_ptr<std::map<string, int>> armySizeForPlayer;  // <player, armySize>
+    std::unique_ptr<std::map<string, bool>> hasCityForPlayer;  // <player, hasCity>
 
 public:
-    Territory(int terrId, int continent);
     Territory();
 
-    Territory(int terrId,
-              int continentId,
-              const std::map<std::string, int> &armySizeForPlayer,
-              const std::map<std::string, bool> &hasCity
+    Territory(int terrId_,
+              int continentId_,
+              const std::map<string, int> &armySizeForPlayer_,
+              const std::map<string, bool> &hasCityForPlayer_
     );
+
+    Territory(int terrId_, int continentId_);
 
     Territory(const Territory &copy);
 
@@ -43,14 +43,16 @@ public:
 
     friend std::istream &operator>>(std::istream &in, Territory &t);
 
-    int getTerrId();
+    int GetTerrId();
 
-    int getContinent();
+    int GetContinent();
 
-    std::map<std::string, int> &getArmySizeForPlayer();
-    std::map<std::string, bool> &getHasCity();
+    std::map<string, int> &GetArmySizeForPlayer();
+
+    std::map<string, bool> &GetHasCity();
 
     void InsertNewArmyPlayerMapping(string playerName);
+
     void InsertNewCityPlayerMapping(string playerName);
 };
 
@@ -62,7 +64,7 @@ private:
 public:
     Adjacency();
 
-    Adjacency(int adjId, bool isLandRoute);
+    Adjacency(int adjId_, bool isLandRoute_);
 
     Adjacency(const Adjacency &copy);
 
@@ -74,51 +76,30 @@ public:
 
     friend std::istream &operator>>(std::istream &in, Adjacency &a);
 
-    int getAdjId();
+    int GetAdjId();
 
-    bool getIsLandRoute();
+    bool GetIsLandRoute();
 };
-
-/*
-class terrAndAdjs {
-private:
-    Territory* terrWithAdjs;
-    vector<Adjacency>* adjsForTerr;
-public:
-    Map();
-    Map(bool* rect);
-    Map(const Map& copy);
-    ~Map();
-
-    Map& operator =(const Map& map);
-    friend std::ostream& operator << (std::ostream& out, const Map& map);
-    friend std::istream& operator >> (std::istream& in, Map& map);
-
-    Territory* getTerrWithAdjs();
-    vector<Adjacency>* getAdjsForTerr();
-};
- */
 
 
 class Map {
 private:
-    bool rect;
-    typedef pair<Territory *, vector<Adjacency> *> terrInfo;     // typedef keyword allows new names for types, pair holds two & had constructor/destructor
+    bool rectangle;
+    // typedef keyword allows new names for types; pair holds two variables & has auto constructor/destructor
+    typedef pair<Territory *, vector<Adjacency> *> terrInfo;
     vector<terrInfo> *terrAndAdjsList;
     int startingPoint;
 
-    //struct terrInfo {Territory* terr; vector<Adjacency>* adj;};     // TODO Change typedef pair to struct? Need init?
-    //vector<Territory*, vector<Adjacency>*>* terrs;
-    bool territoryExists(int adjId);
+    bool TerritoryExists(int adjId_);
 
-    bool continentExists(int continent);
+    bool ContinentExists(int continentId_);
 
-    bool isConnected(int adjId);
+    bool IsConnected(int adjId_);
 
 public:
     Map();
 
-    Map(bool rect);
+    Map(bool rectangle_);
 
     Map(const Map &copy);
 
@@ -130,21 +111,21 @@ public:
 
     friend std::istream &operator>>(std::istream &in, Map &m);
 
-    bool addTerritory(Territory *t);
+    int GetStartingPoint();
 
-    bool addAdjacency(Territory *t, Adjacency *a);
+    int GetMapSize();
 
-    int getStartingPoint();
+    void SetStartingPoint(int terrId_);
 
-    void setStartingPoint(int terrId);
+    bool AddTerritory(Territory *t);
 
-    void display();
+    bool AddAdjacency(Territory *t, Adjacency *a);
 
-    bool validate();
+    void RemoveAdjacency(int adjId_);
 
-    Territory* findTerritory(int terrId);
+    Territory *FindTerritory(int terrId_);
 
-    int getMapSize();
+    void Display();
 
-    void removeAdjacency(int adjId);
+    bool Validate();
 };

@@ -21,7 +21,7 @@ void DemonstrateA2Part2() {
                                true,
                                0,
                                0));
-    player1->Hands->SetOwningPlayer(player1);
+    player1->MyHand->SetOwningPlayer(player1);
     player1->GetBiddingFacility()->SetOwningPlayer(player1);
 
     cout << "Enter Player 1 Name: " << endl;
@@ -45,7 +45,7 @@ void DemonstrateA2Part2() {
                        true,
                        0,
                        0));
-    player2->Hands->SetOwningPlayer(player2);
+    player2->MyHand->SetOwningPlayer(player2);
     player2->GetBiddingFacility()->SetOwningPlayer(player2);
 
     cout << "Enter Player 2 Name: " << endl;
@@ -90,7 +90,7 @@ void DemonstrateA2Part2() {
     terr->InsertNewArmyPlayerMapping(player1->GetName());
     terr->InsertNewCityPlayerMapping(player1->GetName());
 
-    terr->getHasCity()[player1->GetName()] = true;
+    terr->GetHasCity()[player1->GetName()] = true;
     player1->PlaceNewArmies(4);
     cout << "----------------------------------" << endl;
 
@@ -119,7 +119,7 @@ void DemonstrateA2Part2() {
     terr2->InsertNewArmyPlayerMapping(player2->GetName());
     terr2->InsertNewCityPlayerMapping(player2->GetName());
 
-    terr2->getHasCity()[player2->GetName()] = true;
+    terr2->GetHasCity()[player2->GetName()] = true;
     player2->PlaceNewArmies(4);
     cout << "----------------------------------" << endl;
 
