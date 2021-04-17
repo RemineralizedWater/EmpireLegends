@@ -39,7 +39,7 @@ BiddingFacility::~BiddingFacility() {
 }
 
 // Assignment Operator
-BiddingFacility& BiddingFacility::operator=(const BiddingFacility &bf) {
+BiddingFacility& BiddingFacility::operator=(BiddingFacility &bf) {
     lastName = bf.lastName;
     coins = bf.coins;
     bidAmount = bf.bidAmount;

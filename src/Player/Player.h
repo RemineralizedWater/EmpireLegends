@@ -49,7 +49,7 @@ public:
 
     ~Player();
 
-    Player &operator=(const Player &playerToCopy);
+    Player &operator=(Player &playerToCopy);
 
     friend std::istream &operator>>(std::istream &is, Player &player);
 

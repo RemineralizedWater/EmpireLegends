@@ -24,7 +24,7 @@ public: // var PascalCase
 
     ~BiddingFacility();
 
-    BiddingFacility &operator=(const BiddingFacility &bf);
+    BiddingFacility &operator=(BiddingFacility &bf);
 
     friend ostream &operator<<(ostream &out, const BiddingFacility &bf);
 

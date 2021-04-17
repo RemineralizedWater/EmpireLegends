@@ -87,8 +87,21 @@ Player::~Player() {
 }
 
 //assignment operator
-Player &Player::operator=(const Player &playerToCopy) {
-    //TODO?
+Player &Player::operator=(Player &playerToCopy) {
+    cards = move(playerToCopy.cards);
+    region = move(playerToCopy.region);
+    biddingFacility = playerToCopy.biddingFacility;
+    MyHand = playerToCopy.MyHand;
+    tokenArmies = playerToCopy.tokenArmies;
+    cubes = playerToCopy.cubes;
+    victoryPoints = playerToCopy.victoryPoints;
+    elixirs = playerToCopy.elixirs;
+    disks = playerToCopy.disks;
+    money = playerToCopy.money;
+    name = playerToCopy.name;
+    totalMovementPointsForRound = playerToCopy.totalMovementPointsForRound;
+    costToMoveOverWater = playerToCopy.costToMoveOverWater;
+    canBeAttacked = playerToCopy.canBeAttacked;
     return *this;
 }
 
