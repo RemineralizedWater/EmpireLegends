@@ -23,7 +23,7 @@ void Subject::Detach(Observer *o) {
 
 void Subject::Notify() {
     list<Observer *>::iterator i = observers->begin();
-    for (; i != observers->end(); i++){
+    for (; i != observers->end(); i++) {
         (*i)->Update(); // calls update on all observers
     }
 }

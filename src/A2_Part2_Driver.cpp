@@ -21,7 +21,7 @@ void DemonstrateA2Part2() {
                                true,
                                0,
                                0));
-    player1->Hands->SetOwningPlayer(player1);
+    player1->MyHand->SetOwningPlayer(player1);
     player1->GetBiddingFacility()->SetOwningPlayer(player1);
 
     cout << "Enter Player 1 Name: " << endl;
@@ -45,7 +45,7 @@ void DemonstrateA2Part2() {
                        true,
                        0,
                        0));
-    player2->Hands->SetOwningPlayer(player2);
+    player2->MyHand->SetOwningPlayer(player2);
     player2->GetBiddingFacility()->SetOwningPlayer(player2);
 
     cout << "Enter Player 2 Name: " << endl;

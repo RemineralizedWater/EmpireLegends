@@ -7,8 +7,9 @@
 
 #include <vector>
 #include "Cards.h"
+#include "../Subject.h"
 
-class Deck{
+class Deck : public Subject {
 private:
     vector<Cards>* deck;
     vector<Cards>* faceUpCards;
