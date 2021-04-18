@@ -212,14 +212,6 @@ void Player::SetVictoryPoints(int points) {
     Notify();
 }
 
-int Player::GetTotalMovementPointsForRound() {
-    return totalMovementPointsForRound;
-}
-
-Map *Player::GetMap() {
-    return map;
-}
-
 void Player::SetTotalMovementPointsForRound(int totalMovementPointsForRound_) {
     totalMovementPointsForRound = totalMovementPointsForRound_;
 }
@@ -266,7 +258,7 @@ void Player::PlaceNewArmies(int numberOfArmiesToPlace) {
     map->Display();
 
     while(!placedCity) {
-        cout << "Which territory would you like to place armies in? ";
+        cout << "Which territory would you like to place armies in?";
         cin >> position;
 
         typedef pair<Territory *, vector<Adjacency> *> terrInfo;

@@ -29,7 +29,7 @@ void DemonstrateA2Part6();
 
 void DemonstrateA2BiddingFacility();
 
-void DemonstrateA3Part1();
+void DemonstrateA3Part1(Map *modelMap, Game *game);
 
 void MainGameLoop(Map *map, bool validMap, Game *game);
 
@@ -100,7 +100,7 @@ void MainGameLoop(Map *modelMap, bool validMap, Game *game) {
                     cout << "Starting point token: " << modelMap->GetStartingPoint() << endl;
                     modelMap->Display();
                 }
-                DemonstrateA3Part1();
+                DemonstrateA3Part1(modelMap, game);
                 break;
             case 2:
                 DemonstrateA2Part2();
