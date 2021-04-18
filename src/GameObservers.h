@@ -13,8 +13,11 @@ private:
 
 public:
     PlayerObserver(Player *subject_);
+
     ~PlayerObserver();
+
     void Update();
+
     void Display();
 };
 
@@ -24,7 +27,24 @@ private:
 
 public:
     DeckObserver(Deck *subject_);
+
     ~DeckObserver();
+
     void Update();
+
+    void Display();
+};
+
+class MapObserver : public Observer {
+private:
+    Map *subject;
+
+public:
+    MapObserver(Map *subject_);
+
+    ~MapObserver();
+
+    void Update();
+
     void Display();
 };

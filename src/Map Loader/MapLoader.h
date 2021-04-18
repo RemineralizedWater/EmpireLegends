@@ -1,20 +1,19 @@
 //
 // Created by 06spa on 2/8/2021.
 //
-#ifndef EMPIRELEGENDS_MAPLOADER_H
-#define EMPIRELEGENDS_MAPLOADER_H
+
+#pragma once
 
 #include <iostream>
 #include "../Map/Map.h"
 
-using std::string;
+using namespace std;
 
 class MapLoader {
 private:
     string mapFilePath;
     int numberOfBoardPieces;
     bool rectangle;
-    Map *map;
 
     bool VerifyId(string stringId, int &intId, string argErrMsg, string outRangeErrMsg);  // int &intId pass by reference
 
@@ -24,14 +23,14 @@ private:
 
     bool IsRectangle();
 
-    bool ParseAdjacency(string adjacency, Territory* territory);
+    bool ParseAdjacency(Map *map, string adjacency, int terrId, int continentId);
 
 public:
     MapLoader();
 
-    MapLoader(int numberOfPlayers);
+    MapLoader(Map *Map, int numberOfPlayers);
 
-    MapLoader(MapLoader &copy);
+    MapLoader(const MapLoader &copy);
 
     ~MapLoader();
 
@@ -41,7 +40,5 @@ public:
 
     friend std::istream &operator>>(std::istream &in, MapLoader &ml);
 
-    Map *LoadMap(string file, bool &validMap);  // bool &validMap pass by reference
+    void LoadMap(Map *map, string file, bool &validMap);  // bool &validMap pass by reference
 };
-
-#endif //EMPIRELEGENDS_MAPLOADER_H

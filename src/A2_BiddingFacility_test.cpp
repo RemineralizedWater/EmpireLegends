@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Player/Player.h"
 
-
 void DemonstrateA2BiddingFacility() {
 
     int whiteLines = 100;
@@ -21,7 +20,8 @@ void DemonstrateA2BiddingFacility() {
                        3,
                        true,
                        0,
-                       0));
+                       0,
+                       new Map()));
     player1->MyHand->SetOwningPlayer(player1);
     player1->GetBiddingFacility()->SetOwningPlayer(player1);
     player1->RequestPlayerName();
@@ -36,12 +36,13 @@ void DemonstrateA2BiddingFacility() {
                        0,
                        new Hand(),
                        0,
-                       "Player 1",
+                       "Player 2",
                        0,
                        3,
                        true,
                        0,
-                       0));
+                       0,
+                       new Map()));
     player2->MyHand->SetOwningPlayer(player2);
     player2->GetBiddingFacility()->SetOwningPlayer(player2);
     player2->RequestPlayerName();
@@ -69,7 +70,6 @@ void DemonstrateA2BiddingFacility() {
     Player *winningBidPlayer;
     int highestBid = -1;
     for (int i = 0; i < 2; i++) {
-
         if (players[i]->GetBiddingFacility()->GetBidAmount() > highestBid) {
             highestBid = players[i]->GetBiddingFacility()->GetBidAmount();
             winningBidPlayer = players[i];
@@ -77,7 +77,6 @@ void DemonstrateA2BiddingFacility() {
     }
 
     for (int i = 0; i < 2; i++) {
-
         if (players[i]->GetBiddingFacility()->GetBidAmount() == highestBid &&
             players[i]->GetName().compare(winningBidPlayer->GetName()) < 0) {
             winningBidPlayer = players[i];
@@ -92,13 +91,19 @@ void DemonstrateA2BiddingFacility() {
         }
     }
 
-    delete winningBidPlayer;
-    winningBidPlayer = nullptr;
-    delete player1;
-    player1 = nullptr;
-    delete player2;
-    player2 = nullptr;
-
+    // Memory clean up
+    if (winningBidPlayer != nullptr) {
+        delete winningBidPlayer;
+        winningBidPlayer = nullptr;
+    }
+    if (player1 != nullptr) {
+        delete player1;
+        player1 = nullptr;
+    }
+    if (player2 != nullptr) {
+        delete player2;
+        player2 = nullptr;
+    }
 
     return;
 }

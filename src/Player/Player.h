@@ -1,6 +1,3 @@
-#ifndef EMPIRELEGENDS_PLAYER_H
-#define EMPIRELEGENDS_PLAYER_H
-
 # pragma once
 
 #include <string>
@@ -11,11 +8,14 @@
 #include "../Cards/Cards.h"
 #include "../Cards/Hand.h"
 #include "../Cards/Deck.h"
+#include "PlayerStrategies.h"
 #include "../Subject.h"
 
 using namespace std;
 
 class Hand;
+
+class PlayerStrategies;
 
 class BiddingFacility;
 
@@ -23,6 +23,7 @@ class Player: public Subject {
 private:
     string region;
     BiddingFacility *biddingFacility;
+    PlayerStrategies *playerStrategies;
     std::unique_ptr<Territory> territory;
     std::unique_ptr<Cards> cards;
     int tokenArmies;
@@ -35,6 +36,7 @@ private:
     int totalMovementPointsForRound;
     int costToMoveOverWater;
     bool canBeAttacked;
+    Map *map;
 
 public:
     static int Supply;
@@ -43,16 +45,18 @@ public:
 
     Player();
 
-    Player(string region_, BiddingFacility *biddingFacility_, Territory &territory_,
-           Cards &cards_, int tokenArmies_,
-           int cubes_, int disks_, Hand *myHand_, int money_, string name_,
-           int totalMovementPointsForRound_, int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_, int elixirs_);
+    Player(string name_);
 
-    Player(Player &playerToCopy);
+    Player(string region_, BiddingFacility *biddingFacility_, Territory &territory_, Cards &cards_,
+           int tokenArmies_, int cubes_, int disks_, Hand *myHand_, int money_, string name_,
+           int totalMovementPointsForRound_, int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_,
+           int elixirs_, Map *map_);
+
+    Player(const Player &playerToCopy);
 
     ~Player();
 
-    Player &operator=(const Player &playerToCopy);
+    Player &operator=(Player &playerToCopy);
 
     friend std::istream &operator>>(std::istream &is, Player &player);
 
@@ -72,6 +76,8 @@ public:
 
     int GetTotalMovementPointsForRound();
 
+    Map* GetMap();
+
     int GetVictoryPoints();
 
     void SetElixirs(int numberOfElixirs);
@@ -90,11 +96,15 @@ public:
 
     void SetTotalMovementPointsForRound(int totalMovementPointsForRound_);
 
+    void SetMap(Map *map_);
+
+    void SetStrategy(PlayerStrategies *newPlayerStrategy);
+
     void RequestPlayerName();
 
     void PaysCoinFromPlayer(int amountToPay);
 
-    void PlaceNewArmies(int numberOfArmiesToPlaced);
+    void PlaceNewArmies(int numberOfArmiesToPlace);
 
     void MoveArmiesForPlayer(int numberOfArmiesToMove);
 
@@ -124,9 +134,8 @@ public:
 
     void ApplyAbility();
 
+    void ExecuteStrategy(Deck* deck);
+
 };
 
 std::istream &operator>>(std::istream &is, Player &player);
-
-#endif //EMPIRELEGENDS_PLAYER_H
-

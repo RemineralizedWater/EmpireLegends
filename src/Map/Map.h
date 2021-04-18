@@ -8,27 +8,24 @@
 #include <iostream>
 #include <map>
 #include "memory"
+#include "../Subject.h"
 
-using std::vector;
-using std::pair;
-using std::cout;
-using std::endl;
-using std::string;
+using namespace std;
 
 class Territory {
 private:
     int terrId;
     int continentId;
-    std::unique_ptr<std::map<string, int>> armySizeForPlayer;  // <player, armySize>
-    std::unique_ptr<std::map<string, bool>> hasCityForPlayer;  // <player, hasCity>
+    std::map<string, int> armySizeForPlayer;  // <player, armySize>
+    std::map<string, bool> hasCityForPlayer;  // <player, hasCity>
 
 public:
     Territory();
 
     Territory(int terrId_,
               int continentId_,
-              const std::map<string, int> &armySizeForPlayer_,
-              const std::map<string, bool> &hasCityForPlayer_
+              std::map<string, int> armySizeForPlayer_,
+              std::map<string, bool> hasCityForPlayer_
     );
 
     Territory(int terrId_, int continentId_);
@@ -50,6 +47,18 @@ public:
     std::map<string, int> &GetArmySizeForPlayer();
 
     std::map<string, bool> &GetHasCity();
+
+    int GetNumberOfArmies(string playerName);
+
+    bool HasCity(string playerName);
+
+    bool HasArmies(string playerName);
+
+    void AddArmySizeForPlayer(string playerName, int amount);
+
+    void RemoveArmySizeForPlayer(string playerName, int amount);
+
+    void AddCityForPlayer(string playerName);
 
     void InsertNewArmyPlayerMapping(string playerName);
 
@@ -82,7 +91,7 @@ public:
 };
 
 
-class Map {
+class Map : public Subject {
 private:
     bool rectangle;
     // typedef keyword allows new names for types; pair holds two variables & has auto constructor/destructor
@@ -111,15 +120,21 @@ public:
 
     friend std::istream &operator>>(std::istream &in, Map &m);
 
+    bool GetIsRectangle();
+
     int GetStartingPoint();
 
     int GetMapSize();
 
+    void SetIsRectangle(bool rectangle_);
+
+    vector<terrInfo> *GetTerrAndAdjsList();
+
     void SetStartingPoint(int terrId_);
 
-    bool AddTerritory(Territory *t);
+    bool AddTerritory(int terrId, int continentId);
 
-    bool AddAdjacency(Territory *t, Adjacency *a);
+    bool AddAdjacency(int terrId, int adjId_, bool isLandRoute_);
 
     void RemoveAdjacency(int adjId_);
 

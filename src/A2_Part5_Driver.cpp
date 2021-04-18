@@ -20,7 +20,8 @@ void DemonstrateA2Part5() {
                        3,
                        true,
                        0,
-                       0));
+                       0,
+                       new Map()));
     player1->MyHand->SetOwningPlayer(player1);
 
     Player *player2(
@@ -38,7 +39,8 @@ void DemonstrateA2Part5() {
                        3,
                        true,
                        0,
-                       0));
+                       0,
+                       new Map()));
     player2->MyHand->SetOwningPlayer(player2);
 
     Player *players[2] = {player1, player2};
@@ -83,12 +85,19 @@ void DemonstrateA2Part5() {
         cout << "=======================================================================" << endl;
     }
 
-    delete player1;
-    player1 = nullptr;
-    delete player2;
-    player2 = nullptr;
-    delete deck;
-    deck = nullptr;
+    // Memory clean up
+    if (player1 != nullptr) {
+        delete player1;
+        player1 = nullptr;
+    }
+    if (player2 != nullptr) {
+        delete player2;
+        player2 = nullptr;
+    }
+    if (deck != nullptr) {
+        delete deck;
+        deck = nullptr;
+    }
 
     return;
 }

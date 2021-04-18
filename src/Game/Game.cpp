@@ -1,9 +1,11 @@
 //
 // Created by 06spa on 3/26/2021.
 //
+
 #include <iostream>
 #include "Game.h"
-#include "../BiddingFacility/BiddingFacility.h"
+
+using namespace std;
 
 /**
  * Default constructor
@@ -16,8 +18,8 @@ Game::Game() {
  * Parametric constructor
  */
 Game::Game(int numberOfPlayers_) {
-    cout << numberOfPlayers_ << " player game" << endl;
-    this->numberOfPlayers = numberOfPlayers_;
+    //cout << numberOfPlayers_ << " player game" << endl;
+    numberOfPlayers = numberOfPlayers_;
     //TODO call methods here and create setters and getters
 }
 
@@ -32,7 +34,7 @@ Game::~Game() {
  * Copy Constructor
  * @param copy
  */
-Game::Game(Game &copy) {
+Game::Game(const Game &copy) {
     this->numberOfPlayers = copy.numberOfPlayers;
 }
 
@@ -52,22 +54,37 @@ Game &Game::operator=(const Game &gs) {
  * @param gs
  * @return
  */
-std::ostream &operator<<(std::ostream &out, const Game &gs) {
-    out << " number of players: "<< gs.numberOfPlayers  << std::endl;
+ostream &operator<<(ostream &out, const Game &gs) {
+    out << " number of players: "<< gs.numberOfPlayers  << endl;
     return out;
 }
 
-std::istream &operator>>(std::istream &in, Game &gs){
-    std::cout << "Enter number of players" << std::endl;
+istream &operator>>(istream &in, Game &gs) {
+    cout << "Enter number of players" << endl;
     in >> gs.numberOfPlayers;
     return in;
 }
 
+/**
+ * Accessor
+ * @return numberOfPlayers
+ */
+int Game::GetNumberOfPlayers() {
+    return numberOfPlayers;
+}
+
+/**
+ * Mutator
+ * @param numberOfPlayers_
+ */
+void Game::SetNumberOfPlayers(int numberOfPlayers_) {
+    numberOfPlayers = numberOfPlayers_;
+}
+
 vector<Player *> Game::CreatePlayers(int startingPoint) {
     vector<Player *> players;
-    Player *ptr;  // TODO REMOVE?
 
-    for (int i = 0; i < numberOfPlayers;i++) {
+    for (int i = 0; i < numberOfPlayers; i++) {
         Player *player(
                 new Player(to_string(startingPoint),
                            new BiddingFacility(),
@@ -83,7 +100,8 @@ vector<Player *> Game::CreatePlayers(int startingPoint) {
                            3,
                            true,
                            0,
-                           0));
+                           0,
+                           new Map()));
         player->MyHand->SetOwningPlayer(player);
         player->GetBiddingFacility()->SetOwningPlayer(player);
 
@@ -133,7 +151,7 @@ bool Game::CountControlledTerritories(vector<Player *> players, Map *map) {
     int winner = 0;
     std::map<int, int> playersAndControlledTerritoriesCount;
 
-    for(int i = 1; i < (map->GetMapSize() + 1); i++) {
+    for (int i = 1; i < (map->GetMapSize() + 1); i++) {
         Territory *temp = map->FindTerritory(i);
 
         //finds which player controls a territory by counting armies and cities
@@ -188,7 +206,7 @@ bool Game::CountArmies(vector<Player *> players, Map *map) {
     //counting total armies for each player from board
     std::map<int, int> playersAndArmies;
     for (int i = 1; i < (map->GetMapSize() + 1); i++) {
-        Territory* temp = map->FindTerritory(i);
+        Territory *temp = map->FindTerritory(i);
         for (int k = 0; k < numberOfPlayers; k++) {
             if (playersAndArmies.find(k) != playersAndArmies.end()) {
                 playersAndArmies[k] = (playersAndArmies[k] + temp->GetArmySizeForPlayer()[players[k]->GetName()]);
@@ -202,7 +220,7 @@ bool Game::CountArmies(vector<Player *> players, Map *map) {
     //comparing results or army counts on board for each player to get player with most armies
     std::map<int, int>::iterator playersAndArmiesIt;
     for (playersAndArmiesIt = playersAndArmies.begin(); playersAndArmiesIt != playersAndArmies.end(); playersAndArmiesIt++) {
-        if (maxArmies == playersAndArmiesIt->second){
+        if (maxArmies == playersAndArmiesIt->second) {
             ties++;
         }
         if (maxArmies<playersAndArmiesIt->second) {
@@ -247,11 +265,12 @@ bool Game::CountMoney(vector<Player *> players) {
     return false;
 }
 
-Map *Game::SelectMap(bool &validMap) {
-    std::string input;
-    std::string file;
-    std::cout << "\nChoose a map file to load \n1) valid_map.txt \n2) invalid1_map.txt \n3) invalid2_map.txt \n4) invalid3_map.txt" << std::endl;
-    std::cin >> input;
+void Game::SelectMap(Map *map, bool &validMap) {
+    string input;
+    string file;
+    cout << "\nGame Maps:\n1) valid_map.txt \n2) invalid1_map.txt \n3) invalid2_map.txt \n4) invalid3_map.txt" << endl;
+    cout << "Enter the chosen Game Map (1, 2, 3 or 4):";
+    cin >> input;
 
     while (true) {
         if (input == "1") {
@@ -271,14 +290,21 @@ Map *Game::SelectMap(bool &validMap) {
             break;
         }
         else {
-            std::cout << "Please enter a valid number \n1) valid_map.txt \n2) invalid1_map.txt \n3) invalid2_map.txt \n4) invalid3_map.txt" << std::endl;
-            std::cin >> input;
+            cout << "Please enter a valid Game Map choice (1, 2, 3 or 4):";
+            cin >> input;
         }
     }
 
-    MapLoader *mapLoader = new MapLoader(numberOfPlayers);
-    Map *map = mapLoader->LoadMap(file, validMap);
-    return map;
+    MapLoader *mapLoader = new MapLoader(map, numberOfPlayers);
+    mapLoader->LoadMap(map, file, validMap);
+
+    // Memory clean up
+    if (mapLoader != nullptr) {
+        delete mapLoader;
+        mapLoader = nullptr;
+    }
+
+    return;
 }
 
 Deck *Game::CreateDeck() {

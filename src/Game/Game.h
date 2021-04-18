@@ -1,10 +1,10 @@
-#ifndef EMPIRELEGENDS_GAME_H
-#define EMPIRELEGENDS_GAME_H
+#pragma once
 
 #include <iostream>
 #include "../Map/Map.h"
 #include "../Map Loader/MapLoader.h"
 #include "../Player/Player.h"
+#include "../BiddingFacility/BiddingFacility.h"
 
 class Game {
 private:
@@ -15,7 +15,7 @@ public:
 
     Game(int numberOfPlayers_);
 
-    Game(Game &copy);
+    Game(const Game &copy);
 
     ~Game();
 
@@ -25,7 +25,11 @@ public:
 
     friend std::istream &operator>>(std::istream &in, Game &ml);
 
-    Deck* CreateDeck();
+    int GetNumberOfPlayers();
+
+    void SetNumberOfPlayers(int numberOfPlayers_);
+
+    Deck *CreateDeck();
 
     vector<Player*> CreatePlayers(int startingPoint);
 
@@ -33,11 +37,9 @@ public:
 
     bool CountMoney(vector<Player *>players);
 
-    bool CountArmies(vector<Player *>players, Map* map);
+    bool CountArmies(vector<Player *>players, Map *map);
 
     bool CountControlledTerritories(vector<Player *> players, Map *map);
 
-    Map* SelectMap(bool &validMap);  // bool &validMap pass by reference
+    void SelectMap(Map *map, bool &validMap);  // bool &validMap pass by reference
 };
-
-#endif //EMPIRELEGENDS_GAME_H

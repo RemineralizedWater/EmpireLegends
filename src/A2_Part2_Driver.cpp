@@ -20,7 +20,8 @@ void DemonstrateA2Part2() {
                                3,
                                true,
                                0,
-                               0));
+                               0,
+                               new Map()));
     player1->MyHand->SetOwningPlayer(player1);
     player1->GetBiddingFacility()->SetOwningPlayer(player1);
 
@@ -44,7 +45,8 @@ void DemonstrateA2Part2() {
                        3,
                        true,
                        0,
-                       0));
+                       0,
+                       new Map()));
     player2->MyHand->SetOwningPlayer(player2);
     player2->GetBiddingFacility()->SetOwningPlayer(player2);
 
@@ -173,14 +175,24 @@ void DemonstrateA2Part2() {
             players[i]->GetBiddingFacility()->ResolveBid(false);
         }
     }
-    delete player1;
-    player1 = nullptr;
-    delete player2;
-    player2 = nullptr;
-    delete deck;
-    deck = nullptr;
-    delete terr;
-    terr = nullptr;
+
+    // Memory clean up
+    if (player1 != nullptr) {
+        delete player1;
+        player1 = nullptr;
+    }
+    if (player2 != nullptr) {
+        delete player2;
+        player2 = nullptr;
+    }
+    if (deck != nullptr) {
+        delete deck;
+        deck = nullptr;
+    }
+    if (terr != nullptr) {
+        delete terr;
+        terr = nullptr;
+    }
 
     return;
 }

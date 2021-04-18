@@ -5,7 +5,7 @@
 #include "GameObservers.h"
 #include "Player/PlayerController.h"
 
-void DemonstrateA2Part3(){
+void DemonstrateA2Part3() {
 
 
     // Player 1 Setup
@@ -33,7 +33,7 @@ void DemonstrateA2Part3(){
     Player *players[2] = {modelPlayer1, modelPlayer2};
 
     cout << "Creating deck.." << endl;
-    Deck* deck = new Deck(2);
+    Deck *deck = new Deck(2);
     cout << "Populating Face Up Cards.." << endl;
     deck->PopulateFaceUpCards();
     cout << "Cards in deck: " << endl;
@@ -42,7 +42,7 @@ void DemonstrateA2Part3(){
     deck->PrintCardsIn((deck->GetFaceUpCards()));
 
     int index = 0;
-    while(true){
+    while (true) {
         cout << "======== " << players[index]->GetName() << "'s TURN ========" << endl;
         players[index]->MyHand->Exchange(deck);
         players[index]->ResolveActiveCard();
@@ -54,18 +54,18 @@ void DemonstrateA2Part3(){
         cout << "Cards in " << players[index]->GetName() << "'s MyHand:" << endl;
         deck->PrintCardsIn(players[index]->MyHand->GetHand());
 
-        if(index == 0) index = 1;
+        if (index == 0) index = 1;
         else index = 0;
 
         string option;
         cout << "Enter 'X' to exit, or anything else to continue to next player turn." << endl;
         cin >> option;
-        if(option.compare("X") == 0 || option.compare("x") == 0){
+        if (option.compare("X") == 0 || option.compare("x") == 0) {
             break;
         }
     }
 
-    // memory clean up
+    // Memory clean up
     if (controllerPlayer1 != nullptr && viewPlayer1 != nullptr && modelPlayer1 != nullptr) {
         delete controllerPlayer1;
         controllerPlayer1 = nullptr;
