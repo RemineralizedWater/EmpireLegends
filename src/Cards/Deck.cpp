@@ -52,13 +52,13 @@ Deck::Deck(int numberOfPlayers) {
     Cards card9("Forest Pixie", "1cube|-|4cubeMoves", 0, 2, 4, "", 0, 0, 2, 1, "");
     deck->push_back(card9);
 
-    Cards card10("Graveyard", "+1VP perCursedCard|-|2cubes", 0, 1, 2, "", 0, 0, 6, 1, "Crsed");
+    Cards card10("Graveyard", "+1VP perCursedCard|-|2cubes", 0, 1, 2, "", 0, 0, 6, 1, "Cursed");
     deck->push_back(card10);
 
     Cards card11("Night Hydra", "1cube|-|5cubesMove+ destory1cube", 0, 2, 5, "AND", 4, 1, 2, 1, "");
     deck->push_back(card11);
 
-    Cards card12("Night Wizard", "+1VP per NightCard|-|3cubes+destroy1cube", 0, 1, 3, "AND", 4, 1, 6, 1, "Nght");
+    Cards card12("Night Wizard", "+1VP per NightCard|-|3cubes+destroy1cube", 0, 1, 3, "AND", 4, 1, 6, 1, "Night");
     deck->push_back(card12);
 
     Cards card13("Noble Knight", "1cubeMove|-|4cubes+destroy1cube", 0, 1, 4, "OR", 4, 1, 1, 1, "");
@@ -94,13 +94,13 @@ Deck::Deck(int numberOfPlayers) {
     Cards card23("Forest Tree Town", "1cubeMove|-|settlement", 0, 3, 1, "", 0, 0, 1, 1, "");
     deck->push_back(card23);
 
-    Cards card24("Lake", "+1VP per forestCard|-|2cubes/3cubesMove", 0, 1, 2, "OR", 2, 3, 6, 1, "Frest");
+    Cards card24("Lake", "+1VP per forestCard|-|2cubes/3cubesMove", 0, 1, 2, "OR", 2, 3, 6, 1, "Forest");
     deck->push_back(card24);
 
     Cards card25("Night Village", "1cube|-|settlement", 0, 3, 1, "", 0, 0, 2, 1, "");
     deck->push_back(card25);
 
-    Cards card26("Noble Hills", "threeNobleCards=4VP|-|3cubes", 0, 1, 3, "", 0, 0, 7, 4, "Nble");
+    Cards card26("Noble Hills", "threeNobleCards=4VP|-|3cubes", 0, 1, 3, "", 0, 0, 7, 4, "Noble");
     deck->push_back(card26);
 
     Cards card27("Noble Unicorn", "1cubeMove|-|4cubesMove+1cube", 0, 2, 4, "AND", 1, 1, 1, 1, "");
@@ -110,7 +110,7 @@ Deck::Deck(int numberOfPlayers) {
         Cards card28("Arcane Manticore", "1cubeMove|-|4cubes+destroy1cube", 0, 1, 4, "AND", 4, 1, 1, 1, "");
         deck->push_back(card28);
 
-        Cards card29("Arcane Temple", "+1VP per ArcaneCard|-|3cubeMoves", 0, 2, 3, "", 0, 0, 6, 1, "Acane");
+        Cards card29("Arcane Temple", "+1VP per ArcaneCard|-|3cubeMoves", 0, 2, 3, "", 0, 0, 6, 1, "Arcane");
         deck->push_back(card29);
 
         Cards card30("Mountain Treasury", "1Potion2BronzeCoins|-|3cubesMove", 0, 2, 3, "", 0, 0, 5, 2, "");

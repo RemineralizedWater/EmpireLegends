@@ -34,3 +34,17 @@ public:
 
     void Display();
 };
+
+class MapObserver : public Observer{
+private:
+    Map *subject;
+
+public:
+    MapObserver(Map *subject_);
+
+    ~MapObserver();
+
+    void Update();
+
+    void Display();
+};

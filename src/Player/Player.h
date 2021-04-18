@@ -36,6 +36,7 @@ private:
     int totalMovementPointsForRound;
     int costToMoveOverWater;
     bool canBeAttacked;
+    Map *map;
 
 public:
     static int Supply;
@@ -44,10 +45,12 @@ public:
 
     Player();
 
-    Player(string region_, BiddingFacility *biddingFacility_, Territory &territory_,
-           Cards &cards_, int tokenArmies_,
-           int cubes_, int disks_, Hand *myHand_, int money_, string name_,
-           int totalMovementPointsForRound_, int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_, int elixirs_);
+    Player(string name_);
+
+    Player(string region_, BiddingFacility *biddingFacility_, Territory &territory_, Cards &cards_,
+           int tokenArmies_, int cubes_, int disks_, Hand *myHand_, int money_, string name_,
+           int totalMovementPointsForRound_, int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_,
+           int elixirs_, Map *map_);
 
     Player(const Player &playerToCopy);
 
@@ -73,6 +76,8 @@ public:
 
     int GetTotalMovementPointsForRound();
 
+    Map* GetMap();
+
     int GetVictoryPoints();
 
     void SetElixirs(int numberOfElixirs);
@@ -91,11 +96,15 @@ public:
 
     void SetTotalMovementPointsForRound(int totalMovementPointsForRound_);
 
+    void SetMap(Map *map_);
+
+    void SetStrategy(PlayerStrategies *newPlayerStrategy);
+
     void RequestPlayerName();
 
     void PaysCoinFromPlayer(int amountToPay);
 
-    void PlaceNewArmies(int numberOfArmiesToPlaced);
+    void PlaceNewArmies(int numberOfArmiesToPlace);
 
     void MoveArmiesForPlayer(int numberOfArmiesToMove);
 
@@ -124,8 +133,6 @@ public:
     void CheckForMostElixirsForPlayer(int currentPlayerIndex, vector<Player *> players);
 
     void ApplyAbility();
-
-    void SetStrategy(PlayerStrategies *newPlayerStrategy);
 
     void ExecuteStrategy(Deck* deck);
 

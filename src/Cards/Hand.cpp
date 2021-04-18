@@ -1,7 +1,3 @@
-//
-// Created by Wayne on 3/8/2021.
-//
-
 #include "Hand.h"
 #include <vector>
 #include <iostream>
@@ -30,13 +26,17 @@ Cards *Hand::GetActiveCard() {
     return activeCard;
 }
 
+int Hand::GetNumberOfCardsInHand() {
+    return hand->size();
+}
+
 // Mutators
 void Hand::SetActiveCard(Cards *card) {
     activeCard = new Cards(*card);
 }
 
 void Hand::SetOwningPlayer(Player *owningPlayer_) {
-    this->owningPlayer = owningPlayer_;
+    owningPlayer = owningPlayer_;
 }
 
 void Hand::AddToHand(Cards card) {
@@ -80,27 +80,27 @@ void Hand::Exchange(Deck *deck) {
 
     deck->SetFaceUpCardsCost();
 }
-bool Hand::ExchangeWithoutPrompt(Deck *deck,int positionToPickUp) {
+bool Hand::ExchangeWithoutPrompt(Deck *deck, int positionToPickUp) {
     int index = positionToPickUp - 1;
 
-    while(true){
-        if(owningPlayer->GetMoney() >= deck->GetFaceUpCards()->at(index).GetCost()){
+    while (true) {
+        if (owningPlayer->GetMoney() >= deck->GetFaceUpCards()->at(index).GetCost()) {
             break;
-        }else{
+        } else {
             return false;
         }
     }
 
     Cards drawnCard = deck->GetFaceUpCards()->at(index);
     AddToHand(drawnCard);
-    cout << "----------------------------------------" <<endl;
-    cout << "Picked up " << drawnCard << " from position: " << positionToPickUp <<endl;
-    cout << "----------------------------------------" <<endl;
+    cout << "----------------------------------------" << endl;
+    cout << "Picked up " << drawnCard << " from position: " << positionToPickUp << endl;
+    cout << "----------------------------------------" << endl;
 
     owningPlayer->PaysCoinFromPlayer(drawnCard.GetCost());
 
     //reorganize cards in faceup pile
-    for(int i = index; i < deck->GetFaceUpCards()->size() - 1; i++){
+    for (int i = index; i < deck->GetFaceUpCards()->size() - 1; i++) {
         deck->GetFaceUpCards()->at(i) = deck->GetFaceUpCards()->at(i + 1);
     }
     // remove last card (is a duplicate)
