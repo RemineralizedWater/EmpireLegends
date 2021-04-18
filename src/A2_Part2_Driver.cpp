@@ -20,7 +20,8 @@ void DemonstrateA2Part2() {
                                3,
                                true,
                                0,
-                               0));
+                               0,
+                               new Map()));
     player1->MyHand->SetOwningPlayer(player1);
     player1->GetBiddingFacility()->SetOwningPlayer(player1);
 
@@ -44,7 +45,8 @@ void DemonstrateA2Part2() {
                        3,
                        true,
                        0,
-                       0));
+                       0,
+                       new Map()));
     player2->MyHand->SetOwningPlayer(player2);
     player2->GetBiddingFacility()->SetOwningPlayer(player2);
 

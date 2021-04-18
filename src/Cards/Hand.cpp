@@ -1,7 +1,3 @@
-//
-// Created by Wayne on 3/8/2021.
-//
-
 #include "Hand.h"
 #include <vector>
 #include <iostream>
@@ -30,13 +26,17 @@ Cards *Hand::GetActiveCard() {
     return activeCard;
 }
 
+int Hand::GetNumberOfCardsInHand() {
+    return hand->size();
+}
+
 // Mutators
 void Hand::SetActiveCard(Cards *card) {
     activeCard = new Cards(*card);
 }
 
 void Hand::SetOwningPlayer(Player *owningPlayer_) {
-    this->owningPlayer = owningPlayer_;
+    owningPlayer = owningPlayer_;
 }
 
 void Hand::AddToHand(Cards card) {

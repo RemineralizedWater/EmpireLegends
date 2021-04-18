@@ -20,7 +20,8 @@ void DemonstrateA2Part5() {
                        3,
                        true,
                        0,
-                       0));
+                       0,
+                       new Map()));
     player1->MyHand->SetOwningPlayer(player1);
 
     Player *player2(
@@ -38,7 +39,8 @@ void DemonstrateA2Part5() {
                        3,
                        true,
                        0,
-                       0));
+                       0,
+                       new Map()));
     player2->MyHand->SetOwningPlayer(player2);
 
     Player *players[2] = {player1, player2};

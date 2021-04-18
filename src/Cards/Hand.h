@@ -26,6 +26,8 @@ public:
 
     Cards *GetActiveCard();
 
+    int GetNumberOfCardsInHand();
+
     void SetActiveCard(Cards *card);
 
     void SetOwningPlayer(Player *owningPlayer);

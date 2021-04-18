@@ -20,7 +20,8 @@ void DemonstrateA2Part4() {
                                                    3,
                                                    true,
                                                    0,
-                                                   0));
+                                                   0,
+                                                   new Map()));
 
 
     std::unique_ptr<std::map<std::string, int>> armySizeForPlayer(new std::map<std::string, int>());
