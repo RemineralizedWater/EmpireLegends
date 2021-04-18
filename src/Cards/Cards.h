@@ -2,10 +2,11 @@
 
 #include <string>
 #include <vector>
+#include "../Subject.h"
 
 using namespace std;
 
-class Cards {
+class Cards : public Subject {
 private:
     string name;
     string goodsAndAction;

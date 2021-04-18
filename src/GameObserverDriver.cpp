@@ -5,6 +5,8 @@
 #include "Player/PlayerController.h"
 #include "Cards/Deck.h"
 #include "Cards/DeckController.h"
+#include "Cards/Hand.h"
+#include "Cards/HandController.h"
 #include "GameObservers.h"
 #include "Map/Map.h"
 #include "Map/MapController.h"
@@ -18,6 +20,10 @@ void GameObservers(Map *modelMap, Game *game) {
     Player *modelPlayer1(new Player("Player1_name"));
     PlayerObserver *viewPlayer1 = new PlayerObserver(modelPlayer1);
     PlayerController *controllerPlayer1 = new PlayerController(viewPlayer1, modelPlayer1);
+
+    Hand *modelPlayer1Hand(modelPlayer1->MyHand);
+    HandObserver *viewPlayer1Hand = new HandObserver(modelPlayer1Hand);
+    HandController *controllerPlayer1Hand = new HandController(viewPlayer1Hand, modelPlayer1Hand);
 
     typedef pair<Territory *, vector<Adjacency> *> terrInfo;
     {
@@ -40,6 +46,10 @@ void GameObservers(Map *modelMap, Game *game) {
     Player *modelPlayer2(new Player("Player2_name"));
     PlayerObserver *viewPlayer2 = new PlayerObserver(modelPlayer2);
     PlayerController *controllerPlayer2 = new PlayerController(viewPlayer2, modelPlayer2);
+
+    Hand *modelPlayer2Hand(modelPlayer2->MyHand);
+    HandObserver *viewPlayer2Hand = new HandObserver(modelPlayer2Hand);
+    HandController *controllerPlayer2Hand = new HandController(viewPlayer2Hand, modelPlayer2Hand);
 
     typedef pair<Territory *, vector<Adjacency> *> terrInfo;
     {
@@ -104,7 +114,9 @@ void GameObservers(Map *modelMap, Game *game) {
             break;
         }
 
-        cout << "======== " << players[index]->GetName() << "'s TURN ========" << endl;
+        cout << "--------------------------------------------------------------------------" << endl;
+        cout << players[index]->GetName() << "'s TURN" << endl;
+        cout << "--------------------------------------------------------------------------" << endl;
         modelDeck->PrintCardsIn(modelDeck->GetFaceUpCards());
         players[index]->MyHand->Exchange(modelDeck);
         players[index]->ResolveActiveCard();
@@ -114,6 +126,7 @@ void GameObservers(Map *modelMap, Game *game) {
         else index = 0;
 
         string option;
+        cout << "--------------------------------------------------------------------------" << endl;
         cout << "Enter 'X' to exit, or anything else to continue to next player turn." << endl;
         cin >> option;
         if (option.compare("X") == 0 || option.compare("x") == 0) {
@@ -128,6 +141,21 @@ void GameObservers(Map *modelMap, Game *game) {
         viewDeck = nullptr;
         modelDeck = nullptr;
     }
+
+    if(controllerPlayer1Hand != nullptr && viewPlayer1Hand != nullptr && modelPlayer1Hand != nullptr){
+        delete controllerPlayer1Hand;
+        controllerPlayer1Hand = nullptr;
+        viewPlayer1Hand = nullptr;
+        modelPlayer1Hand = nullptr;
+    }
+
+    if(controllerPlayer2Hand != nullptr && viewPlayer2Hand != nullptr && modelPlayer2Hand != nullptr){
+        delete controllerPlayer2Hand;
+        controllerPlayer2Hand = nullptr;
+        viewPlayer2Hand = nullptr;
+        modelPlayer2Hand = nullptr;
+    }
+
     if (controllerPlayer1 != nullptr && viewPlayer1 != nullptr && modelPlayer1 != nullptr) {
         delete controllerPlayer1;
         controllerPlayer1 = nullptr;

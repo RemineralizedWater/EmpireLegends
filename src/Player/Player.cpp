@@ -260,7 +260,7 @@ void Player::PlaceNewArmies(int numberOfArmiesToPlace) {
     while (!placedCity) {
         cout << "Which territory would you like to place armies in?";
         cin >> position;
-
+        cout << endl;
         typedef pair<Territory *, vector<Adjacency> *> terrInfo;
         vector<terrInfo>::iterator terrIt;
         for (terrIt = map->GetTerrAndAdjsList()->begin();
@@ -369,7 +369,7 @@ void Player::MoveArmiesForPlayer(int numberOfArmiesToMove) {
         cin >> fromID;
         cout << "Which territory would you like to move armies TO?";
         cin >> toID;
-
+        cout << endl;
         typedef pair<Territory *, vector<Adjacency> *> terrInfo;
         vector<terrInfo>::iterator terrIt;
         for (terrIt = map->GetTerrAndAdjsList()->begin();
@@ -438,7 +438,7 @@ void Player::BuildCityForPlayer() {
     while (!builtCity) {
         cout << "Which territory would you like to build a city in? (a city will be built regardless if you already have a city there)";
         cin >> cityTargetID;
-
+        cout << endl;
         typedef pair<Territory *, vector<Adjacency> *> terrInfo;
         vector<terrInfo>::iterator terrIt;
         for (terrIt = map->GetTerrAndAdjsList()->begin();
@@ -446,6 +446,7 @@ void Player::BuildCityForPlayer() {
 
             if ((*terrIt).first->GetTerrId() == cityTargetID) {
                 (*terrIt).first->AddCityForPlayer(name);
+                cout << "A city has been built!" << endl;
                 disks -= 1;
                 builtCity = true;
                 break;
@@ -544,6 +545,7 @@ void Player::ResolveActiveCard() {
                 break;
         }
     }
+    MyHand->Notify();
     Notify();
 }
 

@@ -30,7 +30,9 @@ void PlayerObserver::Display() {
     int elixirs = subject->GetElixirs();
 
     Map *modelMap = subject->GetMap();
-    cout << "__________________________________________________________________________" << endl;
+    cout << "--------------------------------------------------------------------------" << endl;
+    cout << "PLAYER OBSERVER" << endl;
+    cout << "--------------------------------------------------------------------------" << endl;
     cout << "Player: " + playerName + " has " +
         to_string(money) + " money left, " +
         to_string(elixirs) + " elixirs, and " +
@@ -64,6 +66,7 @@ void PlayerObserver::Display() {
     } else {
         cout << "Empty." << endl;
     }
+    cout << "--------------------------------------------------------------------------" << endl;
 }
 
 // ------------------------
@@ -89,11 +92,15 @@ void DeckObserver::Update() {
 
 void DeckObserver::Display() {
     subject->ShuffleDeck();
-    cout << "- - - - - - - - - - CARDS LEFT IN DECK - - - - - - - - - - - -" << endl;
+    cout << "--------------------------------------------------------------------------" << endl;
+    cout << "DECK OBSERVER - DECK AND/OR FACE-UP PILE HAS CHANGED" << endl;
+    cout << "--------------------------------------------------------------------------" << endl;
+    cout << "CARDS REMAINING IN DECK" << endl;
     subject->PrintCardsIn(subject->GetDeck());
-    cout << "- - - - - - - - - - CARDS IN FACE UP PILE - - - - - - - - - -" << endl;
+    cout << "--------------------------------------------------------------------------" << endl;
+    cout << "FACE-UP CARDS" << endl;
     subject->PrintCardsIn(subject->GetFaceUpCards());
-    cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
+    cout << "--------------------------------------------------------------------------" << endl;
 }
 
 // MAP OBSERVER
@@ -118,4 +125,67 @@ void MapObserver::Update() {
 
 void MapObserver::Display() {
     subject->Display();
+}
+
+// Card OBSERVER
+// Constructor
+CardObserver::CardObserver(Cards *subject_) {
+    subject = subject_;
+    subject_->Attach(this);
+}
+
+// Destructor
+CardObserver::~CardObserver() {
+    subject->Detach(this);
+    if (subject != nullptr) {
+        delete subject;
+        subject = nullptr;
+    }
+}
+
+void CardObserver::Update() {
+    Display();
+}
+
+void CardObserver::Display() {
+
+
+}
+
+// HAND OBSERVER
+// Constructor
+HandObserver::HandObserver(Hand*subject_) {
+    subject = subject_;
+    subject_->Attach(this);
+}
+
+// Destructor
+HandObserver::~HandObserver() {
+    subject->Detach(this);
+    if (subject != nullptr) {
+        delete subject;
+        subject = nullptr;
+    }
+}
+
+void HandObserver::Update() {
+    Display();
+}
+
+void HandObserver::Display() {
+
+    string actions[5] = {"", "placed armies: ", "moved armies: ", "built city: ", "destroy armies: "};
+    cout << "--------------------------------------------------------------------------" << endl;
+    cout << "PHASE OBSERVER" << endl;
+    cout << "--------------------------------------------------------------------------" << endl;
+    cout << subject->GetOwningPlayerName() << " is Resolving their drawn card: " << subject->GetActiveCard()->GetName() <<
+         " and has paid " << subject->GetActiveCard()->GetCost() << " coins." << endl;
+
+    cout << subject->GetOwningPlayerName() << " has " << actions[subject->GetActiveCard()->GetActionOne()] << subject->GetActiveCard()->GetActionOneValue();
+    if(subject->GetActiveCard()->GetActionTwo() != 0)
+        cout << " and/or " << actions[subject->GetActiveCard()->GetActionTwo()] << subject->GetActiveCard()->GetActionTwoValue();
+    cout << "." << endl;
+
+    cout << "Their turn is now over." << endl;
+    cout << "--------------------------------------------------------------------------" << endl;
 }
