@@ -2,10 +2,11 @@
 
 #include <string>
 #include <vector>
+#include "../Subject.h"
 
 using namespace std;
 
-class Cards {
+class Cards : public Subject {
 private:
     string name;
     string goodsAndAction;
@@ -42,7 +43,7 @@ public:
 
     Cards &operator=(const Cards &c);
 
-    friend ostream &operator<<(ostream &out, const Cards &c);
+    friend ostream &operator<<(ostream &out, Cards &c);
 
     friend istream &operator>>(istream &in, Cards &c);
 
