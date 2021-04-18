@@ -212,6 +212,14 @@ void Player::SetVictoryPoints(int points) {
     Notify();
 }
 
+int Player::GetTotalMovementPointsForRound() {
+    return totalMovementPointsForRound;
+}
+
+Map *Player::GetMap() {
+    return map;
+}
+
 void Player::SetTotalMovementPointsForRound(int totalMovementPointsForRound_) {
     totalMovementPointsForRound = totalMovementPointsForRound_;
 }
