@@ -385,10 +385,13 @@ void Player::MoveArmiesForPlayer(int numberOfArmiesToMove) {
                     for (terrIt2 = map->GetTerrAndAdjsList()->begin();
                          terrIt2 != map->GetTerrAndAdjsList()->end(); ++terrIt2) {
 
-                        if ((*terrIt2).first->GetTerrId() == toID) {
+                        if ((*terrIt2).first->GetTerrId() == toID && (*terrIt2).first->HasCity(name)) {
                             (*terrIt2).first->AddArmySizeForPlayer(name, armiesToMove);
                             (*terrIt).first->RemoveArmySizeForPlayer(name, armiesToMove);
                             movedArmies = true;
+                        }else{
+                            cout << "You do not have a city in that territory, cannot move armies." << endl;
+                            break;
                         }
                     }
                 } else {

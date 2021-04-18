@@ -27,10 +27,13 @@ void PlayerObserver::Display() {
     int victoryPoints = subject->GetVictoryPoints();
     int cities = subject->GetCitiesDisks(); // disks
     int money = subject->GetMoney();
+    int elixirs = subject->GetElixirs();
+
     Map *modelMap = subject->GetMap();
     cout << "__________________________________________________________________________" << endl;
     cout << "Player: " + playerName + " has " +
-        to_string(money) + " money left, and " +
+        to_string(money) + " money left, " +
+        to_string(elixirs) + " elixirs, and " +
         to_string(victoryPoints) + " total victory points." << endl;
     cout << to_string(tokenArmies) + " : Armies can be placed" << endl;
     cout << to_string(cities) + " : Cities can be placed" << endl;

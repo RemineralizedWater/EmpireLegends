@@ -12,7 +12,7 @@
 
 void GameObservers(Map *modelMap, Game *game) {
 
-    int const NUMBER_OF_ROUNDS_TO_PLAY = 20;
+    int const NUMBER_OF_ROUNDS_TO_PLAY = 5;
 
     // Player 1 Setup
     Player *modelPlayer1(new Player("Player1_name"));
@@ -72,11 +72,40 @@ void GameObservers(Map *modelMap, Game *game) {
         if (players[0]->MyHand->GetNumberOfCardsInHand() >= (int)(NUMBER_OF_ROUNDS_TO_PLAY / 2) &&
                 players[1]->MyHand->GetNumberOfCardsInHand() >= (int)(NUMBER_OF_ROUNDS_TO_PLAY / 2)) {
             cout << "GAME OVER! " << NUMBER_OF_ROUNDS_TO_PLAY << " Rounds have been played" << endl;
-            cout << "DISPLAY SCORES" << endl;
+
+            // Score calculation
+            int winner = 0;
+            if (game->Tied(players, winner)) {
+                //money
+                game->CountMoney(players);
+                if (game->Tied(players, winner)) {
+                    //armies
+                    game->CountArmies(players, modelMap);
+                    if (game->Tied(players, winner)) {
+                        game->CountControlledTerritories(players, modelMap);
+                        game->Tied(players, winner);
+                        cout << "Winner! After Counting Most Controlled Territories on the board" << endl;
+                        cout << players[winner]->GetName() << ": " << players[winner]->GetBiddingFacility()->GetLastName()
+                             << endl;
+                    } else {
+                        cout << "Winner! After Counting Most Armies on the board" << endl;
+                        cout << players[winner]->GetName() << ": " << players[winner]->GetBiddingFacility()->GetLastName()
+                             << endl;
+                    }
+                } else {
+                    cout << "Winner! After Counting Money" << endl;
+                    cout << players[winner]->GetName() << ": " << players[winner]->GetBiddingFacility()->GetLastName() << endl;
+                }
+            } else {
+                cout << "Winner!" << endl;
+                cout << players[winner]->GetName() << ": " << players[winner]->GetBiddingFacility()->GetLastName() << endl;
+            }
+
             break;
         }
 
         cout << "======== " << players[index]->GetName() << "'s TURN ========" << endl;
+        modelDeck->PrintCardsIn(modelDeck->GetFaceUpCards());
         players[index]->MyHand->Exchange(modelDeck);
         players[index]->ResolveActiveCard();
         players[index]->ComputeScore(index, players, modelMap);
