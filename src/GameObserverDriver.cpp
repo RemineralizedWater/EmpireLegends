@@ -81,7 +81,9 @@ void GameObservers(Map *modelMap, Game *game) {
     while (true) {
         if (players[0]->MyHand->GetNumberOfCardsInHand() >= (int)(NUMBER_OF_ROUNDS_TO_PLAY / 2) &&
                 players[1]->MyHand->GetNumberOfCardsInHand() >= (int)(NUMBER_OF_ROUNDS_TO_PLAY / 2)) {
+            cout << "--------------------------------------------------------------------------" << endl;
             cout << "GAME OVER! " << NUMBER_OF_ROUNDS_TO_PLAY << " Rounds have been played" << endl;
+            cout << "--------------------------------------------------------------------------" << endl;
 
             // Score calculation
             int winner = 0;
@@ -95,22 +97,30 @@ void GameObservers(Map *modelMap, Game *game) {
                         game->CountControlledTerritories(players, modelMap);
                         game->Tied(players, winner);
                         cout << "Winner! After Counting Most Controlled Territories on the board" << endl;
-                        cout << players[winner]->GetName() << ": " << players[winner]->GetBiddingFacility()->GetLastName()
-                             << endl;
+                        cout << players[winner]->GetName() << endl;
                     } else {
                         cout << "Winner! After Counting Most Armies on the board" << endl;
-                        cout << players[winner]->GetName() << ": " << players[winner]->GetBiddingFacility()->GetLastName()
-                             << endl;
+                        cout << players[winner]->GetName() << endl;
                     }
                 } else {
                     cout << "Winner! After Counting Money" << endl;
-                    cout << players[winner]->GetName() << ": " << players[winner]->GetBiddingFacility()->GetLastName() << endl;
+                    cout << players[winner]->GetName() << endl;
                 }
             } else {
                 cout << "Winner!" << endl;
-                cout << players[winner]->GetName() << ": " << players[winner]->GetBiddingFacility()->GetLastName() << endl;
+                cout << players[winner]->GetName() << endl;
             }
 
+            for(int i = 0; i < players.size(); i++){
+                cout << "--------------------------------------------------------------------------" << endl;
+                cout << players[i]->GetName() << " Statistics" << endl;
+                cout << "Coins remaining: " << players[i]->GetMoney() << endl;
+                cout << "Elixirs: " << players[i]->GetElixirs() << endl;
+                cout << "Armies remaining to be placed: " << players[i]->GetArmiesTokens() << endl;
+                cout << "Cities remaining to be placed: " << players[i]->GetCitiesDisks() << endl;
+                cout << "Victory Points: " << players[i]->GetVictoryPoints() << endl;
+            }
+            cout << "--------------------------------------------------------------------------" << endl;
             break;
         }
 
