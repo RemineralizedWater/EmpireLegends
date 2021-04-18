@@ -36,5 +36,5 @@ public:
 
     void Exchange(Deck *deck);
 
-    bool ExchangeWithoutPrompt(Deck* deck,int positionToPickUp);
+    bool ExchangeWithoutPrompt(Deck *deck, int positionToPickUp);
 };

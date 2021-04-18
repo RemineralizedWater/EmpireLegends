@@ -41,7 +41,7 @@ void PlayerObserver::Display() {
     for (terrIt = modelMap->GetTerrAndAdjsList()->begin();
          terrIt != modelMap->GetTerrAndAdjsList()->end(); ++terrIt) {
 
-        if((*terrIt).first->GetArmySizeForPlayer()[playerName] != 0 || (*terrIt).first->HasCity(playerName)){
+        if ((*terrIt).first->GetArmySizeForPlayer()[playerName] != 0 || (*terrIt).first->HasCity(playerName)) {
             terrCount += 1;
             cout << "Territory: " << (*terrIt).first->GetTerrId();
             cout <<" | Continent: " << (*terrIt).first->GetContinent();
@@ -95,7 +95,7 @@ void DeckObserver::Display() {
 
 // MAP OBSERVER
 // Constructor
-MapObserver::MapObserver(Map *subject_){
+MapObserver::MapObserver(Map *subject_) {
     subject = subject_;
     subject_->Attach(this);
 }

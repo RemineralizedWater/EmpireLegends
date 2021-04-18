@@ -10,7 +10,7 @@
 #include "Map/MapController.h"
 #include "Game/Game.h"
 
-void GameObservers(Map *modelMap, Game *game){
+void GameObservers(Map *modelMap, Game *game) {
 
     int const NUMBER_OF_ROUNDS_TO_PLAY = 20;
 
@@ -26,7 +26,7 @@ void GameObservers(Map *modelMap, Game *game){
              terrIt != modelMap->GetTerrAndAdjsList()->end(); ++terrIt) {
             (*terrIt).first->InsertNewArmyPlayerMapping(modelPlayer1->GetName());
             (*terrIt).first->InsertNewCityPlayerMapping(modelPlayer1->GetName());
-            if((*terrIt).first->GetTerrId() == 1)
+            if ((*terrIt).first->GetTerrId() == 1)
                 (*terrIt).first->AddCityForPlayer(modelPlayer1->GetName());
         }
     }
@@ -48,7 +48,7 @@ void GameObservers(Map *modelMap, Game *game){
              terrIt != modelMap->GetTerrAndAdjsList()->end(); ++terrIt) {
             (*terrIt).first->InsertNewArmyPlayerMapping(modelPlayer2->GetName());
             (*terrIt).first->InsertNewCityPlayerMapping(modelPlayer2->GetName());
-            if((*terrIt).first->GetTerrId() == 1)
+            if ((*terrIt).first->GetTerrId() == 1)
                 (*terrIt).first->AddCityForPlayer(modelPlayer2->GetName());
         }
     }
@@ -69,7 +69,7 @@ void GameObservers(Map *modelMap, Game *game){
 
     int index = 0;
     while (true) {
-        if(players[0]->MyHand->GetNumberOfCardsInHand() >= (int)(NUMBER_OF_ROUNDS_TO_PLAY / 2) &&
+        if (players[0]->MyHand->GetNumberOfCardsInHand() >= (int)(NUMBER_OF_ROUNDS_TO_PLAY / 2) &&
                 players[1]->MyHand->GetNumberOfCardsInHand() >= (int)(NUMBER_OF_ROUNDS_TO_PLAY / 2)) {
             cout << "GAME OVER! " << NUMBER_OF_ROUNDS_TO_PLAY << " Rounds have been played" << endl;
             cout << "DISPLAY SCORES" << endl;

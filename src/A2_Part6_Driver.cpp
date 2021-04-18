@@ -24,20 +24,18 @@ void DemonstrateA2Part6() {
 
     //setup
     bool validMap = false;
-    MapLoader *mapLoader = new MapLoader(numPlayers);
-    Map *map = mapLoader->LoadMap("../src/Map Boards/valid_map.txt", validMap);
+    Map *map = new Map();
+    MapLoader *mapLoader = new MapLoader(map, numPlayers);
+    mapLoader->LoadMap(map, "../src/Map Boards/valid_map.txt", validMap);
     vector<Player *> players = starter->CreatePlayers(map->GetStartingPoint());
     Deck *deck = starter->CreateDeck();
-
 
     for (int i = 0; i < players.size(); i++) {
         players[i]->MyHand->SetOwningPlayer(players[i]);
     }
+
     //player1
-    players[0]->MyHand->AddToHand(Cards(new string("Forest Gnome"), new string("3Potions|-|2cubeMoves"), new int{0},
-                                        new int{2}, new int{2}, new string(""),
-                                        new int{0}, new int{0},
-                                        new int{4}, new int{3}, new string{""}));
+    players[0]->MyHand->AddToHand(Cards("Forest Gnome", "3Potions|-|2cubeMoves", 0, 2, 2, "", 0, 0, 4, 3, ""));
     players[0]->ApplyAbility();
     Territory *t = map->FindTerritory(1);
     t->InsertNewArmyPlayerMapping(players[0]->GetName());
@@ -45,20 +43,11 @@ void DemonstrateA2Part6() {
     t->GetHasCity()[players[0]->GetName()] = true;
     t->GetArmySizeForPlayer()[players[0]->GetName()] += 1;
 
-
-
     //player2
-    players[1]->MyHand->AddToHand(Cards(new string("Cursed Banshee"), new string("2potions|-|6cubeMoves"), new int{0},
-                                        new int{2}, new int{6}, new string(""),
-                                        new int{0}, new int{0},
-                                        new int{4}, new int{2}, new string{""}));
+    players[1]->MyHand->AddToHand(Cards("Cursed Banshee", "2potions|-|6cubeMoves", 0, 2, 6, "", 0, 0, 4, 2, ""));
     players[1]->ApplyAbility();
 
-    players[1]->MyHand->AddToHand(
-            Cards(new string("Mountain Treasury"), new string("1Potion2BronzeCoins|-|3cubesMove"), new int{0},
-                  new int{2}, new int{3}, new string(""),
-                  new int{0}, new int{0},
-                  new int{5}, new int{2}, new string{""}));
+    players[1]->MyHand->AddToHand(Cards("Mountain Treasury", "1Potion2BronzeCoins|-|3cubesMove", 0, 2, 3, "", 0, 0, 5, 2, ""));
     players[1]->ApplyAbility();
     t->InsertNewArmyPlayerMapping(players[1]->GetName());
     t->InsertNewCityPlayerMapping(players[1]->GetName());

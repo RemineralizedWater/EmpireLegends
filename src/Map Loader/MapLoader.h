@@ -7,14 +7,13 @@
 #include <iostream>
 #include "../Map/Map.h"
 
-using std::string;
+using namespace std;
 
 class MapLoader {
 private:
     string mapFilePath;
     int numberOfBoardPieces;
     bool rectangle;
-    Map *map;
 
     bool VerifyId(string stringId, int &intId, string argErrMsg, string outRangeErrMsg);  // int &intId pass by reference
 
@@ -24,12 +23,12 @@ private:
 
     bool IsRectangle();
 
-    bool ParseAdjacency(string adjacency, Territory *territory);
+    bool ParseAdjacency(Map *map, string adjacency, int terrId, int continentId);
 
 public:
     MapLoader();
 
-    MapLoader(int numberOfPlayers);
+    MapLoader(Map *Map, int numberOfPlayers);
 
     MapLoader(const MapLoader &copy);
 
@@ -41,5 +40,5 @@ public:
 
     friend std::istream &operator>>(std::istream &in, MapLoader &ml);
 
-    Map *LoadMap(string file, bool &validMap);  // bool &validMap pass by reference
+    void LoadMap(Map *map, string file, bool &validMap);  // bool &validMap pass by reference
 };

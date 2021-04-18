@@ -1,5 +1,5 @@
-#include "Player/Player.h";
-#include "Player/PlayerStrategies.h";
+#include "Player/Player.h"
+#include "Player/PlayerStrategies.h"
 #include "Map/Map.h"
 #include "Game/Game.h"
 
@@ -35,7 +35,7 @@ void DemonstrateA3Part1(Map *modelMap, Game *game) {
              terrIt != modelMap->GetTerrAndAdjsList()->end(); ++terrIt) {
             (*terrIt).first->InsertNewArmyPlayerMapping(modelPlayer1->GetName());
             (*terrIt).first->InsertNewCityPlayerMapping(modelPlayer1->GetName());
-            if((*terrIt).first->GetTerrId() == 1)
+            if ((*terrIt).first->GetTerrId() == 1)
                 (*terrIt).first->AddCityForPlayer(modelPlayer1->GetName());
         }
     }
@@ -74,7 +74,7 @@ void DemonstrateA3Part1(Map *modelMap, Game *game) {
              terrIt != modelMap->GetTerrAndAdjsList()->end(); ++terrIt) {
             (*terrIt).first->InsertNewArmyPlayerMapping(modelPlayer2->GetName());
             (*terrIt).first->InsertNewCityPlayerMapping(modelPlayer2->GetName());
-            if((*terrIt).first->GetTerrId() == 1)
+            if ((*terrIt).first->GetTerrId() == 1)
                 (*terrIt).first->AddCityForPlayer(modelPlayer2->GetName());
         }
     }

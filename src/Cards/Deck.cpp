@@ -193,7 +193,7 @@ void Deck::ShuffleDeck() {
 }
 
 void Deck::PopulateFaceUpCards() {
-    for(int i = 0; i < 6; i++) {
+    for (int i = 0; i < 6; i++) {
         Cards drawnCard = deck->back();
         deck->pop_back();
         faceUpCards->push_back(drawnCard);

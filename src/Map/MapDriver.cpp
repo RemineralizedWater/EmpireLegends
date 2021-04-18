@@ -7,10 +7,7 @@
 
 #include "Map.h"
 
-using std::cin;
-using std::string;
-using std::streamsize;
-using std::numeric_limits;
+using namespace std;
 
 void cleanTerr(vector<Territory *> _terr);
 
@@ -40,9 +37,8 @@ int DemonstrateMap(int numberOfPlayers) {
         Map *map = new Map();
         vector<Territory *> terr;
         vector<Adjacency *> adj;
-        std::unique_ptr<std::map<std::string, int>> armySizeForPlayer_(new std::map<string, int>());
-        std::unique_ptr<std::map<std::string, bool>> hasCityForPlayer_(new std::map<string, bool>());
-
+        std::map<string, int> armySizeForPlayer_;  // <player, armySize>
+        std::map<string, bool> hasCityForPlayer_;  // <player, hasCity>
 
         switch (userInput) {
             case 1:
@@ -53,47 +49,47 @@ int DemonstrateMap(int numberOfPlayers) {
                  * 1        |3          |(L,2)(L,5)
                  * 1        |4          |(L,2)(L,5)
                  * 1        |5          |(L,4)(L,3)*/
-                terr.push_back(new Territory(1, 1, *armySizeForPlayer_,*hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(3, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(4, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(5, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
+                terr.push_back(new Territory(1, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(1, 1);
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(2, 1);
+                terr.push_back(new Territory(3, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(3, 1);
+                terr.push_back(new Territory(4, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(4, 1);
+                terr.push_back(new Territory(5, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(5, 1);
 
-                terr.push_back(new Territory(1, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                terr.push_back(new Territory(1, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(2, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(1, 2, true);
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(1, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(2, 1, true);
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(3, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(2, 3, true);
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(4, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(3, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(2, 4, true);
+                terr.push_back(new Territory(3, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(2, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(3, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(3, 2, true);
+                terr.push_back(new Territory(3, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(5, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(4, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(3, 5, true);
+                terr.push_back(new Territory(4, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(2, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(4, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(4, 2, true);
+                terr.push_back(new Territory(4, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(5, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(5, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(4, 5, true);
+                terr.push_back(new Territory(5, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(4, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(5, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(5, 4, true);
+                terr.push_back(new Territory(5, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(3, true));
-                map->AddAdjacency(terr.back(), adj.back());
+                map->AddAdjacency(5, 3, true);
                 break;
             case 2:
                 /* Stores the information below in the graph:
@@ -104,49 +100,49 @@ int DemonstrateMap(int numberOfPlayers) {
                  * 1        |4          |(L,2)(L,5)
                  * 1        |5          |(L,4)(L,3)
                  * 1        |6          |(L, No Adjacency)*/   // invalid, Territory 6 is not connected to rest of graph
-                terr.push_back(new Territory(1, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(3, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(4, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(5, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(6, 1, *armySizeForPlayer_, *hasCityForPlayer_));   // invalid
-                map->AddTerritory(terr.back());
+                terr.push_back(new Territory(1, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(1, 1);
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(2, 1);
+                terr.push_back(new Territory(3, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(3, 1);
+                terr.push_back(new Territory(4, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(4, 1);
+                terr.push_back(new Territory(5, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(5, 1);
+                terr.push_back(new Territory(6, 1, armySizeForPlayer_, hasCityForPlayer_));   // invalid
+                map->AddTerritory(6, 1);
 
-                terr.push_back(new Territory(1, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                terr.push_back(new Territory(1, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(2, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(1, 2, true);
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(1, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(2, 1, true);
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(3, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(2, 3, true);
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(4, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(3, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(2, 4, true);
+                terr.push_back(new Territory(3, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(2, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(3, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(3, 2, true);
+                terr.push_back(new Territory(3, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(5, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(4, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(3, 5, true);
+                terr.push_back(new Territory(4, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(2, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(4, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(4, 2, true);
+                terr.push_back(new Territory(4, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(5, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(5, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(4, 5, true);
+                terr.push_back(new Territory(5, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(4, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(5, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(5, 4, true);
+                terr.push_back(new Territory(5, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(3, true));
-                map->AddAdjacency(terr.back(), adj.back());
+                map->AddAdjacency(5, 3, true);
                 break;
             case 3:
                 /* Stores the information below in the graph:
@@ -158,63 +154,63 @@ int DemonstrateMap(int numberOfPlayers) {
                  * 1        |5          |(L,4)(L,3)
                  * 2        |6          |(L,2)
                  * 2        |7          |(L,2)*/                     // invalid, Continent 2 is not a connected subgraph
-                terr.push_back(new Territory(1, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(3, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(4, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(5, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(6, 2, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(7, 2, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());                                                 // invalid
+                terr.push_back(new Territory(1, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(1, 1);
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(2, 1);
+                terr.push_back(new Territory(3, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(3, 1);
+                terr.push_back(new Territory(4, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(4, 1);
+                terr.push_back(new Territory(5, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(5, 1);
+                terr.push_back(new Territory(6, 2, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(6, 2);
+                terr.push_back(new Territory(7, 2, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(7, 2);                                                 // invalid
 
-                terr.push_back(new Territory(1, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                terr.push_back(new Territory(1, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(2, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(1, 2, true);
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(1, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(2, 1, true);
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(3, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(2, 3, true);
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(4, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(3, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(2, 4, true);
+                terr.push_back(new Territory(3, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(2, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(3, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(3, 2, true);
+                terr.push_back(new Territory(3, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(5, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(4, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(3, 5, true);
+                terr.push_back(new Territory(4, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(2, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(4, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(4, 2, true);
+                terr.push_back(new Territory(4, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(5, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(5, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(4, 5, true);
+                terr.push_back(new Territory(5, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(4, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(5, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(5, 4, true);
+                terr.push_back(new Territory(5, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(3, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(6, 2, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(5, 3, true);
+                terr.push_back(new Territory(6, 2, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(2, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(2, 2, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(6, 2, true);
+                terr.push_back(new Territory(2, 2, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(6, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(7, 2, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(2, 6, true);
+                terr.push_back(new Territory(7, 2, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(2, true));
-                map->AddAdjacency(terr.back(), adj.back());                                     // invalid
-                terr.push_back(new Territory(2, 2, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(7, 2, true);                                     // invalid
+                terr.push_back(new Territory(2, 2, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(7, true));
-                map->AddAdjacency(terr.back(), adj.back());                                     // invalid
+                map->AddAdjacency(2, 7, true);                                     // invalid
                 break;
             case 4:
                 /* Stores the information below in the graph:
@@ -226,55 +222,55 @@ int DemonstrateMap(int numberOfPlayers) {
                  * 1        |5          |(L,4)(L,3)
                  * 2        |1          |(L,2)      // invalid, Territory 1 belongs to Continents 1 & 2
                  * 2        |2          |(L,1)*/    // invalid, Territory 1 belongs to Continents 1 & 2
-                terr.push_back(new Territory(1, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(1, 2, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());                                                // invalid
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(3, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(4, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
-                terr.push_back(new Territory(5, 1, *armySizeForPlayer_, *hasCityForPlayer_));
-                map->AddTerritory(terr.back());
+                terr.push_back(new Territory(1, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(1, 1);
+                terr.push_back(new Territory(1, 2, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(1, 2);                                                // invalid
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(2, 1);
+                terr.push_back(new Territory(3, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(3, 1);
+                terr.push_back(new Territory(4, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(4, 1);
+                terr.push_back(new Territory(5, 1, armySizeForPlayer_, hasCityForPlayer_));
+                map->AddTerritory(5, 1);
 
-                terr.push_back(new Territory(1, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                terr.push_back(new Territory(1, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(2, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(1, 2, true);
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(1, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(2, 1, true);
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(3, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(2, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(2, 3, true);
+                terr.push_back(new Territory(2, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(4, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(3, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(2, 4, true);
+                terr.push_back(new Territory(3, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(2, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(3, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(3, 2, true);
+                terr.push_back(new Territory(3, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(5, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(4, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(3, 5, true);
+                terr.push_back(new Territory(4, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(2, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(4, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(4, 2, true);
+                terr.push_back(new Territory(4, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(5, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(5, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(4, 5, true);
+                terr.push_back(new Territory(5, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(4, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(5, 1, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(5, 4, true);
+                terr.push_back(new Territory(5, 1, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(3, true));
-                map->AddAdjacency(terr.back(), adj.back());
-                terr.push_back(new Territory(1, 2, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(5, 3, true);
+                terr.push_back(new Territory(1, 2, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(2, true));
-                map->AddAdjacency(terr.back(), adj.back());                                        // invalid
-                terr.push_back(new Territory(2, 2, *armySizeForPlayer_, *hasCityForPlayer_));
+                map->AddAdjacency(1, 2, true);                                        // invalid
+                terr.push_back(new Territory(2, 2, armySizeForPlayer_, hasCityForPlayer_));
                 adj.push_back(new Adjacency(1, true));
-                map->AddAdjacency(terr.back(), adj.back());                                        // invalid
+                map->AddAdjacency(2, 1, true);                                        // invalid
                 break;
             case 5:
             default:

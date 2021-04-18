@@ -25,6 +25,10 @@ public:
 
     friend std::istream &operator>>(std::istream &in, Game &ml);
 
+    int GetNumberOfPlayers();
+
+    void SetNumberOfPlayers(int numberOfPlayers_);
+
     Deck *CreateDeck();
 
     vector<Player*> CreatePlayers(int startingPoint);
@@ -37,5 +41,5 @@ public:
 
     bool CountControlledTerritories(vector<Player *> players, Map *map);
 
-    Map *SelectMap(bool &validMap);  // bool &validMap pass by reference
+    void SelectMap(Map *map, bool &validMap);  // bool &validMap pass by reference
 };
