@@ -98,7 +98,7 @@ public:
 
     void PaysCoinFromPlayer(int amountToPay);
 
-    void PlaceNewArmies(int numberOfArmiesToPlaced);
+    void PlaceNewArmies(int numberOfArmiesToPlace);
 
     void MoveArmiesForPlayer(int numberOfArmiesToMove);
 

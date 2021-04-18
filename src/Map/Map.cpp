@@ -131,6 +131,14 @@ std::map<std::string, bool> &Territory::GetHasCity() {
     return hasCityForPlayer;
 }
 
+/**
+ * get number of armies for player
+ * @return
+ */
+int Territory::GetNumberOfArmies(string playerName) {
+    return armySizeForPlayer[playerName];
+}
+
 // Public Methods
 void Territory::InsertNewArmyPlayerMapping(string playerName) {
     armySizeForPlayer.insert({playerName, 0});
@@ -146,10 +154,6 @@ void Territory::AddArmySizeForPlayer(string playerName, int amount) {
 
 void Territory::AddCityForPlayer(string playerName) {
     hasCityForPlayer[playerName] = true;
-}
-
-int Territory::GetNumberOfArmies(string playerName) {
-    return armySizeForPlayer[playerName];
 }
 
 void Territory::RemoveArmySizeForPlayer(string playerName, int amount) {
@@ -337,6 +341,15 @@ int Map::GetMapSize() {
  */
 int Map::GetStartingPoint() {
     return startingPoint;
+}
+
+/**
+ * Get the list of territories and their adjacencies
+ * @return
+ */
+typedef pair<Territory *, vector<Adjacency> *> terrInfo; // Need to redefine for return type in GetTerrAndAdjsList()
+vector<terrInfo> *Map::GetTerrAndAdjsList() {
+    return terrAndAdjsList;
 }
 
 // Mutators
@@ -531,9 +544,4 @@ bool Map::Validate() {
         }
     }
     return true;
-}
-
-typedef pair<Territory *, vector<Adjacency> *> terrInfo;
-vector<terrInfo>* Map::GetTerrAndAdjsList() {
-    return terrAndAdjsList;
 }

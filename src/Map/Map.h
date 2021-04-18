@@ -48,21 +48,21 @@ public:
 
     int GetContinent();
 
+    std::map<string, int> &GetArmySizeForPlayer();
+
+    std::map<string, bool> &GetHasCity();
+
     int GetNumberOfArmies(string playerName);
 
     bool HasCity(string playerName);
 
     bool HasArmies(string playerName);
 
-    std::map<string, int> &GetArmySizeForPlayer();
-
     void AddArmySizeForPlayer(string playerName, int amount);
 
     void RemoveArmySizeForPlayer(string playerName, int amount);
 
     void AddCityForPlayer(string playerName);
-
-    std::map<string, bool> &GetHasCity();
 
     void InsertNewArmyPlayerMapping(string playerName);
 
@@ -128,7 +128,7 @@ public:
 
     int GetMapSize();
 
-    vector<terrInfo>* GetTerrAndAdjsList();
+    vector<terrInfo> *GetTerrAndAdjsList();
 
     void SetStartingPoint(int terrId_);
 

@@ -26,6 +26,10 @@ Cards *Hand::GetActiveCard() {
     return activeCard;
 }
 
+int Hand::GetNumberOfCardsInHand() {
+    return hand->size();
+}
+
 // Mutators
 void Hand::SetActiveCard(Cards *card) {
     activeCard = new Cards(*card);
@@ -75,8 +79,4 @@ void Hand::Exchange(Deck *deck) {
     deck->GetFaceUpCards()->push_back(replacementCard);
 
     deck->SetFaceUpCardsCost();
-}
-
-int Hand::NumberOfCardsInHand() {
-    return hand->size();
 }

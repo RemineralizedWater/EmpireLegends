@@ -36,11 +36,15 @@ public:
 };
 
 class MapObserver : public Observer{
-public:
-    MapObserver(Map *subject_);
-    ~MapObserver();
-    void Update();
-    void Display();
 private:
     Map *subject;
+
+public:
+    MapObserver(Map *subject_);
+
+    ~MapObserver();
+
+    void Update();
+
+    void Display();
 };

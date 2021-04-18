@@ -247,7 +247,6 @@ bool Game::CountMoney(vector<Player *> players) {
 }
 
 Map *Game::SelectMap(bool &validMap) {
-
     std::string input;
     std::string file;
 

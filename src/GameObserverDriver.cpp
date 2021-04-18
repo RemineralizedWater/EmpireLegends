@@ -69,8 +69,8 @@ void GameObservers(Map *modelMap, Game *game){
 
     int index = 0;
     while (true) {
-
-        if(players[0]->MyHand->NumberOfCardsInHand() >= (int)(NUMBER_OF_ROUNDS_TO_PLAY/2) && players[1]->MyHand->NumberOfCardsInHand() >= (int)(NUMBER_OF_ROUNDS_TO_PLAY/2)){
+        if(players[0]->MyHand->GetNumberOfCardsInHand() >= (int)(NUMBER_OF_ROUNDS_TO_PLAY / 2) &&
+                players[1]->MyHand->GetNumberOfCardsInHand() >= (int)(NUMBER_OF_ROUNDS_TO_PLAY / 2)) {
             cout << "GAME OVER! " << NUMBER_OF_ROUNDS_TO_PLAY << " Rounds have been played" << endl;
             cout << "DISPLAY SCORES" << endl;
             break;

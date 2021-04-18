@@ -27,7 +27,7 @@ void PlayerObserver::Display() {
     int victoryPoints = subject->GetVictoryPoints();
     int cities = subject->GetCitiesDisks(); // disks
     int money = subject->GetMoney();
-    Map* modelMap = subject->GetMap();
+    Map *modelMap = subject->GetMap();
     cout << "__________________________________________________________________________" << endl;
     cout << "Player: " + playerName + " has " +
         to_string(money) + " money left, and " +
@@ -55,7 +55,7 @@ void PlayerObserver::Display() {
     }
 
     cout << playerName + "\'s Hand: " << endl;
-    if(!subject->MyHand->GetHand()->empty()){
+    if (!subject->MyHand->GetHand()->empty()) {
         for (int i = 0; i < subject->MyHand->GetHand()->size(); i++)
             cout << (i + 1) << ". " << subject->MyHand->GetHand()->at(i);
     } else {
@@ -94,14 +94,16 @@ void DeckObserver::Display() {
 }
 
 // MAP OBSERVER
+// Constructor
 MapObserver::MapObserver(Map *subject_){
     subject = subject_;
     subject_->Attach(this);
 }
 
+// Destructor
 MapObserver::~MapObserver() {
     subject->Detach(this);
-    if(subject != nullptr){
+    if (subject != nullptr) {
         delete subject;
         subject = nullptr;
     }
@@ -114,4 +116,3 @@ void MapObserver::Update() {
 void MapObserver::Display() {
     subject->Display();
 }
-

@@ -50,12 +50,16 @@ int main() {
     }
 
     controllerMap->ControlMap();
+
     // Main Game Loop
     MainGameLoop(modelMap, validMap, game);
 
+    // Memory clean up
     if(modelMap != nullptr){
         delete modelMap;
         modelMap = nullptr;
+        viewMap = nullptr;
+        controllerMap = nullptr;
     }
     if(game != nullptr){
         delete game;

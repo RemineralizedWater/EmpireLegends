@@ -26,6 +26,8 @@ public:
 
     Cards *GetActiveCard();
 
+    int GetNumberOfCardsInHand();
+
     void SetActiveCard(Cards *card);
 
     void SetOwningPlayer(Player *owningPlayer);
@@ -33,6 +35,4 @@ public:
     void AddToHand(Cards card);
 
     void Exchange(Deck *deck);
-
-    int NumberOfCardsInHand();
 };

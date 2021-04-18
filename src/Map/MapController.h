@@ -1,4 +1,5 @@
 #pragma once
+
 #include "../GameObservers.h"
 #include "Map.h"
 
@@ -9,5 +10,6 @@ private:
 
 public:
     MapController(MapObserver *newView, Map *newModel);
+
     void ControlMap();
 };
