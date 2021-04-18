@@ -40,10 +40,10 @@ void DemonstrateA3Part1(){
                        0,
                        0
             ));
-    player1->Hands->SetOwningPlayer(player1);
+    player1->MyHand->SetOwningPlayer(player1);
     player1->SetStrategy(greedy);
 
-    player2->Hands->SetOwningPlayer(player2);
+    player2->MyHand->SetOwningPlayer(player2);
     player2->SetStrategy(human);
 
 

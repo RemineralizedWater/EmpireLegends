@@ -9,6 +9,7 @@
 #include <random>
 #include "Deck.h"
 
+// Constructors
 Deck::Deck() {
     Deck(2);
 }
@@ -133,11 +134,17 @@ Deck::Deck(int numberOfPlayers) {
     }
 }
 
-void Deck::ShuffleDeck() {
-
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-
-    shuffle(deck->begin(), deck->end(), std::default_random_engine(seed));
+// Destructor
+Deck::~Deck()
+{
+    if (deck != nullptr) {
+        delete deck;
+        deck = nullptr;
+    }
+    if (faceUpCards != nullptr) {
+        delete faceUpCards;
+        faceUpCards = nullptr;
+    }
 }
 
 // Accessors
@@ -149,22 +156,7 @@ vector<Cards> *Deck::GetFaceUpCards() {
     return faceUpCards;
 }
 
-void Deck::PopulateFaceUpCards() {
-    for(int i = 0; i < 6; i++) {
-        Cards drawnCard = deck->back();
-        deck->pop_back();
-        faceUpCards->push_back(drawnCard);
-    }
-        SetFaceUpCardsCost();
-}
-
-void Deck::PrintCardsIn(vector<Cards> *vectorOfCards) {
-
-    for (int i = 0; i < vectorOfCards->size(); i++) {
-        cout << (i + 1) << ". " << vectorOfCards->at(i);
-    }
-}
-
+// Mutators
 void Deck::SetFaceUpCardsCost() {
     int count = 0;
     int cost = 0;
@@ -192,19 +184,25 @@ void Deck::SetFaceUpCardsCost() {
         }
         faceUpCards->at(i).SetCost(cost);
     }
+    Notify();
 }
 
-Deck::~Deck()
-{
+void Deck::ShuffleDeck() {
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    shuffle(deck->begin(), deck->end(), std::default_random_engine(seed));
+}
 
-    if (deck != nullptr) {
-        delete deck;
-        deck = nullptr;
+void Deck::PopulateFaceUpCards() {
+    for(int i = 0; i < 6; i++) {
+        Cards drawnCard = deck->back();
+        deck->pop_back();
+        faceUpCards->push_back(drawnCard);
     }
+    SetFaceUpCardsCost();
+}
 
-
-    if (faceUpCards != nullptr) {
-        delete faceUpCards;
-        faceUpCards = nullptr;
+void Deck::PrintCardsIn(vector<Cards> *vectorOfCards) {
+    for (int i = 0; i < vectorOfCards->size(); i++) {
+        cout << (i + 1) << ". " << vectorOfCards->at(i);
     }
 }

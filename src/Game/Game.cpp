@@ -3,7 +3,6 @@
 //
 #include <iostream>
 #include "Game.h"
-#include "../BiddingFacility/BiddingFacility.h"
 
 /**
  * Default constructor
@@ -32,7 +31,7 @@ Game::~Game() {
  * Copy Constructor
  * @param copy
  */
-Game::Game(Game &copy) {
+Game::Game(const Game &copy) {
     this->numberOfPlayers = copy.numberOfPlayers;
 }
 
@@ -57,7 +56,7 @@ std::ostream &operator<<(std::ostream &out, const Game &gs) {
     return out;
 }
 
-std::istream &operator>>(std::istream &in, Game &gs){
+std::istream &operator>>(std::istream &in, Game &gs) {
     std::cout << "Enter number of players" << std::endl;
     in >> gs.numberOfPlayers;
     return in;
@@ -65,7 +64,6 @@ std::istream &operator>>(std::istream &in, Game &gs){
 
 vector<Player *> Game::CreatePlayers(int startingPoint) {
     vector<Player *> players;
-    Player *ptr;  // TODO REMOVE?
 
     for (int i = 0; i < numberOfPlayers;i++) {
         Player *player(
@@ -84,7 +82,7 @@ vector<Player *> Game::CreatePlayers(int startingPoint) {
                            true,
                            0,
                            0));
-        player->Hands->SetOwningPlayer(player);
+        player->MyHand->SetOwningPlayer(player);
         player->GetBiddingFacility()->SetOwningPlayer(player);
 
         cout << "Providing player 18 coins.." << endl;
@@ -188,7 +186,7 @@ bool Game::CountArmies(vector<Player *> players, Map *map) {
     //counting total armies for each player from board
     std::map<int, int> playersAndArmies;
     for (int i = 1; i < (map->GetMapSize() + 1); i++) {
-        Territory* temp = map->FindTerritory(i);
+        Territory *temp = map->FindTerritory(i);
         for (int k = 0; k < numberOfPlayers; k++) {
             if (playersAndArmies.find(k) != playersAndArmies.end()) {
                 playersAndArmies[k] = (playersAndArmies[k] + temp->GetArmySizeForPlayer()[players[k]->GetName()]);
@@ -202,7 +200,7 @@ bool Game::CountArmies(vector<Player *> players, Map *map) {
     //comparing results or army counts on board for each player to get player with most armies
     std::map<int, int>::iterator playersAndArmiesIt;
     for (playersAndArmiesIt = playersAndArmies.begin(); playersAndArmiesIt != playersAndArmies.end(); playersAndArmiesIt++) {
-        if (maxArmies == playersAndArmiesIt->second){
+        if (maxArmies == playersAndArmiesIt->second) {
             ties++;
         }
         if (maxArmies<playersAndArmiesIt->second) {

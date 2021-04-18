@@ -21,7 +21,7 @@ void HumanStrategy::Execute(Deck* deck,Player* player) {
             cin >> positionToPickUp;
             continue;
         }
-        enoughMoney=player->Hands->ExchangeWithoutPrompt(deck,positionToPickUp);
+        enoughMoney=player->MyHand->ExchangeWithoutPrompt(deck,positionToPickUp);
         if(!enoughMoney){
             cout << "Player does not have enough money to buy this card. Please select another." << endl;
             cin >> positionToPickUp;
@@ -69,7 +69,7 @@ void GreedyComputerStrategy::Execute(Deck* deck,Player* player) {
 
     bool enoughMoney=false;
     while(!enoughMoney){
-        enoughMoney=player->Hands->ExchangeWithoutPrompt(deck,positionToPickUp);
+        enoughMoney=player->MyHand->ExchangeWithoutPrompt(deck,positionToPickUp);
         if(!enoughMoney){
             positionToPickUp=rand() % deck->GetFaceUpCards()->size() + 1; ;
             continue;
@@ -107,7 +107,7 @@ void ModerateComputerStrategy::Execute(Deck* deck,Player* player) {
 
     bool enoughMoney=false;
     while(!enoughMoney){
-        enoughMoney=player->Hands->ExchangeWithoutPrompt(deck,positionToPickUp);
+        enoughMoney=player->MyHand->ExchangeWithoutPrompt(deck,positionToPickUp);
         if(!enoughMoney){
             positionToPickUp=rand() % deck->GetFaceUpCards()->size() + 1; ;
             continue;

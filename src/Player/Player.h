@@ -1,6 +1,3 @@
-#ifndef EMPIRELEGENDS_PLAYER_H
-#define EMPIRELEGENDS_PLAYER_H
-
 # pragma once
 
 #include <string>
@@ -12,6 +9,7 @@
 #include "../Cards/Hand.h"
 #include "../Cards/Deck.h"
 #include "PlayerStrategies.h"
+#include "../Subject.h"
 
 using namespace std;
 
@@ -21,7 +19,7 @@ class PlayerStrategies;
 
 class BiddingFacility;
 
-class Player {
+class Player: public Subject {
 private:
     string region;
     BiddingFacility *biddingFacility;
@@ -42,20 +40,20 @@ private:
 public:
     static int Supply;
 
-    Hand *Hands;
+    Hand *MyHand;
 
     Player();
 
     Player(string region_, BiddingFacility *biddingFacility_, Territory &territory_,
            Cards &cards_, int tokenArmies_,
-           int cubes_, int disks_, Hand *hand_, int money_, string name_,
+           int cubes_, int disks_, Hand *myHand_, int money_, string name_,
            int totalMovementPointsForRound_, int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_, int elixirs_);
 
-    Player(Player &playerToCopy);
+    Player(const Player &playerToCopy);
 
     ~Player();
 
-    Player &operator=(const Player &playerToCopy);
+    Player &operator=(Player &playerToCopy);
 
     friend std::istream &operator>>(std::istream &is, Player &player);
 
@@ -81,7 +79,7 @@ public:
 
     void SetVictoryPoints(int points);
 
-    void SetName(string name_);
+    void SetName(string name_); // Notify();
 
     void SetCostOverWater(int costToMoveOverWater_);
 
@@ -134,6 +132,3 @@ public:
 };
 
 std::istream &operator>>(std::istream &is, Player &player);
-
-#endif //EMPIRELEGENDS_PLAYER_H
-

@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <vector>
 #include "Cards.h"
@@ -7,8 +6,6 @@
 using namespace std;
 
 void DemonstrateCards(int numberOfPlayers) {
-
-
     std::unique_ptr<Player> player(
             new Player("Montreal",
                        new BiddingFacility(),
@@ -35,15 +32,18 @@ void DemonstrateCards(int numberOfPlayers) {
     cout << "Cards in Face Up Pile:" << endl;
     deck->PrintCardsIn((deck->GetFaceUpCards()));
 
-    player->Hands->Exchange(deck);
+    player->MyHand->Exchange(deck);
 
     cout << "Cards in deck: " << endl;
     deck->PrintCardsIn(deck->GetDeck());
     cout << "Cards in Face Up Pile:" << endl;
     deck->PrintCardsIn((deck->GetFaceUpCards()));
-    cout << "Cards in player hand:" << endl;
-    deck->PrintCardsIn(player->Hands->GetHand());
+    cout << "Cards in player MyHand:" << endl;
+    deck->PrintCardsIn(player->MyHand->GetHand());
 
-    delete deck;
-    deck = nullptr;
+    // Memory clean up
+    if (deck != nullptr) {
+        delete deck;
+        deck = nullptr;
+    }
 }

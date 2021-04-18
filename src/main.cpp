@@ -1,9 +1,6 @@
-
 #include <iostream>
 #include <limits>
 #include "Game/Game.h"
-#include "Map/Map.h"
-
 
 using namespace std;
 
@@ -33,8 +30,10 @@ void DemonstrateA3Part1();
 
 void MainGameLoop(Map *map, bool validMap);
 
+void GameObservers();
+
 int main() {
-   Game *game;
+    Game *game;
     Map *map;
     int numberOfPlayers = 0;
 
@@ -62,10 +61,13 @@ int main() {
     // Main Game Loop
     MainGameLoop(map, validMap);
 
-    delete map;
-    map = nullptr;
-    delete game;
-    game = nullptr;
+    // Memory clean up
+    if (map != nullptr) {
+        delete map;
+        map = nullptr;}
+    if (game != nullptr) {
+        delete game;
+        game = nullptr;}
     return 0;
 }
 

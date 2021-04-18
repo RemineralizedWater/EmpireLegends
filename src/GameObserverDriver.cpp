@@ -1,12 +1,12 @@
-#include "Player/Player.h"
 #include <memory>
 #include <sstream>
-#include "Cards/Deck.h"
-#include "GameObservers.h"
+#include "Player/Player.h"
 #include "Player/PlayerController.h"
+#include "Cards/Deck.h"
+#include "Cards/DeckController.h"
+#include "GameObservers.h"
 
-void DemonstrateA2Part3() {
-
+void GameObservers(Map map) {
 
     // Player 1 Setup
     Player *modelPlayer1(new Player());
@@ -32,27 +32,21 @@ void DemonstrateA2Part3() {
 
     Player *players[2] = {modelPlayer1, modelPlayer2};
 
+
     cout << "Creating deck.." << endl;
-    Deck *deck = new Deck(2);
-    cout << "Populating Face Up Cards.." << endl;
-    deck->PopulateFaceUpCards();
-    cout << "Cards in deck: " << endl;
-    deck->PrintCardsIn(deck->GetDeck());
-    cout << "Cards in Face Up Pile:" << endl;
-    deck->PrintCardsIn((deck->GetFaceUpCards()));
+    Deck *modelDeck = new Deck(2);
+    DeckObserver *viewDeck = new DeckObserver(modelDeck);
+    DeckController *controllerDeck = new DeckController(viewDeck, modelDeck);
+
+    controllerDeck->ControlDeck();
 
     int index = 0;
     while (true) {
         cout << "======== " << players[index]->GetName() << "'s TURN ========" << endl;
-        players[index]->MyHand->Exchange(deck);
+        players[index]->MyHand->Exchange(modelDeck);
         players[index]->ResolveActiveCard();
-
-        cout << "Cards in deck: " << endl;
-        deck->PrintCardsIn(deck->GetDeck());
-        cout << "Cards in Face Up Pile:" << endl;
-        deck->PrintCardsIn((deck->GetFaceUpCards()));
-        cout << "Cards in " << players[index]->GetName() << "'s MyHand:" << endl;
-        deck->PrintCardsIn(players[index]->MyHand->GetHand());
+        //players[index]->ComputeScore(index, players, map)
+        //players[0]->ComputeScore(0, players, map);
 
         if (index == 0) index = 1;
         else index = 0;
@@ -66,6 +60,12 @@ void DemonstrateA2Part3() {
     }
 
     // Memory clean up
+    if (controllerDeck != nullptr && viewDeck != nullptr && modelDeck != nullptr) {
+        delete controllerDeck;
+        controllerDeck = nullptr;
+        viewDeck = nullptr;
+        modelDeck = nullptr;
+    }
     if (controllerPlayer1 != nullptr && viewPlayer1 != nullptr && modelPlayer1 != nullptr) {
         delete controllerPlayer1;
         controllerPlayer1 = nullptr;
@@ -78,6 +78,4 @@ void DemonstrateA2Part3() {
         viewPlayer2 = nullptr;
         modelPlayer2 = nullptr;
     }
-
-    return;
 }
