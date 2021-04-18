@@ -9,7 +9,8 @@ void DemonstrateA2Part1() {
 
     Game *starter = new Game(2);
     bool validMap = false;
-    Map *map= starter->SelectMap(validMap);
+    Map *map = new Map();
+    starter->SelectMap(map, validMap);
 
     if (validMap) {
         cout << "Starting point token: " << map->GetStartingPoint() << endl;

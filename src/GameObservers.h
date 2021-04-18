@@ -35,7 +35,7 @@ public:
     void Display();
 };
 
-class MapObserver : public Observer{
+class MapObserver : public Observer {
 private:
     Map *subject;
 

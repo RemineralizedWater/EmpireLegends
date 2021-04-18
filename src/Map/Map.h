@@ -10,11 +10,7 @@
 #include "memory"
 #include "../Subject.h"
 
-using std::vector;
-using std::pair;
-using std::cout;
-using std::endl;
-using std::string;
+using namespace std;
 
 class Territory {
 private:
@@ -124,17 +120,21 @@ public:
 
     friend std::istream &operator>>(std::istream &in, Map &m);
 
+    bool GetIsRectangle();
+
     int GetStartingPoint();
 
     int GetMapSize();
+
+    void SetIsRectangle(bool rectangle_);
 
     vector<terrInfo> *GetTerrAndAdjsList();
 
     void SetStartingPoint(int terrId_);
 
-    bool AddTerritory(Territory *t);
+    bool AddTerritory(int terrId, int continentId);
 
-    bool AddAdjacency(Territory *t, Adjacency *a);
+    bool AddAdjacency(int terrId, int adjId_, bool isLandRoute_);
 
     void RemoveAdjacency(int adjId_);
 

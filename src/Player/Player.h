@@ -8,11 +8,14 @@
 #include "../Cards/Cards.h"
 #include "../Cards/Hand.h"
 #include "../Cards/Deck.h"
+#include "PlayerStrategies.h"
 #include "../Subject.h"
 
 using namespace std;
 
 class Hand;
+
+class PlayerStrategies;
 
 class BiddingFacility;
 
@@ -20,6 +23,7 @@ class Player: public Subject {
 private:
     string region;
     BiddingFacility *biddingFacility;
+    PlayerStrategies *playerStrategies;
     std::unique_ptr<Territory> territory;
     std::unique_ptr<Cards> cards;
     int tokenArmies;
@@ -46,7 +50,7 @@ public:
     Player(string region_, BiddingFacility *biddingFacility_, Territory &territory_, Cards &cards_,
            int tokenArmies_, int cubes_, int disks_, Hand *myHand_, int money_, string name_,
            int totalMovementPointsForRound_, int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_,
-           int elixirs_, Map *map);
+           int elixirs_, Map *map_);
 
     Player(const Player &playerToCopy);
 
@@ -94,6 +98,8 @@ public:
 
     void SetMap(Map *map_);
 
+    void SetStrategy(PlayerStrategies *newPlayerStrategy);
+
     void RequestPlayerName();
 
     void PaysCoinFromPlayer(int amountToPay);
@@ -127,6 +133,8 @@ public:
     void CheckForMostElixirsForPlayer(int currentPlayerIndex, vector<Player *> players);
 
     void ApplyAbility();
+
+    void ExecuteStrategy(Deck* deck);
 
 };
 

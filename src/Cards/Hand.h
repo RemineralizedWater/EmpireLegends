@@ -35,4 +35,6 @@ public:
     void AddToHand(Cards card);
 
     void Exchange(Deck *deck);
+
+    bool ExchangeWithoutPrompt(Deck *deck, int positionToPickUp);
 };

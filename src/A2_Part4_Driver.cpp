@@ -24,12 +24,12 @@ void DemonstrateA2Part4() {
                                                    new Map()));
 
 
-    std::unique_ptr<std::map<std::string, int>> armySizeForPlayer(new std::map<std::string, int>());
-    std::unique_ptr<std::map<std::string, bool>> hasArmy(new std::map<std::string, bool>());
+    std::unique_ptr<std::map<string, int>> armySizeForPlayer(new std::map<string, int>());
+    std::unique_ptr<std::map<string, bool>> hasArmy(new std::map<string, bool>());
     Territory territoryToTest(rand(), rand(), *armySizeForPlayer, *hasArmy);
 
-    std::unique_ptr<std::map<std::string, int>> map1(new std::map<std::string, int>());
-    std::unique_ptr<std::map<std::string, bool>> map2(new std::map<std::string, bool>());
+    std::unique_ptr<std::map<string, int>> map1(new std::map<string, int>());
+    std::unique_ptr<std::map<string, bool>> map2(new std::map<string, bool>());
     Territory territoryToTest2(rand(), rand(), *map1, *map2);
 
 
