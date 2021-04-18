@@ -46,6 +46,7 @@ Player::Player(string region_,
           canBeAttacked(canBeAttacked_),
           victoryPoints(victoryPoints_),
           elixirs(elixirs_) {
+    this->playerStrategies=new HumanStrategy();
 }
 
 //Copy constructor
@@ -63,7 +64,7 @@ Player::Player(Player &playerToCopy)
           costToMoveOverWater(playerToCopy.costToMoveOverWater),
           victoryPoints(playerToCopy.victoryPoints),
           elixirs(playerToCopy.elixirs),
-          canBeAttacked(playerToCopy.canBeAttacked) {
+          canBeAttacked(playerToCopy.canBeAttacked){
 }
 
 //Destructor
@@ -631,4 +632,13 @@ void Player::ComputeScore(int currentPlayerIndex, vector<Player *> players, Map 
             victoryPoints += 1;
         }
     }
+}
+
+void Player::SetStrategy(PlayerStrategies *newPlayerStrategy) {
+    this->playerStrategies=newPlayerStrategy;
+}
+
+void Player::ExecuteStrategy(Deck *deck) {
+    cout << "======== " << this->GetName() << "'s TURN ========" << endl;
+    this->playerStrategies->Execute(deck,this);
 }

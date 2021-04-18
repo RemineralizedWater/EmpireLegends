@@ -29,11 +29,12 @@ void DemonstrateA2Part6();
 
 void DemonstrateA2BiddingFacility();
 
+void DemonstrateA3Part1();
+
 void MainGameLoop(Map *map, bool validMap);
 
 int main() {
-
-    Game *game;
+   Game *game;
     Map *map;
     int numberOfPlayers = 0;
 
@@ -65,7 +66,6 @@ int main() {
     map = nullptr;
     delete game;
     game = nullptr;
-
     return 0;
 }
 
@@ -74,7 +74,7 @@ void MainGameLoop(Map *map, bool validMap) {
 
     while (true) {
         cout << endl << "What would you like to test:" << endl;
-        cout << "1 - Part 1: Game start " << endl;
+        cout << "1 - Part 1: Player Strategy Pattern " << endl;
         cout << "2 - Part 2: Game play: startup phase" << endl;
         cout << "3 - Part 3: Game play: main game loop" << endl;
         cout << "4 - Part 4: Main game loop: The player actions" << endl;
@@ -98,7 +98,7 @@ void MainGameLoop(Map *map, bool validMap) {
                     cout << "Starting point token: " << map->GetStartingPoint() << endl;
                     map->Display();
                 }
-                DemonstrateA2Part1();
+                DemonstrateA3Part1();
                 break;
             case 2:
                 DemonstrateA2Part2();

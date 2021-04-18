@@ -24,6 +24,7 @@ public:
     ~Hand();
     void AddToHand(Cards card);
     void Exchange(Deck* deck);
+    bool ExchangeWithoutPrompt(Deck* deck,int positionToPickUp);
     vector<Cards>* GetHand();
     Cards* GetActiveCard();
     void SetActiveCard(Cards* card);

@@ -11,10 +11,13 @@
 #include "../Cards/Cards.h"
 #include "../Cards/Hand.h"
 #include "../Cards/Deck.h"
+#include "PlayerStrategies.h"
 
 using namespace std;
 
 class Hand;
+
+class PlayerStrategies;
 
 class BiddingFacility;
 
@@ -22,6 +25,7 @@ class Player {
 private:
     string region;
     BiddingFacility *biddingFacility;
+    PlayerStrategies *playerStrategies;
     std::unique_ptr<Territory> territory;
     std::unique_ptr<Cards> cards;
     int tokenArmies;
@@ -122,6 +126,10 @@ public:
     void CheckForMostElixirsForPlayer(int currentPlayerIndex, vector<Player *> players);
 
     void ApplyAbility();
+
+    void SetStrategy(PlayerStrategies *newPlayerStrategy);
+
+    void ExecuteStrategy(Deck* deck);
 
 };
 

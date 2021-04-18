@@ -43,6 +43,39 @@ void Hand::Exchange(Deck* deck) {
 
     deck->SetFaceUpCardsCost();
 }
+bool Hand::ExchangeWithoutPrompt(Deck *deck,int positionToPickUp) {
+    int index = positionToPickUp - 1;
+
+    while(true){
+        if(owningPlayer->GetMoney() >= deck->GetFaceUpCards()->at(index).GetCost()){
+            break;
+        }else{
+            return false;
+        }
+    }
+
+    Cards drawnCard = deck->GetFaceUpCards()->at(index);
+    AddToHand(drawnCard);
+    cout << "----------------------------------------" <<endl;
+    cout << "Picked up " << drawnCard << " from position: " << positionToPickUp <<endl;
+    cout << "----------------------------------------" <<endl;
+
+    owningPlayer->PaysCoinFromPlayer(drawnCard.GetCost());
+
+    //reorganize cards in faceup pile
+    for(int i = index; i < deck->GetFaceUpCards()->size() - 1; i++){
+        deck->GetFaceUpCards()->at(i) = deck->GetFaceUpCards()->at(i + 1);
+    }
+    // remove last card (is a duplicate)
+    deck->GetFaceUpCards()->pop_back();
+
+    Cards replacementCard = deck->GetDeck()->back();
+    deck->GetDeck()->pop_back();
+    deck->GetFaceUpCards()->push_back(replacementCard);
+
+    deck->SetFaceUpCardsCost();
+    return true;
+}
 
 Hand::Hand() {
     hand = new vector<Cards>();

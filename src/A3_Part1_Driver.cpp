@@ -1,0 +1,73 @@
+#include "Player/Player.h";
+#include "Player/PlayerStrategies.h";
+
+void DemonstrateA3Part1(){
+    PlayerStrategies* greedy= new GreedyComputerStrategy();
+    PlayerStrategies* human= new HumanStrategy();
+    PlayerStrategies* moderate=new ModerateComputerStrategy();
+
+    Player *player1(
+            new Player("Montreal",
+                       new BiddingFacility(),
+                       *(new Territory()),
+                       *(new Cards()),
+                       0,
+                       1,
+                       0,
+                       new Hand(),
+                       20,
+                       "Player 1",
+                       0,
+                       3,
+                       true,
+                       0,
+                       0
+            ));
+    Player *player2(
+            new Player("Montreal",
+                       new BiddingFacility(),
+                       *(new Territory()),
+                       *(new Cards()),
+                       0,
+                       1,
+                       0,
+                       new Hand(),
+                       20,
+                       "Player 2",
+                       0,
+                       3,
+                       true,
+                       0,
+                       0
+            ));
+    player1->Hands->SetOwningPlayer(player1);
+    player1->SetStrategy(greedy);
+
+    player2->Hands->SetOwningPlayer(player2);
+    player2->SetStrategy(human);
+
+
+    cout << "Creating deck.." << endl;
+    Deck* deck = new Deck(2);
+    cout << "Populating Face Up Cards.." << endl;
+    deck->PopulateFaceUpCards();
+
+    player1->ExecuteStrategy(deck);
+    player2->ExecuteStrategy(deck);
+
+    player2->SetStrategy(moderate);
+    player2->ExecuteStrategy(deck);
+
+    delete greedy;
+    greedy= nullptr;
+    delete moderate;
+    moderate= nullptr;
+    delete human;
+    human= nullptr;
+    delete player1;
+    player1= nullptr;
+    delete player2;
+    player2= nullptr;
+    delete deck;
+    deck= nullptr;
+}
