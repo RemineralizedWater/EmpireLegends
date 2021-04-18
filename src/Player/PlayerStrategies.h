@@ -22,7 +22,7 @@ public:
 
     ~HumanStrategy();
 
-    void Execute(Deck *deck,Player *player);
+    void Execute(Deck *deck, Player *player);
 
     string GetStrategyName() override;
 };

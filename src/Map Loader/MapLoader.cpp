@@ -84,7 +84,7 @@ std::istream &operator>>(std::istream &in, MapLoader &ml) {
  * @return
  */
 bool MapLoader::IsRectangle() {
-    string input;
+    string input = "";
     cout << "Board Layouts:\n1) Rectangular \n2) L-Shape \nEnter the chosen Board Layout (1 or 2):";
     cin >> input;
     while (true) {
@@ -112,9 +112,9 @@ bool MapLoader::IsRectangle() {
 void MapLoader::LoadMap(Map *map, string file, bool &validMap) {  // bool &validMap pass by reference
     mapFilePath = file;
     cout << "***** Reading from map file " << mapFilePath << endl;
-    std::fstream input(file);
-    string line;
-    string adjacency;
+    fstream input(file);
+    string line = "";
+    string adjacency = "";
     int mapBoardCount = 0;
     bool isConfigured = false;
     bool startingPointFound = false;
@@ -122,6 +122,7 @@ void MapLoader::LoadMap(Map *map, string file, bool &validMap) {  // bool &valid
     if (!input) {
         cout << "No file found!" << endl;
         validMap = false;
+        fstream close(file);
         return;
     }
 
@@ -131,6 +132,7 @@ void MapLoader::LoadMap(Map *map, string file, bool &validMap) {  // bool &valid
         if (!startingPointFound) {
             int startingPoint = 0;
             if (!VerifyId(line, startingPoint, "Territory name must be a number", "Territory name is too long")) {
+                fstream close(file);
                 return;
             }
             startingPointFound = true;
@@ -151,6 +153,7 @@ void MapLoader::LoadMap(Map *map, string file, bool &validMap) {  // bool &valid
         }
         //stop reading file if end of specified map shape
         if (isConfigured && line == "}") {
+            fstream close(file);
             break;
         }
 
@@ -159,6 +162,7 @@ void MapLoader::LoadMap(Map *map, string file, bool &validMap) {  // bool &valid
             if (line == "-") {
                 mapBoardCount++;
                 if (mapBoardCount == numberOfBoardPieces) {
+                    fstream close(file);
                     break;
                 }
                 else {
@@ -171,6 +175,7 @@ void MapLoader::LoadMap(Map *map, string file, bool &validMap) {  // bool &valid
             if (!VerifyId(line.substr(currentCharIndex, line.find("|", currentCharIndex) - currentCharIndex), continentId,
                           "Continent name must be a number", "Continent name is too long")) {
                 validMap = false;
+                fstream close(file);
                 return;
             }
 
@@ -184,17 +189,19 @@ void MapLoader::LoadMap(Map *map, string file, bool &validMap) {  // bool &valid
             if (!VerifyId(line.substr(currentCharIndex, line.find("|", currentCharIndex) - currentCharIndex), terrId,
                           "Territory name must be a number", "Territory name is too long")) {
                 validMap = false;
+                fstream close(file);
                 return;
             }
             const std::map<string, int> armySizeForPlayer;
             const std::map<string, bool> hasCityForPlayer;
-            //if (!map->AddTerritory(new Territory(terrId, continentId, armySizeForPlayer, hasCityForPlayer))) {
-            if (!map->AddTerritory(terrId, continentId)) {
+            if (!map->AddTerritory(terrId, continentId)) { // TODO SEGFAULT
                 validMap = false;
+                fstream close(file);
                 return;
             }
             if (!CheckNextFieldExists(line, currentCharIndex)) {
                 validMap = false;
+                fstream close(file);
                 return;
             }
 
@@ -203,11 +210,13 @@ void MapLoader::LoadMap(Map *map, string file, bool &validMap) {  // bool &valid
             if (line.at(currentCharIndex) != '(') {
                 cout << "Invalid format" << endl;
                 validMap = false;
+                fstream close(file);
                 return;
             }
             adjacency = line.substr(currentCharIndex, line.size() - 1);
             if (!ParseAdjacency(map, adjacency, terrId, continentId)) {
                 validMap = false;
+                fstream close(file);
                 return;
             }
         }
@@ -217,19 +226,23 @@ void MapLoader::LoadMap(Map *map, string file, bool &validMap) {  // bool &valid
     if (!isConfigured) {
         cout << "Invalid Map! There is no isConfigured for the shape of the map selected in map file" << endl;
         validMap = false;
+        fstream close(file);
         return;
     }
     if (mapBoardCount != numberOfBoardPieces) {
         cout << "Invalid Map! Map must have " << numberOfBoardPieces << " boards pieces" << endl;
         validMap = false;
+        fstream close(file);
         return;
     }
     //Validate the values in map
     if (!map->Validate()) {
         validMap = false;
+        fstream close(file);
         return;
     }
     validMap = true;
+    fstream close(file);
     return;
 }
 

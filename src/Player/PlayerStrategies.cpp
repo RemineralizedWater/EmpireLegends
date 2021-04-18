@@ -3,7 +3,7 @@
 // HUMANSTRATEGY METHODS
 // Constructor
 HumanStrategy::HumanStrategy() {
-    this->strategyName="Human Player";
+    strategyName = "Human Player";
 }
 
 // Destructor

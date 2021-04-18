@@ -231,7 +231,7 @@ void Player::SetCitiesDisks(int numberOfDisks) {
 }
 
 void Player::SetStrategy(PlayerStrategies *newPlayerStrategy) {
-    this->playerStrategies = newPlayerStrategy;
+    playerStrategies = newPlayerStrategy;
 }
 
 //Successfully pays coin and withdraws money from said player account
