@@ -113,3 +113,7 @@ bool Hand::ExchangeWithoutPrompt(Deck *deck, int positionToPickUp) {
     deck->SetFaceUpCardsCost();
     return true;
 }
+
+string Hand::GetOwningPlayerName() {
+    return owningPlayer->GetName();
+}

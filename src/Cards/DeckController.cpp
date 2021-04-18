@@ -1,7 +1,3 @@
-//
-// Created by Wayne on 4/17/2021.
-//
-
 #include "DeckController.h"
 
 DeckController::DeckController(DeckObserver *newView, Deck *newModel) {
@@ -10,6 +6,6 @@ DeckController::DeckController(DeckObserver *newView, Deck *newModel) {
 }
 
 void DeckController::ControlDeck() {
-    cout << "- - - - - - - - - - - - POPULATING FACE UP CARDS - - - - - - - - - - - -" << endl;
+    cout << "Populating Face-Up Cards.." << endl;
     deckModel->PopulateFaceUpCards();
 }
