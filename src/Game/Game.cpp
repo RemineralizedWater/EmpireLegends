@@ -79,9 +79,6 @@ void Game::SetNumberOfPlayers(int numberOfPlayers_) {
 //TODO; remove starting point parameter
 vector<Player *> Game::CreatePlayers(int startingPoint) {
     vector<Player *> players;
-    BiddingFacility *tempBiddingFacility;
-    tempBiddingFacility->ReceiveStartingCoins(numberOfPlayers);
-
     for (int i = 0; i < numberOfPlayers; i++) {
         Player *player(
                 new Player(to_string(map->GetStartingPoint()),
@@ -105,7 +102,13 @@ vector<Player *> Game::CreatePlayers(int startingPoint) {
         player->MyHand->SetOwningPlayer(player);
         player->GetBiddingFacility()->SetOwningPlayer(player);
         player->SetName("Player"+to_string(i+1));
-        player->SetMoney(tempBiddingFacility->GetCoins());
+
+        int coins = 0;
+        if (numberOfPlayers == 2) coins = 14;
+        else if (numberOfPlayers == 3) coins = 11;
+        else if (numberOfPlayers == 4) coins = 9;
+
+        player->SetMoney(coins);
         player->SetArmiesTokens(18);
         player->SetCitiesDisks(3);
         players.push_back(player);
