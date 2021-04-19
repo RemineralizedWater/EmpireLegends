@@ -79,12 +79,7 @@ void Game::SetNumberOfPlayers(int numberOfPlayers_) {
 //TODO; remove starting point parameter
 vector<Player *> Game::CreatePlayers(int startingPoint) {
     vector<Player *> players;
-<<<<<<< HEAD
-=======
-    BiddingFacility *tempBiddingFacility;
-    tempBiddingFacility->ReceiveStartingCoins(numberOfPlayers);
 
->>>>>>> 6b10c4f00012be31b4c638911e0d0cced5bfd041
     for (int i = 0; i < numberOfPlayers; i++) {
         Player *player(
                 new Player(to_string(map->GetStartingPoint()),
