@@ -32,13 +32,13 @@ public:
 
     Deck *CreateDeck();
 
-    vector<Player*> CreatePlayers(int startingPoint);
+    vector<Player *> CreatePlayers(int startingPoint);
 
     bool Tied(vector<Player *> players, int &winner);  // TODO, WHY int &winner?
 
-    bool CountMoney(vector<Player *>players);
+    bool CountMoney(vector<Player *> players);
 
-    bool CountArmies(vector<Player *>players, Map *map);
+    bool CountArmies(vector<Player *> players, Map *map);
 
     bool CountControlledTerritories(vector<Player *> players, Map *map);
 

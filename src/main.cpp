@@ -3,13 +3,8 @@
 #include "Game/Game.h"
 #include "GameObservers.h"
 #include "Map/MapController.h"
-#include "Map/Map.h"
-#include "Player/Player.h"
-#include "Player/PlayerStrategies.h"
 
 using namespace std;
-
-
 
 void DemonstrateA3Part1(Map *modelMap, Game *game);
 
@@ -17,20 +12,27 @@ void MainGameLoop(Game *game, Map *map, bool &validMap, bool &isTournament, int 
 
 
 void InitialGameConfig(Game *game, Map *modelMap, bool &validMap, bool &isTournament, int &numberOfPlayers,
-                       PlayerStrategies *greedy, PlayerStrategies *human, PlayerStrategies *moderate, vector<int> playerStrategyInt);
+                       PlayerStrategies *greedy, PlayerStrategies *human, PlayerStrategies *moderate, PlayerStrategies
+                       *playerOneStrategy, PlayerStrategies *playerTwoStrategy, PlayerStrategies *playerThreeStrategy,
+                       PlayerStrategies *playerFourStrategy);
 
 
 void GameObservers(Map *map, Game *game);
+
+//void DemonstrateA3Part4();
 
 int main() {
     bool isTournament = false;
     int numberOfPlayers = 2;
     bool validMap = false;
 
-    vector<int> playerStrategyInt;
+    PlayerStrategies *playerOneStrategy = nullptr;
+    PlayerStrategies *playerTwoStrategy = nullptr;
+    PlayerStrategies *playerThreeStrategy = nullptr;
+    PlayerStrategies *playerFourStrategy = nullptr;
 
-    PlayerStrategies *greedy = new GreedyComputerStrategy();
     PlayerStrategies *human = new HumanStrategy();
+    PlayerStrategies *greedy = new GreedyComputerStrategy();
     PlayerStrategies *moderate = new ModerateComputerStrategy();
 
     Map *modelMap = new Map();
@@ -38,8 +40,8 @@ int main() {
     mapLoader->LoadMap(modelMap, "../src/Map Boards/valid_map.txt", validMap);
     Game *game = new Game(numberOfPlayers, modelMap);
 
-    InitialGameConfig(game, modelMap, validMap, isTournament, numberOfPlayers,
-                           greedy, human, moderate, playerStrategyInt);
+    InitialGameConfig(game, modelMap, validMap, isTournament, numberOfPlayers, greedy, human, moderate,
+                      playerOneStrategy, playerTwoStrategy, playerThreeStrategy, playerFourStrategy);
 
     MapObserver *viewMap = new MapObserver(modelMap);
     MapController *controllerMap = new MapController(viewMap, modelMap);
@@ -70,21 +72,19 @@ void MainGameLoop(Game *game, Map *modelMap, bool &validMap, bool &isTournament,
     int userInput = 0;
 
     while (true) {
-        cout << endl << "What would you like to test:" << endl;
+        cout << endl << "What Part Driver would you like to execute:" << endl;
         cout << "1 - Part 1: Player Strategy Pattern " << endl;
-        cout << "2 - Part 2: Game play: startup phase" << endl;
-        cout << "3 - Part 3: Game play: main game loop" << endl;
-        cout << "4 - Part 4: Main game loop: The player actions" << endl;
-        cout << "5 - Part 5: Main game loop: after the action" << endl;
-        cout << "6 - Part 6: Main Game loop: Compute the game score" << endl;
-        cout << "7 - A3 Part 3: GameObservers" << endl;
-        cout << "8 - Exit" << endl;
+        cout << "2 - Part 2: Phase Observer" << endl;
+        cout << "3 - Part 3: Game Statistics Observer" << endl;
+        cout << "4 - Part 4: Game Tournament" << endl;
+        cout << "5 - Main Game Loop" << endl;
+        cout << "6 - Exit" << endl;
 
         while (true) {
-            if (cin >> userInput && userInput >= 1 && userInput <= 8) {
+            if (cin >> userInput && userInput >= 1 && userInput <= 6) {
                 break;
             } else {
-                cout << "Please enter a valid selection (integer, no greater than 8 and no less than 1)" << endl
+                cout << "Please enter a valid selection (integer, no greater than 6 and no less than 1)" << endl
                      << ">>";
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -100,24 +100,17 @@ void MainGameLoop(Game *game, Map *modelMap, bool &validMap, bool &isTournament,
                 exit(0);
                 break;
             case 2:
-                //DemonstrateA2Part2(); //broken, discard or adapt for A3
-                break;
-            case 3:
-                //DemonstrateA2Part3(); //broken, discard or adapt for A3
-                break;
-            case 4:
-                //DemonstrateA2Part4(); //broken, discard or adapt for A3
-                break;
-            case 5:
-                //DemonstrateA2Part5(); //broken, discard or adapt for A3
-                break;
-            case 6:
-                //DemonstrateA2Part6(); //broken, discard or adapt for A3
-                break;
-            case 7:
                 GameObservers(modelMap, game);
                 break;
-            case 8:
+            case 3:
+                GameObservers(modelMap, game);
+                break;
+            case 4:
+                //DemonstrateA3Part4();
+                break;
+            case 5:
+                break;
+            case 6:
             default:
                 return;
         }
@@ -127,8 +120,9 @@ void MainGameLoop(Game *game, Map *modelMap, bool &validMap, bool &isTournament,
 
 // Handles Configuration of Initial Game Settings
 void InitialGameConfig(Game *game, Map *modelMap, bool &validMap, bool &isTournament, int &numberOfPlayers,
-
-                       PlayerStrategies *greedy, PlayerStrategies *human, PlayerStrategies *moderate, vector<int> playerStrategyInt) {
+                       PlayerStrategies *human, PlayerStrategies *greedy, PlayerStrategies *moderate, PlayerStrategies
+                       *playerOneStrategy, PlayerStrategies *playerTwoStrategy, PlayerStrategies *playerThreeStrategy,
+                       PlayerStrategies *playerFourStrategy) {
     int input = 0;
 
     // Determine the game mode
@@ -185,8 +179,8 @@ void InitialGameConfig(Game *game, Map *modelMap, bool &validMap, bool &isTourna
     for (int i = 0; i < numberOfPlayers; i++) {
         input = 0;
         cout << "Strategies:\n1) Human Player Strategy (requires user interaction to make decisions)" <<
-        "\n2) Greedy Computer Strategy (automated, focuses on building cities or destroying opponents)" <<
-        "\n3) Moderate Computer Strategy (automated, focuses on occupying regions with more armies than opponents)" << endl;
+             "\n2) Greedy Computer Strategy (automated, focuses on building cities or destroying opponents)" <<
+             "\n3) Moderate Computer Strategy (automated, focuses on occupying regions with more armies than opponents)" << endl;
         cout << "Enter Player " << to_string(i + 1) << "\'s Strategy (1, 2, or 3):";
         while (true) {
             if (cin >> input && input >= 1 && input <= 3) {
@@ -197,22 +191,56 @@ void InitialGameConfig(Game *game, Map *modelMap, bool &validMap, bool &isTourna
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
         }
-        cout << "Player " << to_string(i + 1) << " selected Strategy ";
+        cout << "Player " << to_string(i + 1) << " selected Strategy: ";
         switch (input) {
             case 1:
-                cout << "1) Human Player Strategy" << endl << endl;
-                // TODO Integrate Strategy Logic Here
+                cout << "1) Human Player Strategy" << endl;
+                if (i + 1 == 1) {
+                    playerOneStrategy = human;
+                }
+                if (i + 1 == 2) {
+                    playerTwoStrategy = human;
+                }
+                if (i + 1 == 3) {
+                    playerThreeStrategy = human;
+                }
+                if (i + 1 == 4) {
+                    playerFourStrategy = human;
+                }
                 break;
             case 2:
-                cout << "2) Greedy Computer Strategy" << endl << endl;
-                // TODO Integrate Strategy Logic Here
+                cout << "2) Greedy Computer Strategy" << endl;
+                if (i + 1 == 1) {
+                    playerOneStrategy = greedy;
+                }
+                if (i + 1 == 2) {
+                    playerTwoStrategy = greedy;
+                }
+                if (i + 1 == 3) {
+                    playerThreeStrategy = greedy;
+                }
+                if (i + 1 == 4) {
+                    playerFourStrategy = greedy;
+                }
                 break;
             case 3:
-                cout << "3) Moderate Computer Strategy" << endl << endl;
-                // TODO Integrate Strategy Logic Here
+                cout << "3) Moderate Computer Strategy" << endl;
+                if (i + 1 == 1) {
+                    playerOneStrategy = moderate;
+                }
+                if (i + 1 == 2) {
+                    playerTwoStrategy = moderate;
+                }
+                if (i + 1 == 3) {
+                    playerThreeStrategy = moderate;
+                }
+                if (i + 1 == 4) {
+                    playerFourStrategy = moderate;
+                }
                 break;
             default:
                 break;
         }
+        cout << endl;
     }
 }

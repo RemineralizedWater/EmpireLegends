@@ -83,6 +83,7 @@ void Hand::Exchange(Deck *deck) {
 
     deck->SetFaceUpCardsCost();
 }
+
 bool Hand::ExchangeWithoutPrompt(Deck *deck, int positionToPickUp) {
     int index = positionToPickUp - 1;
 

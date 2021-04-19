@@ -3,13 +3,8 @@
 #include <vector>
 #include "Player/Player.h"
 #include "Player/PlayerController.h"
-#include "Cards/Deck.h"
 #include "Cards/DeckController.h"
-#include "Cards/Hand.h"
 #include "Cards/HandController.h"
-#include "GameObservers.h"
-#include "Map/Map.h"
-#include "Map/MapController.h"
 #include "Game/Game.h"
 
 void GameObservers(Map *modelMap, Game *game) {
@@ -79,8 +74,8 @@ void GameObservers(Map *modelMap, Game *game) {
 
     int index = 0;
     while (true) {
-        if (players[0]->MyHand->GetNumberOfCardsInHand() >= (int)(NUMBER_OF_ROUNDS_TO_PLAY / 2) &&
-                players[1]->MyHand->GetNumberOfCardsInHand() >= (int)(NUMBER_OF_ROUNDS_TO_PLAY / 2)) {
+        if (players[0]->MyHand->GetNumberOfCardsInHand() >= (int) (NUMBER_OF_ROUNDS_TO_PLAY / 2) &&
+            players[1]->MyHand->GetNumberOfCardsInHand() >= (int) (NUMBER_OF_ROUNDS_TO_PLAY / 2)) {
             cout << "--------------------------------------------------------------------------" << endl;
             cout << "GAME OVER! " << NUMBER_OF_ROUNDS_TO_PLAY << " Rounds have been played" << endl;
             cout << "--------------------------------------------------------------------------" << endl;
@@ -111,7 +106,7 @@ void GameObservers(Map *modelMap, Game *game) {
                 cout << players[winner]->GetName() << endl;
             }
 
-            for(int i = 0; i < players.size(); i++){
+            for (int i = 0; i < players.size(); i++) {
                 cout << "--------------------------------------------------------------------------" << endl;
                 cout << players[i]->GetName() << " Statistics" << endl;
                 cout << "Coins remaining: " << players[i]->GetMoney() << endl;
@@ -123,7 +118,6 @@ void GameObservers(Map *modelMap, Game *game) {
             cout << "--------------------------------------------------------------------------" << endl;
             break;
         }
-
         cout << "--------------------------------------------------------------------------" << endl;
         cout << players[index]->GetName() << "'s TURN" << endl;
         cout << "--------------------------------------------------------------------------" << endl;
@@ -152,14 +146,14 @@ void GameObservers(Map *modelMap, Game *game) {
         modelDeck = nullptr;
     }
 
-    if(controllerPlayer1Hand != nullptr && viewPlayer1Hand != nullptr && modelPlayer1Hand != nullptr){
+    if (controllerPlayer1Hand != nullptr && viewPlayer1Hand != nullptr && modelPlayer1Hand != nullptr) {
         delete controllerPlayer1Hand;
         controllerPlayer1Hand = nullptr;
         viewPlayer1Hand = nullptr;
         modelPlayer1Hand = nullptr;
     }
 
-    if(controllerPlayer2Hand != nullptr && viewPlayer2Hand != nullptr && modelPlayer2Hand != nullptr){
+    if (controllerPlayer2Hand != nullptr && viewPlayer2Hand != nullptr && modelPlayer2Hand != nullptr) {
         delete controllerPlayer2Hand;
         controllerPlayer2Hand = nullptr;
         viewPlayer2Hand = nullptr;

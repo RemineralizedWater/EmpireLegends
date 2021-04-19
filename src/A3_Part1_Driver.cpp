@@ -1,6 +1,4 @@
 #include "Player/Player.h"
-#include "Player/PlayerStrategies.h"
-#include "Map/Map.h"
 #include "Game/Game.h"
 
 void DemonstrateA3Part1(Map *modelMap, Game *game) {

@@ -1,7 +1,3 @@
-//
-// Created by 06spa on 2/8/2021.
-//
-
 #pragma once
 
 #include <iostream>
@@ -15,11 +11,13 @@ private:
     int numberOfBoardPieces;
     bool rectangle;
 
-    bool VerifyId(string stringId, int &intId, string argErrMsg, string outRangeErrMsg);  // int &intId pass by reference
+    bool
+    VerifyId(string stringId, int &intId, string argErrMsg, string outRangeErrMsg);  // int &intId pass by reference
 
     bool IsLand(string adjacency, int commaIndex, int currentIndex, bool &land);  // bool &land pass by reference
 
-    bool CheckNextFieldExists(string line, int &currentIndex);  // int &currentIndex pass by reference to correctly id valid map
+    bool CheckNextFieldExists(string line,
+                              int &currentIndex);  // int &currentIndex pass by reference to correctly id valid map
 
     bool IsRectangle();
 

@@ -1,7 +1,5 @@
 #include "Player/Player.h"
-#include <memory>
 #include <sstream>
-#include "Cards/Deck.h"
 #include "GameObservers.h"
 #include "Player/PlayerController.h"
 

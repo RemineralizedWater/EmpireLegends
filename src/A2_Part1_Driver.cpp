@@ -18,14 +18,14 @@ void DemonstrateA2Part1() {
     }
 
     cout << "\n\n\n\n" << endl;
-    vector<Player*> players= starter->CreatePlayers(map->GetStartingPoint());
+    vector<Player *> players = starter->CreatePlayers(map->GetStartingPoint());
     for (Player *p : players) {
-        cout << p->GetName() << ": " << p->GetBiddingFacility()->GetLastName() <<" Money:"<< p->GetMoney() <<
-        " Bid Amount:" << p->GetBiddingFacility()->GetBidAmount() << endl;
+        cout << p->GetName() << ": " << p->GetBiddingFacility()->GetLastName() << " Money:" << p->GetMoney() <<
+             " Bid Amount:" << p->GetBiddingFacility()->GetBidAmount() << endl;
     }
 
     cout << "\n\n\n\n" << endl;
-    Deck *deck= starter->CreateDeck();
+    Deck *deck = starter->CreateDeck();
     cout << "Cards in deck: " << endl;
     deck->PrintCardsIn(deck->GetDeck());
 
@@ -33,12 +33,12 @@ void DemonstrateA2Part1() {
     for (Player *p : players) {
         if (p != nullptr) {
             delete p;
-            p= nullptr;
+            p = nullptr;
         }
     }
     if (map != nullptr) {
         delete map;
-        map= nullptr;
+        map = nullptr;
     }
     if (deck != nullptr) {
         delete deck;
@@ -46,7 +46,7 @@ void DemonstrateA2Part1() {
     }
     if (starter != nullptr) {
         delete starter;
-        starter= nullptr;
+        starter = nullptr;
     }
 
     return;

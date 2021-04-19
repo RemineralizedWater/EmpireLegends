@@ -17,8 +17,8 @@ Territory::Territory() {
  * @param armySizeForPlayer
  */
 Territory::Territory(int terrId_, int continentId_,
-                    std::map<string, int> armySizeForPlayer_,
-                    std::map<string, bool> hasCityForPlayer_) {
+                     std::map<string, int> armySizeForPlayer_,
+                     std::map<string, bool> hasCityForPlayer_) {
     terrId = terrId_;
     continentId = continentId_;
     armySizeForPlayer = armySizeForPlayer_;
