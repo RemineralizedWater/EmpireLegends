@@ -1,7 +1,3 @@
-//
-// Created by Wayne on 3/8/2021.
-//
-
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -135,8 +131,7 @@ Deck::Deck(int numberOfPlayers) {
 }
 
 // Destructor
-Deck::~Deck()
-{
+Deck::~Deck() {
     if (deck != nullptr) {
         delete deck;
         deck = nullptr;

@@ -34,9 +34,9 @@ void PlayerObserver::Display() {
     cout << "PLAYER OBSERVER" << endl;
     cout << "--------------------------------------------------------------------------" << endl;
     cout << "Player: " + playerName + " has " +
-        to_string(money) + " money left, " +
-        to_string(elixirs) + " elixirs, and " +
-        to_string(victoryPoints) + " total victory points." << endl;
+            to_string(money) + " money left, " +
+            to_string(elixirs) + " elixirs, and " +
+            to_string(victoryPoints) + " total victory points." << endl;
     cout << to_string(tokenArmies) + " : Armies can be placed" << endl;
     cout << to_string(cities) + " : Cities can be placed" << endl;
 
@@ -49,7 +49,7 @@ void PlayerObserver::Display() {
         if ((*terrIt).first->GetArmySizeForPlayer()[playerName] != 0 || (*terrIt).first->HasCity(playerName)) {
             terrCount += 1;
             cout << "Territory: " << (*terrIt).first->GetTerrId();
-            cout <<" | Continent: " << (*terrIt).first->GetContinent();
+            cout << " | Continent: " << (*terrIt).first->GetContinent();
             cout << " | Cities: " << (*terrIt).first->GetHasCity()[playerName];
             cout << " | Armies: " << (*terrIt).first->GetArmySizeForPlayer()[playerName] << endl;
         }
@@ -154,7 +154,7 @@ void CardObserver::Display() {
 
 // HAND OBSERVER
 // Constructor
-HandObserver::HandObserver(Hand*subject_) {
+HandObserver::HandObserver(Hand *subject_) {
     subject = subject_;
     subject_->Attach(this);
 }
@@ -178,12 +178,15 @@ void HandObserver::Display() {
     cout << "--------------------------------------------------------------------------" << endl;
     cout << "PHASE OBSERVER" << endl;
     cout << "--------------------------------------------------------------------------" << endl;
-    cout << subject->GetOwningPlayerName() << " is Resolving their drawn card: " << subject->GetActiveCard()->GetName() <<
+    cout << subject->GetOwningPlayerName() << " is Resolving their drawn card: " << subject->GetActiveCard()->GetName()
+         <<
          " and has paid " << subject->GetActiveCard()->GetCost() << " coins." << endl;
 
-    cout << subject->GetOwningPlayerName() << " has " << actions[subject->GetActiveCard()->GetActionOne()] << subject->GetActiveCard()->GetActionOneValue();
-    if(subject->GetActiveCard()->GetActionTwo() != 0)
-        cout << " and/or " << actions[subject->GetActiveCard()->GetActionTwo()] << subject->GetActiveCard()->GetActionTwoValue();
+    cout << subject->GetOwningPlayerName() << " has " << actions[subject->GetActiveCard()->GetActionOne()]
+         << subject->GetActiveCard()->GetActionOneValue();
+    if (subject->GetActiveCard()->GetActionTwo() != 0)
+        cout << " and/or " << actions[subject->GetActiveCard()->GetActionTwo()]
+             << subject->GetActiveCard()->GetActionTwoValue();
     cout << "." << endl;
 
     cout << "Their turn is now over." << endl;

@@ -3,9 +3,6 @@
 #include "Game/Game.h"
 #include "GameObservers.h"
 #include "Map/MapController.h"
-#include "Map/Map.h"
-#include "Player/Player.h"
-#include "Player/PlayerStrategies.h"
 
 using namespace std;
 
@@ -36,7 +33,8 @@ void DemonstrateA3Part1(Map *modelMap, Game *game);
 void MainGameLoop(Game *game, Map *map, bool &validMap, bool &isTournament, int &numberOfPlayers);
 
 void InitialGameConfig(Game *game, Map *modelMap, bool &validMap, bool &isTournament, int &numberOfPlayers,
-                       PlayerStrategies *greedy, PlayerStrategies *human, PlayerStrategies *moderate, vector<int> playerStrategyInt);
+                       PlayerStrategies *greedy, PlayerStrategies *human, PlayerStrategies *moderate,
+                       vector<int> playerStrategyInt);
 
 void GameObservers(Map *map, Game *game);
 
@@ -54,7 +52,7 @@ int main() {
     Map *modelMap = new Map();
 
     InitialGameConfig(game, modelMap, validMap, isTournament, numberOfPlayers,
-                           greedy, human, moderate, playerStrategyInt);
+                      greedy, human, moderate, playerStrategyInt);
 
     MapObserver *viewMap = new MapObserver(modelMap);
     MapController *controllerMap = new MapController(viewMap, modelMap);
@@ -134,12 +132,13 @@ void MainGameLoop(Game *game, Map *modelMap, bool &validMap, bool &isTournament,
                 return;
         }
     }
-    return;
+
 }
 
 // Handles Configuration of Initial Game Settings
 void InitialGameConfig(Game *game, Map *modelMap, bool &validMap, bool &isTournament, int &numberOfPlayers,
-                       PlayerStrategies *greedy, PlayerStrategies *human, PlayerStrategies *moderate, vector<int> playerStrategyInt) {
+                       PlayerStrategies *greedy, PlayerStrategies *human, PlayerStrategies *moderate,
+                       vector<int> playerStrategyInt) {
     int input = 0;
 
     // Determine the game mode
@@ -155,11 +154,9 @@ void InitialGameConfig(Game *game, Map *modelMap, bool &validMap, bool &isTourna
     }
     if (input == 1) {
         isTournament = false;
-    }
-    else if (input == 2) {
+    } else if (input == 2) {
         isTournament = true;
-    }
-    else {
+    } else {
         cout << "Error, exiting!" << endl;
         exit(-1);
     }
@@ -168,8 +165,7 @@ void InitialGameConfig(Game *game, Map *modelMap, bool &validMap, bool &isTourna
     if (isTournament) {
         cout << "Tournament Mode selected" << endl << endl;
         numberOfPlayers = 2;
-    }
-    else {
+    } else {
         cout << "Single Game Mode selected" << endl << endl;
         numberOfPlayers = 2;
         cout << "Enter the Number of Players (2, 3 or 4):";
@@ -196,8 +192,9 @@ void InitialGameConfig(Game *game, Map *modelMap, bool &validMap, bool &isTourna
     for (int i = 0; i < numberOfPlayers; i++) {
         input = 0;
         cout << "Strategies:\n1) Human Player Strategy (requires user interaction to make decisions)" <<
-        "\n2) Greedy Computer Strategy (automated, focuses on building cities or destroying opponents)" <<
-        "\n3) Moderate Computer Strategy (automated, focuses on occupying regions with more armies than opponents)" << endl;
+             "\n2) Greedy Computer Strategy (automated, focuses on building cities or destroying opponents)" <<
+             "\n3) Moderate Computer Strategy (automated, focuses on occupying regions with more armies than opponents)"
+             << endl;
         cout << "Enter Player " << to_string(i + 1) << "\'s Strategy (1, 2, or 3):";
         while (true) {
             if (cin >> input && input >= 1 && input <= 3) {

@@ -1,7 +1,3 @@
-//
-// Created by 06spa on 3/26/2021.
-//
-
 #include <iostream>
 #include "Game.h"
 
@@ -55,7 +51,7 @@ Game &Game::operator=(const Game &gs) {
  * @return
  */
 ostream &operator<<(ostream &out, const Game &gs) {
-    out << " number of players: "<< gs.numberOfPlayers  << endl;
+    out << " number of players: " << gs.numberOfPlayers << endl;
     return out;
 }
 
@@ -126,7 +122,7 @@ bool Game::Tied(vector<Player *> players, int &winner) {
         if (maxVictoryPoint == players[i]->GetVictoryPoints()) {
             ties++;
         }
-        if (maxVictoryPoint<(players[i])->GetVictoryPoints()) {
+        if (maxVictoryPoint < (players[i])->GetVictoryPoints()) {
             maxVictoryPoint = (players[i])->GetVictoryPoints();
             winner = i;
             ties = 0;
@@ -172,10 +168,11 @@ bool Game::CountControlledTerritories(vector<Player *> players, Map *map) {
         }
         //if tied then no player owns the territory
         if (ties == 0) {
-            if (playersAndControlledTerritoriesCount.find(playerWithMostArmies) != playersAndControlledTerritoriesCount.end()) {
-                playersAndControlledTerritoriesCount[playerWithMostArmies] = (playersAndControlledTerritoriesCount[playerWithMostArmies] + 1);
-            }
-            else {
+            if (playersAndControlledTerritoriesCount.find(playerWithMostArmies) !=
+                playersAndControlledTerritoriesCount.end()) {
+                playersAndControlledTerritoriesCount[playerWithMostArmies] = (
+                        playersAndControlledTerritoriesCount[playerWithMostArmies] + 1);
+            } else {
                 playersAndControlledTerritoriesCount.insert(pair<int, int>(playerWithMostArmies, 1));
             }
         }
@@ -210,8 +207,7 @@ bool Game::CountArmies(vector<Player *> players, Map *map) {
         for (int k = 0; k < numberOfPlayers; k++) {
             if (playersAndArmies.find(k) != playersAndArmies.end()) {
                 playersAndArmies[k] = (playersAndArmies[k] + temp->GetArmySizeForPlayer()[players[k]->GetName()]);
-            }
-            else {
+            } else {
                 playersAndArmies.insert(pair<int, int>(k, temp->GetArmySizeForPlayer()[players[k]->GetName()]));
             }
         }
@@ -219,11 +215,12 @@ bool Game::CountArmies(vector<Player *> players, Map *map) {
 
     //comparing results or army counts on board for each player to get player with most armies
     std::map<int, int>::iterator playersAndArmiesIt;
-    for (playersAndArmiesIt = playersAndArmies.begin(); playersAndArmiesIt != playersAndArmies.end(); playersAndArmiesIt++) {
+    for (playersAndArmiesIt = playersAndArmies.begin();
+         playersAndArmiesIt != playersAndArmies.end(); playersAndArmiesIt++) {
         if (maxArmies == playersAndArmiesIt->second) {
             ties++;
         }
-        if (maxArmies<playersAndArmiesIt->second) {
+        if (maxArmies < playersAndArmiesIt->second) {
             maxArmies = playersAndArmiesIt->second;
             winner = playersAndArmiesIt->first;
             ties = 0;
@@ -276,20 +273,16 @@ void Game::SelectMap(Map *map, bool &validMap) {
         if (input == "1") {
             file = "../src/Map Boards/valid_map.txt";
             break;
-        }
-        else if (input == "2") {
+        } else if (input == "2") {
             file = "../src/Map Boards/invalid1_map.txt";
             break;
-        }
-        else if (input == "3") {
+        } else if (input == "3") {
             file = "../src/Map Boards/invalid2_map.txt";
             break;
-        }
-        else if (input == "4") {
+        } else if (input == "4") {
             file = "../src/Map Boards/invalid3_map.txt";
             break;
-        }
-        else {
+        } else {
             cout << "Please enter a valid Game Map choice (1, 2, 3 or 4):";
             cin >> input;
         }

@@ -1,6 +1,4 @@
 #include "Player/Player.h"
-#include "Player/PlayerStrategies.h"
-#include "Map/Map.h"
 #include "Game/Game.h"
 
 void DemonstrateA3Part1(Map *modelMap, Game *game) {
@@ -9,7 +7,7 @@ void DemonstrateA3Part1(Map *modelMap, Game *game) {
     PlayerStrategies *moderate = new ModerateComputerStrategy();
 
     // Player 1 Setup
-    Player *modelPlayer1 (
+    Player *modelPlayer1(
             new Player("Montreal",
                        new BiddingFacility(),
                        *(new Territory()),
