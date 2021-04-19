@@ -32,6 +32,24 @@ MapLoader::MapLoader(Map *map, int numberOfPlayers) {
     }
     map->SetIsRectangle(rectangle);
 }
+/**
+ * Gets board shape type and number of board pieces based on player to load a map
+ * @param mapFilePath
+ * @param numberOfPlayers
+ */
+MapLoader::MapLoader(Map *map, int numberOfPlayers, bool rectangleShape) {
+    numberOfBoardPieces = 0;
+    rectangle = false;
+    if (numberOfPlayers == 2 || numberOfPlayers == 3) {
+        rectangle = rectangleShape;
+        numberOfBoardPieces = 3;
+    }
+    else if (numberOfPlayers == 4) {
+        numberOfBoardPieces = 4;
+        rectangle = true;
+    }
+    map->SetIsRectangle(rectangle);
+}
 
 /**
  * Copy Constructor

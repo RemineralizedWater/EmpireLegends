@@ -30,6 +30,8 @@ public:
 
     MapLoader(Map *Map, int numberOfPlayers);
 
+    MapLoader(Map *Map, int numberOfPlayers, bool shapeRectangle);
+
     MapLoader(const MapLoader &copy);
 
     ~MapLoader();

@@ -47,10 +47,13 @@ int main() {
     int playerThreeStrategy = 0;
     int playerFourStrategy = 0;
 
-    Game *game = new Game(numberOfPlayers);
     Map *modelMap = new Map();
+    MapLoader *mapLoader = new MapLoader(modelMap, numberOfPlayers, true);
+    mapLoader->LoadMap(modelMap, "../src/Map Boards/valid_map.txt", validMap);
+    Game *game = new Game(numberOfPlayers, modelMap);
 
     InitialGameConfig(game, modelMap, validMap, isTournament, numberOfPlayers, playerOneStrategy, playerTwoStrategy, playerThreeStrategy, playerFourStrategy);
+
 
     MapObserver *viewMap = new MapObserver(modelMap);
     MapController *controllerMap = new MapController(viewMap, modelMap);
@@ -59,6 +62,8 @@ int main() {
 
     // Main Game Loop
     MainGameLoop(game, modelMap, validMap, isTournament, numberOfPlayers);
+
+    //TODO: memory clean up for maploader and game
 
     // Memory clean up
     if (modelMap != nullptr) {
@@ -76,6 +81,8 @@ int main() {
 }
 
 void MainGameLoop(Game *game, Map *modelMap, bool &validMap, bool &isTournament, int &numberOfPlayers) {
+
+
     int userInput = 0;
 
     while (true) {
@@ -106,6 +113,7 @@ void MainGameLoop(Game *game, Map *modelMap, bool &validMap, bool &isTournament,
                     modelMap->Display();
                 }
                 DemonstrateA3Part1(modelMap, game);
+                exit(0);
                 break;
             case 2:
                 //DemonstrateA2Part2(); //broken, discard or adapt for A3

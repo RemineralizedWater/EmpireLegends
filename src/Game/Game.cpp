@@ -17,9 +17,9 @@ Game::Game() {
 /**
  * Parametric constructor
  */
-Game::Game(int numberOfPlayers_) {
-    //cout << numberOfPlayers_ << " player game" << endl;
+Game::Game(int numberOfPlayers_, Map *modelMap) {
     numberOfPlayers = numberOfPlayers_;
+    map=modelMap;
     //TODO call methods here and create setters and getters
 }
 
@@ -80,13 +80,14 @@ int Game::GetNumberOfPlayers() {
 void Game::SetNumberOfPlayers(int numberOfPlayers_) {
     numberOfPlayers = numberOfPlayers_;
 }
-
+//TODO; remove starting point parameter
 vector<Player *> Game::CreatePlayers(int startingPoint) {
     vector<Player *> players;
-
+    BiddingFacility *tempBiddingFacility;
+    tempBiddingFacility->ReceiveStartingCoins(numberOfPlayers);
     for (int i = 0; i < numberOfPlayers; i++) {
         Player *player(
-                new Player(to_string(startingPoint),
+                new Player(to_string(map->GetStartingPoint()),
                            new BiddingFacility(),
                            *(new Territory()),
                            *(new Cards()),
@@ -95,21 +96,59 @@ vector<Player *> Game::CreatePlayers(int startingPoint) {
                            0,
                            new Hand(),
                            0,
-                           "Player 1",
+                           "Player"+to_string(i+1),
                            0,
                            3,
                            true,
                            0,
                            0,
-                           new Map()));
+                           map,
+                           0,
+                           0));
         player->MyHand->SetOwningPlayer(player);
         player->GetBiddingFacility()->SetOwningPlayer(player);
-
-        cout << "Providing player 18 coins.." << endl;
-        player->SetMoney(18);
+        player->SetName("Player"+to_string(i+1));
+        player->SetMoney(tempBiddingFacility->GetCoins());
+        player->SetArmiesTokens(18);
+        player->SetCitiesDisks(3);
         players.push_back(player);
     }
     return players;
+}
+void Game::Setup(vector<Player*> players) {
+
+    //place armies on starting point
+    int terrId;
+    cout<<"Setting up armies on board"<<endl;
+    for(int k=0;k<players.size();k++){
+        typedef pair<Territory *, vector<Adjacency> *> terrInfo;
+        {
+            vector<terrInfo>::iterator terrIt;
+            for (terrIt = map->GetTerrAndAdjsList()->begin();
+                 terrIt != map->GetTerrAndAdjsList()->end(); ++terrIt) {
+                (*terrIt).first->InsertNewArmyPlayerMapping(players.at(k)->GetName());
+                (*terrIt).first->InsertNewCityPlayerMapping(players.at(k)->GetName());
+                if ((*terrIt).first->GetTerrId() == map->GetStartingPoint())
+                    (*terrIt).first->AddCityForPlayer(players.at(k)->GetName());
+            }
+        }
+    }
+
+    if(numberOfPlayers==2){
+        for(int i=0;i<10;i++){
+            for(int k=0;k<players.size();k++){
+                terrId=rand() % map->GetMapSize() + 1;
+                cout<<players.at(k)->GetName()<<": ";
+                players.at(k)->PlaceNewArmies(1, terrId, true, true);
+            }
+        }
+    }
+    else{
+        for(int k=0;k<players.size();k++){
+            cout<<players.at(k)->GetName()<<": ";
+            players.at(k)->PlaceNewArmies(4, map->GetStartingPoint(), false, true);
+        }
+    }
 }
 
 /**

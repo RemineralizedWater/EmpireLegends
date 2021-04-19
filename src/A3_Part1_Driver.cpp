@@ -7,99 +7,22 @@ void DemonstrateA3Part1(Map *modelMap, Game *game) {
     PlayerStrategies *greedy = new GreedyComputerStrategy();
     PlayerStrategies *human = new HumanStrategy();
     PlayerStrategies *moderate = new ModerateComputerStrategy();
+    vector<Player*> players=game->CreatePlayers(10);
 
-    // Player 1 Setup
-    Player *modelPlayer1 (
-            new Player("Montreal",
-                       new BiddingFacility(),
-                       *(new Territory()),
-                       *(new Cards()),
-                       0,
-                       1,
-                       0,
-                       new Hand(),
-                       20,
-                       "Player 1",
-                       0,
-                       3,
-                       true,
-                       0,
-                       0,
-                       new Map()
-            ));
-
-    typedef pair<Territory *, vector<Adjacency> *> terrInfo;
-    {
-        vector<terrInfo>::iterator terrIt;
-        for (terrIt = modelMap->GetTerrAndAdjsList()->begin();
-             terrIt != modelMap->GetTerrAndAdjsList()->end(); ++terrIt) {
-            (*terrIt).first->InsertNewArmyPlayerMapping(modelPlayer1->GetName());
-            (*terrIt).first->InsertNewCityPlayerMapping(modelPlayer1->GetName());
-            if ((*terrIt).first->GetTerrId() == 1)
-                (*terrIt).first->AddCityForPlayer(modelPlayer1->GetName());
-        }
-    }
-    modelPlayer1->SetMap(modelMap);
-    modelPlayer1->MyHand->SetOwningPlayer(modelPlayer1);
-    modelPlayer1->SetMoney(20);
-    modelPlayer1->SetArmiesTokens(0);
-    modelPlayer1->SetCitiesDisks(0);
-
-    modelPlayer1->SetStrategy(greedy);
-
-    // Player 2 Setup
-    Player *modelPlayer2(
-            new Player("Montreal",
-                       new BiddingFacility(),
-                       *(new Territory()),
-                       *(new Cards()),
-                       0,
-                       1,
-                       0,
-                       new Hand(),
-                       20,
-                       "Player 2",
-                       0,
-                       3,
-                       true,
-                       0,
-                       0,
-                       new Map()
-            ));
-
-    typedef pair<Territory *, vector<Adjacency> *> terrInfo;
-    {
-        vector<terrInfo>::iterator terrIt;
-        for (terrIt = modelMap->GetTerrAndAdjsList()->begin();
-             terrIt != modelMap->GetTerrAndAdjsList()->end(); ++terrIt) {
-            (*terrIt).first->InsertNewArmyPlayerMapping(modelPlayer2->GetName());
-            (*terrIt).first->InsertNewCityPlayerMapping(modelPlayer2->GetName());
-            if ((*terrIt).first->GetTerrId() == 1)
-                (*terrIt).first->AddCityForPlayer(modelPlayer2->GetName());
-        }
-    }
-    modelPlayer2->SetMap(modelMap);
-    modelPlayer2->MyHand->SetOwningPlayer(modelPlayer2);
-    modelPlayer2->SetMoney(20);
-    modelPlayer2->SetArmiesTokens(0);
-    modelPlayer2->SetCitiesDisks(0);
-
-    modelPlayer2->SetStrategy(human);
-
-    vector<Player *> players;
-    players.push_back(modelPlayer1);
-    players.push_back(modelPlayer2);
+    players.at(0)->SetStrategy(human);
+    players.at(1)->SetStrategy(greedy);
 
     Deck *modelDeck(game->CreateDeck());
-
     cout << "Populating Face Up Cards.." << endl;
     modelDeck->PopulateFaceUpCards();
 
-    modelPlayer1->ExecuteStrategy(modelDeck);
-    modelPlayer2->ExecuteStrategy(modelDeck);
+    game->Setup(players);
 
-    modelPlayer2->SetStrategy(moderate);
-    modelPlayer2->ExecuteStrategy(modelDeck);
+    players.at(0)->ExecuteStrategy(modelDeck, game->GetNumberOfPlayers());
+    players.at(1)->ExecuteStrategy(modelDeck,game->GetNumberOfPlayers());
+
+    players.at(1)->SetStrategy(moderate);
+    players.at(1)->ExecuteStrategy(modelDeck,game->GetNumberOfPlayers());
 
     // Memory clean up
     if (greedy != nullptr) {
@@ -114,13 +37,13 @@ void DemonstrateA3Part1(Map *modelMap, Game *game) {
         delete human;
         human = nullptr;
     }
-    if (modelPlayer1 != nullptr) {
-        delete modelPlayer1;
-        modelPlayer1 = nullptr;
+    if (players.at(0) != nullptr) {
+        delete players.at(0);
+        players.at(0) = nullptr;
     }
-    if (modelPlayer2 != nullptr) {
-        delete modelPlayer2;
-        modelPlayer2 = nullptr;
+    if (players.at(1) != nullptr) {
+        delete players.at(1);
+        players.at(1) = nullptr;
     }
     if (modelDeck != nullptr) {
         delete modelDeck;

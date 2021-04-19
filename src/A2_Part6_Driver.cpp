@@ -20,7 +20,7 @@
 
 void DemonstrateA2Part6() {
     int numPlayers = 2;
-    Game *starter = new Game(numPlayers);
+    Game *starter = new Game(numPlayers, new Map());
 
     //setup
     bool validMap = false;
