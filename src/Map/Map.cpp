@@ -434,6 +434,7 @@ bool Map::IsConnected(int adjId_) {
  */
 bool Map::AddTerritory(int terrId, int continentId) {
     Territory *t = new Territory(terrId, continentId);
+
     vector<Adjacency> *a = new vector<Adjacency>();       // TODO: memory leak?
     if (TerritoryExists(t->GetTerrId()) == t->GetTerrId()) {
         cout << "Invalid Map! Territory already exists. Territory belongs to more than one continent." << endl;

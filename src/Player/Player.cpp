@@ -26,6 +26,8 @@ Player::Player() {
     costToMoveOverWater = 3;
     canBeAttacked = true;
     map = new Map();
+    extraArmyAbility=0;
+    extraMoveAbility=0;
 }
 
 //Parametric constructor
@@ -46,25 +48,16 @@ Player::Player(string name_) {
     costToMoveOverWater = 3;
     canBeAttacked = true;
     map = new Map();
+    extraArmyAbility=0;
+    extraMoveAbility=0;
 }
 
 //Parametric constructor
-Player::Player(string region_,
-               BiddingFacility *biddingFacility_,
-               Territory &territory_,
-               Cards &cards_,
+Player::Player(string region_, BiddingFacility *biddingFacility_, Territory &territory_, Cards &cards_,
                int tokenArmies_,
-               int cubes_,
-               int disks_,
-               Hand *MyHand_,
-               int money_,
-               string name_,
-               int totalMovementPointsForRound_,
-               int costToMoveOverWater_,
-               bool canBeAttacked_,
-               int victoryPoints_,
-               int elixirs_,
-               Map *map_)
+               int cubes_, int disks_, Hand *myHand_, int money_, string name_, int totalMovementPointsForRound_,
+               int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_, int elixirs_, Map *map_,
+               int extraMoveAbility_, int extraArmyAbility_)
         : region(region_),
           biddingFacility(biddingFacility_),
           territory(&territory_),
@@ -72,7 +65,7 @@ Player::Player(string region_,
           tokenArmies(tokenArmies_),
           cubes(cubes_),
           disks(disks_),
-          MyHand(MyHand_),
+          MyHand(myHand_),
           money(money_),
           totalMovementPointsForRound(totalMovementPointsForRound_),
           costToMoveOverWater(costToMoveOverWater_),
@@ -80,7 +73,9 @@ Player::Player(string region_,
           canBeAttacked(canBeAttacked_),
           victoryPoints(victoryPoints_),
           elixirs(elixirs_),
-          map(map_) {
+          map(map_),
+          extraArmyAbility(extraArmyAbility_),
+          extraMoveAbility(extraMoveAbility_){
     playerStrategies = new HumanStrategy();
 }
 
@@ -100,7 +95,9 @@ Player::Player(const Player &playerToCopy)
           victoryPoints(playerToCopy.victoryPoints),
           elixirs(playerToCopy.elixirs),
           canBeAttacked(playerToCopy.canBeAttacked),
-          map(playerToCopy.map) {
+          map(playerToCopy.map),
+          extraMoveAbility(extraMoveAbility),
+          extraArmyAbility(extraArmyAbility){
 }
 
 //Destructor
@@ -127,6 +124,8 @@ Player &Player::operator=(Player &playerToCopy) {
     totalMovementPointsForRound = playerToCopy.totalMovementPointsForRound;
     costToMoveOverWater = playerToCopy.costToMoveOverWater;
     canBeAttacked = playerToCopy.canBeAttacked;
+    extraArmyAbility=playerToCopy.extraArmyAbility;
+    extraMoveAbility=playerToCopy.extraMoveAbility;
     return *this;
 }
 
@@ -144,6 +143,8 @@ std::istream &operator>>(std::istream &is, Player &player) {
     is >> player.costToMoveOverWater;
     is >> player.victoryPoints;
     is >> player.elixirs;
+    is >> player.extraMoveAbility;
+    is >> player.extraArmyAbility;
     return is;
 }
 
@@ -231,8 +232,13 @@ void Player::SetCitiesDisks(int numberOfDisks) {
 }
 
 void Player::SetStrategy(PlayerStrategies *newPlayerStrategy) {
-    playerStrategies = newPlayerStrategy;
+    this->playerStrategies = newPlayerStrategy;
 }
+
+PlayerStrategies * Player::GetStrategy() {
+    return this->playerStrategies;
+}
+
 
 //Successfully pays coin and withdraws money from said player account
 void Player::PaysCoinFromPlayer(int amountToPay) {
@@ -240,9 +246,56 @@ void Player::PaysCoinFromPlayer(int amountToPay) {
     Supply += amountToPay;
     cout << "The transaction has been successful, we have removed: " << amountToPay << " coins." << endl;
 }
+void Player::PlaceNewArmies(int numberOfArmiesToPlace, int position, bool twoPlayerSetup, bool setup) {
+    numberOfArmiesToPlace+=extraArmyAbility;
+    int armiesToPlace = numberOfArmiesToPlace;
+    bool placedCity = false;
 
+    if(!twoPlayerSetup) {
+        if (tokenArmies < armiesToPlace)
+            armiesToPlace = tokenArmies;
+
+        if (armiesToPlace == 0) {
+            cout << "You do not have any armies left to place." << endl;
+            return;
+        }
+    }
+
+    while (!placedCity) {
+        typedef pair<Territory *, vector<Adjacency> *> terrInfo;
+        vector<terrInfo>::iterator terrIt;
+        for (terrIt = map->GetTerrAndAdjsList()->begin();
+             terrIt != map->GetTerrAndAdjsList()->end(); ++terrIt) {
+
+            if ((*terrIt).first->GetTerrId() == position) {
+                if ((*terrIt).first->GetHasCity()[name]&&!setup) {
+                    (*terrIt).first->AddArmySizeForPlayer(name, armiesToPlace);
+                    cout << armiesToPlace << " armies have been added to territory "<< position<< endl;
+                    tokenArmies -= armiesToPlace;
+                    placedCity = true;
+                }
+                else if(setup&&twoPlayerSetup){
+                    (*terrIt).first->AddArmySizeForPlayer(name, armiesToPlace);
+                    cout << armiesToPlace << " armies have been added to territory "<< position<< endl;
+                    placedCity = true;
+                }
+                else if(setup){
+                    (*terrIt).first->AddArmySizeForPlayer(name, armiesToPlace);
+                    cout << armiesToPlace << " armies have been added to territory "<< position<< endl;
+                    tokenArmies -= armiesToPlace;
+                    placedCity = true;
+                }
+                else {
+                    cout << "You do not have a city in this territory, choose a different territory." << endl;
+                }
+                break;
+            }
+        }
+    }
+}
 //Places armies for desired player
 void Player::PlaceNewArmies(int numberOfArmiesToPlace) {
+    numberOfArmiesToPlace+=extraArmyAbility;
     int armiesToPlace = numberOfArmiesToPlace;
     int position;
     bool placedCity = false;
@@ -258,9 +311,12 @@ void Player::PlaceNewArmies(int numberOfArmiesToPlace) {
     map->Display();
 
     while (!placedCity) {
+        string tempPosition;
         cout << "Which territory would you like to place armies in?";
-        cin >> position;
-        cout << endl;
+        cin >> tempPosition;
+        position=stoi(tempPosition);
+        cout<<position<<endl;
+
         typedef pair<Territory *, vector<Adjacency> *> terrInfo;
         vector<terrInfo>::iterator terrIt;
         for (terrIt = map->GetTerrAndAdjsList()->begin();
@@ -357,6 +413,7 @@ void Player::AndOrAction() {
 
 //Moves army for desired player
 void Player::MoveArmiesForPlayer(int numberOfArmiesToMove) {
+    numberOfArmiesToMove+=extraMoveAbility;
     int toID, fromID;
     bool movedArmies = false;
 
@@ -366,10 +423,55 @@ void Player::MoveArmiesForPlayer(int numberOfArmiesToMove) {
         int armiesToMove = numberOfArmiesToMove;
 
         cout << "Which territory would you like to move armies FROM?";
-        cin >> fromID;
+        string tempFromID;
+        cin >> tempFromID;
+        fromID=stoi(tempFromID);
+        cout<<fromID<<endl;
         cout << "Which territory would you like to move armies TO?";
-        cin >> toID;
-        cout << endl;
+        string tempToID;
+        cin >> tempToID;
+        tempToID=stoi(tempToID);
+        cout<<tempToID<<endl;
+        typedef pair<Territory *, vector<Adjacency> *> terrInfo;
+        vector<terrInfo>::iterator terrIt;
+        for (terrIt = map->GetTerrAndAdjsList()->begin();
+             terrIt != map->GetTerrAndAdjsList()->end(); ++terrIt) {
+
+            if ((*terrIt).first->GetTerrId() == fromID) {
+                if ((*terrIt).first->GetNumberOfArmies(name) > 0) {
+
+                    if ((*terrIt).first->GetNumberOfArmies(name) < armiesToMove)
+                        armiesToMove = (*terrIt).first->GetNumberOfArmies(name);
+
+                    vector<terrInfo>::iterator terrIt2;
+                    for (terrIt2 = map->GetTerrAndAdjsList()->begin();
+                         terrIt2 != map->GetTerrAndAdjsList()->end(); ++terrIt2) {
+
+                        if ((*terrIt2).first->GetTerrId() == toID) {
+                            (*terrIt2).first->AddArmySizeForPlayer(name, armiesToMove);
+                            (*terrIt).first->RemoveArmySizeForPlayer(name, armiesToMove);
+                            movedArmies = true;
+                        }
+                    }
+                } else {
+                    cout << "You do not have enough armies to move, cannot move armies." << endl;
+                    movedArmies = true;
+                    break;
+                }
+            }
+        }
+    }
+}
+//Moves army for desired player
+void Player::MoveArmiesForPlayer(int numberOfArmiesToMove, int toID, int fromID) {
+    numberOfArmiesToMove+=extraMoveAbility;
+    bool movedArmies = false;
+
+    map->Display();
+
+    while (!movedArmies) {
+        int armiesToMove = numberOfArmiesToMove;
+
         typedef pair<Territory *, vector<Adjacency> *> terrInfo;
         vector<terrInfo>::iterator terrIt;
         for (terrIt = map->GetTerrAndAdjsList()->begin();
@@ -437,8 +539,11 @@ void Player::BuildCityForPlayer() {
 
     while (!builtCity) {
         cout << "Which territory would you like to build a city in? (a city will be built regardless if you already have a city there)";
-        cin >> cityTargetID;
-        cout << endl;
+        string tempCityTargetID;
+        cin >> tempCityTargetID;
+        cityTargetID=stoi(tempCityTargetID);
+        cout<<cityTargetID<<endl;
+
         typedef pair<Territory *, vector<Adjacency> *> terrInfo;
         vector<terrInfo>::iterator terrIt;
         for (terrIt = map->GetTerrAndAdjsList()->begin();
@@ -468,8 +573,12 @@ void Player::DestroysNumberOfArmyOfPlayer(int numberOfArmiesToDestroy) {
 
         cout << "Who are you targeting?";
         cin >> targetName;
+        cout<<targetName<<endl;
         cout << "Which territory are you targeting?";
-        cin >> targetTerritoryID;
+        string tempTargetTerritoryID;
+        cin >> tempTargetTerritoryID;
+        targetTerritoryID=stoi(tempTargetTerritoryID);
+        cout<<tempTargetTerritoryID<<endl;
 
         typedef pair<Territory *, vector<Adjacency> *> terrInfo;
         vector<terrInfo>::iterator terrIt;
@@ -499,15 +608,17 @@ void Player::DestroysNumberOfArmyOfPlayer(int numberOfArmiesToDestroy) {
 void Player::ApplyAbility() {
     //+ to move armies
     if (MyHand->GetActiveCard()->GetGoods() == 1) {
-        //TODO 1 extra move each time player movesArmy
+        extraMoveAbility+=MyHand->GetActiveCard()->GetGoodsValue();
     }
         //"+ to place armies"
     else if (MyHand->GetActiveCard()->GetGoods() == 2) {
-        //TODO gain one more army when placeArmies performed
+        extraArmyAbility+=MyHand->GetActiveCard()->GetGoodsValue();
     }
         //"- to move over water"
     else if (MyHand->GetActiveCard()->GetGoods() == 3) {
-        //TODO reduce cost to move over water
+        if(costToMoveOverWater>=MyHand->GetActiveCard()->GetGoodsValue()){
+            costToMoveOverWater-=MyHand->GetActiveCard()->GetGoodsValue();
+        }
     }
         //"+ elixirs"
     else if (MyHand->GetActiveCard()->GetGoods() == 4) {
@@ -520,7 +631,7 @@ void Player::ApplyAbility() {
     }
         // "immune to attack"
     else if (MyHand->GetActiveCard()->GetGoods() == 9) {
-        //TODO make immune to attack
+        canBeAttacked=false;
 
     }
 }
@@ -749,7 +860,7 @@ void Player::ComputeScore(int currentPlayerIndex, vector<Player *> players, Map 
     }
 }
 
-void Player::ExecuteStrategy(Deck *deck) {
+void Player::ExecuteStrategy(Deck *deck, int numPlayer) {
     cout << "======== " << this->GetName() << "'s TURN ========" << endl;
-    this->playerStrategies->Execute(deck, this);
+    this->playerStrategies->Execute(deck, this, numPlayer);
 }

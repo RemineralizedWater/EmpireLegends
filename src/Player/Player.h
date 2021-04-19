@@ -37,6 +37,8 @@ private:
     int costToMoveOverWater;
     bool canBeAttacked;
     Map *map;
+    int extraMoveAbility;
+    int extraArmyAbility;
 
 public:
     static int Supply;
@@ -47,10 +49,11 @@ public:
 
     Player(string name_);
 
-    Player(string region_, BiddingFacility *biddingFacility_, Territory &territory_, Cards &cards_,
-           int tokenArmies_, int cubes_, int disks_, Hand *myHand_, int money_, string name_,
-           int totalMovementPointsForRound_, int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_,
-           int elixirs_, Map *map_);
+    Player(string region_, BiddingFacility *biddingFacility_, Territory &territory_, Cards &cards_, int tokenArmies_,
+           int cubes_, int disks_, Hand *myHand_, int money_, string name_, int totalMovementPointsForRound_,
+           int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_, int elixirs_, Map *map_,
+           int extraMoveAbility_, int extraArmyAbility_);
+
 
     Player(const Player &playerToCopy);
 
@@ -100,13 +103,19 @@ public:
 
     void SetStrategy(PlayerStrategies *newPlayerStrategy);
 
+    PlayerStrategies* GetStrategy();
+
     void RequestPlayerName();
 
     void PaysCoinFromPlayer(int amountToPay);
 
     void PlaceNewArmies(int numberOfArmiesToPlace);
 
+    void PlaceNewArmies(int numberOfArmiesToPlace, int position, bool twoPlayerSetup, bool setup);
+
     void MoveArmiesForPlayer(int numberOfArmiesToMove);
+
+    void MoveArmiesForPlayer(int numberOfArmiesToMove, int toID, int fromID);
 
     void MoveOverLandForPlayer();
 
@@ -134,7 +143,7 @@ public:
 
     void ApplyAbility();
 
-    void ExecuteStrategy(Deck* deck);
+    void ExecuteStrategy(Deck* deck, int numPlayer);
 
 };
 

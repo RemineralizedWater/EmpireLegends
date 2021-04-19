@@ -10,10 +10,12 @@ void DemonstrateA3Part1(Map *modelMap, Game *game);
 
 void MainGameLoop(Game *game, Map *map, bool &validMap, bool &isTournament, int &numberOfPlayers);
 
+
 void InitialGameConfig(Game *game, Map *modelMap, bool &validMap, bool &isTournament, int &numberOfPlayers,
                        PlayerStrategies *greedy, PlayerStrategies *human, PlayerStrategies *moderate, PlayerStrategies
                        *playerOneStrategy, PlayerStrategies *playerTwoStrategy, PlayerStrategies *playerThreeStrategy,
                        PlayerStrategies *playerFourStrategy);
+
 
 void GameObservers(Map *map, Game *game);
 
@@ -23,6 +25,7 @@ int main() {
     bool isTournament = false;
     int numberOfPlayers = 2;
     bool validMap = false;
+
     PlayerStrategies *playerOneStrategy = nullptr;
     PlayerStrategies *playerTwoStrategy = nullptr;
     PlayerStrategies *playerThreeStrategy = nullptr;
@@ -32,8 +35,10 @@ int main() {
     PlayerStrategies *greedy = new GreedyComputerStrategy();
     PlayerStrategies *moderate = new ModerateComputerStrategy();
 
-    Game *game = new Game(numberOfPlayers);
     Map *modelMap = new Map();
+    MapLoader *mapLoader = new MapLoader(modelMap, numberOfPlayers, true);
+    mapLoader->LoadMap(modelMap, "../src/Map Boards/valid_map.txt", validMap);
+    Game *game = new Game(numberOfPlayers, modelMap);
 
     InitialGameConfig(game, modelMap, validMap, isTournament, numberOfPlayers, greedy, human, moderate,
                       playerOneStrategy, playerTwoStrategy, playerThreeStrategy, playerFourStrategy);
@@ -45,6 +50,7 @@ int main() {
 
     // Main Game Loop
     MainGameLoop(game, modelMap, validMap, isTournament, numberOfPlayers);
+
 
     // Memory clean up
     if (modelMap != nullptr) {
@@ -62,6 +68,7 @@ int main() {
 }
 
 void MainGameLoop(Game *game, Map *modelMap, bool &validMap, bool &isTournament, int &numberOfPlayers) {
+
     int userInput = 0;
 
     while (true) {
@@ -90,6 +97,7 @@ void MainGameLoop(Game *game, Map *modelMap, bool &validMap, bool &isTournament,
                     modelMap->Display();
                 }
                 DemonstrateA3Part1(modelMap, game);
+                exit(0);
                 break;
             case 2:
                 GameObservers(modelMap, game);

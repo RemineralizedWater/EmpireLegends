@@ -46,8 +46,10 @@ void Hand::AddToHand(Cards card) {
 
 void Hand::Exchange(Deck *deck) {
     int positionToPickUp;
-    cout << "Which card from the Face Up Pile would you like to take: ";
-    cin >> positionToPickUp;
+    cout << "Which card from the Face Up Pile would you like to take: " ;
+    string tempPositionToPickUp;
+    cin >> tempPositionToPickUp;
+    positionToPickUp=stoi(tempPositionToPickUp);
     int index = positionToPickUp - 1;
 
     while (true) {
@@ -55,7 +57,8 @@ void Hand::Exchange(Deck *deck) {
             break;
         } else {
             cout << "Player does not have enough money to buy this card. Please select another." << endl;
-            cin >> positionToPickUp;
+            cin >> tempPositionToPickUp;
+            positionToPickUp=stoi(tempPositionToPickUp);
             index = positionToPickUp - 1;
         }
     }

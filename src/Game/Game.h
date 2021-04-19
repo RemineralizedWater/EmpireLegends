@@ -9,11 +9,12 @@
 class Game {
 private:
     int numberOfPlayers;
+    Map *map;
 
 public:
     Game();
 
-    Game(int numberOfPlayers_);
+    Game(int numberOfPlayers_, Map *modelMap);
 
     Game(const Game &copy);
 
@@ -42,4 +43,6 @@ public:
     bool CountControlledTerritories(vector<Player *> players, Map *map);
 
     void SelectMap(Map *map, bool &validMap);  // bool &validMap pass by reference
+
+    void Setup(vector<Player*> players);
 };

@@ -21,7 +21,7 @@ void DemonstrateA2BiddingFacility() {
                        true,
                        0,
                        0,
-                       new Map()));
+                       new Map(), 0, 0));
     player1->MyHand->SetOwningPlayer(player1);
     player1->GetBiddingFacility()->SetOwningPlayer(player1);
     player1->RequestPlayerName();
@@ -42,7 +42,7 @@ void DemonstrateA2BiddingFacility() {
                        true,
                        0,
                        0,
-                       new Map()));
+                       new Map(), 0, 0));
     player2->MyHand->SetOwningPlayer(player2);
     player2->GetBiddingFacility()->SetOwningPlayer(player2);
     player2->RequestPlayerName();

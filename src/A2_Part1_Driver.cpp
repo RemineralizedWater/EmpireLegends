@@ -7,7 +7,7 @@
 
 void DemonstrateA2Part1() {
 
-    Game *starter = new Game(2);
+    Game *starter = new Game(2, new Map());
     bool validMap = false;
     Map *map = new Map();
     starter->SelectMap(map, validMap);

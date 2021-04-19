@@ -10,7 +10,7 @@ class PlayerStrategies {
 public:
     virtual string GetStrategyName() = 0;
 
-    virtual void Execute(Deck *deck, Player *player) = 0;
+    virtual void Execute(Deck *deck, Player *player, int numPlayer) = 0;
 };
 
 class HumanStrategy: public PlayerStrategies {
@@ -22,7 +22,7 @@ public:
 
     ~HumanStrategy();
 
-    void Execute(Deck *deck, Player *player);
+    void Execute(Deck *deck,Player *player,int numPlayer);
 
     string GetStrategyName() override;
 };
@@ -38,7 +38,7 @@ public:
 
     string GetStrategyName() override;
 
-    void Execute(Deck *deck,Player *player);
+    void Execute(Deck *deck,Player *player, int numPlayer);
 };
 
 class ModerateComputerStrategy: public PlayerStrategies {
@@ -50,7 +50,7 @@ public:
 
     ~ModerateComputerStrategy();
 
-    void Execute(Deck *deck, Player *player);
+    void Execute(Deck *deck, Player *player,int numPlayer);
 
     string GetStrategyName() override;
 };
