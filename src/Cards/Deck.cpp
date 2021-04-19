@@ -37,7 +37,7 @@ Deck::Deck(int numberOfPlayers) {
     Cards card4("Cursed King", "1Potion|-|3cubes/4cubeMoves", 0, 1, 3, "OR", 2, 4, 4, 1, "");
     deck->push_back(card4);
 
-    Cards card5("Cursed Tower", "+1VP per flying|-|settlement", 0, 3, 1, "", 0, 0, 6, 1, "fying");
+    Cards card5("Cursed Tower", "+1VP per flying|-|settlement", 0, 3, 1, "", 0, 0, 6, 1, "flying");
     deck->push_back(card5);
 
     Cards card6("Dire Eye", "Wings|-|4cubes", 0, 1, 4, "", 0, 0, 3, 1, "");

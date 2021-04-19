@@ -83,11 +83,21 @@ Cards &Cards::operator=(const Cards &c) {
     name = c.name;
     goodsAndAction = c.goodsAndAction;
     cost = c.cost;
+
+    actionOperation = c.actionOperation;
+    actionOne = c.actionOne;
+    actionOneValue = c.actionOneValue;
+    actionTwo = c.actionTwo;
+    actionTwoValue = c.actionTwoValue;
+
+    goods = c.goods;
+    goodsValue = c.goodsValue;
+    goodsSpecific = c.goodsSpecific;
     return *this;
 }
 
 // Stream Insertion Operators
-ostream &operator<<(ostream &out, const Cards &c) {
+ostream &operator<<(ostream &out, Cards &c) {
     //out << "(cost: " << *(c.cost) << ") name: " << *(c.name) << ", goods and actions: " << *(c.goodsAndAction) << endl;
     string actions[5] = {"", "Place Armies: ", "Move Armies: ", "Build City: ", "Destroy Armies: "};
     string goods[11] = {"", "+ to move armies", "+ to place armies", "- to move over water", "+ elixirs",

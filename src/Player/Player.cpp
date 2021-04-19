@@ -239,6 +239,7 @@ PlayerStrategies * Player::GetStrategy() {
     return this->playerStrategies;
 }
 
+
 //Successfully pays coin and withdraws money from said player account
 void Player::PaysCoinFromPlayer(int amountToPay) {
     money -= amountToPay;
@@ -431,7 +432,6 @@ void Player::MoveArmiesForPlayer(int numberOfArmiesToMove) {
         cin >> tempToID;
         tempToID=stoi(tempToID);
         cout<<tempToID<<endl;
-
         typedef pair<Territory *, vector<Adjacency> *> terrInfo;
         vector<terrInfo>::iterator terrIt;
         for (terrIt = map->GetTerrAndAdjsList()->begin();
@@ -487,10 +487,13 @@ void Player::MoveArmiesForPlayer(int numberOfArmiesToMove, int toID, int fromID)
                     for (terrIt2 = map->GetTerrAndAdjsList()->begin();
                          terrIt2 != map->GetTerrAndAdjsList()->end(); ++terrIt2) {
 
-                        if ((*terrIt2).first->GetTerrId() == toID) {
+                        if ((*terrIt2).first->GetTerrId() == toID && (*terrIt2).first->HasCity(name)) {
                             (*terrIt2).first->AddArmySizeForPlayer(name, armiesToMove);
                             (*terrIt).first->RemoveArmySizeForPlayer(name, armiesToMove);
                             movedArmies = true;
+                        }else{
+                            cout << "You do not have a city in that territory, cannot move armies." << endl;
+                            break;
                         }
                     }
                 } else {
@@ -548,6 +551,7 @@ void Player::BuildCityForPlayer() {
 
             if ((*terrIt).first->GetTerrId() == cityTargetID) {
                 (*terrIt).first->AddCityForPlayer(name);
+                cout << "A city has been built!" << endl;
                 disks -= 1;
                 builtCity = true;
                 break;
@@ -652,6 +656,7 @@ void Player::ResolveActiveCard() {
                 break;
         }
     }
+    MyHand->Notify();
     Notify();
 }
 

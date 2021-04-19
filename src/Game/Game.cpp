@@ -85,6 +85,7 @@ vector<Player *> Game::CreatePlayers(int startingPoint) {
     vector<Player *> players;
     BiddingFacility *tempBiddingFacility;
     tempBiddingFacility->ReceiveStartingCoins(numberOfPlayers);
+
     for (int i = 0; i < numberOfPlayers; i++) {
         Player *player(
                 new Player(to_string(map->GetStartingPoint()),

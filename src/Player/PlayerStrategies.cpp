@@ -1,10 +1,11 @@
 #include "PlayerStrategies.h"
 #include <sstream>
 
+
 // HUMANSTRATEGY METHODS
 // Constructor
 HumanStrategy::HumanStrategy() {
-    this->strategyName = "Human Player";
+    strategyName = "Human Player";
 }
 
 // Destructor
@@ -23,6 +24,7 @@ void HumanStrategy::Execute(Deck *deck, Player *player,int numPlayer) {
     player->MyHand->Exchange(deck);
 
     cout << "**Would you like to perform the action(s)?**\n1. YES\n2. NO " << endl;
+
     int playAction;
     cin >> playAction;
     while (playAction < 1 || playAction > 2) {
@@ -61,8 +63,7 @@ void GreedyComputerStrategy::Execute(Deck *deck, Player *player, int numPlayers)
     //picking cards
     for (int i = 0; i < deck->GetFaceUpCards()->size(); i++) {
         //build city action
-        if ((deck->GetFaceUpCards()->at(i).GetActionOne() == 3 || deck->GetFaceUpCards()->at(i).GetActionTwo() == 3 ||
-            deck->GetFaceUpCards()->at(i).GetActionOne() == 4 || deck->GetFaceUpCards()->at(i).GetActionTwo() == 4)){
+        if ((deck->GetFaceUpCards()->at(i).GetActionOne() == 3 || deck->GetFaceUpCards()->at(i).GetActionTwo() == 3)&&deck->GetFaceUpCards()->at((i)).GetActionTwo() == 0){
             if(deck->GetFaceUpCards()->at(i).GetCost()<= player->GetMoney()){
                 positionToPickUp = i + 1;
                 break;
@@ -191,7 +192,7 @@ void GreedyComputerStrategy::Execute(Deck *deck, Player *player, int numPlayers)
 // MODERATECOMPUTERSTRATEGY METHODS
 // Constructor
 ModerateComputerStrategy::ModerateComputerStrategy() {
-    this->strategyName = "Moderate Computer Player";
+    this->strategyName="Moderate Computer Player";
 }
 
 // Destructor
@@ -203,7 +204,6 @@ string ModerateComputerStrategy::GetStrategyName() {
 }
 
 void ModerateComputerStrategy::Execute(Deck *deck, Player *player, int numPlayer) {
-    //TODO: try to control regions by placing its armies
 
     cout << "--------" << strategyName << "----------" << endl;
     cout << "Cards in Face Up Pile:" << endl;
@@ -216,8 +216,8 @@ void ModerateComputerStrategy::Execute(Deck *deck, Player *player, int numPlayer
 
     //picking cards
     for (int i = 0; i < deck->GetFaceUpCards()->size(); i++) {
-        //build city action
-        if ((deck->GetFaceUpCards()->at(i).GetActionOne() == 1)){
+        //Place armies
+        if ((deck->GetFaceUpCards()->at(i).GetActionOne() == 1&&deck->GetFaceUpCards()->at((i)).GetActionTwo() == 0)){
             if(deck->GetFaceUpCards()->at(i).GetCost()<= player->GetMoney()){
                 positionToPickUp = i + 1;
                 break;

@@ -6,6 +6,7 @@
 class Player;
 class Deck;
 class Hand;
+class Cards;
 
 class PlayerObserver : public Observer {
 private:
@@ -47,4 +48,34 @@ public:
     void Update();
 
     void Display();
+};
+
+class CardObserver : public Observer {
+private:
+    Cards *subject;
+
+public:
+    CardObserver(Cards *subject_);
+
+    ~CardObserver();
+
+    void Update();
+
+    void Display();
+
+};
+
+class HandObserver : public Observer {
+private:
+    Hand *subject;
+
+public:
+    HandObserver(Hand *subject_);
+
+    ~HandObserver();
+
+    void Update();
+
+    void Display();
+
 };

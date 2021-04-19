@@ -24,6 +24,7 @@ void DemonstrateA3Part1(Map *modelMap, Game *game) {
     players.at(1)->SetStrategy(moderate);
     players.at(1)->ExecuteStrategy(modelDeck,game->GetNumberOfPlayers());
 
+
     // Memory clean up
     if (greedy != nullptr) {
         delete greedy;
@@ -37,6 +38,7 @@ void DemonstrateA3Part1(Map *modelMap, Game *game) {
         delete human;
         human = nullptr;
     }
+
     if (players.at(0) != nullptr) {
         delete players.at(0);
         players.at(0) = nullptr;

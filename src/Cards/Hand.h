@@ -11,7 +11,7 @@
 
 class Player;
 
-class Hand {
+class Hand : public Subject {
 private:
     vector<Cards> *hand;
     Cards *activeCard;
@@ -27,6 +27,8 @@ public:
     Cards *GetActiveCard();
 
     int GetNumberOfCardsInHand();
+
+    string GetOwningPlayerName();
 
     void SetActiveCard(Cards *card);
 

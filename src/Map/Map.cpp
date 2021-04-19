@@ -434,12 +434,21 @@ bool Map::IsConnected(int adjId_) {
  */
 bool Map::AddTerritory(int terrId, int continentId) {
     Territory *t = new Territory(terrId, continentId);
-    vector<Adjacency> *adj = new vector<Adjacency>();       // TODO: memory leak?
+
+    vector<Adjacency> *a = new vector<Adjacency>();       // TODO: memory leak?
     if (TerritoryExists(t->GetTerrId()) == t->GetTerrId()) {
         cout << "Invalid Map! Territory already exists. Territory belongs to more than one continent." << endl;
+        if (t != nullptr) {
+            delete t;
+            t = nullptr;
+        }
+        if (a != nullptr) {
+            delete a;
+            a = nullptr;
+        }
         return false;
     }
-    terrAndAdjsList->push_back(make_pair(t, adj));
+    terrAndAdjsList->push_back(make_pair(t, a));
     return true;
 }
 
@@ -460,11 +469,19 @@ bool Map::AddAdjacency(int terrId, int adjId_, bool isLandRoute_) {
             for (adjIt = (*terrIt).second->begin(); adjIt != (*terrIt).second->end(); ++adjIt) {
                 if (adjIt->GetAdjId() == adjId_ && adjIt->GetIsLandRoute() == isLandRoute_) {
                     cout << "Edge already exists for the territory" << endl;
+                    if (a != nullptr) {
+                        delete a;
+                        a = nullptr;
+                    }
                     return false;
                 }
                 if (adjIt->GetAdjId() == terrId) {
                     cout << adjIt->GetAdjId() << terrId << endl;
                     cout << "Edge cannot connect to itself" << endl;
+                    if (a != nullptr) {
+                        delete a;
+                        a = nullptr;
+                    }
                     return false;
                 }
             }

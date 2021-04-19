@@ -54,6 +54,7 @@ public:
            int costToMoveOverWater_, bool canBeAttacked_, int victoryPoints_, int elixirs_, Map *map_,
            int extraMoveAbility_, int extraArmyAbility_);
 
+
     Player(const Player &playerToCopy);
 
     ~Player();
