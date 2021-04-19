@@ -4,8 +4,11 @@
 #include "Player/Player.h"
 
 class Player;
+
 class Deck;
+
 class Hand;
+
 class Cards;
 
 class PlayerObserver : public Observer {

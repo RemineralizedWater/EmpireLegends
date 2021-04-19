@@ -1,7 +1,5 @@
 #include <iostream>
 #include "Player/Player.h"
-#include "Cards/Deck.h"
-#include "Map/Map.h"
 #include "Map Loader/MapLoader.h"
 #include "Game/Game.h"
 
@@ -47,7 +45,8 @@ void DemonstrateA2Part6() {
     players[1]->MyHand->AddToHand(Cards("Cursed Banshee", "2potions|-|6cubeMoves", 0, 2, 6, "", 0, 0, 4, 2, ""));
     players[1]->ApplyAbility();
 
-    players[1]->MyHand->AddToHand(Cards("Mountain Treasury", "1Potion2BronzeCoins|-|3cubesMove", 0, 2, 3, "", 0, 0, 5, 2, ""));
+    players[1]->MyHand->AddToHand(
+            Cards("Mountain Treasury", "1Potion2BronzeCoins|-|3cubesMove", 0, 2, 3, "", 0, 0, 5, 2, ""));
     players[1]->ApplyAbility();
     t->InsertNewArmyPlayerMapping(players[1]->GetName());
     t->InsertNewCityPlayerMapping(players[1]->GetName());

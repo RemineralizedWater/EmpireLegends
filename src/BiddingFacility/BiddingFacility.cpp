@@ -1,5 +1,3 @@
-// Implementation of Bidding Facility class
-
 #include "BiddingFacility.h"
 #include <iostream>
 #include <string>
@@ -24,7 +22,8 @@ BiddingFacility::BiddingFacility(const BiddingFacility &copy) {
     isStartingPlayer = copy.isStartingPlayer;
 }
 
-BiddingFacility::BiddingFacility(string lastName_, int coins_, int bidAmount_, Player *owningPlayer_, bool isStartingPlayer_) {
+BiddingFacility::BiddingFacility(string lastName_, int coins_, int bidAmount_, Player *owningPlayer_,
+                                 bool isStartingPlayer_) {
     lastName = lastName_;
     coins = coins_;
     bidAmount = bidAmount_;
@@ -41,7 +40,7 @@ BiddingFacility::~BiddingFacility() {
 }
 
 // Assignment Operator
-BiddingFacility& BiddingFacility::operator=(BiddingFacility &bf) {
+BiddingFacility &BiddingFacility::operator=(BiddingFacility &bf) {
     lastName = bf.lastName;
     coins = bf.coins;
     bidAmount = bf.bidAmount;
@@ -51,13 +50,13 @@ BiddingFacility& BiddingFacility::operator=(BiddingFacility &bf) {
 }
 
 // Stream Insertion Operators
-ostream& operator << (ostream &out, const BiddingFacility &bf) {
+ostream &operator<<(ostream &out, const BiddingFacility &bf) {
     out << "last name: " << bf.lastName << ", coins: " << bf.coins << ", bid amount: " << bf.bidAmount << endl;
     return out;
 }
 
 // Note: obj needs to be dereferenced when using cout (ie, cout << *foo)
-istream& operator >> (istream &in, BiddingFacility &bf) {
+istream &operator>>(istream &in, BiddingFacility &bf) {
     in >> bf.lastName;
     in >> bf.coins;
     in >> bf.bidAmount;
@@ -92,7 +91,7 @@ void BiddingFacility::SetLastName(string lastName_) {
 void BiddingFacility::ReceiveStartingCoins(int numberOfPlayers) {
     coins = 0;
     if (numberOfPlayers == 2) coins = 14;
-    else if (numberOfPlayers == 3 ) coins = 11;
+    else if (numberOfPlayers == 3) coins = 11;
     else if (numberOfPlayers == 4) coins = 9;
 }
 
@@ -104,7 +103,8 @@ void BiddingFacility::EnterBid() {
             cout << "Bid amount of (" << bidAmount << ") received." << endl;
             break;
         } else {
-            cout << "Please enter a valid bid (integer, no greater than " << owningPlayer->GetMoney() << ")" << endl << ">>";
+            cout << "Please enter a valid bid (integer, no greater than " << owningPlayer->GetMoney() << ")" << endl
+                 << ">>";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
@@ -122,7 +122,8 @@ void BiddingFacility::RevealBid() {
 void BiddingFacility::ResolveBid(bool hasWonBid) {
     if (hasWonBid) {
         cout << owningPlayer->GetName() << " has won the bid! " << endl;
-        cout << owningPlayer->GetName() << " has lost " << bidAmount << " coins and has " << owningPlayer->GetMoney() << " coins left." << endl;
+        cout << owningPlayer->GetName() << " has lost " << bidAmount << " coins and has " << owningPlayer->GetMoney()
+             << " coins left." << endl;
         owningPlayer->PaysCoinFromPlayer(bidAmount);
         owningPlayer->Supply += bidAmount;
         cout << bidAmount << " has been added to the Supply." << endl;

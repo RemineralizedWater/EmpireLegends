@@ -110,8 +110,7 @@ ostream &operator<<(ostream &out, Cards &c) {
     }
     if (c.goods == 6) {
         out << " goods = " << goods[6] << c.goodsSpecific;
-    }
-    else {
+    } else {
         out << " goods = " << to_string(c.goodsValue) << goods[c.goods];
     }
 

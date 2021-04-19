@@ -46,7 +46,7 @@ void Hand::AddToHand(Cards card) {
 
 void Hand::Exchange(Deck *deck) {
     int positionToPickUp;
-    cout << "Which card from the Face Up Pile would you like to take: " ;
+    cout << "Which card from the Face Up Pile would you like to take: ";
     cin >> positionToPickUp;
     int index = positionToPickUp - 1;
 
@@ -80,6 +80,7 @@ void Hand::Exchange(Deck *deck) {
 
     deck->SetFaceUpCardsCost();
 }
+
 bool Hand::ExchangeWithoutPrompt(Deck *deck, int positionToPickUp) {
     int index = positionToPickUp - 1;
 

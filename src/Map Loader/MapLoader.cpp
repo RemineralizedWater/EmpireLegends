@@ -25,8 +25,7 @@ MapLoader::MapLoader(Map *map, int numberOfPlayers) {
     if (numberOfPlayers == 2 || numberOfPlayers == 3) {
         rectangle = IsRectangle();
         numberOfBoardPieces = 3;
-    }
-    else if (numberOfPlayers == 4) {
+    } else if (numberOfPlayers == 4) {
         numberOfBoardPieces = 4;
         rectangle = true;
     }
@@ -68,12 +67,13 @@ MapLoader &MapLoader::operator=(const MapLoader &ml) {
  * @return
  */
 std::ostream &operator<<(std::ostream &out, const MapLoader &ml) {
-    out << " Map File: " << ml.mapFilePath << " Board Pieces: " << ml.numberOfBoardPieces << " Rectangular Board: " << ml.rectangle << endl;
+    out << " Map File: " << ml.mapFilePath << " Board Pieces: " << ml.numberOfBoardPieces << " Rectangular Board: "
+        << ml.rectangle << endl;
     return out;
 }
 
 std::istream &operator>>(std::istream &in, MapLoader &ml) {
-    cout << "Enter map file path"<< endl;
+    cout << "Enter map file path" << endl;
     in >> ml.mapFilePath;
     return in;
 }
@@ -91,12 +91,10 @@ bool MapLoader::IsRectangle() {
         if (input == "1") {
             cout << "Board Layout Rectangular selected" << endl;
             return true;
-        }
-        else if (input == "2") {
+        } else if (input == "2") {
             cout << "Board Layout L-Shape selected" << endl;
             return false;
-        }
-        else {
+        } else {
             cout << "Board Layouts:\n1) Rectangular \n2) L-Shape \nPlease enter a valid Board Layout choice (1 or 2):";
             cin >> input;
         }
@@ -142,12 +140,10 @@ void MapLoader::LoadMap(Map *map, string file, bool &validMap) {  // bool &valid
         else if (line == "Rectangle(3){" && rectangle && numberOfBoardPieces == 3) {
             isConfigured = true;
             continue;
-        }
-        else if (line == "Rectangle(4){" && rectangle && numberOfBoardPieces == 4) {
+        } else if (line == "Rectangle(4){" && rectangle && numberOfBoardPieces == 4) {
             isConfigured = true;
             continue;
-        }
-        else if (line == "L-shape{" && !rectangle) {
+        } else if (line == "L-shape{" && !rectangle) {
             isConfigured = true;
             continue;
         }
@@ -164,15 +160,15 @@ void MapLoader::LoadMap(Map *map, string file, bool &validMap) {  // bool &valid
                 if (mapBoardCount == numberOfBoardPieces) {
                     fstream close(file);
                     break;
-                }
-                else {
+                } else {
                     continue;
                 }
             }
 
             //parse continentId field
             int continentId = 0;
-            if (!VerifyId(line.substr(currentCharIndex, line.find("|", currentCharIndex) - currentCharIndex), continentId,
+            if (!VerifyId(line.substr(currentCharIndex, line.find("|", currentCharIndex) - currentCharIndex),
+                          continentId,
                           "Continent name must be a number", "Continent name is too long")) {
                 validMap = false;
                 fstream close(file);
@@ -304,7 +300,8 @@ bool MapLoader::ParseAdjacency(Map *map, string adjacency, int terrId, int conti
  * @param currentIndex
  * @return
  */
-bool MapLoader::CheckNextFieldExists(string line, int &currentIndex) {  // int &currentIndex pass by reference to correctly id valid map
+bool MapLoader::CheckNextFieldExists(string line,
+                                     int &currentIndex) {  // int &currentIndex pass by reference to correctly id valid map
     currentIndex = line.find("|", currentIndex);
 
     //check if there is a character after |
@@ -353,18 +350,18 @@ bool MapLoader::VerifyId(string stringId, int &intId, string argErrMsg,
  * @param land
  * @return
  */
-bool MapLoader::IsLand(string adjacency, int commaIndex, int currentIndex, bool &land) {  // bool &land pass by reference
+bool
+MapLoader::IsLand(string adjacency, int commaIndex, int currentIndex, bool &land) {  // bool &land pass by reference
     //land
     if (adjacency.substr(currentIndex, commaIndex - currentIndex) == "L") {
         land = true;
         return true;
     }
-    //water
+        //water
     else if (adjacency.substr(currentIndex, commaIndex - currentIndex) == "W") {
         land = false;
         return true;
-    }
-    else {
+    } else {
         cout << "territory must be connected by L or W " << endl;
         return false;
     }
